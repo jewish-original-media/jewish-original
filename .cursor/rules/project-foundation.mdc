@@ -1,0 +1,31 @@
+---
+description: Core product, editorial, brand, and engineering rules for Jewish Original Media
+alwaysApply: true
+---
+
+# Jewish Original Media
+
+- Official working positioning: "A modern home for Jewish history, culture,
+  education, connection, and identity."
+- Product principle: History is the foundation. Education transmits it.
+  Identity is the product. Connection is the outcome.
+- Treat this as a production editorial, education, and identity platform.
+- Use `docs/` as the source of truth and update it with meaningful decisions.
+- Do not fabricate history, Torah, news, sponsors, testimonials, or statistics.
+- Preserve provenance, citations, image rights, canonical URLs, and corrections.
+- Keep editorial content structured; do not collapse content types into generic posts.
+- Keep taxonomies CMS-managed and references relational.
+- Default to Server Components, semantic HTML, and minimal client JavaScript.
+- Protect SEO, accessibility, mobile UX, Core Web Vitals, and reduced motion.
+- Use brand tokens and approved assets; never alter, recolor, stretch, rotate,
+  shadow, or redraw a logo.
+- Avoid generic SaaS visuals, excessive rounded cards, gradients, glow, and glass.
+- Use supplied photography before considering licensed alternatives.
+- Provision real external services before installing their SDKs or building against them.
+- Keep secrets server-only; validate all writes; authorize every protected operation.
+- Automate repetition, but require editorial approval for judgment-sensitive output.
+- Add dependencies only when a concrete requirement justifies them.
+- Keep infrastructure lean: prefer reliable free tiers, avoid overlapping
+  services, document paid upgrade triggers, and never trade away security,
+  accessibility, editorial integrity, or reliability for cost.
+- Do not build future roadmap features before their milestone.

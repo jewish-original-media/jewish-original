@@ -1,0 +1,75 @@
+import { expect, test } from "@playwright/test";
+
+test("renders the responsive, accessible application shell", async ({
+  page,
+}, testInfo) => {
+  const browserErrors: string[] = [];
+
+  page.on("console", (message) => {
+    if (message.type() === "error") {
+      const sourceUrl = message.location().url;
+      browserErrors.push(
+        sourceUrl ? `${message.text()} (${sourceUrl})` : message.text(),
+      );
+    }
+  });
+  page.on("pageerror", (error) => browserErrors.push(error.message));
+  page.on("response", (response) => {
+    if (response.status() >= 400) {
+      browserErrors.push(`${response.status()} ${response.url()}`);
+    }
+  });
+
+  await page.goto("/");
+
+  await expect(page.getByRole("banner")).toBeVisible();
+  await expect(page.getByRole("main")).toBeVisible();
+  await expect(page.getByRole("contentinfo")).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: /a modern home for jewish history/i,
+    }),
+  ).toBeVisible();
+
+  const hasHorizontalOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > window.innerWidth,
+  );
+  expect(hasHorizontalOverflow).toBe(false);
+
+  if (testInfo.project.name === "mobile") {
+    const menu = page.getByText("Menu", { exact: true });
+    await expect(menu).toBeVisible();
+    await menu.click();
+    await expect(
+      page.getByRole("navigation", { name: "Mobile" }),
+    ).toBeVisible();
+    await menu.click();
+  } else {
+    await expect(
+      page.getByRole("navigation", { name: "Primary" }),
+    ).toBeVisible();
+  }
+
+  await page.screenshot({
+    path: `artifacts/shell-${testInfo.project.name}-verified.png`,
+    fullPage: true,
+  });
+
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("link", { name: "Skip to main content" }),
+  ).toBeFocused();
+
+  expect(browserErrors).toEqual([]);
+});
+
+test("serves generated discovery and crawler metadata", async ({ request }) => {
+  for (const path of ["/robots.txt", "/sitemap.xml", "/manifest.webmanifest"]) {
+    const response = await request.get(path);
+    expect(response.ok(), `${path} should return a successful response`).toBe(
+      true,
+    );
+  }
+});

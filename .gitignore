@@ -1,0 +1,26 @@
+# dependencies
+/node_modules
+/.analysis-venv
+
+# Next.js
+/.next
+/out
+
+# production
+/build
+/coverage
+/artifacts
+/playwright-report
+/test-results
+
+# local environment files
+.env*
+!.env.example
+
+# platform
+.vercel
+
+# logs and editor files
+*.log
+.DS_Store
+*.tsbuildinfo
