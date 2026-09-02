@@ -115,3 +115,154 @@ Continue with Vercel for the lowest-operations Next.js deployment path, but do
 not classify Hobby as a production free tier for this business. Hobby is
 personal and non-commercial; public commercial deployment triggers Vercel Pro
 or a deliberate hosting re-evaluation.
+
+## ADR-014 — Provision one Sanity development environment
+
+**Status:** Accepted, 2026-08-31
+
+Provision one Sanity Free project under the Jewish Original Media organization
+with one public `development` dataset and embed Studio at `/admin`. Reserve the
+second Free dataset; do not create production infrastructure before the
+development import and editorial workflow are proven. Sanity is the only active
+external service and current monthly infrastructure cost remains $0.
+
+The Free plan's Administrator and Viewer roles are acceptable for the
+founder-only development milestone. Add team members only after evaluating the
+least-privilege role requirement and paid upgrade trigger.
+
+## ADR-015 — Do not mislabel generated import keys as source IDs
+
+**Status:** Accepted, 2026-08-31
+
+The delivered 124-row legacy CSV has a blank `Item ID` column in every row and
+one duplicate slug. Its row-scoped deterministic keys are therefore generated
+identifiers for the frozen export, not source-provided stable IDs. Preserve that
+distinction in provenance and reports.
+
+This decision described the earlier CSV-only evidence. ADR-016 supersedes its
+source gate now that the original XLSX is available; the rule against
+misrepresenting generated IDs remains in force.
+
+## ADR-016 — Use the original XLSX as canonical migration input
+
+**Status:** Accepted, 2026-08-31
+
+The original `JOM On This Day Content.xlsx` is now the canonical archive. Its
+checksum, worksheet names, source rows, formula expressions, and cached formula
+results define migration provenance. The Numbers workbook, PDF, and CSV exports
+remain reconciliation evidence but cannot override stronger XLSX cell evidence.
+
+Treat `Form` and `Import` as the two canonical record families. Other worksheets
+are instructions, unmaterialized pivots, calculations, transformed copies, or
+indexes. Generate stable IDs from the frozen workbook checksum, worksheet, and
+source row when no source ID exists, and label them as generated.
+
+Restricted raw staging may retain contributor metadata locally under ignored
+`artifacts/`. Sanitized candidate staging, duplicate reports, and the proposed
+manifest must contain no contributor email.
+
+## ADR-017 — Preserve duplicate evidence without creating editorial relations
+
+**Status:** Accepted, 2026-08-31
+
+The founder-approved first-20 pilot is imported as deterministic Sanity drafts.
+Duplicate and conflicting source versions remain separate documents. Store the
+cluster ID and all cluster member source IDs in read-only import provenance,
+and expose the evidence through an open blocking review flag.
+
+Do not create `relatedHistory` references from duplicate detection. That field
+represents editorially meaningful related content, while similarity evidence
+only signals a possible merge, alternate version, or conflict requiring human
+judgment. The pilot remains at 20 drafts, zero published documents, and $0
+monthly infrastructure cost.
+
+## ADR-018 — Preview the public History experience without publishing
+
+**Status:** Accepted, 2026-08-31
+
+Public History URLs use durable editorial slugs such as
+`/history/us-liberates-dachau`. Migration identifiers never appear in public
+paths. The public site renders only documents that are both Sanity-published
+and `workflowStatus: ready`.
+
+A small set of structurally clean drafts may be marked
+`publicTestCandidate` for authenticated Draft Mode only. That flag is a design
+preview gate, not factual approval, image-rights clearance, or publication.
+
+Reusable reference documents (topics, regions, people, places, eras,
+organizations, and sources) may be published so relationships resolve. History
+entries remain drafts until an editor marks them ready and publishes them.
+
+Recurring Jewish observances are a distinct `entryKind`. The source historical
+date remains empty or unknown; a Hebrew `observanceRule` stores the nominal
+date and a future provider key. No current-year Gregorian date is stored or
+displayed as canonical. Hebcal is reserved until daily/calendar features need
+it.
+
+Safe topic and geography mappings may be applied from the reviewed crosswalk.
+Ambiguous values such as `Israeli/Zionism`, `British`, and `French` remain
+unmapped.
+
+## ADR-019 — First History article review does not publish
+
+**Status:** Accepted, 2026-09-01
+
+`US Liberates Dachau` is the first article taken through the publication
+standard. Review may analyze claims, propose wording, recommend sources and
+SEO, and refine the shared History template. It may not rewrite the stored
+source body, attach unverified URLs as verified, or publish.
+
+The stored Form record remains the immutable source version until the founder
+approves a specific editorial patch. See
+`docs/HISTORY_DACHAU_FIRST_ARTICLE_REVIEW.md`.
+
+On 2026-09-01 the founder approved an editorial patch for the unpublished
+Dachau draft: reviewed public body, excerpt, SEO, Gregorian calendar,
+Tegernsee place, and verified USHMM / Yad Vashem / Dachau Memorial citations.
+The original `provenance.sourceBody` was left unchanged. The history entry
+was not published. U.S. Army was not added as an organization. No image was
+attached.
+
+Final visual QA uses one production `next start` process so History
+Playwright and screenshots do not reopen `next dev` file-watchers. The
+shared entry rail label is “From the archive,” not “Historical record.”
+
+## ADR-020 — History template polish uses motifs, not a new identity
+
+**Status:** Accepted, 2026-09-01
+
+The shared History article template may add restrained JOM signatures from
+approved OTD motifs: a luminance-masked lion watermark in the desktop hero
+and a small Magen David section mark between gold rules. Those files are
+copied unedited. They are not logos, are not recolored on disk, and must stay
+low-contrast enough to leave type readable. The lion is the hero signature.
+The star is the no-image transition. Do not use both in the same cluster, and
+do not put a second JOM wordmark in the hero.
+
+`mix-blend-mode: screen` on the gold lion PNG fails on sand: either the
+opaque black field prints as a panel, or the gold flattens into the field.
+Use `mask-mode: luminance` on the white lion with a brand-gold fill.
+
+Featured imagery is a 16:9 editorial frame that appears only when a
+rights-cleared `primaryImage` exists. Cards and social metadata reuse that
+image. No-image articles collapse to typography plus a gold rule. Optional
+rhythm blocks (pull quote, fact, timeline marker, artifact) render only when
+supplied with real editorial content.
+
+This polish does not publish History, import records, or change Dachau
+prose, citations, taxonomy, SEO, or provenance.
+
+## ADR-021 — Founder published the first History article
+
+**Status:** Accepted, 2026-09-01
+
+The founder said PUBLISH for `US Liberates Dachau` only. The published
+document is `historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc`,
+`workflowStatus: ready`. Related unpublished History drafts stay drafts;
+their references remain weak so they are not published by association.
+Source body, editorial body, citations, taxonomy, and SEO were not rewritten
+for publication. No additional archive records were imported.
+
+The development dataset is private, so public History pages use the
+server-only read token with the published perspective. Without that token,
+published documents are invisible and the public slug 404s.

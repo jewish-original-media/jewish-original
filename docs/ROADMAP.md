@@ -9,7 +9,7 @@
 
 Exit: a clean, deployable shell with no fabricated editorial content.
 
-## Milestone 1 — Structured history vertical
+## Milestone 1 — Structured history vertical (first article complete)
 
 - Obtain canonical XLSX/CSV archive exports and freeze source checksums
 - Provision Sanity and embed a protected Studio at `/admin`
@@ -18,10 +18,20 @@ Exit: a clean, deployable shell with no fabricated editorial content.
 - Build spreadsheet staging, validation, dry-run, and reconciliation tooling
 - Import the approved 20-record migration test set as drafts and conduct
   editorial QA
-- Build history detail, index, today view, filters, related content, and JSON-LD
-- Establish preview, correction, and publishing workflows
+- Build the first History entry template, index foundation, preview, and JSON-LD
+- Complete the first article review for `US Liberates Dachau` without publishing
+- Polish the shared History article template for hierarchy, featured media,
+  and restrained JOM signatures without publishing
+- Refine desktop hero spacing, lion watermark, and CSS editorial motion;
+  stop for founder design review without publishing
+- Apply a final pre-publish UI polish (lion quieting, excerpt measure,
+  share separators, source/rail readability) without publishing
+- Keep publication blocked until fact, citation, taxonomy, and rights review
+- Publish only the reviewed `US Liberates Dachau` article after founder approval
 
-Exit: editors can safely publish real history entries and readers can discover them.
+Exit: the editorial workflow and public History template are proven. The first
+reviewed article is public. Remaining archive import waits until more records
+can be published honestly.
 
 ## Milestone 2 — Daily Jewish utility
 

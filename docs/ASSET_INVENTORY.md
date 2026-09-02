@@ -53,6 +53,20 @@ Fifteen supplied brand graphics:
 The transparent secondary logo variants are currently the most production-ready
 sub-brand marks. Other files need true transparent or vector exports.
 
+History template delivery copies two unedited OTD motif rasters into
+`public/brand/motifs/` for CSS masks only:
+
+- `otd-lion-white.png` — white rampant lion on black; desktop hero luminance
+  mask, filled with brand gold at low opacity
+- `otd-lion-gold.png` — gold rampant lion on black; color reference only. Do
+  not composite it with `mix-blend-mode: screen` on sand (the black field
+  remains, or gold washes out)
+- `otd-star-white.png` — archival Magen David stamp on black; luminance mask
+  for the no-image section mark
+
+They are not JOM wordmarks. Do not place the OTD circular “On This Day”
+logo on History articles.
+
 ## The Two Tall Jews Show and legacy marks
 
 - The Two Tall Jews Show logo — 1024×910, opaque raster

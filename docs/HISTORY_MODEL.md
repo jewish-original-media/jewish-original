@@ -1,6 +1,11 @@
 # Production History Model and Migration Plan
 
-Status: approved foundation proposal; implementation begins in Milestone 1.
+Status: schema, source adapters, and the approved first-20 pilot were
+implemented in Milestone 1 on 2026-08-31. The editorial-foundation milestone
+adds a reviewed taxonomy crosswalk, reversible body conversion, a recurring
+observance model, and a public History template tested only in draft preview.
+`US Liberates Dachau` is the first published History article. The remaining
+pilot records stay unpublished drafts.
 
 ## Modeling decision
 
