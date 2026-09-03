@@ -5,9 +5,7 @@ Do not rebase onto uncommitted History or Podcasts work.
 
 ## 1. Jewish Today commit hash
 
-Recorded after the checkpoint commit. Confirm with:
-
-`git rev-parse feature/jewish-today`
+`242945fa6b6d1757aa433517511c2c8b1f009b57`
 
 ## 2. Branch name
 
