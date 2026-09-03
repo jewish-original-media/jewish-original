@@ -115,3 +115,22 @@ Continue with Vercel for the lowest-operations Next.js deployment path, but do
 not classify Hobby as a production free tier for this business. Hobby is
 personal and non-commercial; public commercial deployment triggers Vercel Pro
 or a deliberate hosting re-evaluation.
+
+## ADR-021 — Jewish Today uses Hebcal REST, not the GPL library
+
+**Status:** Accepted, 2026-09-01
+
+Jewish Today is a calculated daily utility. It does not store each calendar day
+in Sanity. Calendar data comes from the Hebcal REST calendar API through a
+typed adapter in `src/integrations/hebcal`. History matches are queried from
+existing published `historyEntry` documents.
+
+`@hebcal/core` is not installed. That package is GPL-2.0; using it here would
+require this application to be distributed under GPL terms the project has not
+adopted. The hosted API is CC BY 4.0 with required Hebcal.com attribution.
+
+V1 “today” is the civil Gregorian date in `America/New_York`. Sunset, visitor
+timezone, Israel schedule, and candle-lighting are deferred.
+
+ADR numbers 014–020 are reserved for the in-progress History workstream so this
+decision does not collide on merge. See `docs/JEWISH_TODAY.md`.

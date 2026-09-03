@@ -30,6 +30,13 @@ Exit: editors can safely publish real history entries and readers can discover t
 - Define timezone and geolocation consent behavior
 - Compose the useful daily homepage from verified data and original history
 
+Checkpointed and frozen on `feature/jewish-today`: Hebcal REST adapter,
+`JewishTodayDay` contract, standalone `/today`, and live matching against the
+published Dachau History entry. Homepage composition, sunset/local timezone,
+Israel schedule, candle-lighting, and branch convergence remain later
+controlled work. See `docs/JEWISH_TODAY.md` and
+`docs/JEWISH_TODAY_CONVERGENCE.md`.
+
 Exit: the homepage has trustworthy daily value with graceful failure behavior.
 
 ## Milestone 3 — Podcast and original editorial

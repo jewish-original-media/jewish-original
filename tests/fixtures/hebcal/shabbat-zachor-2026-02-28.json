@@ -1,0 +1,29 @@
+{
+  "range": { "start": "2026-02-28", "end": "2026-02-28" },
+  "items": [
+    {
+      "title": "11th of Adar",
+      "date": "2026-02-28",
+      "hdate": "11 Adar 5786",
+      "category": "hebdate",
+      "hebrew": "י״א אדר",
+      "heDateParts": { "y": "תשפ״ו", "m": "אדר", "d": "י״א" }
+    },
+    {
+      "title": "Shabbat Zachor",
+      "date": "2026-02-28",
+      "hdate": "11 Adar 5786",
+      "category": "holiday",
+      "subcat": "shabbat",
+      "hebrew": "שבת זכור",
+      "memo": "Shabbat of Remembrance. Shabbat before Purim"
+    },
+    {
+      "title": "Parashat Tetzaveh",
+      "date": "2026-02-28",
+      "hdate": "11 Adar 5786",
+      "category": "parashat",
+      "hebrew": "פרשת תצוה"
+    }
+  ]
+}

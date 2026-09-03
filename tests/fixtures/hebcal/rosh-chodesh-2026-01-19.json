@@ -1,0 +1,26 @@
+{
+  "range": { "start": "2026-01-19", "end": "2026-01-24" },
+  "items": [
+    {
+      "title": "1st of Sh’vat, 5786",
+      "date": "2026-01-19",
+      "hdate": "1 Sh'vat 5786",
+      "category": "hebdate",
+      "hebrew": "א׳ שבט",
+      "heDateParts": { "y": "תשפ״ו", "m": "שבט", "d": "א׳" }
+    },
+    {
+      "title": "Rosh Chodesh Sh’vat",
+      "date": "2026-01-19",
+      "hdate": "1 Sh'vat 5786",
+      "category": "roshchodesh",
+      "hebrew": "ראש חודש שבט"
+    },
+    {
+      "title": "Parashat Bo",
+      "date": "2026-01-24",
+      "category": "parashat",
+      "hebrew": "פרשת בא"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "range": { "start": "2026-09-05", "end": "2026-09-05" },
+  "items": [
+    {
+      "title": "23rd of Elul",
+      "date": "2026-09-05",
+      "hdate": "23 Elul 5786",
+      "category": "hebdate",
+      "hebrew": "כ״ג אלול",
+      "heDateParts": { "y": "תשפ״ו", "m": "אלול", "d": "כ״ג" }
+    },
+    {
+      "title": "Leil Selichot",
+      "date": "2026-09-05",
+      "hdate": "23 Elul 5786",
+      "category": "holiday",
+      "subcat": "minor",
+      "hebrew": "סליחות",
+      "memo": "Prayers for forgiveness in preparation for the High Holidays"
+    },
+    {
+      "title": "Parashat Nitzavim-Vayeilech",
+      "date": "2026-09-05",
+      "hdate": "23 Elul 5786",
+      "category": "parashat",
+      "hebrew": "פרשת נצבים־וילך"
+    }
+  ]
+}

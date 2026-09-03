@@ -142,3 +142,13 @@ The project targets Node.js 24 LTS. The current local Node 23 installation is
 non-LTS and should be replaced before dependency or deployment debugging.
 Next.js 16 technically supports Node 20.9+, but Node 24 LTS is the project
 standard and Vercel default. `.nvmrc` and `package.json` pin the 24.x line.
+
+## Jewish Today
+
+The daily utility lives at `/today` and is assembled by `getJewishToday()`.
+Calendar calculation stays in `src/integrations/hebcal`. Editorial History
+matching stays in `src/content/jewish-today`. The homepage must import those
+modules later rather than calling Hebcal or writing a second on-this-day query.
+
+See `docs/JEWISH_TODAY.md` and ADR-021. This section is additive and should
+merge beside the History workstream’s Sanity notes.
