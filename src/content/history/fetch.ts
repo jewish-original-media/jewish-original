@@ -12,9 +12,16 @@ import {
   historyEntryQuery,
   historyFilterLabelQuery,
   historyIndexQuery,
+  historyOnThisDayQuery,
   historySlugsQuery,
 } from "./queries";
 import type { HistoryEntry, HistoryEntrySummary, HistoryFilter } from "./types";
+
+export type HistoryIndexOptions = {
+  filter?: HistoryFilter;
+  month?: number;
+  day?: number;
+};
 
 const publishedOptions = {
   next: {
@@ -27,18 +34,37 @@ const previewOptions = {
   cache: "no-store" as const,
 };
 
+function indexParams(preview: boolean, options?: HistoryIndexOptions) {
+  return {
+    filterSlug: options?.filter?.slug || null,
+    filterType: options?.filter?.type || null,
+    month: options?.month ?? null,
+    day: options?.day ?? null,
+    preview,
+  };
+}
+
 export async function getHistoryIndex(
   preview: boolean,
-  filter?: HistoryFilter,
+  options?: HistoryIndexOptions,
 ) {
   const client = preview ? getDraftSanityClient() : getPublishedSanityClient();
   return client.fetch<HistoryEntrySummary[]>(
     historyIndexQuery,
-    {
-      filterSlug: filter?.slug || null,
-      filterType: filter?.type || null,
-      preview,
-    },
+    indexParams(preview, options),
+    preview ? previewOptions : publishedOptions,
+  );
+}
+
+export async function getOnThisDayHistory(
+  preview: boolean,
+  month: number,
+  day: number,
+) {
+  const client = preview ? getDraftSanityClient() : getPublishedSanityClient();
+  return client.fetch<HistoryEntrySummary[]>(
+    historyOnThisDayQuery,
+    { preview, month, day },
     preview ? previewOptions : publishedOptions,
   );
 }

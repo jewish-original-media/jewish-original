@@ -1,15 +1,26 @@
 import { expect, test } from "@playwright/test";
 
-test("publishes only the reviewed Dachau article on the public collection", async ({
+test("publishes only the reviewed Dachau article on the public archive", async ({
   page,
 }) => {
   const response = await page.goto("/history");
 
   expect(response?.status()).toBe(200);
   await expect(
-    page.getByRole("heading", { name: /jewish history, held with care/i }),
+    page.getByRole("heading", { name: /on this day in jewish history/i }),
   ).toBeVisible();
-  await expect(page.getByText("US Liberates Dachau")).toBeVisible();
+  await expect(page.getByRole("link", { name: "US Liberates Dachau" })).toHaveCount(
+    1,
+  );
+  await expect(page.getByRole("heading", { name: "Topics" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Eras" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Places" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Regions" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "People" })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Organizations" })).toHaveCount(
+    0,
+  );
+  await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
   await expect(page.getByText("Joop Westerweel")).toHaveCount(0);
   await expect(page.getByText("Samuel Willenberg")).toHaveCount(0);
   await expect(page.getByText("Theodore Herzl")).toHaveCount(0);
@@ -17,6 +28,60 @@ test("publishes only the reviewed Dachau article on the public collection", asyn
     page.getByText(/first public collection is in editorial review/i),
   ).toHaveCount(0);
   await expect(page.getByText("Private editorial preview")).toHaveCount(0);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://jewishoriginal.com/history",
+  );
+});
+
+test("browses published history by civil date without fabricating a match", async ({
+  page,
+}) => {
+  await page.goto("/history");
+  await page.getByLabel("Month").selectOption("4");
+  await page.getByLabel("Day").selectOption("29");
+  await page.getByRole("button", { name: /view this day/i }).click();
+
+  await expect(page).toHaveURL(/month=4/);
+  await expect(page).toHaveURL(/day=29/);
+  await expect(
+    page.getByRole("heading", { name: "On April 29" }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "US Liberates Dachau" })).toBeVisible();
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+    "content",
+    /noindex/,
+  );
+
+  await page.goto("/history?month=9&day=2");
+  await expect(
+    page.getByText("No reviewed story is attached to this date yet."),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "US Liberates Dachau" })).toHaveCount(
+    0,
+  );
+});
+
+test("filters the archive by published taxonomy and keeps empty people hidden", async ({
+  page,
+}) => {
+  const response = await page.goto("/history?topic=holocaust");
+  expect(response?.status()).toBe(200);
+  await expect(page.getByRole("heading", { name: "Holocaust" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "US Liberates Dachau" })).toBeVisible();
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://jewishoriginal.com/history",
+  );
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+    "content",
+    /noindex/,
+  );
+
+  await page.goto("/history?person=theodor-herzl");
+  await expect(
+    page.getByText("No reviewed entry currently matches this connection."),
+  ).toBeVisible();
 });
 
 test("serves the published Dachau article and keeps other slugs unpublished", async ({

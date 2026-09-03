@@ -266,3 +266,28 @@ for publication. No additional archive records were imported.
 The development dataset is private, so public History pages use the
 server-only read token with the published perspective. Without that token,
 published documents are invisible and the public slug 404s.
+
+## ADR-022 — History owns On This Day matching; Jewish Today owns the calendar
+
+**Status:** Accepted, 2026-09-02
+
+`/history` is the public home of On This Day in Jewish History and the
+reviewed archive. History matches published, ready, non-duplicate historical
+events to a civil Gregorian month and day. Recurring observances are excluded
+from that fixed-date match. “Today” uses `America/New_York`, matching Jewish
+Today’s V1 civil-date definition.
+
+Jewish Today remains responsible for Hebcal and Jewish calendar calculation.
+History does not import Hebcal, compute Hebrew dates, or duplicate `/today`.
+Jewish Today should later consume History’s matcher rather than maintaining a
+second GROQ copy.
+
+Archive discovery uses query parameters on `/history` (`month`, `day`,
+`topic`, `era`, `place`, `region`, `person`, `organization`). Nested taxonomy
+routes are deferred until a facet has a meaningful published body. Filtered
+and date views are `noindex` and canonicalize to `/history`. Keyword search
+and paid search providers are deferred.
+
+The approved History article template is unchanged. No additional History
+drafts were published. The public archive may contain a single story and
+must still look intentional.

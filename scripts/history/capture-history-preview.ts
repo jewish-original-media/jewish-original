@@ -39,7 +39,7 @@ async function main() {
       waitUntil: "load",
     });
     await expect(
-      page.getByRole("heading", { name: /jewish history, held with care/i }),
+      page.getByRole("heading", { name: /on this day in jewish history/i }),
     ).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({

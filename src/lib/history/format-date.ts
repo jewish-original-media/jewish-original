@@ -1,6 +1,6 @@
 import type { HistoricalDate, ObservanceRule } from "@/content/history/types";
 
-const monthNames = [
+export const GREGORIAN_MONTH_NAMES = [
   "",
   "January",
   "February",
@@ -14,7 +14,9 @@ const monthNames = [
   "October",
   "November",
   "December",
-];
+] as const;
+
+const monthNames = GREGORIAN_MONTH_NAMES;
 
 function formatYear(year: number) {
   return year > 0 ? String(year) : `${1 - year} BCE`;
@@ -67,4 +69,13 @@ export function formatHistoricalDate(
   if (date.calendarSystem === "julian") return `${value} (Julian calendar)`;
   if (date.calendarSystem === "hebrew") return `${value} (Hebrew calendar)`;
   return value || "Date under review";
+}
+
+export function formatMonthName(month: number) {
+  return GREGORIAN_MONTH_NAMES[month] || "";
+}
+
+export function formatMonthDay(month: number, day: number) {
+  const monthName = formatMonthName(month);
+  return monthName ? `${monthName} ${day}` : "";
 }

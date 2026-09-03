@@ -1,11 +1,73 @@
 import type { Metadata } from "next";
 
-import type { HistoryEntry } from "@/content/history/types";
+import type { HistoryEntry, HistoryEntrySummary } from "@/content/history/types";
 import { formatHistoricalDate } from "@/lib/history/format-date";
 import { siteConfig } from "@/lib/site";
 
 export function historyEntryUrl(slug: string) {
   return `${siteConfig.url}/history/${slug}`;
+}
+
+export function historyArchiveUrl() {
+  return `${siteConfig.url}/history`;
+}
+
+const archiveDescription =
+  "On This Day in Jewish History and the reviewed Jewish Original historical archive.";
+
+export function buildHistoryArchiveMetadata(options: {
+  browsing: boolean;
+  preview: boolean;
+  title?: string;
+  description?: string;
+}): Metadata {
+  const title = options.title || "On This Day in Jewish History";
+  const description = options.description || archiveDescription;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: "/history",
+    },
+    robots:
+      options.preview || options.browsing
+        ? { index: false, follow: true }
+        : { index: true, follow: true },
+    openGraph: {
+      type: "website",
+      siteName: siteConfig.name,
+      title,
+      description,
+      url: "/history",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
+  };
+}
+
+export function buildHistoryArchiveJsonLd(entries: HistoryEntrySummary[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "On This Day in Jewish History",
+    description: archiveDescription,
+    url: historyArchiveUrl(),
+    isPartOf: {
+      "@type": "WebSite",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    hasPart: entries.map((entry) => ({
+      "@type": "Article",
+      headline: entry.title,
+      url: historyEntryUrl(entry.slug),
+      description: entry.excerpt,
+    })),
+  };
 }
 
 export function buildHistoryMetadata(

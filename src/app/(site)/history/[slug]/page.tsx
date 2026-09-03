@@ -237,14 +237,23 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
                 heading="People"
                 items={entry.people}
               />
-              <HistoryReferenceList heading="Places" items={entry.places} />
+              <HistoryReferenceList
+                filterType="place"
+                heading="Places"
+                items={entry.places}
+              />
               <HistoryReferenceList
                 filterType="region"
                 heading="Geography"
                 items={entry.geographicRegions}
               />
-              <HistoryReferenceList heading="Eras" items={entry.eras} />
               <HistoryReferenceList
+                filterType="era"
+                heading="Eras"
+                items={entry.eras}
+              />
+              <HistoryReferenceList
+                filterType="organization"
                 heading="Organizations"
                 items={entry.organizations}
               />
@@ -265,6 +274,7 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
                     <HistoryEntryCard
                       entry={relationship.entry}
                       key={`${relationship.relationType}-${relationship.entry._id}`}
+                      variant="related"
                     />
                   ) : null,
                 )}

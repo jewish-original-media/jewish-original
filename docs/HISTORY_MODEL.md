@@ -51,6 +51,20 @@ display text, and whether it is original, traditional, or a verified calendar
 conversion. Recurring observances also require an `observanceRule` rather than
 pretending they occurred on one fixed Gregorian date.
 
+### Today in Jewish History matching
+
+History owns historical content matching. Jewish Today owns Jewish calendar
+calculation. The canonical predicate lives in `src/lib/history/on-this-day.ts`.
+
+A public On This Day result must be a published `historyEntry` with
+`workflowStatus: ready`, a defined slug, `entryKind` other than
+`recurringObservance`, and a Gregorian `historicalDate` at day precision whose
+start month and day match the requested civil date. Duplicate candidates are
+excluded. No result is fabricated when the match set is empty.
+
+V1 “today” is the civil Gregorian date in `America/New_York`. Hebrew-calendar
+recurrence, sunset, and location remain outside this model.
+
 ### Referenced entities
 
 - `people`: references to `person`

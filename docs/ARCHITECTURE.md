@@ -139,7 +139,10 @@ consistent.
 
 - Canonical metadata through the Next.js metadata API
 - Generated `robots.txt`, XML sitemaps, Open Graph images, and schema.org JSON-LD
-- Stable routes such as `/history/[slug]` and `/podcasts/[slug]`
+- Stable routes such as `/history`, `/history/[slug]`, and `/podcasts/[slug]`
+- History owns Gregorian On This Day matching; Jewish Today owns Hebcal
+- Archive filters stay on `/history` query parameters until taxonomy routes
+  have a meaningful published body
 - Responsive `next/image`, self-hosted fonts, minimal client JavaScript
 - Internal links driven by structured relationships, not brittle keyword matching
 - Web-vitals budgets: LCP <2.5s, INP <200ms, CLS <0.1 at the 75th percentile

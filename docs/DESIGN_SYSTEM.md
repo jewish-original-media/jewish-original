@@ -61,6 +61,19 @@ History article scale:
 The article H1 remains dominant. Related titles must not use the display
 scale.
 
+History archive scale:
+
+- Landing H1 reuses the article display scale: “On this day in Jewish history.”
+- Featured card title: `clamp(1.85rem, 3.4vw, 2.75rem)`, serif, max 18ch
+- Archive list title: `clamp(1.25rem, 1.8vw, 1.6rem)`, serif
+- Related titles stay on the smaller article scale
+- Date browse uses native month/day selects, not a 365-day grid
+- Taxonomy links are compact sentence-case lists, not filter chips
+
+Archive cards must work with and without a rights-cleared 16:9 image. The
+no-image treatment is typographic. Do not insert a generic photograph or an
+empty media well.
+
 Featured media uses a fixed 16:9 frame, `object-fit: cover`, and caption /
 credit under the image. Articles without a rights-cleared image use a gold
 rule and a small Magen David index mark. They never show an empty image box.

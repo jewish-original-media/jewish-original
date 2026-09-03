@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test:history-body": "tsx --test tests/history-body-conversion.test.ts tests/history-seo.test.ts tests/history-content-warnings.test.ts tests/history-featured-media.test.ts",
+    "test:history-body": "tsx --test tests/history-body-conversion.test.ts tests/history-seo.test.ts tests/history-content-warnings.test.ts tests/history-featured-media.test.ts tests/history-on-this-day.test.ts tests/history-archive.test.ts",
     "test:e2e": "playwright test",
     "sanity:schema": "sanity schema validate",
     "history:audit-xlsx": ".analysis-venv/bin/python scripts/history/audit-xlsx.py",

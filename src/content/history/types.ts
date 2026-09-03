@@ -74,6 +74,9 @@ export type HistoryEntrySummary = {
   observanceRule?: ObservanceRule;
   topics: HistoryReference[];
   people: HistoryReference[];
+  places: HistoryReference[];
+  eras: HistoryReference[];
+  organizations: HistoryReference[];
   geographicRegions: HistoryReference[];
   primaryImage?: HistoryImage;
 };
@@ -89,9 +92,6 @@ export type HistoryEntry = HistoryEntrySummary & {
   };
   contentWarnings: string[];
   contentWarningNote?: string;
-  places: HistoryReference[];
-  eras: HistoryReference[];
-  organizations: HistoryReference[];
   citations: HistoryCitation[];
   relatedHistory: {
     relationType?: string;
@@ -110,7 +110,24 @@ export type HistoryEntry = HistoryEntrySummary & {
   _updatedAt: string;
 };
 
+export type HistoryFilterType =
+  | "topic"
+  | "era"
+  | "place"
+  | "region"
+  | "person"
+  | "organization";
+
 export type HistoryFilter = {
-  type: "topic" | "region" | "person";
+  type: HistoryFilterType;
   slug: string;
+};
+
+export type HistoryArchiveFacets = {
+  topics: HistoryReference[];
+  eras: HistoryReference[];
+  places: HistoryReference[];
+  regions: HistoryReference[];
+  people: HistoryReference[];
+  organizations: HistoryReference[];
 };

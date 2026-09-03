@@ -2,7 +2,8 @@ import { defineQuery } from "next-sanity";
 
 const publicVisibility =
   '!(_id in path("drafts.**")) && workflowStatus == "ready"';
-const previewVisibility = "publicTestCandidate == true";
+const previewVisibility =
+  'publicTestCandidate == true && workflowStatus != "duplicateCandidate"';
 
 const referenceProjection = `{
   "name": name,
@@ -46,6 +47,9 @@ const summaryProjection = `{
   observanceRule,
   "topics": coalesce(topics[]->${referenceProjection}, []),
   "people": coalesce(people[]->${referenceProjection}, []),
+  "places": coalesce(places[]->${referenceProjection}, []),
+  "eras": coalesce(eras[]->${referenceProjection}, []),
+  "organizations": coalesce(organizations[]->${referenceProjection}, []),
   "geographicRegions": coalesce(geographicRegions[]->${referenceProjection}, []),
   ${imageProjection}
 }`;
@@ -53,16 +57,43 @@ const summaryProjection = `{
 const filterExpression = `(
   !defined($filterType) ||
   ($filterType == "topic" && $filterSlug in topics[]->slug.current) ||
+  ($filterType == "era" && $filterSlug in eras[]->slug.current) ||
+  ($filterType == "place" && $filterSlug in places[]->slug.current) ||
   ($filterType == "region" && $filterSlug in geographicRegions[]->slug.current) ||
-  ($filterType == "person" && $filterSlug in people[]->slug.current)
+  ($filterType == "person" && $filterSlug in people[]->slug.current) ||
+  ($filterType == "organization" && $filterSlug in organizations[]->slug.current)
+)`;
+
+const gregorianDayMatch = `(
+  entryKind != "recurringObservance" &&
+  historicalDate.precision == "day" &&
+  historicalDate.calendarSystem == "gregorian"
+)`;
+
+const dateFilterExpression = `(
+  !defined($month) || (
+    ${gregorianDayMatch} &&
+    historicalDate.start.month == $month &&
+    (!defined($day) || historicalDate.start.day == $day)
+  )
 )`;
 
 export const historyIndexQuery = defineQuery(`*[
   _type == "historyEntry" &&
   defined(slug.current) &&
   select($preview => ${previewVisibility}, ${publicVisibility}) &&
-  ${filterExpression}
+  ${filterExpression} &&
+  ${dateFilterExpression}
 ] | order(historicalDate.start.year desc, historicalDate.start.month desc, historicalDate.start.day desc) ${summaryProjection}`);
+
+export const historyOnThisDayQuery = defineQuery(`*[
+  _type == "historyEntry" &&
+  defined(slug.current) &&
+  select($preview => ${previewVisibility}, ${publicVisibility}) &&
+  ${gregorianDayMatch} &&
+  historicalDate.start.month == $month &&
+  historicalDate.start.day == $day
+] | order(historicalDate.start.year desc) ${summaryProjection}`);
 
 export const historySlugsQuery = defineQuery(`*[
   _type == "historyEntry" &&
@@ -80,9 +111,6 @@ export const historyEntryQuery = defineQuery(`*[
   hebrewDate,
   "contentWarnings": coalesce(contentWarnings, []),
   contentWarningNote,
-  "places": coalesce(places[]->${referenceProjection}, []),
-  "eras": coalesce(eras[]->${referenceProjection}, []),
-  "organizations": coalesce(organizations[]->${referenceProjection}, []),
   "citations": coalesce(citations[verificationStatus == "verified" || $preview]{
     _key,
     title,
@@ -113,11 +141,14 @@ export const draftCandidateSlugQuery = defineQuery(`*[
 ][0]{"slug": slug.current}`);
 
 export const historyFilterLabelQuery = defineQuery(`*[
-  _type in ["topic", "geographicRegion", "person"] &&
+  _type in ["topic", "historicalEra", "place", "geographicRegion", "person", "organization"] &&
   slug.current == $slug &&
   (
     $filterType == "topic" && _type == "topic" ||
+    $filterType == "era" && _type == "historicalEra" ||
+    $filterType == "place" && _type == "place" ||
     $filterType == "region" && _type == "geographicRegion" ||
-    $filterType == "person" && _type == "person"
+    $filterType == "person" && _type == "person" ||
+    $filterType == "organization" && _type == "organization"
   )
 ][0]{"name": name, "slug": slug.current}`);

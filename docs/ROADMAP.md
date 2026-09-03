@@ -28,10 +28,12 @@ Exit: a clean, deployable shell with no fabricated editorial content.
   share separators, source/rail readability) without publishing
 - Keep publication blocked until fact, citation, taxonomy, and rights review
 - Publish only the reviewed `US Liberates Dachau` article after founder approval
+- Turn `/history` into the public archive and On This Day discovery home
+  without publishing additional drafts
 
-Exit: the editorial workflow and public History template are proven. The first
-reviewed article is public. Remaining archive import waits until more records
-can be published honestly.
+Exit: the editorial workflow, public History template, and public archive
+foundation are proven. The first reviewed article is public. Remaining archive
+import waits until more records can be published honestly.
 
 ## Milestone 2 — Daily Jewish utility
 
