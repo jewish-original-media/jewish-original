@@ -15,21 +15,17 @@ test("homepage section order is masthead, today, history, podcasts, later desks"
   );
 });
 
-test("only Jewish Today and the masthead are live modules", () => {
+test("masthead, Jewish Today, and History are live modules", () => {
   assert.equal(HOME_SECTION_ORDER[0]?.status, "live");
   assert.equal(HOME_SECTION_ORDER[1]?.status, "live");
-  assert.equal(HOME_SECTION_ORDER[2]?.status, "pending-history-merge");
+  assert.equal(HOME_SECTION_ORDER[2]?.status, "live");
   assert.equal(HOME_SECTION_ORDER[3]?.status, "pending-podcasts-merge");
   assert.equal(HOME_SECTION_ORDER[4]?.status, "later-desk");
 });
 
-test("History contract names the three temporary adapters to replace", () => {
-  assert.equal(HISTORY_HOME_CONTRACT.status, "pending-history-merge");
-  assert.deepEqual(HISTORY_HOME_CONTRACT.replaceOnMerge, [
-    "fetchOnThisDayHistory -> getOnThisDayHistory",
-    'TodayHistoryCard -> HistoryEntryCard variant="archive"',
-    "formatOnThisDayDate -> formatHistoricalDate",
-  ]);
+test("History homepage contract uses published archive entries", () => {
+  assert.equal(HISTORY_HOME_CONTRACT.status, "live");
+  assert.deepEqual(HISTORY_HOME_CONTRACT.entries, []);
 });
 
 test("Podcasts contract names future inputs and invents no episodes", () => {

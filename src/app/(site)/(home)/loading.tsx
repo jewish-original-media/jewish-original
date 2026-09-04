@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/container";
 
-import styles from "../home.module.css";
+import styles from "@/app/home.module.css";
 
 export default function HomeLoading() {
   return (

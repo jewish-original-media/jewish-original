@@ -10,7 +10,8 @@ try {
     process.env[name] = value.replace(/^["']|["']$/g, "");
   }
 } catch {
-  // Published History tests skip matching when local Sanity identifiers are absent.
+  // Published History and draft preview tests skip or degrade when local
+  // Sanity identifiers or secrets are absent.
 }
 
 const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;

@@ -8,6 +8,14 @@ const VIEWPORTS = [
   { name: "390", width: 390, height: 844 },
 ] as const;
 
+const PUBLISHED_HISTORY = [
+  "US Liberates Dachau",
+  "Joop Westerweel Is Murdered at Vught",
+  "Bialystok Ghetto Is Sealed",
+  "Samuel Willenberg Dies",
+  "Anti-Jewish Riots Break Out in Tripoli, Libya",
+] as const;
+
 async function expectNoOverflow(page: import("@playwright/test").Page) {
   const hasHorizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > window.innerWidth,
@@ -15,7 +23,7 @@ async function expectNoOverflow(page: import("@playwright/test").Page) {
   expect(hasHorizontalOverflow).toBe(false);
 }
 
-test("composes the homepage from Jewish Today and reserved slots", async ({
+test("composes the homepage from Jewish Today and published History", async ({
   page,
 }, testInfo) => {
   await page.goto("/");
@@ -38,11 +46,18 @@ test("composes the homepage from Jewish Today and reserved slots", async ({
   await expect(page.getByText(/preparing today’s homepage/i)).toHaveCount(0);
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: "The archive belongs here" }),
+    page.getByRole("heading", { name: "From the archive" }),
   ).toBeVisible();
   await expect(
-    page.getByText(/until the archive experience is connected/i),
-  ).toBeVisible();
+    page.getByRole("link", { name: "Open the History archive" }),
+  ).toHaveAttribute("href", "/history");
+  for (const title of PUBLISHED_HISTORY) {
+    await expect(
+      page.getByRole("region", { name: "From the archive" }).getByRole("link", {
+        name: title,
+      }),
+    ).toBeVisible();
+  }
   await expect(
     page.getByRole("heading", { name: "Shows and episodes belong here" }),
   ).toBeVisible();
@@ -52,14 +67,10 @@ test("composes the homepage from Jewish Today and reserved slots", async ({
   ).toBeVisible();
   await expect(
     page
-      .getByRole("region", { name: "The archive belongs here" })
-      .getByRole("link"),
-  ).toHaveCount(0);
-  await expect(
-    page
       .getByRole("region", { name: "Shows and episodes belong here" })
       .getByRole("link"),
   ).toHaveCount(0);
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
 
   await expectNoOverflow(page);
   await page.screenshot({

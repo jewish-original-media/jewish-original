@@ -58,8 +58,7 @@ Calculated calendar days are not stored in Sanity.
 
 Uses `JewishTodayPage`. Shows the compact date hero, then only the sections
 that have real content: calendar observances, this week’s parashah, and
-published History matches. History uses `TodayHistoryCard`, a temporary
-adapter for the History archive card.
+published History matches. History uses `HistoryEntryCard` `variant="archive"`.
 
 ### Compact homepage module
 
@@ -71,8 +70,9 @@ result to `JewishTodayModule`. The module shows:
 - one History title when a published match exists
 - a link to `/today`
 
-Do not call Hebcal or Sanity a second time from the homepage. See
-`docs/HOMEPAGE.md`. Temporary History adapters remain pending History merge.
+Do not call Hebcal or write a second on-this-day query from the homepage
+module. The homepage History section uses `getHistoryIndex`, not another
+Jewish Today fetch. See `docs/HOMEPAGE.md`.
 
 ## History matching
 
@@ -87,27 +87,18 @@ A match requires all of:
 - `historicalDate.start.month` and `.day` equal today’s civil month/day
 
 Related History is not queried, so unpublished related documents cannot leak.
-Featured images are not rendered in this isolated worktree; the Dachau
-no-image state is a gold rule and typography, matching History’s no-image
-intent.
+Cards use History’s `HistoryEntryCard`, including a rights-cleared image only
+when History supplies one. Dachau remains a no-image article.
 
 The development dataset is private. Published reads need
-`SANITY_API_READ_TOKEN`. Without the token, the query returns empty rather
+`SANITY_API_READ_TOKEN`. Without the token, matching returns empty rather
 than failing the page.
 
-## History card adapter
+## History card
 
-`TodayHistoryCard` follows the History archive card: date kicker, serif title
-link, gold title underline, excerpt, topics, optional place, and a quiet rule
-instead of an empty image box. It does not copy History CSS or the
-`HistoryEntryCard` component. In this isolated worktree the card link 404s
-until History’s `/history/[slug]` routes are merged.
-
-On merge, replace:
-
-- `fetchOnThisDayHistory` with `getOnThisDayHistory`
-- `TodayHistoryCard` with `HistoryEntryCard` `variant="archive"`
-- local date formatting with `formatHistoricalDate`
+`/today` and the homepage History module render `HistoryEntryCard`
+`variant="archive"`. Date labels use `formatHistoricalDate`. Matching uses
+`getOnThisDayHistory`. There is no second Jewish Today History system.
 
 ## Provider decision
 
@@ -127,16 +118,9 @@ status line, and any published History matches. Raw errors are not shown.
 
 ## Convergence with History
 
-History is checkpointed on `milestone-1-sanity-history` at `e9bfd59`. This
-branch stays isolated. Needed at controlled merge review:
-
-- History’s published `historyEntry` schema (already compatible)
-- `SANITY_API_READ_TOKEN` for the private dataset
-- `HistoryEntryCard` and its CSS
-- `/history/[slug]` routes for card links
-- optional Sanity image `remotePatterns` when a rights-cleared image exists
-
-Do not rebase this worktree onto uncommitted or in-progress History work.
+Frozen History `3539211` is merged on Integration. Jewish Today consumes
+History’s matcher, card, date formatter, and `/history/[slug]` routes.
+Podcasts remain unmerged.
 
 ## Cost
 

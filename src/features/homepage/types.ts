@@ -1,3 +1,5 @@
+import type { HistoryEntrySummary } from "@/content/history/types";
+
 export const HOME_SECTION_IDS = [
   "masthead",
   "jewish-today",
@@ -9,7 +11,7 @@ export const HOME_SECTION_IDS = [
 export type HomeSectionId = (typeof HOME_SECTION_IDS)[number];
 
 export type HomeSectionStatus =
-  "live" | "pending-history-merge" | "pending-podcasts-merge" | "later-desk";
+  "live" | "unavailable" | "pending-podcasts-merge" | "later-desk";
 
 export type HomeSectionContract = {
   id: HomeSectionId;
@@ -39,12 +41,8 @@ export type PodcastHomeContract = {
 };
 
 export type HistoryHomeContract = {
-  status: "pending-history-merge";
-  replaceOnMerge: readonly [
-    "fetchOnThisDayHistory -> getOnThisDayHistory",
-    'TodayHistoryCard -> HistoryEntryCard variant="archive"',
-    "formatOnThisDayDate -> formatHistoricalDate",
-  ];
+  status: "live" | "unavailable";
+  entries: HistoryEntrySummary[];
 };
 
 export type HomePageData = {

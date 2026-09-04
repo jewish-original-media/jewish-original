@@ -1,3 +1,6 @@
+import Link from "next/link";
+
+import { HistoryEntryCard } from "@/components/history/history-entry-card";
 import { JewishTodayModule } from "@/components/today/jewish-today-module";
 import { Container } from "@/components/ui/container";
 import { LATER_DESKS, type HomePageData } from "@/features/homepage";
@@ -40,6 +43,9 @@ function HomeSection({
 }
 
 export function HomePageView({ data }: HomePageViewProps) {
+  const historyUnavailable = data.history.status === "unavailable";
+  const historyEntries = data.history.entries;
+
   return (
     <div className={styles.page}>
       <section className={styles.masthead} aria-labelledby="home-masthead">
@@ -56,8 +62,8 @@ export function HomePageView({ data }: HomePageViewProps) {
             Connection is the outcome.
           </p>
           <p className={styles.principle}>
-            Start with today. History, podcasts, and later desks will join this
-            home as each collection is ready — never as invented filler.
+            Start with today and the published archive. Podcasts and later desks
+            will join this home when they are ready — never as invented filler.
           </p>
         </Container>
       </section>
@@ -72,15 +78,34 @@ export function HomePageView({ data }: HomePageViewProps) {
       </section>
 
       <HomeSection
-        className={`${styles.sectionRule} ${styles.pendingSection}`}
+        className={styles.sectionRule}
         eyebrow="History"
         id="history"
-        title="The archive belongs here"
+        title="From the archive"
       >
-        <p className={styles.slotCopy}>
-          The History archive will occupy this section. Until the archive
-          experience is connected, Jewish Today shows a published on-this-day
-          match when one exists and stays quiet when none does.
+        {historyUnavailable ? (
+          <p className={styles.slotCopy} role="status">
+            The History archive is briefly unavailable.
+          </p>
+        ) : null}
+        {!historyUnavailable && historyEntries.length === 0 ? (
+          <p className={styles.slotCopy}>
+            Published History will appear here when a reviewed entry is ready.
+          </p>
+        ) : null}
+        {historyEntries.length > 0 ? (
+          <div className={styles.historyList}>
+            {historyEntries.map((entry) => (
+              <HistoryEntryCard
+                entry={entry}
+                key={entry._id}
+                variant="archive"
+              />
+            ))}
+          </div>
+        ) : null}
+        <p className={styles.archiveLink}>
+          <Link href="/history">Open the History archive</Link>
         </p>
       </HomeSection>
 

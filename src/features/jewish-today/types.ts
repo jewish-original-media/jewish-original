@@ -1,3 +1,5 @@
+import type { HistoryEntrySummary } from "@/content/history/types";
+
 export type JewishTodayCalendarStatus = "ready" | "unavailable";
 
 export type JewishTodayHolidayKind =
@@ -35,17 +37,7 @@ export type OnThisDayTopic = {
   slug: string;
 };
 
-export type OnThisDayHistoryEntry = {
-  id: string;
-  title: string;
-  slug: string;
-  href: string;
-  excerpt?: string;
-  year?: number;
-  dateLabel?: string;
-  topics: OnThisDayTopic[];
-  location?: string;
-};
+export type OnThisDayHistoryEntry = HistoryEntrySummary;
 
 export type JewishTodayDay = {
   gregorianDate: string;
@@ -65,7 +57,7 @@ export type JewishTodayDay = {
   roshChodesh?: JewishTodayNamedEvent;
   specialShabbat: JewishTodayNamedEvent[];
   calendarEvents: JewishTodayCalendarEvent[];
-  onThisDay: OnThisDayHistoryEntry[];
+  onThisDay: HistoryEntrySummary[];
   calendarStatus: JewishTodayCalendarStatus;
   attribution: {
     provider: "hebcal";
@@ -83,5 +75,5 @@ export type GetJewishTodayOptions = {
   fetchOnThisDay?: (
     month: number,
     day: number,
-  ) => Promise<OnThisDayHistoryEntry[]>;
+  ) => Promise<HistoryEntrySummary[]>;
 };

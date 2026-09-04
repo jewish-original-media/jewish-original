@@ -1,4 +1,5 @@
-import { fetchOnThisDayHistory } from "../../content/jewish-today/on-this-day";
+import type { HistoryEntrySummary } from "@/content/history/types";
+
 import { fetchHebcalCalendar } from "../../integrations/hebcal/client";
 import {
   emptyJewishTodayDay,
@@ -14,6 +15,14 @@ import {
 } from "./timezone";
 import type { GetJewishTodayOptions, JewishTodayDay } from "./types";
 
+async function getPublishedOnThisDay(
+  month: number,
+  day: number,
+): Promise<HistoryEntrySummary[]> {
+  const { getOnThisDayHistory } = await import("@/content/history/fetch");
+  return getOnThisDayHistory(false, month, day);
+}
+
 export async function getJewishToday(
   options: GetJewishTodayOptions = {},
 ): Promise<JewishTodayDay> {
@@ -24,7 +33,7 @@ export async function getJewishToday(
     timeZone,
   );
   const parsed = parseIsoDate(gregorianDate);
-  const fetchOnThisDay = options.fetchOnThisDay ?? fetchOnThisDayHistory;
+  const fetchOnThisDay = options.fetchOnThisDay ?? getPublishedOnThisDay;
   const onThisDay = parsed
     ? await fetchOnThisDay(parsed.month, parsed.day).catch(() => [])
     : [];

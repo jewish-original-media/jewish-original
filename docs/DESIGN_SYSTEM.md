@@ -47,6 +47,53 @@ Usage:
 - Quotes and historical accents: serif italic
 - Never set long paragraphs in uppercase or wide tracking
 
+History article scale:
+
+- Display (H1): `clamp(2.35rem, 6.2vw, 4.85rem)` mobile/tablet; desktop
+  `clamp(2.75rem, 5.2vw, 5.15rem)`, serif, max 15ch
+- Lede / excerpt: `clamp(1.125rem, 1.5vw, 1.375rem)`, serif, max 38rem
+  mobile/tablet and 33rem desktop
+- Section titles: `clamp(1.45rem, 2vw, 1.75rem)`, serif
+- Related story titles: `clamp(1.15rem, 1.35vw, 1.375rem)`, serif, max 28rem
+- Body: `clamp(1.0625rem, 1.25vw, 1.1875rem)`, serif
+- Kickers / metadata: 12px sans, tracked uppercase
+
+The article H1 remains dominant. Related titles must not use the display
+scale.
+
+History archive scale:
+
+- Landing H1 reuses the article display scale: “On this day in Jewish history.”
+- Featured card title: `clamp(1.85rem, 3.4vw, 2.75rem)`, serif, max 18ch
+- Archive list title: `clamp(1.25rem, 1.8vw, 1.6rem)`, serif
+- Related titles stay on the smaller article scale
+- Date browse uses native month/day selects, not a 365-day grid
+- Taxonomy links are compact sentence-case lists, not filter chips
+
+Archive cards must work with and without a rights-cleared 16:9 image. The
+no-image treatment is typographic. Do not insert a generic photograph or an
+empty media well.
+
+Featured media uses a fixed 16:9 frame, `object-fit: cover`, and caption /
+credit under the image. Articles without a rights-cleared image use a gold
+rule and a small Magen David index mark. They never show an empty image box.
+
+The History hero uses the unedited white OTD lion as a luminance mask filled
+with brand gold. On desktop it is an oversized, cropped, low-opacity watermark
+on the right. Mobile hides it. The no-image section break keeps a small
+luminance-masked Magen David between gold rules. Source PNGs stay unedited.
+Do not use `mix-blend-mode: screen` for the lion on sand — it flattens gold
+into the field. The OTD circular wordmark and repeating lion/star pattern are
+not used on History articles.
+
+Desktop History hero rhythm (64rem and up):
+
+- Grid: `1.15fr` / `0.45fr` with `clamp(4rem, 7vw, 7.5rem)` column gap
+- Padding: `4.75rem / 5.5rem` at 1024, `5.5rem / 6.5rem` at 1280,
+  `6rem / 7rem` at 1440
+- Date to title `1.25rem`; title to lede `2rem`; lede max 33rem
+- Lion watermark opacity `0.16` on desktop; hidden on mobile
+
 ## Spatial system
 
 - Base rhythm: 4px

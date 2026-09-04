@@ -1,7 +1,7 @@
 # Integration branch
 
-Status: first Integration milestone. Do not merge to the GitHub default branch.
-Do not deploy production. Do not publish Sanity content.
+Status: History + Jewish Today convergence. Do not merge to the GitHub default
+branch. Do not deploy production. Do not publish Sanity content.
 
 ## Branch and worktree
 
@@ -14,60 +14,52 @@ Do not deploy production. Do not publish Sanity content.
 GitHub’s default branch is currently `milestone-1-sanity-history`. That was
 verified and was not changed. Local `main` is not on GitHub.
 
-## Why this base
+## Merged in this stream
 
-All three feature streams share `7b0ed78`.
-
-- Jewish Today branched from `main` and is frozen at `1ec3c87`.
-- History has two later commits plus uncommitted work.
-- Podcasts branched from History’s first-article checkpoint `e9bfd59` and has
-  uncommitted work.
-
-Using History or Podcasts as the Integration base would pull unfinished work.
-Using `main` lets Jewish Today merge cleanly and keeps History and Podcasts
-isolated until they are frozen.
-
-## Merged in this milestone
-
-`feature/jewish-today` (`1ec3c87`), including checkpoint `242945f`.
-
-There were no merge conflicts. Shared files took Jewish Today’s additive
-changes on top of the foundation. History and Podcast planning already present
-on `main` remains in `docs/ROADMAP.md`, `docs/CONTENT_MODEL.md`, and
-`docs/ARCHITECTURE.md`.
+- `feature/jewish-today` (`1ec3c87`), including checkpoint `242945f`
+- `milestone-1-sanity-history` (`35392110091b2de0a15ea6a3695ad24bd92f0170`)
 
 ## Not merged
 
-- `milestone-1-sanity-history`
 - `feature/podcasts`
 
-Do not rebase this branch onto uncommitted History or Podcast worktrees.
+Do not rebase this branch onto uncommitted Podcast work.
 
-## Temporary History adapters
+## Shared-file reconciliation
 
-Still pending History merge, marked in source:
+Integration owns shared surfaces. The History merge kept:
 
-- `fetchOnThisDayHistory`
-- `TodayHistoryCard`
-- `formatOnThisDayDate`
-- `HISTORY_ADAPTER_STATUS = "pending-history-merge"`
+- History’s root layout (no public chrome) so `/admin` stays a Studio shell
+- History’s `(site)` chrome for `/`, `/today`, `/history`, and `/support`
+- History Sanity, draft-mode, sitemap History slugs, and published archive
+- Jewish Today `/today`, Hebcal, homepage composition, and Playwright port
+  `3020` / `PLAYWRIGHT_BASE_URL`
+
+History’s old `(site)/page.tsx` homepage was not retained. Integration’s
+homepage remains the composed page.
+
+## History adapters
+
+Removed. Jewish Today and the homepage use:
+
+- `getOnThisDayHistory`
+- `getHistoryIndex`
+- `HistoryEntryCard`
+- `formatHistoricalDate`
 
 ## Environment variable names
-
-Used or documented on this branch:
 
 - `NEXT_PUBLIC_SITE_URL`
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_DATASET`
 - `SANITY_API_READ_TOKEN`
+- `DRAFT_MODE_SECRET` — required to enable History draft preview; public
+  pages do not use it
+- `SANITY_API_WRITE_TOKEN` — local History scripts only
 
 Optional local review only, never production:
 
 - `JEWISH_TODAY_ALLOW_PREVIEWS`
-
-Required when History preview is later merged, not wired here:
-
-- `DRAFT_MODE_SECRET`
 
 Do not commit values.
 
@@ -78,6 +70,6 @@ Integration server; CI always starts its own.
 ## Vercel
 
 Vercel Git integration is configured for
-`jewish-original-media/jewish-original`. This branch should create a Preview
-Deployment only. Production and `jewishoriginal.com` must not be changed from
-this workstream.
+`jewish-original-media/jewish-original` on the Jewish Original team. This
+branch should create a Preview Deployment only. Production and
+`jewishoriginal.com` must not be changed from this workstream.

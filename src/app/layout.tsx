@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Jost, Libre_Baskerville } from "next/font/google";
 
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
 import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
@@ -65,16 +63,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable}`}>
-      <body>
-        <a className="skip-link" href="#main-content">
-          Skip to main content
-        </a>
-        <div className="page-shell">
-          <SiteHeader />
-          <main id="main-content">{children}</main>
-          <SiteFooter />
-        </div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

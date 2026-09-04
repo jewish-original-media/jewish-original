@@ -88,6 +88,12 @@ test("retrieves the published Dachau History entry on April 29", async ({
   const dachau = page.getByRole("link", { name: "US Liberates Dachau" });
   await expect(dachau).toBeVisible();
   await expect(dachau).toHaveAttribute("href", "/history/us-liberates-dachau");
+  await dachau.click();
+  await expect(page).toHaveURL(/\/history\/us-liberates-dachau$/);
+  await expect(
+    page.getByRole("heading", { name: "US Liberates Dachau" }),
+  ).toBeVisible();
+  await page.goto("/today?date=2026-04-29");
   await expect(page.getByText("April 29, 1945", { exact: true })).toBeVisible();
   await expect(
     page.getByText(/american troops liberated the dachau concentration camp/i),

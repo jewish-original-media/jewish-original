@@ -1,5 +1,5 @@
+import { HistoryEntryCard } from "@/components/history/history-entry-card";
 import { Container } from "@/components/ui/container";
-import { TodayHistoryCard } from "@/components/today/today-history-card";
 import type { JewishTodayDay } from "@/features/jewish-today";
 import { formatGregorianLabel } from "@/features/jewish-today/timezone";
 import { calendarHighlights } from "@/lib/jewish-today/display";
@@ -112,7 +112,11 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
             </h2>
             <div className={styles.historyList}>
               {day.onThisDay.map((entry) => (
-                <TodayHistoryCard entry={entry} key={entry.id} />
+                <HistoryEntryCard
+                  entry={entry}
+                  key={entry._id}
+                  variant="archive"
+                />
               ))}
             </div>
           </Container>

@@ -1,7 +1,7 @@
 # Homepage foundation
 
-Status: Integration milestone on `feature/integration-homepage`. This is
-architecture and composition, not the finished homepage.
+Status: History + Jewish Today convergence on `feature/integration-homepage`.
+This is still composition, not the finished homepage visual design.
 
 The homepage is a Server Component composition. It is not a CMS document.
 
@@ -21,14 +21,15 @@ nonprofit layout, a synagogue template, or a card grid of invented content.
 ## Route and data composition
 
 - Route: `/`
-- Server entry: `src/app/(home)/page.tsx`
+- Server entry: `src/app/(site)/(home)/page.tsx`
 - Composition: `getHomePageData()` in `src/features/homepage`
 - View: `HomePageView` in `src/components/home/home-page.tsx`
-- The `(home)` route group keeps homepage `loading.tsx` and `error.tsx`
-  from wrapping `/today` or later feature routes.
+- The `(home)` route group stays inside `(site)` so homepage `loading.tsx`
+  and `error.tsx` do not wrap `/today` or `/history`, while Studio at
+  `/admin` stays outside the public chrome.
 
-`getHomePageData()` calls `getJewishToday()` once. The homepage must not call
-Hebcal or write a second on-this-day query.
+`getHomePageData()` calls `getJewishToday()` once and `getHistoryIndex()`
+once. The homepage must not call Hebcal or write a second on-this-day query.
 
 Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 
@@ -36,7 +37,7 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 
 1. **Masthead** — official positioning and product principle. Live.
 2. **Jewish Today** — compact `JewishTodayModule`. Live.
-3. **History** — reserved slot. Pending History merge.
+3. **History** — published `HistoryEntryCard` archive cards. Live.
 4. **Podcasts** — reserved slot. Pending Podcasts merge.
 5. **Later desks** — News, Events, Culture, Support. Named only.
 
@@ -47,41 +48,27 @@ Uses the existing reusable contract:
 - `getJewishToday()`
 - `JewishTodayModule`
 
-If History matching cannot resolve yet, the module omits the History line. It
-does not hard-code Dachau or any other article.
+On-this-day matches come from History `getOnThisDayHistory`. The module omits
+the History line when none exist. It does not hard-code Dachau or any other
+article.
 
-## History convergence slot
+## History module
 
-Do not invent a second History card on this branch.
+Uses the canonical History system only:
 
-Until `milestone-1-sanity-history` is frozen and merged, the homepage renders a
-restrained reserved section only.
+- `getHistoryIndex(false)` for published archive entries
+- `HistoryEntryCard` `variant="archive"`
+- `formatHistoricalDate` inside that card
 
-On History merge, replace these temporary adapters and keep one History system:
-
-1. `fetchOnThisDayHistory` → History `getOnThisDayHistory`
-2. `TodayHistoryCard` → `HistoryEntryCard` `variant="archive"`
-3. `formatOnThisDayDate` → `formatHistoricalDate`
-
-Also required for a real History card on `/` and `/today`:
-
-- `/history` and `/history/[slug]` routes
-- published `historyEntry` reads with `SANITY_API_READ_TOKEN`
-- History card CSS and optional image `remotePatterns`
-
-See `docs/JEWISH_TODAY_CONVERGENCE.md`.
+The homepage does not copy `/history` filters, On This Day browse, taxonomy
+navigation, or featured-layout treatment. It shows published cards and a link
+to the archive. If the read fails, the section says the archive is briefly
+unavailable and still links to `/history`.
 
 ## Podcast convergence slot
 
 Do not merge `feature/podcasts` yet. Do not duplicate Podcast media logic. Do
 not invent episode titles, guests, or media.
-
-Expected future inputs to this slot:
-
-- featured or recent episodes
-- show metadata
-- episode cards
-- media links (YouTube, audio, platform URLs)
 
 ## Later desks
 
@@ -90,9 +77,11 @@ modules and no fabricated items on this branch.
 
 ## Loading and errors
 
-- `src/app/(home)/loading.tsx` keeps the masthead and a quiet reserved rhythm.
-- `src/app/(home)/error.tsx` is a Client Component using Next.js `retry()`. It
-  does not print stack traces. Jewish Today remains available at `/today`.
+- `src/app/(site)/(home)/loading.tsx` keeps the masthead and a quiet reserved
+  rhythm.
+- `src/app/(site)/(home)/error.tsx` is a Client Component using Next.js
+  `retry()`. It does not print stack traces. Jewish Today remains available at
+  `/today`.
 
 ## Responsive rhythm
 

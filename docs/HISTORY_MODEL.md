@@ -1,6 +1,13 @@
 # Production History Model and Migration Plan
 
-Status: approved foundation proposal; implementation begins in Milestone 1.
+Status: schema, source adapters, and the approved first-20 pilot were
+implemented in Milestone 1 on 2026-08-31. The editorial-foundation milestone
+adds a reviewed taxonomy crosswalk, reversible body conversion, a recurring
+observance model, and a public History template tested only in draft preview.
+`US Liberates Dachau`, `Joop Westerweel Is Murdered at Vught`,
+`Bialystok Ghetto Is Sealed`, `Samuel Willenberg Dies`, and
+`Anti-Jewish Riots Break Out in Tripoli, Libya` are the published History
+articles. The remaining pilot records stay unpublished.
 
 ## Modeling decision
 
@@ -45,6 +52,20 @@ An optional `hebrewDate` object stores Hebrew day, month, year, precision,
 display text, and whether it is original, traditional, or a verified calendar
 conversion. Recurring observances also require an `observanceRule` rather than
 pretending they occurred on one fixed Gregorian date.
+
+### Today in Jewish History matching
+
+History owns historical content matching. Jewish Today owns Jewish calendar
+calculation. The canonical predicate lives in `src/lib/history/on-this-day.ts`.
+
+A public On This Day result must be a published `historyEntry` with
+`workflowStatus: ready`, a defined slug, `entryKind` other than
+`recurringObservance`, and a Gregorian `historicalDate` at day precision whose
+start month and day match the requested civil date. Duplicate candidates are
+excluded. No result is fabricated when the match set is empty.
+
+V1 “today” is the civil Gregorian date in `America/New_York`. Hebrew-calendar
+recurrence, sunset, and location remain outside this model.
 
 ### Referenced entities
 

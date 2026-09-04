@@ -26,10 +26,10 @@ export const HOME_SECTION_ORDER: readonly HomeSectionContract[] = [
   {
     id: "history",
     eyebrow: "History",
-    title: "The archive belongs here",
-    status: "pending-history-merge",
+    title: "From the archive",
+    status: "live",
     description:
-      "Reserved for the History archive and HistoryEntryCard after milestone-1-sanity-history merges.",
+      "Published HistoryEntryCard archive cards from getHistoryIndex. Not a second /history page.",
   },
   {
     id: "podcasts",
@@ -77,12 +77,8 @@ export const LATER_DESKS: readonly LaterDeskContract[] = [
 ] as const;
 
 export const HISTORY_HOME_CONTRACT: HistoryHomeContract = {
-  status: "pending-history-merge",
-  replaceOnMerge: [
-    "fetchOnThisDayHistory -> getOnThisDayHistory",
-    'TodayHistoryCard -> HistoryEntryCard variant="archive"',
-    "formatOnThisDayDate -> formatHistoricalDate",
-  ],
+  status: "live",
+  entries: [],
 };
 
 export const PODCASTS_HOME_CONTRACT: PodcastHomeContract = {

@@ -4,6 +4,7 @@ import { describe, it } from "node:test";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import type { HistoryEntrySummary } from "../src/content/history/types";
 import { getJewishToday } from "../src/features/jewish-today/get-day";
 import type { HebcalCalendarResponse } from "../src/integrations/hebcal/types";
 
@@ -18,24 +19,29 @@ function load(name: string): HebcalCalendarResponse {
   ) as HebcalCalendarResponse;
 }
 
+function dachauSummary(): HistoryEntrySummary {
+  return {
+    _id: "history-dachau",
+    title: "US Liberates Dachau",
+    slug: "us-liberates-dachau",
+    excerpt:
+      "On April 29, 1945, American troops liberated the Dachau concentration camp.",
+    topics: [],
+    people: [],
+    places: [],
+    eras: [],
+    organizations: [],
+    geographicRegions: [],
+  };
+}
+
 describe("getJewishToday composition", () => {
   it("composes calendar data with published History matches only", async () => {
     const day = await getJewishToday({
       date: "2026-04-29",
       fetchCalendar: async () => load("weekday-2026-09-01.json"),
       fetchOnThisDay: async (month, dayOfMonth) =>
-        month === 4 && dayOfMonth === 29
-          ? [
-              {
-                id: "history-dachau",
-                title: "US Liberates Dachau",
-                slug: "us-liberates-dachau",
-                href: "/history/us-liberates-dachau",
-                year: 1945,
-                topics: [],
-              },
-            ]
-          : [],
+        month === 4 && dayOfMonth === 29 ? [dachauSummary()] : [],
     });
 
     assert.equal(day.onThisDay[0]?.slug, "us-liberates-dachau");
@@ -65,16 +71,7 @@ describe("getJewishToday composition", () => {
       fetchCalendar: async () => {
         throw new Error("Hebcal unavailable");
       },
-      fetchOnThisDay: async () => [
-        {
-          id: "history-dachau",
-          title: "US Liberates Dachau",
-          slug: "us-liberates-dachau",
-          href: "/history/us-liberates-dachau",
-          year: 1945,
-          topics: [],
-        },
-      ],
+      fetchOnThisDay: async () => [dachauSummary()],
     });
 
     assert.equal(day.calendarStatus, "unavailable");
@@ -88,15 +85,7 @@ describe("getJewishToday composition", () => {
       fetchCalendar: async () => {
         throw new Error("Hebcal should not be called");
       },
-      fetchOnThisDay: async () => [
-        {
-          id: "history-dachau",
-          title: "US Liberates Dachau",
-          slug: "us-liberates-dachau",
-          href: "/history/us-liberates-dachau",
-          topics: [],
-        },
-      ],
+      fetchOnThisDay: async () => [dachauSummary()],
     });
 
     assert.equal(day.calendarStatus, "unavailable");

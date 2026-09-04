@@ -9,7 +9,7 @@
 
 Exit: a clean, deployable shell with no fabricated editorial content.
 
-## Milestone 1 — Structured history vertical
+## Milestone 1 — Structured history vertical (first article complete)
 
 - Obtain canonical XLSX/CSV archive exports and freeze source checksums
 - Provision Sanity and embed a protected Studio at `/admin`
@@ -18,10 +18,29 @@ Exit: a clean, deployable shell with no fabricated editorial content.
 - Build spreadsheet staging, validation, dry-run, and reconciliation tooling
 - Import the approved 20-record migration test set as drafts and conduct
   editorial QA
-- Build history detail, index, today view, filters, related content, and JSON-LD
-- Establish preview, correction, and publishing workflows
+- Build the first History entry template, index foundation, preview, and JSON-LD
+- Complete the first article review for `US Liberates Dachau` without publishing
+- Polish the shared History article template for hierarchy, featured media,
+  and restrained JOM signatures without publishing
+- Refine desktop hero spacing, lion watermark, and CSS editorial motion;
+  stop for founder design review without publishing
+- Apply a final pre-publish UI polish (lion quieting, excerpt measure,
+  share separators, source/rail readability) without publishing
+- Keep publication blocked until fact, citation, taxonomy, and rights review
+- Publish only the reviewed `US Liberates Dachau` article after founder approval
+- Turn `/history` into the public archive and On This Day discovery home
+  without publishing additional drafts
+- Prepare `Joop Westerweel Is Murdered at Vught` as publication #2 without
+  publishing it
+- Publish only the reviewed Westerweel article after founder approval;
+  remaining History drafts stay unpublished
+- Prepare unpublished Batch 2 drafts: Bialystok, Willenberg, and Tripoli
+- Publish only the reviewed Batch 2 articles after founder approval;
+  remaining History drafts stay unpublished
 
-Exit: editors can safely publish real history entries and readers can discover them.
+Exit: the editorial workflow, public History template, and public archive
+foundation are proven. The first reviewed article is public. Remaining archive
+import waits until more records can be published honestly.
 
 ## Milestone 2 — Daily Jewish utility
 
@@ -31,12 +50,12 @@ Exit: editors can safely publish real history entries and readers can discover t
 - Compose the useful daily homepage from verified data and original history
 
 Checkpointed and frozen on `feature/jewish-today`, then merged into
-`feature/integration-homepage`: Hebcal REST adapter, `JewishTodayDay`
-contract, standalone `/today`, live matching against published History, and a
-homepage foundation that renders `JewishTodayModule` plus reserved History and
-Podcast slots. Sunset/local timezone, Israel schedule, candle-lighting, and
-History/Podcast branch convergence remain later controlled work. See
-`docs/JEWISH_TODAY.md`, `docs/JEWISH_TODAY_CONVERGENCE.md`,
+`feature/integration-homepage` with frozen History `3539211`. Hebcal REST
+adapter, `JewishTodayDay`, standalone `/today`, canonical History matching,
+published History routes, and a homepage that renders `JewishTodayModule`
+plus live History cards are on Integration. Podcasts remain reserved.
+Sunset/local timezone, Israel schedule, and candle-lighting remain later
+work. See `docs/JEWISH_TODAY.md`, `docs/JEWISH_TODAY_CONVERGENCE.md`,
 `docs/HOMEPAGE.md`, and `docs/INTEGRATION.md`.
 
 Exit: the homepage has trustworthy daily value with graceful failure behavior.
