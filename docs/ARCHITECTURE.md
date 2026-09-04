@@ -46,9 +46,9 @@ Current service gates:
   datasets, 10,000 documents, 250,000 API requests/month, 1 million API CDN
   requests/month, 100 GB assets, and 100 GB bandwidth. Use one development
   dataset initially and reserve the second for production. One of two datasets
-  is now in use. The development dataset holds draft history entries and the
-  small reusable-entity set needed by the public-history pilot. No documents
-  are published.
+  is now in use.   The development dataset holds draft history entries, four unpublished
+  podcast-pilot drafts, and the small reusable-entity set needed by those
+  streams. Public podcast pages stay empty until founder-approved publication.
   The Free plan exposes Administrator and Viewer roles but not an Editor role,
   so it is suitable for the founder-only development milestone, not a
   least-privilege editorial team. Upgrade when a
@@ -107,7 +107,7 @@ runtime; Edge runtime is not required for streaming or middleware.
 - `sanity.config.ts` and `sanity.cli.ts`: Studio and CLI configuration
 - `src/sanity`: schema types, editor structure, and public environment config
 - `scripts/history`: deterministic source adapters, reconciliation, and draft imports
-- `scripts/podcasts`: RSS dry-run reporting for The Two Tall Jews Show archive
+- `scripts/podcasts`: RSS dry-run reporting and draft-only four-pilot import
 
 Features import integrations through adapters rather than calling third-party
 SDKs directly. This keeps legal provenance, caching, failure handling, and tests

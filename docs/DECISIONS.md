@@ -293,3 +293,20 @@ not publish.
 This workstream does not write Sanity documents, publish episodes, build
 the homepage, or change History article UI. A four-episode local pilot
 renders only while no published podcast documents exist.
+
+## ADR-024 — Four-pilot drafts use verified multi-platform links
+
+**Status:** Accepted, 2026-09-04
+
+Episode media may include official RSS audio plus verified YouTube, Spotify,
+and Apple episode URLs. Primary media is YouTube when a verified official
+episode video exists, otherwise native RSS audio. Spotify and Apple are
+Listen alternatives, not stacked players.
+
+Apple episode URLs were verified through the official iTunes lookup, matched
+by RSS GUID. Spotify episode pages were taken from the official RSS link.
+No official TTJS YouTube episode IDs were verified. Description YouTube
+links remain guest-channel evidence only.
+
+The four-pilot import writes `drafts.*` documents only and is idempotent by
+RSS GUID. It does not publish and does not import the remaining catalog.

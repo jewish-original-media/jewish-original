@@ -17,6 +17,10 @@ const episodeArtworkProjection = `"artwork": select(
     "alt": featuredImage.alt,
     "width": featuredImage.asset->metadata.dimensions.width,
     "height": featuredImage.asset->metadata.dimensions.height
+  },
+  $preview && defined(sourceArtworkUrl) => {
+    "url": sourceArtworkUrl,
+    "alt": "Episode artwork from the official podcast feed."
   }
 )`;
 
@@ -35,14 +39,17 @@ const episodeSummaryProjection = `{
   _id,
   title,
   "slug": slug.current,
-  "showSlug": show->slug.current,
-  "showTitle": show->title,
+  "showSlug": coalesce(show->slug.current, showSlug),
+  "showTitle": coalesce(show->title, "The Two Tall Jews Show"),
   excerpt,
   publishedAt,
   durationSeconds,
   season,
   episodeNumber,
-  "guestNames": coalesce(sourceGuestNames, []),
+  "guestNames": select(
+    count(guests) > 0 => guests[]->name,
+    coalesce(sourceGuestNames, [])
+  ),
   ${episodeArtworkProjection}
 }`;
 
@@ -69,14 +76,14 @@ export const podcastShowQuery = defineQuery(`*[
 export const podcastEpisodeIndexQuery = defineQuery(`*[
   _type == "podcastEpisode" &&
   defined(slug.current) &&
-  show->slug.current == $showSlug &&
+  (show->slug.current == $showSlug || showSlug == $showSlug) &&
   select($preview => ${previewVisibility}, ${publicVisibility})
 ] | order(publishedAt desc) ${episodeSummaryProjection}`);
 
 export const podcastEpisodeQuery = defineQuery(`*[
   _type == "podcastEpisode" &&
   slug.current == $slug &&
-  show->slug.current == $showSlug &&
+  (show->slug.current == $showSlug || showSlug == $showSlug) &&
   select($preview => ${previewVisibility}, ${publicVisibility})
 ][0]{
   ${episodeSummaryProjection.slice(1, -1)},
@@ -84,6 +91,11 @@ export const podcastEpisodeQuery = defineQuery(`*[
   audioUrl,
   youtubeId,
   youtubeUrl,
+  spotifyUrl,
+  appleUrl,
+  primaryMedia,
+  sourceArtworkUrl,
+  workflowStatus,
   summary,
   reviewedTranscript,
   "chapters": coalesce(chapters[], []),
@@ -122,3 +134,18 @@ export const podcastShowSlugsQuery = defineQuery(`*[
   ${publicVisibility} &&
   defined(slug.current)
 ]{"showSlug": slug.current}`);
+
+export const draftPodcastCandidateQuery = defineQuery(`*[
+  _type == "podcastEpisode" &&
+  publicTestCandidate == true &&
+  slug.current == $slug
+][0]{
+  "slug": slug.current,
+  "showSlug": coalesce(show->slug.current, showSlug)
+}`);
+
+export const draftPodcastShowCandidateQuery = defineQuery(`*[
+  _type == "podcastShow" &&
+  publicTestCandidate == true &&
+  slug.current == $slug
+][0]{"slug": slug.current}`);

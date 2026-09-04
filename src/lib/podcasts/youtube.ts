@@ -52,3 +52,9 @@ export function youtubeEmbedUrl(id: string) {
 export function youtubePosterUrl(id: string) {
   return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 }
+
+export const YOUTUBE_FACADE_FIXTURE = {
+  id: "jNQXAC9IVRw",
+  label:
+    "Development fixture only. This is not a Two Tall Jews Show episode and must never be imported as official episode media.",
+} as const;

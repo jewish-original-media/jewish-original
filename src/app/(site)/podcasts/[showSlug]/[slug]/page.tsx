@@ -8,6 +8,7 @@ import {
   EpisodeMedia,
   PodcastMediaAbsent,
 } from "@/components/podcasts/episode-media";
+import { PodcastPreviewBanner } from "@/components/podcasts/podcast-preview-banner";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
@@ -52,7 +53,11 @@ export async function generateMetadata({
   if (!episode) {
     return { title: "Episode", robots: { index: false, follow: false } };
   }
-  return buildPodcastEpisodeMetadata(episode);
+  const metadata = buildPodcastEpisodeMetadata(episode);
+  if (preview) {
+    return { ...metadata, robots: { index: false, follow: false } };
+  }
+  return metadata;
 }
 
 export default async function PodcastEpisodePage({ params }: EpisodePageProps) {
@@ -74,12 +79,17 @@ export default async function PodcastEpisodePage({ params }: EpisodePageProps) {
 
   return (
     <>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: serializeJsonLd(buildPodcastEpisodeJsonLd(episode)),
-        }}
-        type="application/ld+json"
-      />
+      {preview ? (
+        <PodcastPreviewBanner workflowStatus={episode.workflowStatus} />
+      ) : null}
+      {!preview ? (
+        <script
+          dangerouslySetInnerHTML={{
+            __html: serializeJsonLd(buildPodcastEpisodeJsonLd(episode)),
+          }}
+          type="application/ld+json"
+        />
+      ) : null}
       <article>
         <header className="podcast-episode-header">
           <Container className="podcast-episode-hero">
@@ -119,10 +129,14 @@ export default async function PodcastEpisodePage({ params }: EpisodePageProps) {
           <div className="podcast-featured-band">
             <Container>
               <EpisodeMedia
+                appleUrl={episode.appleUrl}
                 artwork={episode.artwork}
                 audioUrl={episode.audioUrl}
+                primaryMedia={episode.primaryMedia}
+                spotifyUrl={episode.spotifyUrl}
                 title={episode.title}
                 youtubeId={episode.youtubeId}
+                youtubeUrl={episode.youtubeUrl}
               />
             </Container>
           </div>

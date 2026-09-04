@@ -137,6 +137,52 @@ export const relatedPodcastItem = defineType({
   ],
 });
 
+export const podcastPlatformLink = defineType({
+  name: "podcastPlatformLink",
+  title: "Podcast platform link",
+  type: "object",
+  fields: [
+    defineField({
+      name: "platform",
+      title: "Platform",
+      type: "string",
+      options: {
+        list: [
+          { title: "YouTube", value: "youtube" },
+          { title: "Spotify", value: "spotify" },
+          { title: "Apple Podcasts", value: "apple" },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "url",
+      title: "URL",
+      type: "url",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "identifier",
+      title: "Platform identifier",
+      type: "string",
+    }),
+    defineField({
+      name: "source",
+      title: "Verification source",
+      type: "string",
+    }),
+    defineField({
+      name: "verified",
+      title: "Verified official episode link",
+      type: "boolean",
+      initialValue: false,
+    }),
+  ],
+  preview: {
+    select: { title: "platform", subtitle: "url" },
+  },
+});
+
 export const podcastChapter = defineType({
   name: "podcastChapter",
   title: "Chapter",
@@ -394,9 +440,11 @@ export const podcastEpisode = defineType({
     }),
     defineField({
       name: "youtubeUrl",
-      title: "YouTube URL",
+      title: "Official YouTube episode URL",
       type: "url",
       group: "media",
+      description:
+        "Verified TTJS episode watch URL only. Do not paste guest-channel or description links.",
       validation: (Rule) =>
         Rule.custom((value) => {
           if (!value) return true;
@@ -418,6 +466,35 @@ export const podcastEpisode = defineType({
       title: "Audio URL",
       type: "url",
       group: "media",
+    }),
+    defineField({
+      name: "spotifyUrl",
+      title: "Official Spotify episode URL",
+      type: "url",
+      group: "media",
+    }),
+    defineField({
+      name: "appleUrl",
+      title: "Official Apple Podcasts episode URL",
+      type: "url",
+      group: "media",
+    }),
+    defineField({
+      name: "primaryMedia",
+      title: "Primary media",
+      type: "string",
+      group: "media",
+      initialValue: "auto",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Automatic (YouTube, then audio)", value: "auto" },
+          { title: "YouTube", value: "youtube" },
+          { title: "Jewish Original audio", value: "audio" },
+        ],
+      },
+      description:
+        "Automatic uses a verified official YouTube episode when present, otherwise the RSS audio enclosure.",
     }),
     defineField({
       name: "durationSeconds",
@@ -582,6 +659,32 @@ export const podcastEpisode = defineType({
       readOnly: true,
     }),
     defineField({
+      name: "sourceArtworkUrl",
+      title: "Source artwork URL",
+      type: "url",
+      group: "advanced",
+      readOnly: true,
+      description:
+        "Official feed artwork. Do not treat this as rights-cleared featured media.",
+    }),
+    defineField({
+      name: "showSlug",
+      title: "Show slug",
+      type: "string",
+      group: "advanced",
+      readOnly: true,
+      description:
+        "Denormalized import slug so draft preview can resolve before the show is published.",
+    }),
+    defineField({
+      name: "platformLinks",
+      title: "Verified platform links",
+      type: "array",
+      group: "advanced",
+      of: [defineArrayMember({ type: "podcastPlatformLink" })],
+      readOnly: true,
+    }),
+    defineField({
       name: "rawTranscript",
       title: "Raw transcript",
       type: "text",
@@ -650,5 +753,9 @@ export const podcastEpisode = defineType({
   },
 });
 
-export const podcastObjectTypes = [relatedPodcastItem, podcastChapter];
+export const podcastObjectTypes = [
+  relatedPodcastItem,
+  podcastChapter,
+  podcastPlatformLink,
+];
 export const podcastDocumentTypes = [podcastShow, podcastEpisode];

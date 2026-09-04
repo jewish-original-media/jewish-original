@@ -60,12 +60,21 @@ approve every public change.
 
 ## Media
 
-Prefer the existing YouTube host. Store a YouTube URL, derive the ID, and
-lazy-load a privacy-friendly facade. Do not rehost video. Audio remains the
-official enclosure URL. No new paid media service.
+Each episode may store official RSS audio, a verified YouTube episode URL/ID,
+a verified Spotify episode URL, and a verified Apple Podcasts episode URL.
+None of those platforms is required on every episode.
+
+Primary media is automatic unless an editor overrides it:
+
+1. A verified official YouTube episode is primary.
+2. Otherwise the official RSS enclosure is primary.
+
+Spotify and Apple appear as alternate Listen links. Do not stack full
+YouTube, Spotify, and Apple players. Do not treat a YouTube URL in an RSS
+description as the official episode video.
 
 ## Publication
 
 Sanity draft/published state is the publication authority.
 `workflowStatus: ready` is required before publish. Import never publishes.
-This milestone does not write Sanity documents.
+The four-pilot import writes `drafts.*` documents only.

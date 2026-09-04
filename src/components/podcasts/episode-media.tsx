@@ -1,34 +1,49 @@
 import Image from "next/image";
 
 import type { PodcastArtwork } from "@/content/podcasts/types";
+import { resolvePrimaryMedia } from "@/lib/podcasts/primary-media";
+import { youtubeWatchUrl } from "@/lib/podcasts/youtube";
 
+import { EpisodePlatformLinks } from "./episode-platform-links";
 import { YouTubeFacade } from "./youtube-facade";
 
 type EpisodeMediaProps = {
   title: string;
   youtubeId?: string;
+  youtubeUrl?: string;
   artwork?: PodcastArtwork;
   audioUrl?: string;
+  spotifyUrl?: string;
+  appleUrl?: string;
+  primaryMedia?: "auto" | "youtube" | "audio";
 };
 
 export function EpisodeMedia({
   title,
   youtubeId,
+  youtubeUrl,
   artwork,
   audioUrl,
+  spotifyUrl,
+  appleUrl,
+  primaryMedia,
 }: EpisodeMediaProps) {
-  if (youtubeId) {
-    return (
-      <div className="podcast-media">
-        <YouTubeFacade title={title} videoId={youtubeId} />
-        {audioUrl ? <AudioPlayer src={audioUrl} title={title} /> : null}
-      </div>
-    );
-  }
+  const primary = resolvePrimaryMedia({
+    primaryMedia,
+    youtubeId,
+    audioUrl,
+  });
+  const officialYouTubeUrl = youtubeId
+    ? youtubeUrl || youtubeWatchUrl(youtubeId)
+    : undefined;
 
-  if (artwork) {
-    return (
-      <div className="podcast-media">
+  return (
+    <div className="podcast-media">
+      {primary === "youtube" && youtubeId ? (
+        <YouTubeFacade title={title} videoId={youtubeId} />
+      ) : null}
+
+      {primary === "audio" && artwork ? (
         <figure className="podcast-media-figure">
           <div className="podcast-media-frame">
             <Image
@@ -40,25 +55,26 @@ export function EpisodeMedia({
             />
           </div>
         </figure>
-        {audioUrl ? <AudioPlayer src={audioUrl} title={title} /> : null}
-      </div>
-    );
-  }
+      ) : null}
 
-  if (audioUrl) {
-    return (
-      <div className="podcast-media podcast-media--audio-only">
+      {primary === "audio" && audioUrl ? (
         <AudioPlayer src={audioUrl} title={title} />
-      </div>
-    );
-  }
+      ) : null}
 
-  return null;
+      <EpisodePlatformLinks
+        appleUrl={appleUrl}
+        audioUrl={audioUrl}
+        primary={primary}
+        spotifyUrl={spotifyUrl}
+        youtubeUrl={officialYouTubeUrl}
+      />
+    </div>
+  );
 }
 
 function AudioPlayer({ src, title }: { src: string; title: string }) {
   return (
-    <div className="podcast-audio">
+    <div className="podcast-audio" id="podcast-audio">
       <p className="podcast-kicker">Listen</p>
       <audio controls preload="none" src={src}>
         <a href={src}>Download audio for {title}</a>

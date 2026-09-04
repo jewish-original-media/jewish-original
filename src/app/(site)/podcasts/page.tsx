@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { EpisodeCard } from "@/components/podcasts/episode-card";
+import { PodcastPreviewBanner } from "@/components/podcasts/podcast-preview-banner";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
@@ -15,7 +16,13 @@ import {
   serializeJsonLd,
 } from "@/lib/seo/podcasts";
 
-export const metadata: Metadata = buildPodcastHomeMetadata();
+export async function generateMetadata(): Promise<Metadata> {
+  const { isEnabled: preview } = await draftMode();
+  const metadata = buildPodcastHomeMetadata();
+  return preview
+    ? { ...metadata, robots: { index: false, follow: false } }
+    : metadata;
+}
 
 export default async function PodcastsPage() {
   const { isEnabled: preview } = await draftMode();
@@ -26,6 +33,10 @@ export default async function PodcastsPage() {
         <Container size="content">
           <p className="eyebrow">Podcasts</p>
           <h1 className="display-title">Podcasts are being prepared.</h1>
+          <p className="podcast-section-copy">
+            The Two Tall Jews Show archive is in editorial review. Published
+            episode pages will appear here after founder approval.
+          </p>
         </Container>
       </Section>
     );
@@ -35,12 +46,15 @@ export default async function PodcastsPage() {
 
   return (
     <>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: serializeJsonLd(buildPodcastHomeJsonLd(show)),
-        }}
-        type="application/ld+json"
-      />
+      {preview ? <PodcastPreviewBanner /> : null}
+      {!preview ? (
+        <script
+          dangerouslySetInnerHTML={{
+            __html: serializeJsonLd(buildPodcastHomeJsonLd(show)),
+          }}
+          type="application/ld+json"
+        />
+      ) : null}
       <section className="podcast-hero">
         <Container className="podcast-hero__grid">
           <div>
@@ -92,12 +106,14 @@ export default async function PodcastsPage() {
         <Container>
           <p className="eyebrow">From the archive</p>
           <h2 className="podcast-section-title">
-            Four episodes that open the catalog
+            {preview
+              ? "Four draft episodes in review"
+              : "From The Two Tall Jews Show"}
           </h2>
           <p className="podcast-section-copy">
-            This foundation uses the official public RSS archive. The complete
-            catalog waits for founder-approved import. No transcripts or
-            editorial summaries have been invented.
+            {preview
+              ? "These four imported drafts are visible only in authenticated preview. They are not published."
+              : "Published episodes appear here after editorial review."}
           </p>
           <div className="podcast-episode-list">
             {episodes.map((episode) => (

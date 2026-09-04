@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { EpisodeCard } from "@/components/podcasts/episode-card";
+import { PodcastPreviewBanner } from "@/components/podcasts/podcast-preview-banner";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
@@ -44,7 +45,10 @@ export async function generateMetadata({
   if (!show) {
     return { title: "Podcast", robots: { index: false, follow: false } };
   }
-  return buildPodcastShowMetadata(show);
+  const metadata = buildPodcastShowMetadata(show);
+  return preview
+    ? { ...metadata, robots: { index: false, follow: false } }
+    : metadata;
 }
 
 export default async function PodcastShowPage({ params }: ShowPageProps) {
@@ -58,12 +62,15 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
 
   return (
     <>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: serializeJsonLd(buildPodcastShowJsonLd(show, episodes)),
-        }}
-        type="application/ld+json"
-      />
+      {preview ? <PodcastPreviewBanner /> : null}
+      {!preview ? (
+        <script
+          dangerouslySetInnerHTML={{
+            __html: serializeJsonLd(buildPodcastShowJsonLd(show, episodes)),
+          }}
+          type="application/ld+json"
+        />
+      ) : null}
       <section className="podcast-hero podcast-hero--show">
         <Container className="podcast-hero__grid">
           <div>
@@ -120,9 +127,9 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
           <p className="eyebrow">Episode archive</p>
           <h2 className="podcast-section-title">Listen in</h2>
           <p className="podcast-section-copy">
-            {episodes.length === 1
-              ? "1 episode from the official public feed is ready for this foundation."
-              : `${episodes.length} episodes from the official public feed are ready for this foundation.`}{" "}
+            {preview
+              ? `${episodes.length} imported draft episode${episodes.length === 1 ? "" : "s"} are visible in preview only.`
+              : `${episodes.length} published episode${episodes.length === 1 ? "" : "s"} from The Two Tall Jews Show.`}{" "}
             Empty summaries, transcripts, and History links stay hidden until
             editors add them.
           </p>

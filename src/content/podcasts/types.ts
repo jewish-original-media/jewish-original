@@ -51,6 +51,11 @@ export type PodcastEpisode = PodcastEpisodeSummary & {
   description?: string;
   audioUrl?: string;
   youtubeId?: string;
+  youtubeUrl?: string;
+  spotifyUrl?: string;
+  appleUrl?: string;
+  primaryMedia?: "auto" | "youtube" | "audio";
+  sourceArtworkUrl?: string;
   summary?: string;
   reviewedTranscript?: string;
   chapters: PodcastChapter[];
@@ -58,6 +63,7 @@ export type PodcastEpisode = PodcastEpisodeSummary & {
   people: PodcastReference[];
   places: PodcastReference[];
   hosts: PodcastReference[];
+  workflowStatus?: string;
   relatedHistory: {
     relationType?: string;
     note?: string;

@@ -56,8 +56,9 @@ first show is The Two Tall Jews Show. See `docs/PODCAST_MODEL.md`.
 ### Podcast episode
 
 Title, slug, show reference, season and episode numbers, publication date,
-excerpt, original description, YouTube URL/ID, audio URL, duration, guest
-and host person references, optional chapters, reviewed summary, raw and
+excerpt, original description, official RSS audio, optional verified YouTube,
+Spotify, and Apple episode URLs, primary-media rule, duration, guest and
+host person references, optional chapters, reviewed summary, raw and
 reviewed transcript, topics, people, places, related history, related
 episodes, sources, featured image, SEO, workflow, and import provenance.
 

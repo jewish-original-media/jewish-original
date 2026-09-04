@@ -4,10 +4,13 @@ import { resolve } from "node:path";
 import { chromium, expect } from "@playwright/test";
 
 const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000";
-const episodeSlug =
-  "sitting-down-with-kalman-gavriel-the-jerusalem-scribe";
+const secret = process.env.DRAFT_MODE_SECRET;
 
 async function main() {
+  if (!secret) {
+    throw new Error("DRAFT_MODE_SECRET is required to capture draft preview.");
+  }
+
   const outputDirectory = resolve("artifacts/podcasts/preview");
   await mkdir(outputDirectory, { recursive: true });
   const browser = await chromium.launch({ channel: "chrome" });
@@ -16,19 +19,10 @@ async function main() {
   });
 
   try {
-    await page.goto(`${baseURL}/podcasts`, { waitUntil: "load" });
-    await expect(
-      page.getByRole("heading", { name: "The Two Tall Jews Show" }),
-    ).toBeVisible();
-    await page.evaluate(() => document.fonts.ready);
-    await page.screenshot({
-      path: resolve(outputDirectory, "podcasts-home-desktop.png"),
-      fullPage: true,
-    });
-
-    await page.goto(`${baseURL}/podcasts/the-two-tall-jews-show`, {
-      waitUntil: "load",
-    });
+    await page.goto(
+      `${baseURL}/api/draft-mode/enable?secret=${encodeURIComponent(secret)}&slug=the-two-tall-jews-show&type=podcast-show`,
+      { waitUntil: "load" },
+    );
     await expect(
       page.getByRole("heading", { name: "The Two Tall Jews Show" }),
     ).toBeVisible();
@@ -39,7 +33,7 @@ async function main() {
     });
 
     await page.goto(
-      `${baseURL}/podcasts/the-two-tall-jews-show/${episodeSlug}`,
+      `${baseURL}/podcasts/the-two-tall-jews-show/sitting-down-with-kalman-gavriel-the-jerusalem-scribe`,
       { waitUntil: "load" },
     );
     await expect(
@@ -54,10 +48,7 @@ async function main() {
     });
 
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(
-      `${baseURL}/podcasts/the-two-tall-jews-show/${episodeSlug}`,
-      { waitUntil: "load" },
-    );
+    await page.reload({ waitUntil: "load" });
     await expect(
       page.getByRole("heading", {
         name: "Sitting Down With: Kalman Gavriel, The Jerusalem Scribe",

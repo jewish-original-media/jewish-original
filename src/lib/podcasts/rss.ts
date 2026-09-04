@@ -10,7 +10,7 @@ const EMAIL_PATTERN = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi;
 const GUID_PATTERN = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
 
 export const PODCAST_RSS_FEED_URL = "https://anchor.fm/s/29786d14/podcast/rss";
-export const PODCAST_IMPORTER_VERSION = "1.0.0";
+export const PODCAST_IMPORTER_VERSION = "1.2.0";
 export const TTJS_SOURCE_SHOW_TITLE = "Jewish Original Media";
 export const TTJS_EDITORIAL_SHOW_TITLE = "The Two Tall Jews Show";
 
