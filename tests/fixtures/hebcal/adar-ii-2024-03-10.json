@@ -1,0 +1,26 @@
+{
+  "range": { "start": "2024-03-10", "end": "2024-03-16" },
+  "items": [
+    {
+      "title": "30th of Adar I",
+      "date": "2024-03-10",
+      "hdate": "30 Adar I 5784",
+      "category": "hebdate",
+      "hebrew": "ל׳ אדר א׳",
+      "heDateParts": { "y": "תשפ״ד", "m": "אדר א׳", "d": "ל׳" }
+    },
+    {
+      "title": "Rosh Chodesh Adar II",
+      "date": "2024-03-10",
+      "hdate": "30 Adar I 5784",
+      "category": "roshchodesh",
+      "hebrew": "ראש חודש אדר ב׳"
+    },
+    {
+      "title": "Parashat Pekudei",
+      "date": "2024-03-16",
+      "category": "parashat",
+      "hebrew": "פרשת פקודי"
+    }
+  ]
+}

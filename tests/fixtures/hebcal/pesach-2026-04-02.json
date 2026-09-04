@@ -1,0 +1,29 @@
+{
+  "range": { "start": "2026-04-02", "end": "2026-04-04" },
+  "items": [
+    {
+      "title": "15th of Nisan",
+      "date": "2026-04-02",
+      "hdate": "15 Nisan 5786",
+      "category": "hebdate",
+      "hebrew": "ט״ו ניסן",
+      "heDateParts": { "y": "תשפ״ו", "m": "ניסן", "d": "ט״ו" }
+    },
+    {
+      "title": "Pesach I",
+      "date": "2026-04-02",
+      "hdate": "15 Nisan 5786",
+      "category": "holiday",
+      "subcat": "major",
+      "yomtov": true,
+      "hebrew": "פסח א׳",
+      "memo": "Passover, the Feast of Unleavened Bread."
+    },
+    {
+      "title": "Parashat Chol HaMoed Pesach",
+      "date": "2026-04-04",
+      "category": "parashat",
+      "hebrew": "פרשת חול המועד פסח"
+    }
+  ]
+}
