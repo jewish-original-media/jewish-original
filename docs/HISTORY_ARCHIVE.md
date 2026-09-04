@@ -1,9 +1,10 @@
 # History Archive and Discovery
 
-Status: V1 public archive on `milestone-1-sanity-history`. Two History
-articles are published: `US Liberates Dachau` and `Joop Westerweel Is
-Murdered at Vught`. Batch 2 drafts (Bialystok, Willenberg, Tripoli) are
-unpublished `ready` candidates. This page
+Status: V1 public archive on `milestone-1-sanity-history`. Five History
+articles are published: `US Liberates Dachau`, `Joop Westerweel Is
+Murdered at Vught`, `Bialystok Ghetto Is Sealed`, `Samuel Willenberg Dies`,
+and `Anti-Jewish Riots Break Out in Tripoli, Libya`. Remaining first-20
+drafts stay unpublished. This page
 is the public home of **On This Day in Jewish History** and the broader
 Jewish Original historical archive.
 

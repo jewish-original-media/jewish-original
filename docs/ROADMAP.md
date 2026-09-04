@@ -35,6 +35,8 @@ Exit: a clean, deployable shell with no fabricated editorial content.
 - Publish only the reviewed Westerweel article after founder approval;
   remaining History drafts stay unpublished
 - Prepare unpublished Batch 2 drafts: Bialystok, Willenberg, and Tripoli
+- Publish only the reviewed Batch 2 articles after founder approval;
+  remaining History drafts stay unpublished
 
 Exit: the editorial workflow, public History template, and public archive
 foundation are proven. The first reviewed article is public. Remaining archive

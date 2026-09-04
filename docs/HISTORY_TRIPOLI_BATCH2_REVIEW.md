@@ -1,8 +1,9 @@
 # History Article Review: Anti-Jewish Riots Break Out in Tripoli, Libya
 
-Status: unpublished `ready` draft after Batch 2 research and editorial patch,
-2026-09-04. This record already existed as a first-20 Form draft. No extra
-archive import was performed. Native Sanity publication was not used.
+Status: published 2026-09-04 after founder “about 120” wording.
+Published ID: `historyEntry.jom-d68726d23439a8e6135c869acacfd547`.
+This record already existed as a first-20 Form draft. No extra archive import
+was performed. Published History count is 5.
 
 ## Identity
 
@@ -13,7 +14,7 @@ archive import was performed. Native Sanity publication was not used.
 - **Date:** 1945-11-05 (day, exact)
 - **Duplicate cluster:** none
 - **Source body:** structurally intact
-- **Workflow:** `ready` · `publicTestCandidate: true` · unpublished
+- **Workflow:** `ready`
 - **Image:** none
 
 ## Fact review
@@ -70,14 +71,14 @@ notice using Yad Vashem’s 120-dead figure.
 
 **Body:**
 
-On this day, anti-Jewish riots broke out in Tripoli, then under British military administration. Over three days, rioters killed 120 Jews and wounded hundreds more in the city and nearby towns. They destroyed synagogues and looted hundreds of homes and businesses.
+On this day, anti-Jewish riots broke out in Tripoli, then under British military administration. Over three days, rioters killed about 120 Jews and wounded hundreds more in the city and nearby towns. They destroyed synagogues and looted hundreds of homes and businesses.
 
 By the eve of World War II, more than 30,000 Jews lived in Libya, and about a quarter of Tripoli’s population was Jewish. The 1945 riots did not empty Libya of its Jewish community; further attacks followed in 1948 and after 1967.
 
-**Excerpt:** On this day, November 5, 1945, anti-Jewish riots broke out in Tripoli. Over three days, 120 Jews were murdered in the city and nearby towns.
+**Excerpt:** On this day, November 5, 1945, anti-Jewish riots broke out in Tripoli. Over three days, about 120 Jews were killed in the city and nearby towns.
 
 **SEO title:** Anti-Jewish Riots Break Out in Tripoli — November 5, 1945 | Jewish Original  
-**SEO description:** On November 5, 1945, anti-Jewish riots in Tripoli killed 120 Jews over three days.
+**SEO description:** On November 5, 1945, anti-Jewish riots broke out in Tripoli, killing about 120 Jews over three days.
 
 ## Taxonomy
 
@@ -94,7 +95,6 @@ None. No-image is acceptable.
 
 ## Recommendation
 
-**READY TO PUBLISH**, with the documented death-toll choice (Yad Vashem 120
-rather than stored 140). Founder may instead treat the toll as
-**READY AFTER FOUNDER DECISION** if a different institutional wording is
-preferred. Do not publish yet.
+Published with founder-approved approximate wording (“about 120”) because
+verified sources differ slightly between 120 and 121. The stored workbook
+140 remains unused.

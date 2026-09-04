@@ -21,9 +21,9 @@ unchanged.
 
 1. Published: US Liberates Dachau
 2. Published: Joop Westerweel Is Murdered at Vught
-3. Unpublished ready: Bialystok Ghetto Established
-4. Unpublished ready: Samuel Willenberg Dies
-5. Unpublished ready: Anti-Jewish Riots Break Out in Tripoli, Libya
+3. Published: Bialystok Ghetto Is Sealed
+4. Published: Samuel Willenberg Dies
+5. Published: Anti-Jewish Riots Break Out in Tripoli, Libya
 6. Deferred: Isaak Rülf / Isaac Rulf's Birthday
 
 Published 2026-09-03. Do not publish additional History drafts until the

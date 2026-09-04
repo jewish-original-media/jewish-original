@@ -329,3 +329,14 @@ Published History count remains 2. Isaak Rülf was not begun.
 New entities created only as required: place `Bialystok ghetto`, place
 `Tripoli`, region `Africa`, sources Associated Press and Jewish Telegraphic
 Agency. No MENA topic was invented. No History template redesign.
+
+## ADR-025 — Publication Batch 2 published
+
+**Status:** Accepted, 2026-09-04
+
+The founder approved publication of Bialystok, Willenberg, and Tripoli after
+three small public-layer edits: Bialystok title/SEO to `Bialystok Ghetto Is
+Sealed` with the existing slug; Willenberg sculpture wording; Tripoli
+approximate “about 120” death toll. Immutable source bodies and checksums
+were not rewritten. Dachau and Joop were not modified. Isaak Rülf, Herzl,
+and Ze’evi remain unpublished. Published History count is 5.

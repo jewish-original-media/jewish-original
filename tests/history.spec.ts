@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("publishes only the reviewed Dachau and Westerweel articles on the public archive", async ({
+test("publishes the five reviewed History articles on the public archive", async ({
   page,
 }) => {
   const response = await page.goto("/history");
@@ -15,6 +15,17 @@ test("publishes only the reviewed Dachau and Westerweel articles on the public a
   await expect(
     page.getByRole("link", { name: "Joop Westerweel Is Murdered at Vught" }),
   ).toHaveCount(1);
+  await expect(
+    page.getByRole("link", { name: "Bialystok Ghetto Is Sealed" }),
+  ).toHaveCount(1);
+  await expect(
+    page.getByRole("link", { name: "Samuel Willenberg Dies" }),
+  ).toHaveCount(1);
+  await expect(
+    page.getByRole("link", {
+      name: "Anti-Jewish Riots Break Out in Tripoli, Libya",
+    }),
+  ).toHaveCount(1);
   await expect(page.getByRole("heading", { name: "Topics" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Eras" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Places" })).toBeVisible();
@@ -24,8 +35,9 @@ test("publishes only the reviewed Dachau and Westerweel articles on the public a
     0,
   );
   await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
-  await expect(page.getByText("Samuel Willenberg")).toHaveCount(0);
   await expect(page.getByText("Theodore Herzl")).toHaveCount(0);
+  await expect(page.getByText("Isaak Rülf")).toHaveCount(0);
+  await expect(page.getByText("Rehavam")).toHaveCount(0);
   await expect(
     page.getByText(/first public collection is in editorial review/i),
   ).toHaveCount(0);
@@ -66,6 +78,26 @@ test("browses published history by civil date without fabricating a match", asyn
     0,
   );
 
+  await page.goto("/history?month=8&day=1");
+  await expect(
+    page.getByRole("heading", { name: "On August 1" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Bialystok Ghetto Is Sealed" }),
+  ).toBeVisible();
+
+  await page.goto("/history?month=2&day=19");
+  await expect(
+    page.getByRole("link", { name: "Samuel Willenberg Dies" }),
+  ).toBeVisible();
+
+  await page.goto("/history?month=11&day=5");
+  await expect(
+    page.getByRole("link", {
+      name: "Anti-Jewish Riots Break Out in Tripoli, Libya",
+    }),
+  ).toBeVisible();
+
   await page.goto("/history?month=9&day=2");
   await expect(
     page.getByText("No reviewed story is attached to this date yet."),
@@ -88,6 +120,17 @@ test("filters the archive by published taxonomy and keeps empty people hidden", 
   await expect(
     page.getByRole("link", { name: "Joop Westerweel Is Murdered at Vught" }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Bialystok Ghetto Is Sealed" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Samuel Willenberg Dies" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: "Anti-Jewish Riots Break Out in Tripoli, Libya",
+    }),
+  ).toHaveCount(0);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://jewishoriginal.com/history",
@@ -103,7 +146,7 @@ test("filters the archive by published taxonomy and keeps empty people hidden", 
   ).toBeVisible();
 });
 
-test("serves the published Dachau and Westerweel articles and keeps other slugs unpublished", async ({
+test("serves the five published History articles and keeps other slugs unpublished", async ({
   page,
 }) => {
   const published = await page.goto("/history/us-liberates-dachau");
@@ -126,14 +169,24 @@ test("serves the published Dachau and Westerweel articles and keeps other slugs 
   ).toBeVisible();
   await expect(page.getByText("Private editorial preview")).toHaveCount(0);
 
-  const unpublished = await page.goto("/history/samuel-willenberg-dies");
-  expect(unpublished?.status()).toBe(404);
   expect((await page.goto("/history/bialystok-ghetto-established"))?.status()).toBe(
-    404,
+    200,
   );
+  expect((await page.goto("/history/samuel-willenberg-dies"))?.status()).toBe(200);
   expect((await page.goto("/history/anti-jewish-riots-tripoli"))?.status()).toBe(
+    200,
+  );
+  expect((await page.goto("/history/theodore-herzl-birthday"))?.status()).toBe(
     404,
   );
+  expect(
+    (await page.goto("/history/isaac-rulfs-birthday-import-0011"))?.status(),
+  ).toBe(404);
+  expect(
+    (
+      await page.goto("/history/pflp-murders-israeli-mk-rehavam-zeevi-import-0111")
+    )?.status(),
+  ).toBe(404);
   await expect(
     page.getByRole("heading", { name: /this page is not available yet/i }),
   ).toBeVisible();
@@ -205,7 +258,16 @@ test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Dachau"
   expect(sitemapXml).toContain(
     "https://jewishoriginal.com/history/joop-westerweel-murdered",
   );
-  expect(sitemapXml).not.toContain("samuel-willenberg-dies");
+  expect(sitemapXml).toContain(
+    "https://jewishoriginal.com/history/bialystok-ghetto-established",
+  );
+  expect(sitemapXml).toContain(
+    "https://jewishoriginal.com/history/samuel-willenberg-dies",
+  );
+  expect(sitemapXml).toContain(
+    "https://jewishoriginal.com/history/anti-jewish-riots-tripoli",
+  );
+  expect(sitemapXml).not.toContain("theodore-herzl-birthday");
 });
 
 test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Westerweel", async ({
@@ -325,22 +387,14 @@ test("opens an authenticated draft preview without publishing other drafts", asy
   await expect(page.getByRole("link", { name: "X", exact: true })).toBeVisible();
 });
 
-test("opens authenticated Batch 2 draft previews without publishing them", async ({
+test("serves the published Batch 2 articles with founder-final copy and metadata", async ({
   page,
 }) => {
-  const secret = process.env.DRAFT_MODE_SECRET;
-  test.skip(
-    !secret || !process.env.SANITY_API_READ_TOKEN,
-    "Draft preview is not configured in this environment.",
-  );
-
-  const bialystok = await page.goto(
-    `/api/draft-mode/enable?secret=${encodeURIComponent(secret || "")}&slug=bialystok-ghetto-established`,
-  );
+  const bialystok = await page.goto("/history/bialystok-ghetto-established");
   expect(bialystok?.status()).toBe(200);
-  await expect(page.getByText("Private editorial preview")).toBeVisible();
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
   await expect(
-    page.getByRole("heading", { name: "Bialystok Ghetto Established" }),
+    page.getByRole("heading", { name: "Bialystok Ghetto Is Sealed" }),
   ).toBeVisible();
   await expect(
     page.getByText(/confined about 50,000 jews/i).first(),
@@ -349,32 +403,102 @@ test("opens authenticated Batch 2 draft previews without publishing them", async
   await expect(page.getByText(/three-quarters/i)).toHaveCount(0);
   await expect(page.getByText(/liberated the bialystok ghetto/i)).toHaveCount(0);
   await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
-
-  const willenberg = await page.goto(
-    `/api/draft-mode/enable?secret=${encodeURIComponent(secret || "")}&slug=samuel-willenberg-dies`,
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://jewishoriginal.com/history/bialystok-ghetto-established",
   );
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+    "content",
+    "Bialystok Ghetto Is Sealed — August 1, 1941 | Jewish Original",
+  );
+  const bialystokJsonLd = JSON.parse(
+    (await page.locator('script[type="application/ld+json"]').textContent()) ||
+      "{}",
+  ) as { "@type"?: string; headline?: string; citation?: string[] };
+  expect(bialystokJsonLd["@type"]).toBe("Article");
+  expect(bialystokJsonLd.headline).toBe("Bialystok Ghetto Is Sealed");
+  expect(bialystokJsonLd.citation).toEqual(
+    expect.arrayContaining([
+      "https://encyclopedia.ushmm.org/content/en/article/bialystok",
+      "https://www.yadvashem.org/odot_pdf/Microsoft%20Word%20-%206011.pdf",
+    ]),
+  );
+  await expect(
+    page.getByRole("heading", { name: "Related Jewish Original stories" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Samuel Willenberg Dies" }),
+  ).toBeVisible();
+
+  const willenberg = await page.goto("/history/samuel-willenberg-dies");
   expect(willenberg?.status()).toBe(200);
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
   await expect(
     page.getByRole("heading", { name: "Samuel Willenberg Dies" }),
   ).toBeVisible();
-  await expect(page.getByText(/august 2, 1943/i).first()).toBeVisible();
+  await expect(
+    page.getByText(/created sculptures about what he had witnessed/i),
+  ).toBeVisible();
+  await expect(page.getByText(/made sculpture about what he had seen/i)).toHaveCount(
+    0,
+  );
   await expect(page.getByText(/sonderkommando/i)).toHaveCount(0);
   await expect(page.getByText(/warsaw ghetto uprising/i)).toHaveCount(0);
   await expect(page.getByText(/875,000/i)).toHaveCount(0);
-
-  const tripoli = await page.goto(
-    `/api/draft-mode/enable?secret=${encodeURIComponent(secret || "")}&slug=anti-jewish-riots-tripoli`,
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://jewishoriginal.com/history/samuel-willenberg-dies",
   );
+  const willenbergJsonLd = JSON.parse(
+    (await page.locator('script[type="application/ld+json"]').textContent()) ||
+      "{}",
+  ) as { "@type"?: string; headline?: string; citation?: string[] };
+  expect(willenbergJsonLd["@type"]).toBe("Article");
+  expect(willenbergJsonLd.headline).toBe("Samuel Willenberg Dies");
+  expect(willenbergJsonLd.citation).toEqual(
+    expect.arrayContaining([
+      "https://www.yadvashem.org/blog/one-of-the-last-survivors-of-treblinka-passes-away.html",
+      "https://encyclopedia.ushmm.org/content/en/article/treblinka",
+      "https://apnews.com/general-news-4a90900b1e7340cb83efab37a1ea99b4",
+    ]),
+  );
+
+  const tripoli = await page.goto("/history/anti-jewish-riots-tripoli");
   expect(tripoli?.status()).toBe(200);
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
   await expect(
     page.getByRole("heading", {
       name: "Anti-Jewish Riots Break Out in Tripoli, Libya",
     }),
   ).toBeVisible();
-  await expect(page.getByText(/killed 120 jews/i).first()).toBeVisible();
+  await expect(page.getByText(/killed about 120 jews/i).first()).toBeVisible();
+  await expect(page.getByText(/rioters killed 120 jews and/i)).toHaveCount(0);
   await expect(page.getByText(/instigated the violence/i)).toHaveCount(0);
   await expect(page.getByText(/ethnically cleansed/i)).toHaveCount(0);
   await expect(page.getByText("Unreviewed draft source")).toHaveCount(0);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://jewishoriginal.com/history/anti-jewish-riots-tripoli",
+  );
+  await expect(page.locator('meta[property="og:description"]')).toHaveAttribute(
+    "content",
+    "On November 5, 1945, anti-Jewish riots broke out in Tripoli, killing about 120 Jews over three days.",
+  );
+  const tripoliJsonLd = JSON.parse(
+    (await page.locator('script[type="application/ld+json"]').textContent()) ||
+      "{}",
+  ) as { "@type"?: string; headline?: string; citation?: string[] };
+  expect(tripoliJsonLd["@type"]).toBe("Article");
+  expect(tripoliJsonLd.headline).toBe(
+    "Anti-Jewish Riots Break Out in Tripoli, Libya",
+  );
+  expect(tripoliJsonLd.citation).toEqual(
+    expect.arrayContaining([
+      "https://www.yadvashem.org/articles/general/the-jews-of-libya.html",
+      "https://www.yadvashem.org/odot_pdf/Microsoft%20Word%20-%206407.pdf",
+      "https://www.jta.org/archive/ed-outbreaks-in-tripolitania-feared-public-demonstrations-prohibited-in-egypt",
+    ]),
+  );
 });
 
 test("opens the published Joop Westerweel article without a preview banner", async ({
