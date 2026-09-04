@@ -147,8 +147,20 @@ standard and Vercel default. `.nvmrc` and `package.json` pin the 24.x line.
 
 The daily utility lives at `/today` and is assembled by `getJewishToday()`.
 Calendar calculation stays in `src/integrations/hebcal`. Editorial History
-matching stays in `src/content/jewish-today`. The homepage must import those
-modules later rather than calling Hebcal or writing a second on-this-day query.
+matching stays in `src/content/jewish-today`. The Integration homepage now imports those modules through
+`getHomePageData()`. It does not call Hebcal or write a second on-this-day
+query. History and Podcasts are reserved slots until those branches merge.
 
-See `docs/JEWISH_TODAY.md` and ADR-021. This section is additive and should
-merge beside the History workstream’s Sanity notes.
+See `docs/JEWISH_TODAY.md`, `docs/HOMEPAGE.md`, and ADR-021. This section is
+additive and should merge beside the History workstream’s Sanity notes.
+
+## Homepage composition
+
+`/` is assembled by `getHomePageData()` in `src/features/homepage`. Jewish
+Today is the only live content module. History, Podcasts, News, Events,
+Culture, and Support have typed section contracts. Do not invent editorial
+items to fill those slots.
+
+Loading and unexpected homepage errors live in `src/app/(home)/` so they do
+not wrap `/today`. Expected Jewish Today failures stay inside
+`getJewishToday()` and degrade without raw errors.

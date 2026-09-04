@@ -1,7 +1,8 @@
 # Jewish Today convergence handoff
 
-Status: frozen on `feature/jewish-today`. Do not merge automatically.
-Do not rebase onto uncommitted History or Podcasts work.
+Status: frozen Jewish Today is merged on `feature/integration-homepage`.
+Temporary History adapters are still pending History merge. Do not rebase onto
+uncommitted History or Podcasts work.
 
 ## 1. Jewish Today commit hash
 
@@ -96,11 +97,15 @@ worktree, so the Dachau card 404s until History routes are merged.
 - `npm run format:check`
 - `npm run build`
 
-Confirm after merge:
+Confirm after History merge:
 
 - `/today?date=2026-04-29` still retrieves published Dachau
 - unmatched dates do not fabricate History
 - unpublished related History cannot leak
 - Hebcal failure still degrades without raw errors
 - Dachau card opens the real History article
-- homepage is composed only when that later milestone begins
+- homepage continues to use one `getJewishToday()` result and does not grow a
+  second History card system
+
+The Integration homepage is now composed. History and Podcasts remain reserved
+slots until those branches are frozen. See `docs/HOMEPAGE.md`.

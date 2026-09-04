@@ -1,5 +1,18 @@
 import type { OnThisDayHistoryEntry } from "@/features/jewish-today/types";
 
+/**
+ * TEMPORARY History adapters — pending History merge.
+ *
+ * Do not treat these as the permanent History system. On controlled History
+ * convergence, replace:
+ * - `fetchOnThisDayHistory` with History `getOnThisDayHistory`
+ * - `formatOnThisDayDate` with History `formatHistoricalDate`
+ * - `TodayHistoryCard` with `HistoryEntryCard` `variant="archive"`
+ *
+ * See `docs/JEWISH_TODAY_CONVERGENCE.md` and `docs/HOMEPAGE.md`.
+ */
+export const HISTORY_ADAPTER_STATUS = "pending-history-merge" as const;
+
 export const ON_THIS_DAY_QUERY = `*[
   _type == "historyEntry" &&
   !(_id in path("drafts.**")) &&

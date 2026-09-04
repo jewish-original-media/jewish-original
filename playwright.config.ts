@@ -14,6 +14,8 @@ try {
 }
 
 const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
+const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3020";
+const port = new URL(baseURL).port || "3020";
 
 export default defineConfig({
   testDir: "./tests",
@@ -23,15 +25,15 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: "list",
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3020",
+    baseURL,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     launchOptions: executablePath ? { executablePath } : { channel: "chrome" },
   },
   webServer: {
-    command: "npm run dev -- --port 3020",
-    url: "http://localhost:3020",
-    reuseExistingServer: false,
+    command: `npm run dev -- --port ${port}`,
+    url: baseURL,
+    reuseExistingServer: !process.env.CI,
     timeout: 120_000,
     env: {
       ...Object.fromEntries(

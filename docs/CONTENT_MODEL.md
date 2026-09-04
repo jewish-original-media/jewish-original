@@ -106,7 +106,9 @@ Jewish Today is not a CMS document. One civil day is assembled at request time
 from Hebcal calendar data plus published History entries whose reviewed
 Gregorian month/day match. Do not persist generated calendar days. Recurring
 observances remain `historyEntry.entryKind = recurringObservance` and are not
-on-this-day History matches. See `docs/JEWISH_TODAY.md`.
+on-this-day History matches. See `docs/JEWISH_TODAY.md`. The homepage composes that calculated day plus
+reserved History, Podcast, News, Events, Culture, and Support slots. It does
+not become a CMS document. See `docs/HOMEPAGE.md`.
 
 ## Relationships and IDs
 

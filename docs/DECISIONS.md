@@ -134,3 +134,25 @@ timezone, Israel schedule, and candle-lighting are deferred.
 
 ADR numbers 014–020 are reserved for the in-progress History workstream so this
 decision does not collide on merge. See `docs/JEWISH_TODAY.md`.
+
+## ADR-022 — Integration bases on local main, not the GitHub default
+
+**Status:** Accepted, 2026-09-03
+
+GitHub’s default branch is `milestone-1-sanity-history`. That default was not
+changed. The Integration branch still starts from local `main` at `7b0ed78`
+because that commit is the last shared stable ancestor of History, Jewish
+Today, and Podcasts. History and Podcasts remain unfinished and isolated.
+Jewish Today is the only feature stream merged into Integration.
+
+## ADR-023 — Homepage composes live modules and reserved slots
+
+**Status:** Accepted, 2026-09-03
+
+The homepage is server-composed, not a CMS document. It calls
+`getJewishToday()` once and renders `JewishTodayModule`. History and Podcasts
+receive reserved slots and typed contracts instead of fabricated cards. The
+temporary Jewish Today History adapters stay marked
+`pending-history-merge` until the History branch is frozen and merged.
+
+See `docs/HOMEPAGE.md` and `docs/INTEGRATION.md`.

@@ -4,6 +4,11 @@ import type { OnThisDayHistoryEntry } from "@/features/jewish-today";
 
 import styles from "@/app/today/today.module.css";
 
+/**
+ * TEMPORARY History card — pending History merge.
+ * Replace with `HistoryEntryCard` `variant="archive"`. Do not invent a second
+ * permanent History card system here.
+ */
 type TodayHistoryCardProps = {
   entry: OnThisDayHistoryEntry;
 };

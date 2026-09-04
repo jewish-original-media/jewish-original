@@ -1,8 +1,10 @@
 # Jewish Today
 
-Status: checkpointed and frozen on `feature/jewish-today`. Standalone `/today`
-exists. The homepage is not composed from this module. Do not merge
-automatically. See `docs/JEWISH_TODAY_CONVERGENCE.md`.
+Status: checkpointed and frozen on `feature/jewish-today`, then merged into
+`feature/integration-homepage`. Standalone `/today` exists. The Integration
+homepage now composes `JewishTodayModule`. Temporary History adapters remain
+pending History merge. See `docs/JEWISH_TODAY_CONVERGENCE.md` and
+`docs/HOMEPAGE.md`.
 
 Jewish Today is a calculated daily experience, not an editorial document type.
 It combines:
@@ -61,15 +63,16 @@ adapter for the History archive card.
 
 ### Compact homepage module
 
-Uses the same `getJewishToday()` result plus `JewishTodayModule`. The module
-should show:
+The Integration homepage now calls `getJewishToday()` once and passes that
+result to `JewishTodayModule`. The module shows:
 
 - the Hebrew date
 - one calendar highlight or, if none, the parashah
 - one History title when a published match exists
 - a link to `/today`
 
-Do not call Hebcal or Sanity a second time from the homepage.
+Do not call Hebcal or Sanity a second time from the homepage. See
+`docs/HOMEPAGE.md`. Temporary History adapters remain pending History merge.
 
 ## History matching
 
