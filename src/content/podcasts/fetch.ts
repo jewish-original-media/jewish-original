@@ -6,6 +6,7 @@ import {
   getDraftSanityClient,
   getPublishedSanityClient,
 } from "@/lib/sanity/client";
+import { TTJS_SHOW_SLUG } from "@/lib/podcasts/urls";
 import { isYouTubeId, parseYouTubeId } from "@/lib/podcasts/youtube";
 
 import {
@@ -71,6 +72,13 @@ export async function getPodcastEpisodes(showSlug: string, preview: boolean) {
     { preview, showSlug },
     preview ? previewOptions : publishedOptions,
   );
+}
+
+export async function getPublishedPodcastHome() {
+  const show = await getPodcastShow(TTJS_SHOW_SLUG, false);
+  if (!show) return null;
+  const episodes = await getPodcastEpisodes(show.slug, false);
+  return { show, episodes };
 }
 
 export const getPodcastEpisode = cache(

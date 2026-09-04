@@ -77,4 +77,9 @@ description as the official episode video.
 
 Sanity draft/published state is the publication authority.
 `workflowStatus: ready` is required before publish. Import never publishes.
-The four-pilot import writes `drafts.*` documents only.
+The four approved pilots and The Two Tall Jews Show are the first published
+Podcast documents. The remaining catalog stays unpublished.
+
+`getPublishedPodcastHome()` is the canonical published homepage data contract:
+show metadata, recent published episode cards, and platform/media links.
+It does not invent artwork, YouTube, transcripts, or History relationships.

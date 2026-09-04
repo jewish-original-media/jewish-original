@@ -14,6 +14,7 @@
     "test:podcasts": "tsx --test tests/podcasts-youtube.test.ts tests/podcasts-seo.test.ts tests/podcasts-rss.test.ts tests/podcasts-platforms.test.ts",
     "podcasts:rss-dry-run": "tsx scripts/podcasts/import-rss.ts",
     "podcasts:import-pilot": "sanity exec scripts/podcasts/import-pilot.ts --with-user-token -- --apply --pilot",
+    "podcasts:publish-pilots": "sanity exec scripts/podcasts/publish-pilots.ts --with-user-token -- --apply",
     "podcasts:capture": "tsx scripts/podcasts/capture-podcast-preview.ts",
     "test:e2e": "playwright test",
     "sanity:schema": "sanity schema validate",

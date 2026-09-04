@@ -1,48 +1,66 @@
 import { expect, test } from "@playwright/test";
 
+const show = "/podcasts/the-two-tall-jews-show";
 const kalman =
   "/podcasts/the-two-tall-jews-show/sitting-down-with-kalman-gavriel-the-jerusalem-scribe";
+const finale =
+  "/podcasts/the-two-tall-jews-show/season-3-finale-looking-ahead-to-2023";
 const zapruder =
   "/podcasts/the-two-tall-jews-show/alexandra-zapruder-on-holocaust-remembrance-antisemitism-and-the-importance-of-bearing-witness";
 const premier =
   "/podcasts/the-two-tall-jews-show/premier-mel-brooks-annexation-music-from-the-holocaust-a-deep-dive-into-tikkun-olam";
 
-test("keeps unpublished pilots off the public catalog and sitemap", async ({
+test("publishes the show and four pilots without preview chrome", async ({
   page,
 }) => {
   const home = await page.goto("/podcasts");
   expect(home?.status()).toBe(200);
   await expect(
-    page.getByRole("heading", { name: "Podcasts are being prepared." }),
+    page.getByRole("heading", { name: "The Two Tall Jews Show", exact: true }),
   ).toBeVisible();
-  await expect(page.getByText("With Kalman Gavriel")).toHaveCount(0);
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
+  await expect(page.getByText("With Kalman Gavriel")).toBeVisible();
+  await expect(page.getByText("With Alexandra Zapruder")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "SEASON 3 FINALE - LOOKING AHEAD TO 2023" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /PREMIER: Mel Brooks/,
+    }),
+  ).toBeVisible();
 
-  const unpublished = await page.goto(kalman);
-  expect(unpublished?.status()).toBe(404);
+  const showPage = await page.goto(show);
+  expect(showPage?.status()).toBe(200);
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
+  await expect(page.locator(".podcast-episode-card")).toHaveCount(4);
 
   const sitemap = await page.goto("/sitemap.xml");
   expect(sitemap?.status()).toBe(200);
   const xml = (await page.content()) || "";
   expect(xml).toContain("https://jewishoriginal.com/podcasts");
-  expect(xml).not.toContain(
+  expect(xml).toContain(
+    "https://jewishoriginal.com/podcasts/the-two-tall-jews-show",
+  );
+  expect(xml).toContain(
     "https://jewishoriginal.com/podcasts/the-two-tall-jews-show/sitting-down-with-kalman-gavriel-the-jerusalem-scribe",
   );
+  expect(xml).not.toContain("/podcasts/dev/youtube-facade");
 });
 
-test("previews a guest draft and hides empty transcript and summary", async ({
+test("keeps unpublished catalog slugs off the public site", async ({ page }) => {
+  const missing = await page.goto(
+    "/podcasts/the-two-tall-jews-show/this-episode-was-not-imported",
+  );
+  expect(missing?.status()).toBe(404);
+});
+
+test("serves a published guest episode with audio and platform links", async ({
   page,
 }) => {
-  const secret = process.env.DRAFT_MODE_SECRET;
-  test.skip(
-    !secret || !process.env.SANITY_API_READ_TOKEN,
-    "Draft preview is not configured in this environment.",
-  );
-
-  const preview = await page.goto(
-    `/api/draft-mode/enable?secret=${encodeURIComponent(secret || "")}&slug=sitting-down-with-kalman-gavriel-the-jerusalem-scribe&type=podcast`,
-  );
-  expect(preview?.status()).toBe(200);
-  await expect(page.getByText("Private editorial preview")).toBeVisible();
+  const response = await page.goto(kalman);
+  expect(response?.status()).toBe(200);
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
   await expect(
     page.getByRole("heading", {
       name: "Sitting Down With: Kalman Gavriel, The Jerusalem Scribe",
@@ -61,31 +79,24 @@ test("previews a guest draft and hides empty transcript and summary", async ({
   await expect(page.locator("iframe")).toHaveCount(0);
 });
 
-test("previews a hosts-only finale and source chapters on the premier", async ({
+test("serves hosts-only, guest, and chapter pilots without stacked players", async ({
   page,
 }) => {
-  const secret = process.env.DRAFT_MODE_SECRET;
-  test.skip(
-    !secret || !process.env.SANITY_API_READ_TOKEN,
-    "Draft preview is not configured in this environment.",
-  );
-
-  const finalePreview = await page.goto(
-    `/api/draft-mode/enable?secret=${encodeURIComponent(secret || "")}&slug=season-3-finale-looking-ahead-to-2023&type=podcast`,
-  );
-  expect(finalePreview?.status()).toBe(200);
+  const finalePage = await page.goto(finale);
+  expect(finalePage?.status()).toBe(200);
   await expect(page.locator(".podcast-episode-hero")).not.toContainText("With ");
   await expect(page.getByRole("heading", { name: "Chapters" })).toHaveCount(0);
+  await expect(page.locator("iframe")).toHaveCount(0);
 
-  const zapruderPreview = await page.goto(zapruder);
-  expect(zapruderPreview?.status()).toBe(200);
+  const zapruderPage = await page.goto(zapruder);
+  expect(zapruderPage?.status()).toBe(200);
   await expect(page.getByText("With Alexandra Zapruder")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Related History" })).toHaveCount(
     0,
   );
 
-  const premierPreview = await page.goto(premier);
-  expect(premierPreview?.status()).toBe(200);
+  const premierPage = await page.goto(premier);
+  expect(premierPage?.status()).toBe(200);
   await expect(page.getByRole("heading", { name: "Chapters" })).toBeVisible();
   await expect(
     page.getByText("Music from the Holocaust, Reborn", { exact: true }),

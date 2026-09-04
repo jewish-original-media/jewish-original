@@ -47,7 +47,8 @@ Exit: the homepage has trustworthy daily value with graceful failure behavior.
 - Model shows and episodes against existing people, places, topics, and History
 - Build `/podcasts`, the TTJS show page, and episode templates from the official RSS feed
 - Import the four approved pilot episodes as unpublished Sanity drafts with verified Apple and Spotify links
-- Keep publication blocked; do not import the remaining catalog until founder review
+- Publish The Two Tall Jews Show and those four approved pilots after founder review
+- Keep the remaining catalog unpublished until founder review
 - Later: confirm official YouTube episode IDs, review transcripts, and import the remaining feed
 - Build editorial story templates and social-to-site publishing workflows after the podcast foundation is approved
 

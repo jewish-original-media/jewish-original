@@ -113,7 +113,7 @@ export default async function PodcastsPage() {
           <p className="podcast-section-copy">
             {preview
               ? "These four imported drafts are visible only in authenticated preview. They are not published."
-              : "Published episodes appear here after editorial review."}
+              : "Four founder-approved episodes from the archive. The remaining catalog stays unpublished."}
           </p>
           <div className="podcast-episode-list">
             {episodes.map((episode) => (

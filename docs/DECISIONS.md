@@ -310,3 +310,12 @@ links remain guest-channel evidence only.
 
 The four-pilot import writes `drafts.*` documents only and is idempotent by
 RSS GUID. It does not publish and does not import the remaining catalog.
+
+## ADR-025 — Founder-approved TTJS pilots may publish
+
+**Status:** Accepted, 2026-09-04
+
+After founder approval, The Two Tall Jews Show and the four verified pilot
+episodes were published as `workflowStatus: ready` documents. Publication
+does not import the remaining catalog, invent transcripts or History links,
+or treat description YouTube URLs as official episode media.
