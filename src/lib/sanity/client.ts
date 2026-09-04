@@ -25,8 +25,10 @@ export function getDraftSanityClient() {
     );
   }
 
-  return baseClient.withConfig({
+  return createClient({
+    ...sanityEnv,
     perspective: "drafts",
+    requestTagPrefix: "jewish-original",
     stega: false,
     token,
     useCdn: false,

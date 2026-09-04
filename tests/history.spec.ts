@@ -224,3 +224,64 @@ test("opens an authenticated draft preview without publishing other drafts", asy
   await expect(page.getByRole("link", { name: "Facebook" })).toBeVisible();
   await expect(page.getByRole("link", { name: "X", exact: true })).toBeVisible();
 });
+
+test("opens the Joop Westerweel draft preview without publishing it", async ({
+  page,
+}) => {
+  const secret = process.env.DRAFT_MODE_SECRET;
+  test.skip(
+    !secret || !process.env.SANITY_API_READ_TOKEN,
+    "Draft preview is not configured in this environment.",
+  );
+
+  const unpublished = await page.goto("/history/joop-westerweel-murdered");
+  expect(unpublished?.status()).toBe(404);
+
+  const response = await page.goto(
+    `/api/draft-mode/enable?secret=${encodeURIComponent(secret || "")}&slug=joop-westerweel-murdered`,
+  );
+  expect(response?.status()).toBe(200);
+  await expect(page.getByText("Private editorial preview")).toBeVisible();
+  await expect(page.getByText("Workflow: ready.")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Joop Westerweel Is Murdered at Vught" }),
+  ).toBeVisible();
+  await expect(page.getByText(/vught concentration camp/i).first()).toBeVisible();
+  await expect(
+    page.getByText(/arrested on march 11, 1944/i),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      /in 1964, yad vashem recognized westerweel and his wife, wilhelmina, as righteous among the nations/i,
+    ),
+  ).toBeVisible();
+  await expect(page.getByText(/150 to 200/i)).toHaveCount(0);
+  await expect(page.getByText(/march 14, 1944/i)).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "People" })).toBeVisible();
+  await expect(page.getByText("Joop Westerweel").first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Organizations" })).toHaveCount(
+    0,
+  );
+  await expect(
+    page.getByRole("heading", { name: "Sources and further reading" }),
+  ).toBeVisible();
+  await expect(page.getByText("Johan (Joop) Westerweel")).toBeVisible();
+  await expect(page.getByText("Johan Gerard Westerweel")).toBeVisible();
+  await expect(page.getByText("Unreviewed draft source")).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Email" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Facebook" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "X", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Related Jewish Original stories" }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "US Liberates Dachau" })).toBeVisible();
+  await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
+  await expect(
+    page.getByRole("link", { name: "support Jewish Original" }),
+  ).toBeVisible();
+
+  await page.getByRole("button", { name: "Exit preview" }).click();
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
+  const stillUnpublished = await page.goto("/history/joop-westerweel-murdered");
+  expect(stillUnpublished?.status()).toBe(404);
+});

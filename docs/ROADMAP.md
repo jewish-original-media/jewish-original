@@ -30,6 +30,8 @@ Exit: a clean, deployable shell with no fabricated editorial content.
 - Publish only the reviewed `US Liberates Dachau` article after founder approval
 - Turn `/history` into the public archive and On This Day discovery home
   without publishing additional drafts
+- Prepare `Joop Westerweel Is Murdered at Vught` as publication #2 without
+  publishing it
 
 Exit: the editorial workflow, public History template, and public archive
 foundation are proven. The first reviewed article is public. Remaining archive

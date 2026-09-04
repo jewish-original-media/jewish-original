@@ -66,35 +66,37 @@ async function main() {
       });
     }
 
-    await page.setViewportSize({ width: 768, height: 1024 });
-    await page.goto(
-      `${baseURL}/api/draft-mode/enable?secret=${encodeURIComponent(secret)}&slug=us-liberates-dachau`,
-      { waitUntil: "load" },
-    );
-    await expect(
-      page.getByRole("heading", { name: "US Liberates Dachau" }),
-    ).toBeVisible();
-    await page.evaluate(() => document.fonts.ready);
-    await page.waitForTimeout(850);
-    await page.screenshot({
-      path: resolve(outputDirectory, "us-liberates-dachau-tablet.png"),
-      fullPage: true,
-    });
+    for (const slug of ["us-liberates-dachau", "joop-westerweel-murdered"]) {
+      await page.setViewportSize({ width: 768, height: 1024 });
+      await page.goto(
+        `${baseURL}/api/draft-mode/enable?secret=${encodeURIComponent(secret)}&slug=${slug}`,
+        { waitUntil: "load" },
+      );
+      await expect(page.getByText("Private editorial preview")).toBeVisible({
+        timeout: 20_000,
+      });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(850);
+      await page.screenshot({
+        path: resolve(outputDirectory, `${slug}-tablet.png`),
+        fullPage: true,
+      });
 
-    await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto(
-      `${baseURL}/api/draft-mode/enable?secret=${encodeURIComponent(secret)}&slug=us-liberates-dachau`,
-      { waitUntil: "load" },
-    );
-    await expect(
-      page.getByRole("heading", { name: "US Liberates Dachau" }),
-    ).toBeVisible();
-    await page.evaluate(() => document.fonts.ready);
-    await page.waitForTimeout(850);
-    await page.screenshot({
-      path: resolve(outputDirectory, "us-liberates-dachau-mobile.png"),
-      fullPage: true,
-    });
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto(
+        `${baseURL}/api/draft-mode/enable?secret=${encodeURIComponent(secret)}&slug=${slug}`,
+        { waitUntil: "load" },
+      );
+      await expect(page.getByText("Private editorial preview")).toBeVisible({
+        timeout: 20_000,
+      });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(850);
+      await page.screenshot({
+        path: resolve(outputDirectory, `${slug}-mobile.png`),
+        fullPage: true,
+      });
+    }
   } finally {
     await browser.close();
   }

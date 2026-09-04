@@ -1,6 +1,7 @@
 import { timingSafeEqual } from "node:crypto";
 
 import { draftMode } from "next/headers";
+import { redirect } from "next/navigation";
 
 import { getDraftCandidateSlug } from "@/content/history/fetch";
 
@@ -36,8 +37,5 @@ export async function GET(request: Request) {
 
   const draft = await draftMode();
   draft.enable();
-  return Response.redirect(
-    new URL(`/history/${candidate.slug}`, request.url),
-    307,
-  );
+  redirect(`/history/${candidate.slug}`);
 }
