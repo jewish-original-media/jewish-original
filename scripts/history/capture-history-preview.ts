@@ -16,10 +16,9 @@ try {
 import { chromium, expect } from "@playwright/test";
 
 const slugs = [
-  "us-liberates-dachau",
-  "joop-westerweel-murdered",
+  "bialystok-ghetto-established",
   "samuel-willenberg-dies",
-  "theodore-herzl-birthday",
+  "anti-jewish-riots-tripoli",
 ];
 const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000";
 
@@ -66,7 +65,7 @@ async function main() {
       });
     }
 
-    for (const slug of ["us-liberates-dachau", "joop-westerweel-murdered"]) {
+    for (const slug of slugs) {
       await page.setViewportSize({ width: 768, height: 1024 });
       await page.goto(
         `${baseURL}/api/draft-mode/enable?secret=${encodeURIComponent(secret)}&slug=${slug}`,

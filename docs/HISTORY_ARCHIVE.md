@@ -1,11 +1,11 @@
 # History Archive and Discovery
 
-Status: V1 public archive on `milestone-1-sanity-history`. One History
-article is published: `US Liberates Dachau`. `Joop Westerweel Is Murdered at
-Vught` is prepared as publication #2 and remains an unpublished draft. The
-remaining pilot drafts stay unpublished. This page is the public home of
-**On This Day in Jewish History** and the broader Jewish Original historical
-archive.
+Status: V1 public archive on `milestone-1-sanity-history`. Two History
+articles are published: `US Liberates Dachau` and `Joop Westerweel Is
+Murdered at Vught`. Batch 2 drafts (Bialystok, Willenberg, Tripoli) are
+unpublished `ready` candidates. This page
+is the public home of **On This Day in Jewish History** and the broader
+Jewish Original historical archive.
 
 ## Information architecture
 

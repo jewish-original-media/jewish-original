@@ -38,7 +38,7 @@ async function main() {
   });
 
   const result = await client.fetch(`{
-    "joop": *[_id == "drafts.historyEntry.jom-513f6a739543db8be9034576144811f9"][0]{
+    "joop": *[_id in ["drafts.historyEntry.jom-513f6a739543db8be9034576144811f9", "historyEntry.jom-513f6a739543db8be9034576144811f9"]]|order(_id)[0]{
       _id, title, excerpt, workflowStatus, publicTestCandidate,
       "slug": slug.current,
       historicalDate,

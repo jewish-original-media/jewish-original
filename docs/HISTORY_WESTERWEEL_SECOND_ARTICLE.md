@@ -1,15 +1,16 @@
 # Second History Article: Joop Westerweel Is Murdered at Vught
 
-Status: founder-approved editorial patch applied 2026-09-03. The article is
-not published. Native Sanity publication state remains a draft. Published
-History count remains 1 (`US Liberates Dachau`).
+Status: founder said PUBLISH on 2026-09-03. Only this article was newly
+published. Native Sanity document:
+`historyEntry.jom-513f6a739543db8be9034576144811f9`. Published History count
+is 2 (`US Liberates Dachau`, this article).
 
 ## Applied public layer
 
 - **Title:** Joop Westerweel Is Murdered at Vught
 - **Slug:** `joop-westerweel-murdered`
-- **Draft ID:** `drafts.historyEntry.jom-513f6a739543db8be9034576144811f9`
-- **Workflow:** `ready` on the draft only
+- **Published ID:** `historyEntry.jom-513f6a739543db8be9034576144811f9`
+- **Workflow:** `ready`
 - **Image:** none
 
 Immutable `provenance.sourceBody` and `sourceBodyChecksum`
@@ -19,11 +20,11 @@ unchanged.
 ## Queue
 
 1. Published: US Liberates Dachau
-2. Next publication candidate: Joop Westerweel (this draft)
-3. Next review: Bialystok Ghetto Established
-4. After Bialystok: Samuel Willenberg Dies
-5. Deferred: Isaak Rülf / Isaac Rulf's Birthday
-6. Replacement for the next review batch, not researched here: Anti-Jewish
-   Riots Break Out in Tripoli, Libya
+2. Published: Joop Westerweel Is Murdered at Vught
+3. Unpublished ready: Bialystok Ghetto Established
+4. Unpublished ready: Samuel Willenberg Dies
+5. Unpublished ready: Anti-Jewish Riots Break Out in Tripoli, Libya
+6. Deferred: Isaak Rülf / Isaac Rulf's Birthday
 
-Do not publish this article until the founder says PUBLISH.
+Published 2026-09-03. Do not publish additional History drafts until the
+founder says PUBLISH.

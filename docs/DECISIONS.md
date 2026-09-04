@@ -292,25 +292,40 @@ The approved History article template is unchanged. No additional History
 drafts were published. The public archive may contain a single story and
 must still look intentional.
 
-## ADR-023 — Westerweel is History publication #2, still unpublished
+## ADR-023 — Westerweel is History publication #2
 
 **Status:** Accepted, 2026-09-03
 
-The founder approved `Joop Westerweel Is Murdered at Vught` as the next
-History publication candidate. The unpublished draft received the reviewed
-public title, body, excerpt, SEO, Gregorian calendar, verified Yad Vashem
-and Nationaal Monument Kamp Vught citations, and removal of Yad Vashem as
-an organization on the 1944 event. The immutable source body was not
-rewritten. No rescue total or birth date was added. No image was attached.
+The founder approved `Joop Westerweel Is Murdered at Vught` as History
+publication #2. The reviewed public title, body, excerpt, SEO, Gregorian
+calendar, verified Yad Vashem and Nationaal Monument Kamp Vught citations,
+and removal of Yad Vashem as an organization on the 1944 event were applied
+before publication. The immutable source body was not rewritten. No rescue
+total or birth date was added. No image was attached.
 
-`workflowStatus` is `ready` on the draft only. Native Sanity publication
-was not changed. Published History remains one article.
+Draft preview uses a dedicated Sanity `drafts` client and the Next.js
+`redirect()` helper after `draftMode().enable()`, so remaining unpublished
+`publicTestCandidate` drafts can be opened without publishing them.
 
-Draft preview now uses a dedicated Sanity `drafts` client and the Next.js
-`redirect()` helper after `draftMode().enable()`, so unpublished
-`publicTestCandidate` drafts such as Westerweel can be opened without
-publishing them.
+On 2026-09-03 the founder said PUBLISH for this article only. The published
+document is `historyEntry.jom-513f6a739543db8be9034576144811f9`,
+`workflowStatus: ready`. Editorial copy, sources, taxonomy, SEO, provenance,
+and image state were not rewritten for publication. Bialystok, Willenberg,
+Rülf, and Tripoli remain unpublished. Published History count is 2.
 
 Batch queue after this candidate: Bialystok, then Willenberg. Isaak Rülf is
 deferred. Anti-Jewish Riots Break Out in Tripoli, Libya replaces Rülf in
-the next review batch and was not researched in this milestone.
+the next review batch.
+
+## ADR-024 — Publication Batch 2 prepared, unpublished
+
+**Status:** Accepted, 2026-09-04
+
+The founder authorized editorial preparation of Bialystok, Willenberg, and
+Tripoli. All three remain unpublished `ready` drafts. Immutable source
+bodies and checksums were not rewritten. Dachau and Joop were not modified.
+Published History count remains 2. Isaak Rülf was not begun.
+
+New entities created only as required: place `Bialystok ghetto`, place
+`Tripoli`, region `Africa`, sources Associated Press and Jewish Telegraphic
+Agency. No MENA topic was invented. No History template redesign.

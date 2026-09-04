@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("publishes only the reviewed Dachau article on the public archive", async ({
+test("publishes only the reviewed Dachau and Westerweel articles on the public archive", async ({
   page,
 }) => {
   const response = await page.goto("/history");
@@ -12,16 +12,18 @@ test("publishes only the reviewed Dachau article on the public archive", async (
   await expect(page.getByRole("link", { name: "US Liberates Dachau" })).toHaveCount(
     1,
   );
+  await expect(
+    page.getByRole("link", { name: "Joop Westerweel Is Murdered at Vught" }),
+  ).toHaveCount(1);
   await expect(page.getByRole("heading", { name: "Topics" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Eras" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Places" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Regions" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "People" })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "People" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Organizations" })).toHaveCount(
     0,
   );
   await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
-  await expect(page.getByText("Joop Westerweel")).toHaveCount(0);
   await expect(page.getByText("Samuel Willenberg")).toHaveCount(0);
   await expect(page.getByText("Theodore Herzl")).toHaveCount(0);
   await expect(
@@ -53,6 +55,17 @@ test("browses published history by civil date without fabricating a match", asyn
     /noindex/,
   );
 
+  await page.goto("/history?month=8&day=11");
+  await expect(
+    page.getByRole("heading", { name: "On August 11" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Joop Westerweel Is Murdered at Vught" }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "US Liberates Dachau" })).toHaveCount(
+    0,
+  );
+
   await page.goto("/history?month=9&day=2");
   await expect(
     page.getByText("No reviewed story is attached to this date yet."),
@@ -60,6 +73,9 @@ test("browses published history by civil date without fabricating a match", asyn
   await expect(page.getByRole("link", { name: "US Liberates Dachau" })).toHaveCount(
     0,
   );
+  await expect(
+    page.getByRole("link", { name: "Joop Westerweel Is Murdered at Vught" }),
+  ).toHaveCount(0);
 });
 
 test("filters the archive by published taxonomy and keeps empty people hidden", async ({
@@ -69,6 +85,9 @@ test("filters the archive by published taxonomy and keeps empty people hidden", 
   expect(response?.status()).toBe(200);
   await expect(page.getByRole("heading", { name: "Holocaust" })).toBeVisible();
   await expect(page.getByRole("link", { name: "US Liberates Dachau" })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Joop Westerweel Is Murdered at Vught" }),
+  ).toBeVisible();
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://jewishoriginal.com/history",
@@ -84,7 +103,7 @@ test("filters the archive by published taxonomy and keeps empty people hidden", 
   ).toBeVisible();
 });
 
-test("serves the published Dachau article and keeps other slugs unpublished", async ({
+test("serves the published Dachau and Westerweel articles and keeps other slugs unpublished", async ({
   page,
 }) => {
   const published = await page.goto("/history/us-liberates-dachau");
@@ -95,10 +114,26 @@ test("serves the published Dachau article and keeps other slugs unpublished", as
   await expect(page.getByText("Private editorial preview")).toHaveCount(0);
   await expect(
     page.getByRole("heading", { name: "Related Jewish Original stories" }),
-  ).toHaveCount(0);
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Joop Westerweel Is Murdered at Vught" }),
+  ).toBeVisible();
 
-  const unpublished = await page.goto("/history/joop-westerweel-murdered");
+  const joop = await page.goto("/history/joop-westerweel-murdered");
+  expect(joop?.status()).toBe(200);
+  await expect(
+    page.getByRole("heading", { name: "Joop Westerweel Is Murdered at Vught" }),
+  ).toBeVisible();
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
+
+  const unpublished = await page.goto("/history/samuel-willenberg-dies");
   expect(unpublished?.status()).toBe(404);
+  expect((await page.goto("/history/bialystok-ghetto-established"))?.status()).toBe(
+    404,
+  );
+  expect((await page.goto("/history/anti-jewish-riots-tripoli"))?.status()).toBe(
+    404,
+  );
   await expect(
     page.getByRole("heading", { name: /this page is not available yet/i }),
   ).toBeVisible();
@@ -167,7 +202,72 @@ test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Dachau"
   expect(sitemapXml).toContain(
     "https://jewishoriginal.com/history/us-liberates-dachau",
   );
-  expect(sitemapXml).not.toContain("joop-westerweel-murdered");
+  expect(sitemapXml).toContain(
+    "https://jewishoriginal.com/history/joop-westerweel-murdered",
+  );
+  expect(sitemapXml).not.toContain("samuel-willenberg-dies");
+});
+
+test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Westerweel", async ({
+  page,
+}) => {
+  const response = await page.goto("/history/joop-westerweel-murdered");
+  expect(response?.status()).toBe(200);
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
+
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://jewishoriginal.com/history/joop-westerweel-murdered",
+  );
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+    "content",
+    "Joop Westerweel Is Murdered at Vught — August 11, 1944 | Jewish Original",
+  );
+  await expect(page.locator('meta[property="og:type"]')).toHaveAttribute(
+    "content",
+    "article",
+  );
+  await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
+    "content",
+    "https://jewishoriginal.com/history/joop-westerweel-murdered",
+  );
+
+  const jsonLd = JSON.parse(
+    (await page.locator('script[type="application/ld+json"]').textContent()) ||
+      "{}",
+  ) as {
+    "@type"?: string;
+    headline?: string;
+    url?: string;
+    citation?: string[];
+  };
+  expect(jsonLd["@type"]).toBe("Article");
+  expect(jsonLd.headline).toBe("Joop Westerweel Is Murdered at Vught");
+  expect(jsonLd.url).toBe(
+    "https://jewishoriginal.com/history/joop-westerweel-murdered",
+  );
+  expect(jsonLd.citation).toEqual(
+    expect.arrayContaining([
+      "https://www.yadvashem.org/yv/en/exhibitions/righteous-teachers/westerweel.asp",
+      "https://www.nmkampvught.nl/ontdekken/het-verhaal/vermoord-in-vught/westerweel-johan-gerard/",
+    ]),
+  );
+  expect(jsonLd.citation).toHaveLength(2);
+
+  await expect(
+    page.getByRole("heading", { name: "Sources and further reading" }),
+  ).toBeVisible();
+  await expect(page.getByText("Johan (Joop) Westerweel")).toBeVisible();
+  await expect(page.getByText("Johan Gerard Westerweel")).toBeVisible();
+  await expect(page.getByText(/150 to 200/i)).toHaveCount(0);
+  await expect(page.getByText(/march 14, 1944/i)).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Related Jewish Original stories" }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "US Liberates Dachau" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Organizations" })).toHaveCount(
+    0,
+  );
 });
 
 test("serves an honest support foundation without a payment form", async ({
@@ -225,7 +325,7 @@ test("opens an authenticated draft preview without publishing other drafts", asy
   await expect(page.getByRole("link", { name: "X", exact: true })).toBeVisible();
 });
 
-test("opens the Joop Westerweel draft preview without publishing it", async ({
+test("opens authenticated Batch 2 draft previews without publishing them", async ({
   page,
 }) => {
   const secret = process.env.DRAFT_MODE_SECRET;
@@ -234,22 +334,60 @@ test("opens the Joop Westerweel draft preview without publishing it", async ({
     "Draft preview is not configured in this environment.",
   );
 
-  const unpublished = await page.goto("/history/joop-westerweel-murdered");
-  expect(unpublished?.status()).toBe(404);
-
-  const response = await page.goto(
-    `/api/draft-mode/enable?secret=${encodeURIComponent(secret || "")}&slug=joop-westerweel-murdered`,
+  const bialystok = await page.goto(
+    `/api/draft-mode/enable?secret=${encodeURIComponent(secret || "")}&slug=bialystok-ghetto-established`,
   );
-  expect(response?.status()).toBe(200);
+  expect(bialystok?.status()).toBe(200);
   await expect(page.getByText("Private editorial preview")).toBeVisible();
-  await expect(page.getByText("Workflow: ready.")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Bialystok Ghetto Established" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/confined about 50,000 jews/i).first(),
+  ).toBeVisible();
+  await expect(page.getByText(/soviet union/i)).toHaveCount(0);
+  await expect(page.getByText(/three-quarters/i)).toHaveCount(0);
+  await expect(page.getByText(/liberated the bialystok ghetto/i)).toHaveCount(0);
+  await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
+
+  const willenberg = await page.goto(
+    `/api/draft-mode/enable?secret=${encodeURIComponent(secret || "")}&slug=samuel-willenberg-dies`,
+  );
+  expect(willenberg?.status()).toBe(200);
+  await expect(
+    page.getByRole("heading", { name: "Samuel Willenberg Dies" }),
+  ).toBeVisible();
+  await expect(page.getByText(/august 2, 1943/i).first()).toBeVisible();
+  await expect(page.getByText(/sonderkommando/i)).toHaveCount(0);
+  await expect(page.getByText(/warsaw ghetto uprising/i)).toHaveCount(0);
+  await expect(page.getByText(/875,000/i)).toHaveCount(0);
+
+  const tripoli = await page.goto(
+    `/api/draft-mode/enable?secret=${encodeURIComponent(secret || "")}&slug=anti-jewish-riots-tripoli`,
+  );
+  expect(tripoli?.status()).toBe(200);
+  await expect(
+    page.getByRole("heading", {
+      name: "Anti-Jewish Riots Break Out in Tripoli, Libya",
+    }),
+  ).toBeVisible();
+  await expect(page.getByText(/killed 120 jews/i).first()).toBeVisible();
+  await expect(page.getByText(/instigated the violence/i)).toHaveCount(0);
+  await expect(page.getByText(/ethnically cleansed/i)).toHaveCount(0);
+  await expect(page.getByText("Unreviewed draft source")).toHaveCount(0);
+});
+
+test("opens the published Joop Westerweel article without a preview banner", async ({
+  page,
+}) => {
+  const published = await page.goto("/history/joop-westerweel-murdered");
+  expect(published?.status()).toBe(200);
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
   await expect(
     page.getByRole("heading", { name: "Joop Westerweel Is Murdered at Vught" }),
   ).toBeVisible();
   await expect(page.getByText(/vught concentration camp/i).first()).toBeVisible();
-  await expect(
-    page.getByText(/arrested on march 11, 1944/i),
-  ).toBeVisible();
+  await expect(page.getByText(/arrested on march 11, 1944/i)).toBeVisible();
   await expect(
     page.getByText(
       /in 1964, yad vashem recognized westerweel and his wife, wilhelmina, as righteous among the nations/i,
@@ -258,19 +396,13 @@ test("opens the Joop Westerweel draft preview without publishing it", async ({
   await expect(page.getByText(/150 to 200/i)).toHaveCount(0);
   await expect(page.getByText(/march 14, 1944/i)).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "People" })).toBeVisible();
-  await expect(page.getByText("Joop Westerweel").first()).toBeVisible();
   await expect(page.getByRole("heading", { name: "Organizations" })).toHaveCount(
     0,
   );
   await expect(
     page.getByRole("heading", { name: "Sources and further reading" }),
   ).toBeVisible();
-  await expect(page.getByText("Johan (Joop) Westerweel")).toBeVisible();
-  await expect(page.getByText("Johan Gerard Westerweel")).toBeVisible();
-  await expect(page.getByText("Unreviewed draft source")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Email" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Facebook" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "X", exact: true })).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Related Jewish Original stories" }),
   ).toBeVisible();
@@ -279,9 +411,4 @@ test("opens the Joop Westerweel draft preview without publishing it", async ({
   await expect(
     page.getByRole("link", { name: "support Jewish Original" }),
   ).toBeVisible();
-
-  await page.getByRole("button", { name: "Exit preview" }).click();
-  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
-  const stillUnpublished = await page.goto("/history/joop-westerweel-murdered");
-  expect(stillUnpublished?.status()).toBe(404);
 });

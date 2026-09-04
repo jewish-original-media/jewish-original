@@ -32,6 +32,9 @@ Exit: a clean, deployable shell with no fabricated editorial content.
   without publishing additional drafts
 - Prepare `Joop Westerweel Is Murdered at Vught` as publication #2 without
   publishing it
+- Publish only the reviewed Westerweel article after founder approval;
+  remaining History drafts stay unpublished
+- Prepare unpublished Batch 2 drafts: Bialystok, Willenberg, and Tripoli
 
 Exit: the editorial workflow, public History template, and public archive
 foundation are proven. The first reviewed article is public. Remaining archive

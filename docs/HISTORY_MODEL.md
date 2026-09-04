@@ -4,8 +4,9 @@ Status: schema, source adapters, and the approved first-20 pilot were
 implemented in Milestone 1 on 2026-08-31. The editorial-foundation milestone
 adds a reviewed taxonomy crosswalk, reversible body conversion, a recurring
 observance model, and a public History template tested only in draft preview.
-`US Liberates Dachau` is the first published History article. The remaining
-pilot records stay unpublished drafts.
+`US Liberates Dachau` and `Joop Westerweel Is Murdered at Vught` are the
+published History articles. Bialystok, Willenberg, and Tripoli are
+unpublished `ready` drafts. The remaining pilot records stay unpublished.
 
 ## Modeling decision
 
