@@ -266,3 +266,30 @@ for publication. No additional archive records were imported.
 The development dataset is private, so public History pages use the
 server-only read token with the published perspective. Without that token,
 published documents are invisible and the public slug 404s.
+
+## ADR-023 — Podcast foundation uses the official RSS feed and nested URLs
+
+**Status:** Accepted, 2026-09-02
+
+The Two Tall Jews Show archive is imported from the official public RSS
+feed `https://anchor.fm/s/29786d14/podcast/rss`, not from guessed YouTube
+scrapes or the marketing homepage. The feed contains 66 items. Season and
+episode numbers are preserved as source metadata even when implausible.
+
+Durable public URLs are:
+
+- `/podcasts` — Podcasts home
+- `/podcasts/the-two-tall-jews-show` — show archive
+- `/podcasts/the-two-tall-jews-show/[slug]` — episode
+
+The editorial show title is The Two Tall Jews Show. The RSS collection
+title Jewish Original Media is stored as source metadata.
+
+Video stays on YouTube with a privacy-friendly lazy facade when an editor
+confirms a watch URL. Audio uses the official enclosure. Transcripts are
+split into raw (Advanced) and reviewed (public). AI may suggest and must
+not publish.
+
+This workstream does not write Sanity documents, publish episodes, build
+the homepage, or change History article UI. A four-episode local pilot
+renders only while no published podcast documents exist.

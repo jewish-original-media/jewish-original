@@ -44,10 +44,11 @@ Exit: the homepage has trustworthy daily value with graceful failure behavior.
 
 ## Milestone 3 — Podcast and original editorial
 
-- Model shows, guests, episodes, articles, authors, and transcripts
-- Import the podcast archive and build durable episode pages
-- Add transcription review, timestamps, media embeds, and related history
-- Build editorial story templates and social-to-site publishing workflows
+- Model shows and episodes against existing people, places, topics, and History
+- Build `/podcasts`, the TTJS show page, and episode templates from the official RSS feed
+- Keep Sanity writes blocked until the four-episode pilot is founder-approved
+- Later: confirm YouTube IDs, review transcripts, and import the remaining feed
+- Build editorial story templates and social-to-site publishing workflows after the podcast foundation is approved
 
 ## Milestone 4 — Curation and distribution
 

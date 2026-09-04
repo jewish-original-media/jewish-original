@@ -14,6 +14,8 @@ try {
 }
 
 const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
+const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000";
+const port = new URL(baseURL).port || "3000";
 
 export default defineConfig({
   testDir: "./tests",
@@ -23,7 +25,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: "list",
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000",
+    baseURL,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     launchOptions: executablePath ? { executablePath } : { channel: "chrome" },
@@ -31,8 +33,9 @@ export default defineConfig({
   webServer: {
     // Production start avoids next dev file-watchers (EMFILE) and matches
     // the published CSS/font output used for History visual QA.
-    command: "npm run start",
-    url: "http://localhost:3000",
+    // PLAYWRIGHT_BASE_URL lets this worktree share a machine with other streams.
+    command: `npx next start --port ${port}`,
+    url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

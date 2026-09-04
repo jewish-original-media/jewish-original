@@ -107,6 +107,7 @@ runtime; Edge runtime is not required for streaming or middleware.
 - `sanity.config.ts` and `sanity.cli.ts`: Studio and CLI configuration
 - `src/sanity`: schema types, editor structure, and public environment config
 - `scripts/history`: deterministic source adapters, reconciliation, and draft imports
+- `scripts/podcasts`: RSS dry-run reporting for The Two Tall Jews Show archive
 
 Features import integrations through adapters rather than calling third-party
 SDKs directly. This keeps legal provenance, caching, failure handling, and tests
@@ -139,7 +140,8 @@ consistent.
 
 - Canonical metadata through the Next.js metadata API
 - Generated `robots.txt`, XML sitemaps, Open Graph images, and schema.org JSON-LD
-- Stable routes such as `/history/[slug]` and `/podcasts/[slug]`
+- Stable routes such as `/history/[slug]`, `/podcasts`,
+  `/podcasts/[showSlug]`, and `/podcasts/[showSlug]/[slug]`
 - Responsive `next/image`, self-hosted fonts, minimal client JavaScript
 - Internal links driven by structured relationships, not brittle keyword matching
 - Web-vitals budgets: LCP <2.5s, INP <200ms, CLS <0.1 at the 75th percentile

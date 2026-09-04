@@ -81,6 +81,18 @@ Desktop History hero rhythm (64rem and up):
 - Date to title `1.25rem`; title to lede `2rem`; lede max 33rem
 - Lion watermark opacity `0.16` on desktop; hidden on mobile
 
+Podcast scale:
+
+- Show H1: `clamp(2.4rem, 6vw, 4.6rem)`, serif, max 16ch on the night hero
+- Episode H1: `clamp(2.1rem, 5vw, 3.85rem)`, serif, max 20ch
+- Episode cards: `clamp(1.35rem, 2vw, 1.7rem)`, serif
+- Tagline: serif italic in gold
+- Featured media remains 16:9. YouTube uses a click-to-load facade.
+- Archive cards are typographic rules, not artwork tiles.
+
+TTJS may use a night hero and the approved circular show mark on black. Do
+not recolor or outline the mark. Do not place it on sand or white.
+
 ## Spatial system
 
 - Base rhythm: 4px
