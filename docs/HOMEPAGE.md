@@ -1,7 +1,8 @@
 # Homepage foundation
 
-Status: History + Jewish Today convergence on `feature/integration-homepage`.
-This is still composition, not the finished homepage visual design.
+Status: History + Jewish Today + Podcast convergence on
+`feature/integration-homepage`. This is still composition, not the finished
+homepage visual design.
 
 The homepage is a Server Component composition. It is not a CMS document.
 
@@ -25,11 +26,12 @@ nonprofit layout, a synagogue template, or a card grid of invented content.
 - Composition: `getHomePageData()` in `src/features/homepage`
 - View: `HomePageView` in `src/components/home/home-page.tsx`
 - The `(home)` route group stays inside `(site)` so homepage `loading.tsx`
-  and `error.tsx` do not wrap `/today` or `/history`, while Studio at
-  `/admin` stays outside the public chrome.
+  and `error.tsx` do not wrap `/today`, `/history`, or `/podcasts`, while
+  Studio at `/admin` stays outside the public chrome.
 
-`getHomePageData()` calls `getJewishToday()` once and `getHistoryIndex()`
-once. The homepage must not call Hebcal or write a second on-this-day query.
+`getHomePageData()` calls `getJewishToday()` once, `getHistoryIndex()` once,
+and the published Podcast show/episode reads once. The homepage must not
+call Hebcal or write a second on-this-day query.
 
 Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 
@@ -38,7 +40,8 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 1. **Masthead** — official positioning and product principle. Live.
 2. **Jewish Today** — compact `JewishTodayModule`. Live.
 3. **History** — published `HistoryEntryCard` archive cards. Live.
-4. **Podcasts** — reserved slot. Pending Podcasts merge.
+4. **Podcasts** — canonical published Podcast module. Preparing while
+   published count is 0.
 5. **Later desks** — News, Events, Culture, Support. Named only.
 
 ## Jewish Today module
@@ -65,10 +68,18 @@ navigation, or featured-layout treatment. It shows published cards and a link
 to the archive. If the read fails, the section says the archive is briefly
 unavailable and still links to `/history`.
 
-## Podcast convergence slot
+## Podcast module
 
-Do not merge `feature/podcasts` yet. Do not duplicate Podcast media logic. Do
-not invent episode titles, guests, or media.
+Uses the canonical Podcast system only:
+
+- `getPodcastShow(TTJS_SHOW_SLUG, false)`
+- `getPodcastEpisodes(show.slug, false)` when a published show exists
+- `EpisodeCard` for published episodes
+- the existing “Podcasts are being prepared.” copy while the show is unpublished
+
+Do not read draft documents on the public homepage. Do not invent episode
+titles, guests, or media. Do not create a second card system. History ↔
+Podcast relationships remain editor-approved fields only.
 
 ## Later desks
 

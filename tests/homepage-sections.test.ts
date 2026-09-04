@@ -19,7 +19,7 @@ test("masthead, Jewish Today, and History are live modules", () => {
   assert.equal(HOME_SECTION_ORDER[0]?.status, "live");
   assert.equal(HOME_SECTION_ORDER[1]?.status, "live");
   assert.equal(HOME_SECTION_ORDER[2]?.status, "live");
-  assert.equal(HOME_SECTION_ORDER[3]?.status, "pending-podcasts-merge");
+  assert.equal(HOME_SECTION_ORDER[3]?.status, "preparing");
   assert.equal(HOME_SECTION_ORDER[4]?.status, "later-desk");
 });
 
@@ -28,14 +28,10 @@ test("History homepage contract uses published archive entries", () => {
   assert.deepEqual(HISTORY_HOME_CONTRACT.entries, []);
 });
 
-test("Podcasts contract names future inputs and invents no episodes", () => {
-  assert.equal(PODCASTS_HOME_CONTRACT.status, "pending-podcasts-merge");
-  assert.deepEqual(PODCASTS_HOME_CONTRACT.expectedInputs, [
-    "featuredOrRecentEpisodes",
-    "showMetadata",
-    "episodeCards",
-    "mediaLinks",
-  ]);
+test("Podcasts contract starts empty and invents no episodes", () => {
+  assert.equal(PODCASTS_HOME_CONTRACT.status, "preparing");
+  assert.equal(PODCASTS_HOME_CONTRACT.show, null);
+  assert.deepEqual(PODCASTS_HOME_CONTRACT.episodes, []);
 });
 
 test("later desks stay named only", () => {

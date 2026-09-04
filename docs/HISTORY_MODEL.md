@@ -116,8 +116,9 @@ unlicensed placeholder.
 
 - `relatedHistory`: ordered objects containing a history reference, relation
   type, optional note, and origin (`editorial`, `imported`, or `suggested`)
-- `relatedPodcastEpisodes`: added when the real podcast schema exists; no
-  placeholder podcast type is introduced now
+- `relatedPodcastEpisodes`: editor-approved `relatedPodcastItem` references
+  to `podcastEpisode`. The History article template does not render them
+  in this milestone. AI or keyword matches stay suggestions until reviewed.
 
 Suggested relationships never become published curation without editor
 approval.

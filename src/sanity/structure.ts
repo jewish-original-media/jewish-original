@@ -71,6 +71,41 @@ export const structure: StructureResolver = (S) =>
             ),
         ),
       S.divider(),
+      S.documentTypeListItem("podcastShow").title("Podcast shows"),
+      S.documentTypeListItem("podcastEpisode").title("Podcast episodes"),
+      S.listItem()
+        .title("Podcast workflow")
+        .child(
+          S.list()
+            .title("Podcast workflow")
+            .items(
+              (
+                [
+                  ["Imported", "imported"],
+                  ["Needs review", "needsReview"],
+                  ["Fact check", "factCheck"],
+                  ["Rights review", "rightsReview"],
+                  ["Ready", "ready"],
+                  ["Rejected", "rejected"],
+                  ["Archived", "archived"],
+                ] as const
+              ).map(([title, status]) =>
+                S.listItem()
+                  .title(title)
+                  .child(
+                    S.documentList()
+                      .title(title)
+                      .apiVersion(sanityEnv.apiVersion)
+                      .schemaType("podcastEpisode")
+                      .filter(
+                        '_type == "podcastEpisode" && workflowStatus == $status',
+                      )
+                      .params({ status }),
+                  ),
+              ),
+            ),
+        ),
+      S.divider(),
       S.listItem()
         .title("Reference data")
         .child(

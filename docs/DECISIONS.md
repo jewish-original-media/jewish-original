@@ -390,3 +390,65 @@ removed. Jewish Today and the homepage consume History’s
 `getOnThisDayHistory`, `HistoryEntryCard`, and `formatHistoricalDate`.
 Podcasts are not merged. Production, DNS, and the GitHub default branch are
 unchanged.
+
+## ADR-030 — Podcast foundation uses the official RSS feed and nested URLs
+
+**Status:** Accepted, 2026-09-02
+
+Authored as ADR-023 on `feature/podcasts`. Renumbered here so History
+ADR-023 (Westerweel) and later History/Integration ADRs stay stable.
+
+The Two Tall Jews Show archive is imported from the official public RSS
+feed `https://anchor.fm/s/29786d14/podcast/rss`, not from guessed YouTube
+scrapes or the marketing homepage. The feed contains 66 items. Season and
+episode numbers are preserved as source metadata even when implausible.
+
+Durable public URLs are:
+
+- `/podcasts` — Podcasts home
+- `/podcasts/the-two-tall-jews-show` — show archive
+- `/podcasts/the-two-tall-jews-show/[slug]` — episode
+
+The editorial show title is The Two Tall Jews Show. The RSS collection
+title Jewish Original Media is stored as source metadata.
+
+Video stays on YouTube with a privacy-friendly lazy facade when an editor
+confirms a watch URL. Audio uses the official enclosure. Transcripts are
+split into raw (Advanced) and reviewed (public). AI may suggest and must
+not publish.
+
+The public catalog reads published Sanity documents only. Unpublished
+pilot drafts stay out of `/podcasts`, show pages, episode pages, and the
+sitemap.
+
+## ADR-031 — Four-pilot drafts use verified multi-platform links
+
+**Status:** Accepted, 2026-09-04
+
+Authored as ADR-024 on `feature/podcasts`. Renumbered here so History
+ADR-024 remains Publication Batch 2 preparation.
+
+Episode media may include official RSS audio plus verified YouTube, Spotify,
+and Apple episode URLs. Primary media is YouTube when a verified official
+episode video exists, otherwise native RSS audio. Spotify and Apple are
+Listen alternatives, not stacked players.
+
+Apple episode URLs were verified through the official iTunes lookup, matched
+by RSS GUID. Spotify episode pages were taken from the official RSS link.
+No official TTJS YouTube episode IDs were verified. Description YouTube
+links remain guest-channel evidence only.
+
+The four-pilot import writes `drafts.*` documents only and is idempotent by
+RSS GUID. It does not publish and does not import the remaining catalog.
+
+## ADR-032 — Frozen Podcasts merge into Integration
+
+**Status:** Accepted, 2026-09-04
+
+`feature/podcasts` at `0d939d3` is merged into `feature/integration-homepage`.
+History desks remain. Podcast shows, episodes, and workflow join the same
+Studio. One draft-mode enable route serves History, podcast shows, and
+podcast episodes. The homepage Podcast slot uses the canonical published
+Podcast read and the existing “Podcasts are being prepared.” state while
+published count is 0. Research branches, Production, DNS, and the GitHub
+default branch are unchanged.

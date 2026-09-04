@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { HistoryEntryCard } from "@/components/history/history-entry-card";
+import { EpisodeCard } from "@/components/podcasts/episode-card";
 import { JewishTodayModule } from "@/components/today/jewish-today-module";
 import { Container } from "@/components/ui/container";
 import { LATER_DESKS, type HomePageData } from "@/features/homepage";
@@ -62,8 +63,9 @@ export function HomePageView({ data }: HomePageViewProps) {
             Connection is the outcome.
           </p>
           <p className={styles.principle}>
-            Start with today and the published archive. Podcasts and later desks
-            will join this home when they are ready — never as invented filler.
+            Start with today and the published archive. Published podcasts and
+            later desks will join this home when they are ready — never as
+            invented filler.
           </p>
         </Container>
       </section>
@@ -113,11 +115,38 @@ export function HomePageView({ data }: HomePageViewProps) {
         className={styles.pendingSection}
         eyebrow="Podcasts"
         id="podcasts"
-        title="Shows and episodes belong here"
+        title={
+          data.podcasts.status === "live" && data.podcasts.show
+            ? data.podcasts.show.title
+            : "Podcasts are being prepared."
+        }
       >
-        <p className={styles.slotCopy}>
-          Featured and recent episodes, show details, episode cards, and media
-          links will occupy this section. No episode is invented here.
+        {data.podcasts.status === "unavailable" ? (
+          <p className={styles.slotCopy} role="status">
+            Podcasts are briefly unavailable.
+          </p>
+        ) : null}
+        {data.podcasts.status === "preparing" ? (
+          <p className={styles.slotCopy}>
+            The Two Tall Jews Show archive is in editorial review. Published
+            episode pages will appear here after founder approval.
+          </p>
+        ) : null}
+        {data.podcasts.status === "live" &&
+        data.podcasts.episodes.length === 0 ? (
+          <p className={styles.slotCopy}>
+            Published episodes will appear here after editorial review.
+          </p>
+        ) : null}
+        {data.podcasts.episodes.length > 0 ? (
+          <div className="podcast-episode-list">
+            {data.podcasts.episodes.map((episode) => (
+              <EpisodeCard episode={episode} key={episode._id} />
+            ))}
+          </div>
+        ) : null}
+        <p className={styles.archiveLink}>
+          <Link href="/podcasts">Open Podcasts</Link>
         </p>
       </HomeSection>
 

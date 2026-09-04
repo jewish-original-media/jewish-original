@@ -1,4 +1,8 @@
 import type { HistoryEntrySummary } from "@/content/history/types";
+import type {
+  PodcastEpisodeSummary,
+  PodcastShow,
+} from "@/content/podcasts/types";
 
 export const HOME_SECTION_IDS = [
   "masthead",
@@ -11,7 +15,7 @@ export const HOME_SECTION_IDS = [
 export type HomeSectionId = (typeof HOME_SECTION_IDS)[number];
 
 export type HomeSectionStatus =
-  "live" | "unavailable" | "pending-podcasts-merge" | "later-desk";
+  "live" | "unavailable" | "preparing" | "later-desk";
 
 export type HomeSectionContract = {
   id: HomeSectionId;
@@ -31,13 +35,9 @@ export type LaterDeskContract = {
 };
 
 export type PodcastHomeContract = {
-  status: "pending-podcasts-merge";
-  expectedInputs: readonly [
-    "featuredOrRecentEpisodes",
-    "showMetadata",
-    "episodeCards",
-    "mediaLinks",
-  ];
+  status: "live" | "preparing" | "unavailable";
+  show: PodcastShow | null;
+  episodes: PodcastEpisodeSummary[];
 };
 
 export type HistoryHomeContract = {

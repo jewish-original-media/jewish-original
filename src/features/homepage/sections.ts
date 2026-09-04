@@ -1,4 +1,9 @@
 import type {
+  PodcastEpisodeSummary,
+  PodcastShow,
+} from "@/content/podcasts/types";
+
+import type {
   HomeSectionContract,
   LaterDeskContract,
   HistoryHomeContract,
@@ -34,10 +39,10 @@ export const HOME_SECTION_ORDER: readonly HomeSectionContract[] = [
   {
     id: "podcasts",
     eyebrow: "Podcasts",
-    title: "Shows and episodes belong here",
-    status: "pending-podcasts-merge",
+    title: "Podcasts are being prepared.",
+    status: "preparing",
     description:
-      "Reserved for featured and recent episodes after feature/podcasts merges.",
+      "Published getPodcastShow and EpisodeCard only. Draft pilots stay off the public homepage.",
   },
   {
     id: "later-desks",
@@ -82,11 +87,26 @@ export const HISTORY_HOME_CONTRACT: HistoryHomeContract = {
 };
 
 export const PODCASTS_HOME_CONTRACT: PodcastHomeContract = {
-  status: "pending-podcasts-merge",
-  expectedInputs: [
-    "featuredOrRecentEpisodes",
-    "showMetadata",
-    "episodeCards",
-    "mediaLinks",
-  ],
+  status: "preparing",
+  show: null,
+  episodes: [],
 };
+
+export function buildPodcastHomeContract(
+  show: PodcastShow | null,
+  episodes: PodcastEpisodeSummary[] = [],
+): PodcastHomeContract {
+  if (!show) {
+    return {
+      status: "preparing",
+      show: null,
+      episodes: [],
+    };
+  }
+
+  return {
+    status: "live",
+    show,
+    episodes,
+  };
+}

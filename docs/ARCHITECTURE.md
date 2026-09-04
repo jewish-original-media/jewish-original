@@ -46,9 +46,11 @@ Current service gates:
   datasets, 10,000 documents, 250,000 API requests/month, 1 million API CDN
   requests/month, 100 GB assets, and 100 GB bandwidth. Use one development
   dataset initially and reserve the second for production. One of two datasets
-  is now in use. The development dataset holds the History corpus. Five
-  reviewed History entries are published. Remaining imported records stay
-  drafts.
+  is now in use. The development dataset holds the History corpus and
+  unpublished Podcast pilot drafts. Five reviewed History entries are
+  published. Remaining imported History records stay drafts. One
+  podcastShow and four podcastEpisode documents remain unpublished.
+  Public podcast pages stay empty until founder-approved publication.
   The Free plan exposes Administrator and Viewer roles but not an Editor role,
   so it is suitable for the founder-only development milestone, not a
   least-privilege editorial team. Upgrade when a
@@ -107,6 +109,7 @@ runtime; Edge runtime is not required for streaming or middleware.
 - `sanity.config.ts` and `sanity.cli.ts`: Studio and CLI configuration
 - `src/sanity`: schema types, editor structure, and public environment config
 - `scripts/history`: deterministic source adapters, reconciliation, and draft imports
+- `scripts/podcasts`: RSS dry-run reporting and draft-only four-pilot import
 
 Features import integrations through adapters rather than calling third-party
 SDKs directly. This keeps legal provenance, caching, failure handling, and tests
@@ -139,10 +142,12 @@ consistent.
 
 - Canonical metadata through the Next.js metadata API
 - Generated `robots.txt`, XML sitemaps, Open Graph images, and schema.org JSON-LD
-- Stable routes such as `/history`, `/history/[slug]`, and `/podcasts/[slug]`
+- Stable routes such as `/`, `/today`, `/history`, `/history/[slug]`,
+  `/podcasts`, `/podcasts/[showSlug]`, and `/podcasts/[showSlug]/[slug]`
 - History owns Gregorian On This Day matching; Jewish Today owns Hebcal
 - Archive filters stay on `/history` query parameters until taxonomy routes
   have a meaningful published body
+- Unpublished Podcast drafts never enter the sitemap or public catalog
 - Responsive `next/image`, self-hosted fonts, minimal client JavaScript
 - Internal links driven by structured relationships, not brittle keyword matching
 - Web-vitals budgets: LCP <2.5s, INP <200ms, CLS <0.1 at the 75th percentile
@@ -174,9 +179,10 @@ See `docs/JEWISH_TODAY.md`, `docs/HOMEPAGE.md`, and ADR-026.
 ## Homepage composition
 
 `/` is assembled by `getHomePageData()` in `src/features/homepage`. Jewish
-Today and published History are live modules. Podcasts, News, Events,
-Culture, and Support have typed section contracts. Do not invent editorial
-items to fill those slots.
+Today and published History are live modules. Podcasts use the canonical
+published show/episode read and the existing prepared state while nothing
+is published. News, Events, Culture, and Support remain named later desks.
+Do not invent editorial items to fill those slots.
 
 Loading and unexpected homepage errors live in `src/app/(site)/(home)/` so
 they do not wrap `/today` or `/history`. Expected Jewish Today failures stay

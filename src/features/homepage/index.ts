@@ -1,5 +1,6 @@
 export { getHomePageData } from "./get-home-page";
 export {
+  buildPodcastHomeContract,
   HISTORY_HOME_CONTRACT,
   HOME_SECTION_ORDER,
   LATER_DESKS,

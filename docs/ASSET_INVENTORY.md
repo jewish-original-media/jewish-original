@@ -69,7 +69,12 @@ logo on History articles.
 
 ## The Two Tall Jews Show and legacy marks
 
-- The Two Tall Jews Show logo — 1024×910, opaque raster
+- The Two Tall Jews Show logo — founder pack file
+  `Copy of The two tall jewas-Sin fondo- oscuro (1).png`, 1080×960 RGBA with
+  a black field around a white circular badge. Copied unedited to
+  `public/brand/ttjs-mark.png` for Podcast pages. Place only on black/night.
+- WebP derivative of the same mark in the founder asset folder
+- `Podcast.png.webp` (1920×1080) website banner — not used on public pages
 - Jewish History Timeline circular logo — 500×500, transparent PNG
 - Jewish History Timeline circular artwork — 1024×1024, opaque raster
 

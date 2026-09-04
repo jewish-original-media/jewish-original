@@ -10,7 +10,7 @@ test("serves the embedded Sanity Studio without public site chrome", async ({
   await expect(
     page
       .getByText(
-        /Choose login provider|All history entries|Connect this Studio to your project/,
+        /Choose login provider|All history entries|Podcast shows|Connect this Studio to your project|Add CORS origin/,
       )
       .first(),
   ).toBeVisible({ timeout: 15_000 });

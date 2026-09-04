@@ -59,17 +59,20 @@ test("composes the homepage from Jewish Today and published History", async ({
     ).toBeVisible();
   }
   await expect(
-    page.getByRole("heading", { name: "Shows and episodes belong here" }),
+    page.getByRole("heading", { name: "Podcasts are being prepared." }),
   ).toBeVisible();
-  await expect(page.getByText(/no episode is invented here/i)).toBeVisible();
+  await expect(
+    page.getByText(/The Two Tall Jews Show archive is in editorial review/i),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Open Podcasts" }),
+  ).toHaveAttribute("href", "/podcasts");
   await expect(
     page.getByRole("heading", { name: "News, events, culture, and support" }),
   ).toBeVisible();
-  await expect(
-    page
-      .getByRole("region", { name: "Shows and episodes belong here" })
-      .getByRole("link"),
-  ).toHaveCount(0);
+  await expect(page.getByText("With Kalman Gavriel")).toHaveCount(0);
+  await expect(page.getByText("With Alexandra Zapruder")).toHaveCount(0);
+  await expect(page.getByText("Sitting Down With")).toHaveCount(0);
   await expect(page.getByText("Private editorial preview")).toHaveCount(0);
 
   await expectNoOverflow(page);

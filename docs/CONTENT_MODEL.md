@@ -47,11 +47,24 @@ conversion. Year and century are derived from the reviewed date rather than
 stored as drifting free-text values. See `docs/HISTORY_MODEL.md` for the
 production field model and `docs/HISTORY_ARCHIVE_AUDIT.md` for source evidence.
 
+### Podcast show
+
+Title, slug, tagline, description, host person references, rights-aware
+artwork, platform URLs, SEO, workflow, and source-feed provenance. The
+first show is The Two Tall Jews Show. See `docs/PODCAST_MODEL.md`.
+
 ### Podcast episode
 
-Title, slug, show, episode and season numbers, guest references, release date,
-YouTube and audio identifiers, description, transcript with timestamps and
-speaker labels, topics, related history, media, SEO, and publication data.
+Title, slug, show reference, season and episode numbers, publication date,
+excerpt, original description, official RSS audio, optional verified YouTube,
+Spotify, and Apple episode URLs, primary-media rule, duration, guest and
+host person references, optional chapters, reviewed summary, raw and
+reviewed transcript, topics, people, places, related history, related
+episodes, sources, featured image, SEO, workflow, and import provenance.
+
+Guest names from a source feed may be stored as read-only strings until an
+editor links `person` documents. Do not invent guests, transcripts, or
+History relationships.
 
 ### Article
 
@@ -108,8 +121,9 @@ Gregorian month/day match. Do not persist generated calendar days. Recurring
 observances remain `historyEntry.entryKind = recurringObservance` and are not
 on-this-day History matches through History `getOnThisDayHistory`. See
 `docs/JEWISH_TODAY.md`. The homepage composes that calculated day plus
-published History cards, then reserved Podcast, News, Events, Culture, and
-Support slots. It does not become a CMS document. See `docs/HOMEPAGE.md`.
+published History cards and the canonical published Podcast contract. News,
+Events, Culture, and Support remain reserved. It does not become a CMS
+document. See `docs/HOMEPAGE.md`.
 
 ## Relationships and IDs
 
