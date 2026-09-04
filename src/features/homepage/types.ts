@@ -9,13 +9,15 @@ export const HOME_SECTION_IDS = [
   "jewish-today",
   "history",
   "podcasts",
-  "later-desks",
+  "support",
 ] as const;
 
-export type HomeSectionId = (typeof HOME_SECTION_IDS)[number];
+export const HIDDEN_HOME_MODULE_IDS = ["originals", "news", "events"] as const;
 
-export type HomeSectionStatus =
-  "live" | "unavailable" | "preparing" | "later-desk";
+export type HomeSectionId = (typeof HOME_SECTION_IDS)[number];
+export type HiddenHomeModuleId = (typeof HIDDEN_HOME_MODULE_IDS)[number];
+
+export type HomeSectionStatus = "live" | "unavailable" | "preparing";
 
 export type HomeSectionContract = {
   id: HomeSectionId;
@@ -25,13 +27,11 @@ export type HomeSectionContract = {
   description: string;
 };
 
-export type LaterDeskId = "news" | "events" | "culture" | "support";
-
-export type LaterDeskContract = {
-  id: LaterDeskId;
+export type HiddenHomeModule = {
+  id: HiddenHomeModuleId;
   title: string;
-  status: "later-desk";
-  note: string;
+  status: "hidden";
+  reason: "no-published-documents";
 };
 
 export type PodcastHomeContract = {

@@ -349,9 +349,10 @@ test("serves an honest support foundation without a payment form", async ({
 
   expect(response?.status()).toBe(200);
   await expect(
-    page.getByRole("heading", { name: /help keep this history/i }),
+    page.getByRole("heading", { name: /stand with us\. build with us/i }),
   ).toBeVisible();
   await expect(page.locator("form")).toHaveCount(0);
+  await expect(page.getByText(/tax-deductible/i)).toHaveCount(0);
 });
 
 test("opens an authenticated draft preview without publishing other drafts", async ({

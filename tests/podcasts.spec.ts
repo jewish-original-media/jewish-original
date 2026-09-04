@@ -7,28 +7,60 @@ const zapruder =
 const premier =
   "/podcasts/the-two-tall-jews-show/premier-mel-brooks-annexation-music-from-the-holocaust-a-deep-dive-into-tikkun-olam";
 
-test("keeps unpublished pilots off the public catalog and sitemap", async ({
+test("publishes the approved show and four pilot episodes", async ({
   page,
 }) => {
   const home = await page.goto("/podcasts");
   expect(home?.status()).toBe(200);
   await expect(
-    page.getByRole("heading", { name: "Podcasts are being prepared." }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "The Two Tall Jews Show",
+      exact: true,
+    }),
   ).toBeVisible();
-  await expect(page.getByText("With Kalman Gavriel")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Podcasts are being prepared." }),
+  ).toHaveCount(0);
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
+  await expect(page.getByText("With Kalman Gavriel")).toBeVisible();
+  await expect(page.getByText("With Alexandra Zapruder")).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: "SEASON 3 FINALE - LOOKING AHEAD TO 2023",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: "PREMIER: Mel Brooks, Annexation, Music from the Holocaust, & A Deep Dive into Tikkun Olam",
+    }),
+  ).toBeVisible();
 
-  const unpublishedShow = await page.goto("/podcasts/the-two-tall-jews-show");
-  expect(unpublishedShow?.status()).toBe(404);
+  const show = await page.goto("/podcasts/the-two-tall-jews-show");
+  expect(show?.status()).toBe(200);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: "The Two Tall Jews Show",
+      exact: true,
+    }),
+  ).toBeVisible();
 
-  const unpublished = await page.goto(kalman);
-  expect(unpublished?.status()).toBe(404);
+  const published = await page.goto(kalman);
+  expect(published?.status()).toBe(200);
+  await expect(
+    page.getByRole("heading", {
+      name: "Sitting Down With: Kalman Gavriel, The Jerusalem Scribe",
+    }),
+  ).toBeVisible();
+  await expect(page.getByText("Private editorial preview")).toHaveCount(0);
 
   const sitemap = await page.goto("/sitemap.xml");
   expect(sitemap?.status()).toBe(200);
   const xml = (await page.content()) || "";
   expect(xml).toContain("https://jewishoriginal.com/podcasts");
-  expect(xml).not.toContain("/podcasts/the-two-tall-jews-show");
-  expect(xml).not.toContain(
+  expect(xml).toContain("/podcasts/the-two-tall-jews-show");
+  expect(xml).toContain(
     "sitting-down-with-kalman-gavriel-the-jerusalem-scribe",
   );
 });

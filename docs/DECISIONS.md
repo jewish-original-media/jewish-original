@@ -452,3 +452,22 @@ podcast episodes. The homepage Podcast slot uses the canonical published
 Podcast read and the existing “Podcasts are being prepared.” state while
 published count is 0. Research branches, Production, DNS, and the GitHub
 default branch are unchanged.
+
+## ADR-033 — V1 public shell uses live destinations only
+
+**Status:** Accepted, 2026-09-04
+
+Public navigation is Today, History, Podcasts, About, and Support. The logo
+returns Home. Originals, News, and Events stay out of the nav and homepage
+until published documents exist. Search remains deferred.
+
+The homepage opening uses one founder line, “Remember, rebuild, and create,”
+with the approved positioning as the lede. About and Support use
+founder-provided copy. Privacy describes current product behavior and is
+marked for founder legal review.
+
+During this milestone, founder approval to publish The Two Tall Jews Show
+and the four pilot episodes arrived in the Podcast workstream. Integration
+re-read the published documents and surfaced them through the existing
+published-only contract. Integration did not write to Sanity. Production,
+DNS, and the GitHub default branch are unchanged.

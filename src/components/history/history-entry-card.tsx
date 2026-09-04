@@ -10,9 +10,11 @@ export type HistoryCardVariant = "featured" | "archive" | "related";
 export function HistoryEntryCard({
   entry,
   variant = "archive",
+  headingLevel,
 }: {
   entry: HistoryEntrySummary;
   variant?: HistoryCardVariant;
+  headingLevel?: "h2" | "h3";
 }) {
   const date = formatHistoricalDate(
     entry.historicalDate,
@@ -20,7 +22,7 @@ export function HistoryEntryCard({
     entry.observanceRule,
   );
   const location = historyCardLocation(entry);
-  const TitleTag = variant === "featured" ? "h2" : "h3";
+  const TitleTag = headingLevel ?? (variant === "featured" ? "h2" : "h3");
   const titleClass =
     variant === "featured"
       ? "history-archive-title"

@@ -68,8 +68,11 @@ History relationships.
 
 ### Article
 
-Title, slug, author references, editorial desk/category, excerpt, body, sources,
-featured media, topics, related content, SEO, and publication data.
+Title, slug, author person references, excerpt, body, sources, featured media
+with rights, topics, related History or Podcast references, SEO, and
+publication / workflow. This is the future Originals document. Do not add a
+`blogPost` or `newsletterPost` type. See `docs/ORIGINALS.md`. The public
+homepage hides Originals until a published article exists.
 
 ### Curated news item
 
@@ -121,9 +124,9 @@ Gregorian month/day match. Do not persist generated calendar days. Recurring
 observances remain `historyEntry.entryKind = recurringObservance` and are not
 on-this-day History matches through History `getOnThisDayHistory`. See
 `docs/JEWISH_TODAY.md`. The homepage composes that calculated day plus
-published History cards and the canonical published Podcast contract. News,
-Events, Culture, and Support remain reserved. It does not become a CMS
-document. See `docs/HOMEPAGE.md`.
+published History cards, the published Podcast show and latest episode, and a
+Support invitation. Originals, News, and Events stay hidden until published
+documents exist. It does not become a CMS document. See `docs/HOMEPAGE.md`.
 
 ## Relationships and IDs
 

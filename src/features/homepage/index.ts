@@ -1,17 +1,18 @@
 export { getHomePageData } from "./get-home-page";
+export { composeHomeHistory } from "./history";
+export { composeHomePodcasts } from "./podcasts";
 export {
-  buildPodcastHomeContract,
+  HIDDEN_HOME_MODULES,
   HISTORY_HOME_CONTRACT,
   HOME_SECTION_ORDER,
-  LATER_DESKS,
   PODCASTS_HOME_CONTRACT,
 } from "./sections";
 export type {
+  HiddenHomeModule,
   HomePageData,
   HomeSectionContract,
   HomeSectionId,
   HomeSectionStatus,
   HistoryHomeContract,
-  LaterDeskContract,
   PodcastHomeContract,
 } from "./types";

@@ -1,8 +1,8 @@
 # Integration branch
 
-Status: History + Jewish Today + Podcast convergence. Do not merge to the
-GitHub default branch. Do not deploy production. Do not publish Sanity
-content.
+Status: V1 public shell on History + Jewish Today + Podcast convergence. Do
+not merge to the GitHub default branch. Do not deploy production. Do not
+publish Sanity content.
 
 ## Branch and worktree
 
@@ -32,8 +32,8 @@ Do not rebase this branch onto uncommitted research work.
 Integration owns shared surfaces. The Podcast merge kept:
 
 - History’s root layout (no public chrome) so `/admin` stays a Studio shell
-- History’s `(site)` chrome for `/`, `/today`, `/history`, `/podcasts`, and
-  `/support`
+- History’s `(site)` chrome for `/`, `/today`, `/history`, `/podcasts`,
+  `/about`, `/support`, and `/privacy`
 - History + Podcast schema, unified Studio desks, and one draft-mode route
 - sitemap Home, Today, History, published History slugs, Support, and
   published Podcast indexes only
@@ -56,9 +56,12 @@ Removed. Jewish Today and the homepage use:
 
 - `/podcasts` degrades to “Podcasts are being prepared.” while no show is
   published
+- After founder approval on 2026-09-04, The Two Tall Jews Show and the four
+  pilot episodes are published. Integration did not write those documents.
 - unpublished show and episode slugs 404
-- sitemap omits unpublished show and episode slugs
-- homepage uses the same published-only read and `EpisodeCard`
+- sitemap includes only published show and episode slugs
+- homepage uses the same published-only read, one `EpisodeCard` lead, and a
+  route into `/podcasts`
 
 ## Environment variable names
 

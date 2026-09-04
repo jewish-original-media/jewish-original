@@ -4,8 +4,8 @@ import type {
 } from "@/content/podcasts/types";
 
 import type {
+  HiddenHomeModule,
   HomeSectionContract,
-  LaterDeskContract,
   HistoryHomeContract,
   PodcastHomeContract,
 } from "./types";
@@ -14,11 +14,10 @@ export const HOME_SECTION_ORDER: readonly HomeSectionContract[] = [
   {
     id: "masthead",
     eyebrow: "Jewish Original Media",
-    title:
-      "A modern home for Jewish history, culture, education, connection, and identity.",
+    title: "Remember, rebuild, and create.",
     status: "live",
     description:
-      "Restrained editorial identity. Not a marketing hero and not a card grid.",
+      "One restrained opening. Positioning lives in the lede, not as a slogan stack.",
   },
   {
     id: "jewish-today",
@@ -26,58 +25,51 @@ export const HOME_SECTION_ORDER: readonly HomeSectionContract[] = [
     title: "Daily Jewish context",
     status: "live",
     description:
-      "Uses getJewishToday() and JewishTodayModule. Do not fetch Hebcal or History again.",
+      "Uses getJewishToday() once. Homepage presents the same day. Do not fetch Hebcal again.",
   },
   {
     id: "history",
     eyebrow: "History",
-    title: "From the archive",
+    title: "On this day or from the archive",
     status: "live",
     description:
-      "Published HistoryEntryCard archive cards from getHistoryIndex. Not a second /history page.",
+      "Lead HistoryEntryCard plus supporting archive items from getHistoryIndex.",
   },
   {
     id: "podcasts",
     eyebrow: "Podcasts",
-    title: "Podcasts are being prepared.",
-    status: "preparing",
+    title: "The Two Tall Jews Show",
+    status: "live",
     description:
-      "Published getPodcastShow and EpisodeCard only. Draft pilots stay off the public homepage.",
-  },
-  {
-    id: "later-desks",
-    eyebrow: "Later desks",
-    title: "News, events, culture, and support",
-    status: "later-desk",
-    description:
-      "Named only. No fabricated headlines, events, culture items, or donation claims.",
-  },
-] as const;
-
-export const LATER_DESKS: readonly LaterDeskContract[] = [
-  {
-    id: "news",
-    title: "News",
-    status: "later-desk",
-    note: "Curated, rights-safe reporting. Not a wire dump.",
-  },
-  {
-    id: "events",
-    title: "Events",
-    status: "later-desk",
-    note: "Reviewed gatherings with real dates and sources.",
-  },
-  {
-    id: "culture",
-    title: "Culture",
-    status: "later-desk",
-    note: "Books, music, food, art, and discoveries as typed editorial objects.",
+      "Published getPodcastShow and one EpisodeCard lead. The catalog holds the remaining published episodes.",
   },
   {
     id: "support",
-    title: "Support",
-    status: "later-desk",
-    note: "Donations and sponsorships that stay secondary to editorial trust.",
+    eyebrow: "Support",
+    title: "Stand with us",
+    status: "live",
+    description: "A short invitation into /support. No invented campaigns.",
+  },
+] as const;
+
+export const HIDDEN_HOME_MODULES: readonly HiddenHomeModule[] = [
+  {
+    id: "originals",
+    title: "Originals",
+    status: "hidden",
+    reason: "no-published-documents",
+  },
+  {
+    id: "news",
+    title: "What We’re Following",
+    status: "hidden",
+    reason: "no-published-documents",
+  },
+  {
+    id: "events",
+    title: "Upcoming Events",
+    status: "hidden",
+    reason: "no-published-documents",
   },
 ] as const;
 

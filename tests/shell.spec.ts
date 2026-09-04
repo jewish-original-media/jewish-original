@@ -10,11 +10,7 @@ test("renders the responsive, accessible application shell", async ({
       const text = message.text();
       const sourceUrl = message.location().url;
       const combined = `${text} ${sourceUrl}`;
-      if (
-        /\/(?:search|news|events|about|contact|privacy|terms)(?:\?|$)/.test(
-          combined,
-        )
-      ) {
+      if (/\/(?:search|news|events|contact|terms)(?:\?|$)/.test(combined)) {
         return;
       }
       browserErrors.push(sourceUrl ? `${text} (${sourceUrl})` : text);
@@ -24,11 +20,7 @@ test("renders the responsive, accessible application shell", async ({
   page.on("response", (response) => {
     if (response.status() >= 400) {
       const path = new URL(response.url()).pathname;
-      if (
-        /^(?:\/search|\/news|\/events|\/about|\/contact|\/privacy|\/terms)$/.test(
-          path,
-        )
-      ) {
+      if (/^(?:\/search|\/news|\/events|\/contact|\/terms)$/.test(path)) {
         return;
       }
       browserErrors.push(`${response.status()} ${response.url()}`);
@@ -43,7 +35,7 @@ test("renders the responsive, accessible application shell", async ({
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: /a modern home for jewish history/i,
+      name: /remember, rebuild, and create/i,
     }),
   ).toBeVisible();
 

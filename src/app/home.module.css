@@ -5,101 +5,156 @@
 .masthead {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(2.25rem, 6vw, 4.5rem);
-  background: color-mix(in srgb, var(--color-sand) 38%, var(--color-canvas));
+  padding-block: clamp(2.5rem, 7vw, 5.5rem);
+  background: color-mix(in srgb, var(--color-sand) 42%, var(--color-canvas));
 }
 
-.mastheadRule {
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 1px;
-  height: 100%;
-  background: color-mix(in srgb, var(--color-gold) 55%, transparent);
+.mastheadInner {
+  position: relative;
+  z-index: 1;
 }
 
-@media (min-width: 40rem) {
-  .mastheadRule {
-    right: 12%;
-  }
+.mastheadTitle {
+  max-width: 12ch;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(2.35rem, 7vw, 4.4rem);
+  font-weight: 450;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  text-wrap: balance;
 }
 
-.principle {
-  margin: var(--space-8) 0 0;
-  max-width: 36rem;
+.mastheadLede {
+  max-width: 28rem;
+  margin: var(--space-6) 0 0;
   color: var(--color-navy);
   font-family: var(--font-serif);
-  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-  line-height: 1.7;
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  line-height: 1.6;
 }
 
-.sectionTitle {
-  margin: 0;
-  max-width: 18ch;
-  font-family: var(--font-serif);
-  font-size: clamp(1.65rem, 2.4vw, 2.15rem);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-}
-
-.section {
-  padding-block: clamp(2rem, 5vw, 3.75rem);
-}
-
-.sectionRule {
-  border-top: 1px solid var(--color-rule);
+.mastheadActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
 }
 
 .todaySection {
+  padding-block: clamp(2rem, 5vw, 3.5rem);
   background: var(--color-paper);
+  border-block: 1px solid var(--color-rule);
 }
 
-.pendingSection {
-  background: color-mix(in srgb, var(--color-sand) 22%, var(--color-canvas));
+.todayGrid,
+.supportGrid {
+  display: grid;
+  gap: var(--space-8);
 }
 
-.slotCopy,
-.laterNote {
-  margin: var(--space-4) 0 0;
-  max-width: 36rem;
+.todayTitle {
+  margin: 0;
+  max-width: 14ch;
+  color: var(--color-navy);
+  font-size: clamp(2rem, 4.4vw, 3.15rem);
+  font-weight: 450;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.todayHebrew {
+  margin: var(--space-3) 0 0;
+  color: var(--color-navy);
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  line-height: 1.3;
+}
+
+.todayContext {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+
+.todayCivil,
+.todayMeta,
+.todayLink,
+.slotCopy {
+  margin: 0;
   color: var(--color-charcoal);
   font-family: var(--font-serif);
   font-size: clamp(1.02rem, 1.4vw, 1.15rem);
   line-height: 1.65;
 }
 
-.swapList,
-.laterList {
-  margin: var(--space-6) 0 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: var(--space-3);
+.todayLabel {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--color-navy);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
 }
 
-.swapList {
-  max-width: 40rem;
+.todayLink {
+  margin-top: var(--space-3);
 }
 
-.swapItem,
-.laterItem {
+.historySection,
+.podcastSection,
+.supportSection {
+  padding-block: clamp(2.25rem, 6vw, 4.25rem);
+}
+
+.historySection {
+  background: color-mix(in srgb, var(--color-sand) 22%, var(--color-canvas));
+}
+
+.podcastSection {
+  background: var(--color-paper);
+}
+
+.podcastSection .sectionTitle {
+  max-width: 22ch;
+}
+
+.supportSection {
+  background: var(--color-navy);
+  color: var(--color-paper);
+}
+
+.supportSection .eyebrow {
+  color: color-mix(in srgb, var(--color-sand) 80%, white);
+}
+
+.supportSection .sectionTitle {
+  color: var(--color-paper);
+}
+
+.supportSection .slotCopy {
+  color: rgb(255 255 255 / 0.82);
+}
+
+.sectionTitle {
   margin: 0;
-  color: var(--color-muted);
-  font-size: var(--text-sm);
-  line-height: 1.55;
+  max-width: 16ch;
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 2.6vw, 2.35rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
-.laterItem {
-  display: grid;
-  gap: var(--space-1);
-  padding-block: var(--space-3);
-  border-top: 1px solid var(--color-rule);
+.historyLead,
+.podcastLead {
+  margin-top: var(--space-8);
 }
 
-.laterTitle {
-  margin: 0;
+.historyKicker {
+  margin: 0 0 var(--space-3);
   color: var(--color-navy);
   font-size: var(--text-xs);
   font-weight: 700;
@@ -107,15 +162,14 @@
   text-transform: uppercase;
 }
 
-.historyList {
-  margin: var(--space-6) 0 0;
+.historySupport {
   display: grid;
   gap: var(--space-6);
+  margin-top: var(--space-10);
 }
 
 .archiveLink {
-  margin: var(--space-6) 0 0;
-  color: var(--color-charcoal);
+  margin: var(--space-8) 0 0;
   font-family: var(--font-serif);
 }
 
@@ -123,17 +177,18 @@
   color: inherit;
 }
 
-@media (min-width: 48rem) {
-  .laterList {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 var(--space-8);
-  }
+.supportAction {
+  margin: 0;
+  align-self: end;
 }
 
-@media (min-width: 80rem) {
-  .laterList {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+.supportSection :global(.button--primary) {
+  background: var(--color-paper);
+  color: var(--color-navy);
+}
+
+.supportSection :global(.button--primary:hover) {
+  background: var(--color-sand);
 }
 
 .loadingStack {
@@ -146,26 +201,54 @@
   border-top: 1px solid var(--color-rule);
 }
 
+@media (min-width: 48rem) {
+  .todayGrid,
+  .supportGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(2rem, 6vw, 5rem);
+    align-items: end;
+  }
+
+  .historySupport {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-8);
+  }
+}
+
+@media (min-width: 80rem) {
+  .historySupport {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .mastheadRule {
-    animation: home-rule var(--duration-editorial) var(--ease-enter) both;
+  .mastheadTitle,
+  .mastheadLede,
+  .todayTitle {
+    animation: home-rise var(--duration-editorial) var(--ease-enter) both;
+  }
+
+  .mastheadLede {
+    animation-delay: 80ms;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mastheadRule {
+  .mastheadTitle,
+  .mastheadLede,
+  .todayTitle {
     animation: none;
   }
 }
 
-@keyframes home-rule {
+@keyframes home-rise {
   from {
-    transform: scaleY(0);
     opacity: 0;
+    translate: 0 0.55rem;
   }
 
   to {
-    transform: scaleY(1);
     opacity: 1;
+    translate: 0 0;
   }
 }

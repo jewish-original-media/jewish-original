@@ -8,10 +8,7 @@ export default function HomeLoading() {
       <section className={styles.masthead} aria-busy="true" aria-live="polite">
         <Container>
           <p className="eyebrow">Jewish Original Media</p>
-          <h1 className="display-title">
-            A modern home for Jewish history, culture, education, connection,
-            and identity.
-          </h1>
+          <h1 className="display-title">Remember, rebuild, and create.</h1>
           <p className="editorial-lede">Preparing today’s homepage.</p>
         </Container>
       </section>

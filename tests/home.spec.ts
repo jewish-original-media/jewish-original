@@ -6,6 +6,7 @@ const VIEWPORTS = [
   { name: "1024", width: 1024, height: 768 },
   { name: "768", width: 768, height: 1024 },
   { name: "390", width: 390, height: 844 },
+  { name: "375", width: 375, height: 812 },
 ] as const;
 
 const PUBLISHED_HISTORY = [
@@ -31,10 +32,19 @@ test("composes the homepage from Jewish Today and published History", async ({
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: /a modern home for jewish history/i,
+      name: /remember, rebuild, and create/i,
     }),
   ).toBeVisible();
-  await expect(page.getByText("Jewish Today", { exact: true })).toBeVisible();
+  await expect(
+    page
+      .getByRole("region", { name: "Remember, rebuild, and create." })
+      .getByText(
+        /a modern home for jewish history, culture, education, connection, and identity/i,
+      ),
+  ).toBeVisible();
+  await expect(
+    page.locator("p.eyebrow").filter({ hasText: "Jewish Today" }),
+  ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Open Jewish Today" }),
   ).toHaveAttribute("href", "/today");
@@ -45,34 +55,43 @@ test("composes the homepage from Jewish Today and published History", async ({
   ).toBeVisible();
   await expect(page.getByText(/preparing today’s homepage/i)).toHaveCount(0);
   await page.goto("/");
+  await expect(page.getByRole("region", { name: "History" })).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "From the archive" }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "Open the History archive" }),
+    page.getByRole("link", { name: "Explore the History archive" }),
   ).toHaveAttribute("href", "/history");
   for (const title of PUBLISHED_HISTORY) {
     await expect(
-      page.getByRole("region", { name: "From the archive" }).getByRole("link", {
+      page.getByRole("region", { name: "History" }).getByRole("link", {
         name: title,
       }),
     ).toBeVisible();
   }
   await expect(
+    page.getByRole("heading", { name: "The Two Tall Jews Show" }),
+  ).toBeVisible();
+  await expect(
     page.getByRole("heading", { name: "Podcasts are being prepared." }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("link", {
+      name: "Sitting Down With: Kalman Gavriel, The Jerusalem Scribe",
+    }),
   ).toBeVisible();
   await expect(
-    page.getByText(/The Two Tall Jews Show archive is in editorial review/i),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "Open Podcasts" }),
+    page.getByRole("link", { name: "Browse the Podcast archive" }),
   ).toHaveAttribute("href", "/podcasts");
   await expect(
-    page.getByRole("heading", { name: "News, events, culture, and support" }),
+    page.getByRole("heading", { name: "Stand with us. Build with us." }),
   ).toBeVisible();
-  await expect(page.getByText("With Kalman Gavriel")).toHaveCount(0);
+  await expect(page.getByText("What We’re Following")).toHaveCount(0);
+  await expect(page.getByText("Upcoming Events")).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Originals" })).toHaveCount(0);
+  await expect(
+    page
+      .getByRole("region", { name: "Podcasts" })
+      .getByText("With Kalman Gavriel"),
+  ).toBeVisible();
   await expect(page.getByText("With Alexandra Zapruder")).toHaveCount(0);
-  await expect(page.getByText("Sitting Down With")).toHaveCount(0);
   await expect(page.getByText("Private editorial preview")).toHaveCount(0);
 
   await expectNoOverflow(page);
@@ -98,7 +117,7 @@ test("homepage rhythm holds at publication widths", async ({
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /a modern home for jewish history/i,
+        name: /remember, rebuild, and create/i,
       }),
     ).toBeVisible();
     await expectNoOverflow(page);

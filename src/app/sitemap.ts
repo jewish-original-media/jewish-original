@@ -36,9 +36,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
+      url: `${siteConfig.url}/about`,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
       url: `${siteConfig.url}/support`,
       changeFrequency: "monthly",
       priority: 0.4,
+    },
+    {
+      url: `${siteConfig.url}/privacy`,
+      changeFrequency: "yearly",
+      priority: 0.2,
     },
     ...historySlugs.map(({ slug }) => ({
       url: `${siteConfig.url}/history/${slug}`,

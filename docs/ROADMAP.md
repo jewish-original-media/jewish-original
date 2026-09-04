@@ -55,7 +55,9 @@ adapter, `JewishTodayDay`, standalone `/today`, canonical History matching,
 published History routes, and a homepage that renders `JewishTodayModule`
 plus live History cards are on Integration. Frozen Podcasts `0d939d3` are
 also merged: public catalog, unified Studio, and a homepage Podcast module
-that stays in the prepared state until a document is published.
+that stays in the prepared state until a document is published. The V1
+public shell now includes live navigation, About, Support, Privacy, and a
+hierarchical homepage.
 Sunset/local timezone, Israel schedule, and candle-lighting remain later
 work. See `docs/JEWISH_TODAY.md`, `docs/JEWISH_TODAY_CONVERGENCE.md`,
 `docs/HOMEPAGE.md`, and `docs/INTEGRATION.md`.
@@ -69,6 +71,8 @@ Exit: the homepage has trustworthy daily value with graceful failure behavior.
 - Import the four approved pilot episodes as unpublished Sanity drafts with verified Apple and Spotify links
 - Keep publication blocked; do not import the remaining catalog until founder review
 - Merged into `feature/integration-homepage` at frozen checkpoint `0d939d3`
+- Founder-approved publication of The Two Tall Jews Show and the four pilots
+  on 2026-09-04; Integration re-read published documents and did not write
 - Later: confirm official YouTube episode IDs, review transcripts, and import the remaining feed
 - Build editorial story templates and social-to-site publishing workflows after the podcast foundation is approved
 
