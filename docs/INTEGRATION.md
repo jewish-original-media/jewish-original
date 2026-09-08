@@ -60,8 +60,11 @@ Removed. Jewish Today and the homepage use:
   pilot episodes are published. Integration did not write those documents.
 - unpublished show and episode slugs 404
 - sitemap includes only published show and episode slugs
-- homepage uses the same published-only read, one `EpisodeCard` lead, and a
-  route into `/podcasts`
+- homepage uses the same published-only read, one `EpisodeCard` lead, a
+  title rail of additional published episodes, and a route into `/podcasts`
+- Selective runtime/test follow-up from Podcast `00fc9b9` only: catalog copy,
+  shared `getPublishedPodcastHome()`, and unpublished-slug coverage.
+  Publication scripts were not imported.
 
 ## Environment variable names
 

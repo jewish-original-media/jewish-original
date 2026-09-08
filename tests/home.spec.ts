@@ -46,9 +46,9 @@ test("composes the homepage from Jewish Today and published History", async ({
     page.locator("p.eyebrow").filter({ hasText: "Jewish Today" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Open Jewish Today" }),
+    page.getByRole("link", { name: "Today" }).first(),
   ).toHaveAttribute("href", "/today");
-  await page.getByRole("link", { name: "Open Jewish Today" }).click();
+  await page.getByRole("main").getByRole("link", { name: "Today" }).click();
   await expect(page).toHaveURL(/\/today$/);
   await expect(
     page.getByRole("heading", { level: 1, name: "Today" }),
@@ -57,15 +57,20 @@ test("composes the homepage from Jewish Today and published History", async ({
   await page.goto("/");
   await expect(page.getByRole("region", { name: "History" })).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Explore the History archive" }),
+    page.getByRole("link", { name: "Enter the Archive" }),
   ).toHaveAttribute("href", "/history");
+  const visibleHistoryTitles: string[] = [];
   for (const title of PUBLISHED_HISTORY) {
-    await expect(
-      page.getByRole("region", { name: "History" }).getByRole("link", {
-        name: title,
-      }),
-    ).toBeVisible();
+    if (
+      await page
+        .getByRole("region", { name: "History" })
+        .getByRole("link", { name: title })
+        .count()
+    ) {
+      visibleHistoryTitles.push(title);
+    }
   }
+  expect(visibleHistoryTitles).toHaveLength(4);
   await expect(
     page.getByRole("heading", { name: "The Two Tall Jews Show" }),
   ).toBeVisible();
@@ -78,8 +83,11 @@ test("composes the homepage from Jewish Today and published History", async ({
     }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Browse the Podcast archive" }),
+    page.getByRole("link", { name: "View all episodes" }),
   ).toHaveAttribute("href", "/podcasts");
+  await expect(
+    page.getByText("We don’t ask what’s going viral.", { exact: false }),
+  ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Stand with us. Build with us." }),
   ).toBeVisible();

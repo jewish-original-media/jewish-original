@@ -33,7 +33,15 @@ export const HOME_SECTION_ORDER: readonly HomeSectionContract[] = [
     title: "On this day or from the archive",
     status: "live",
     description:
-      "Lead HistoryEntryCard plus supporting archive items from getHistoryIndex.",
+      "One History lead plus up to three supporting archive items from getHistoryIndex.",
+  },
+  {
+    id: "manifesto",
+    eyebrow: "Legacy",
+    title: "What’s worth remembering in 100 years",
+    status: "live",
+    description:
+      "One founder line as a magazine pause. Not a slogan stack and not a CTA.",
   },
   {
     id: "podcasts",

@@ -57,7 +57,7 @@ plus live History cards are on Integration. Frozen Podcasts `0d939d3` are
 also merged: public catalog, unified Studio, and a homepage Podcast module
 that stays in the prepared state until a document is published. The V1
 public shell now includes live navigation, About, Support, Privacy, and a
-hierarchical homepage.
+Design Director editorial homepage.
 Sunset/local timezone, Israel schedule, and candle-lighting remain later
 work. See `docs/JEWISH_TODAY.md`, `docs/JEWISH_TODAY_CONVERGENCE.md`,
 `docs/HOMEPAGE.md`, and `docs/INTEGRATION.md`.

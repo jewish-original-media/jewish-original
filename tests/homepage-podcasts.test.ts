@@ -47,4 +47,8 @@ test("homepage Podcasts use the latest published episode as the lead", () => {
 
   assert.equal(composed.lead?._id, "episode.latest");
   assert.equal(composed.moreCount, 1);
+  assert.deepEqual(
+    composed.more.map((item) => item._id),
+    ["episode.earlier"],
+  );
 });

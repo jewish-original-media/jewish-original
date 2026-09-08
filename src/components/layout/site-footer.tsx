@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { BrandLogo } from "@/components/brand/brand-logo";
 import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/lib/site";
 
@@ -11,12 +10,16 @@ export function SiteFooter() {
     <footer className={styles.footer}>
       <Container className={styles.footerGrid}>
         <div className={styles.footerIdentity}>
-          <BrandLogo placement="footer" />
+          <p className={styles.footerMark} aria-hidden="true">
+            Jewish
+            <br />
+            Original
+          </p>
+          <p className="sr-only">{siteConfig.name}</p>
           <p className={styles.footerLede}>{siteConfig.description}</p>
-          <p className={styles.footerLegalName}>{siteConfig.legalName}</p>
-          <a className={styles.footerEmail} href={`mailto:${siteConfig.email}`}>
-            {siteConfig.email}
-          </a>
+          <p className={styles.footerSignoff}>
+            For memory. For identity. For what comes next.
+          </p>
         </div>
 
         <div className={styles.footerColumns}>
@@ -31,13 +34,21 @@ export function SiteFooter() {
             </ul>
           </div>
           <div>
-            <p className={styles.footerLabel}>Legal</p>
+            <p className={styles.footerLabel}>The house</p>
             <ul className={styles.footerList}>
+              <li>
+                <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+              </li>
               {siteConfig.footerUtility.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href}>{item.label}</Link>
                 </li>
               ))}
+              <li>
+                <span className={styles.footerLegalName}>
+                  {siteConfig.legalName}
+                </span>
+              </li>
             </ul>
           </div>
         </div>

@@ -17,7 +17,9 @@ export function composeHomeHistory(
     todayLead ??
     entries[0] ??
     null;
-  const supporting = entries.filter((entry) => entry._id !== lead?._id);
+  const supporting = entries
+    .filter((entry) => entry._id !== lead?._id)
+    .slice(0, 3);
 
   return {
     lead,

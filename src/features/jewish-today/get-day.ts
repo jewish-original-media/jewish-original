@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import type { HistoryEntrySummary } from "@/content/history/types";
 
 import { fetchHebcalCalendar } from "../../integrations/hebcal/client";
@@ -23,7 +25,7 @@ async function getPublishedOnThisDay(
   return getOnThisDayHistory(false, month, day);
 }
 
-export async function getJewishToday(
+export const getJewishToday = cache(async function getJewishToday(
   options: GetJewishTodayOptions = {},
 ): Promise<JewishTodayDay> {
   const timeZone = options.timeZone ?? JEWISH_TODAY_TIMEZONE;
@@ -56,4 +58,4 @@ export async function getJewishToday(
   } catch {
     return emptyJewishTodayDay(gregorianDate, timeZone, onThisDay);
   }
-}
+});

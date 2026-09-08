@@ -8,19 +8,16 @@ import {
   PODCASTS_HOME_CONTRACT,
 } from "../src/features/homepage/sections";
 
-test("homepage section order is masthead, today, history, podcasts, support", () => {
+test("homepage section order is masthead, today, history, manifesto, podcasts, support", () => {
   assert.deepEqual(
     HOME_SECTION_ORDER.map((section) => section.id),
-    ["masthead", "jewish-today", "history", "podcasts", "support"],
+    ["masthead", "jewish-today", "history", "manifesto", "podcasts", "support"],
   );
 });
 
 test("live homepage modules do not invent later desks", () => {
-  assert.equal(HOME_SECTION_ORDER[0]?.status, "live");
-  assert.equal(HOME_SECTION_ORDER[1]?.status, "live");
-  assert.equal(HOME_SECTION_ORDER[2]?.status, "live");
-  assert.equal(HOME_SECTION_ORDER[3]?.status, "live");
-  assert.equal(HOME_SECTION_ORDER[4]?.status, "live");
+  assert.ok(HOME_SECTION_ORDER.every((section) => section.status === "live"));
+  assert.equal(HOME_SECTION_ORDER.length, 6);
 });
 
 test("History homepage contract uses published archive entries", () => {

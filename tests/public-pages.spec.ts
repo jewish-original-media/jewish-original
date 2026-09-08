@@ -68,6 +68,18 @@ test("serves Support without checkout or tax claims", async ({ page }) => {
   await expect(page.getByText("10 Days Delivery")).toHaveCount(0);
 });
 
+test("unknown public routes use the editorial 404", async ({ page }) => {
+  const response = await page.goto("/this-route-does-not-exist");
+  expect(response?.status()).toBe(404);
+  await expect(
+    page.getByRole("heading", { name: /this page is not available yet/i }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Return home" })).toHaveAttribute(
+    "href",
+    "/",
+  );
+});
+
 test("serves an honest Privacy page for current product behavior", async ({
   page,
 }) => {

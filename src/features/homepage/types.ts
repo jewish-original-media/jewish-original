@@ -8,6 +8,7 @@ export const HOME_SECTION_IDS = [
   "masthead",
   "jewish-today",
   "history",
+  "manifesto",
   "podcasts",
   "support",
 ] as const;

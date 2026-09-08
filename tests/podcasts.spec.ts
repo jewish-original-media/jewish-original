@@ -63,6 +63,16 @@ test("publishes the approved show and four pilot episodes", async ({
   expect(xml).toContain(
     "sitting-down-with-kalman-gavriel-the-jerusalem-scribe",
   );
+  expect(xml).not.toContain("/podcasts/dev/youtube-facade");
+});
+
+test("keeps unpublished catalog slugs off the public site", async ({
+  page,
+}) => {
+  const missing = await page.goto(
+    "/podcasts/the-two-tall-jews-show/this-episode-was-not-imported",
+  );
+  expect(missing?.status()).toBe(404);
 });
 
 test("previews a guest draft and hides empty transcript and summary", async ({

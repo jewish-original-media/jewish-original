@@ -32,8 +32,11 @@ export default function SupportPage() {
       </section>
 
       <section className={styles.band}>
-        <Container className={styles.grid}>
-          <div>
+        <Container className={styles.invitations}>
+          <article className={styles.invitation}>
+            <p className={styles.index} aria-hidden="true">
+              01
+            </p>
             <p className="eyebrow">Support our work</p>
             <h2 className={styles.sectionTitle}>Give $18 or more</h2>
             <p className={styles.amount}>One-time or monthly</p>
@@ -47,9 +50,12 @@ export default function SupportPage() {
                 Email to support
               </a>
             </p>
-          </div>
+          </article>
 
-          <div>
+          <article className={styles.invitation}>
+            <p className={styles.index} aria-hidden="true">
+              02
+            </p>
             <p className="eyebrow">Sponsor our work</p>
             <h2 className={styles.sectionTitle}>Amplify Jewish stories</h2>
             <p className={styles.copy}>
@@ -62,24 +68,30 @@ export default function SupportPage() {
                 Email to sponsor
               </a>
             </p>
-          </div>
+          </article>
+
+          <article className={styles.invitation}>
+            <p className={styles.index} aria-hidden="true">
+              03
+            </p>
+            <p className="eyebrow">Partner with us</p>
+            <h2 className={styles.sectionTitle}>Work alongside the mission</h2>
+            <p className={styles.copy}>
+              We team up with aligned Jewish organizations, brands,
+              institutions, and creators to produce meaningful content, grow
+              communities, and elevate shared missions online and in person.
+            </p>
+            <p className={styles.actions}>
+              <a className="button button--secondary" href={partner}>
+                Email to partner
+              </a>
+            </p>
+          </article>
         </Container>
       </section>
 
       <section className={styles.body}>
         <Container size="content">
-          <p className="eyebrow">Partner with us</p>
-          <h2 className={styles.sectionTitle}>Work alongside the mission</h2>
-          <p className={styles.copy}>
-            We team up with aligned Jewish organizations, brands, institutions,
-            and creators to produce meaningful content, grow communities, and
-            elevate shared missions online and in person.
-          </p>
-          <p className={styles.actions}>
-            <a className="button button--secondary" href={partner}>
-              Email to partner
-            </a>
-          </p>
           <p className={styles.note}>
             Write {siteConfig.email}. There is no checkout on this page, and we
             do not claim tax deductibility.

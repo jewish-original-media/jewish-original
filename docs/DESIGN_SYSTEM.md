@@ -18,15 +18,19 @@ glassmorphism, gradients, or SaaS dashboard conventions.
 
 | Token    | Value     | Intended use                             |
 | -------- | --------- | ---------------------------------------- |
-| Navy     | `#2E3460` | Primary brand, dark text, key surfaces   |
-| Gold     | `#D29046` | Accent, rules, selected calls to action  |
-| Cerulean | `#768FB5` | Supporting information and quiet accents |
-| Sky      | `#E0E5EB` | Cool surface and borders                 |
-| Sand     | `#EEE0CB` | Warm editorial surface                   |
-| Olive    | `#505A2A` | Sparse cultural/seasonal support         |
+| Navy     | `#2E3460` | Primary institutional / editorial anchor |
+| Gold     | `#D29046` | Small emphasis, rules, dates, Support    |
+| Cerulean | `#768FB5` | Jewish Today secondary atmosphere        |
+| Sky      | `#E0E5EB` | Jewish Today cool field                  |
+| Sand     | `#EEE0CB` | Primary paper-like surface               |
+| Olive    | `#505A2A` | Rare cultural accent                     |
+
+Navy and Sand carry the site. Gold is not a section color. Cerulean/Sky are
+reserved for Jewish Today. Olive is rare. Do not distribute the palette
+evenly across stacked bands.
 
 Digital neutrals are derived for accessible text and surfaces. Gold is not used
-for small text on white. Every pairing must meet WCAG 2.2 AA contrast.
+for small text on Sand or white. Every pairing must meet WCAG 2.2 AA contrast.
 
 ## Typography
 
@@ -46,6 +50,18 @@ Usage:
 - Body: sans for concise interface text; serif for long-form editorial reading
 - Quotes and historical accents: serif italic
 - Never set long paragraphs in uppercase or wide tracking
+- Never set Baskerville-style serif in uppercase
+
+Public type scale:
+
+- Display: `clamp(3rem, 8.4vw, 8.75rem)` — homepage masthead only
+- Section display: `clamp(2.35rem, 5vw, 6.25rem)`
+- Feature headline: `clamp(2rem, 3.8vw, 4.75rem)`
+- Article / card headline: `1.35rem` to `2.25rem`
+- Eyebrow: small sans, uppercase, tracked
+- Body: editorial serif, about 17–18px mobile and 18–20px desktop
+
+Very large type is reserved so smaller moments stay intimate.
 
 History article scale:
 
@@ -114,12 +130,16 @@ not recolor or outline the mark. Do not place it on sand or white.
 - Editorial width: 1120px
 - Site width: 1440px
 - Page gutters: 20px mobile, 32px tablet, 48–64px desktop
+- Large screens use a 12-column editorial grid; tablet 8; mobile 4
+- Selected sections may use 7/5 or 8/4 splits, full bleed, or offset text
+- Grouping comes from rules, columns, and field changes before cards
 
 ## Shape, depth, and borders
 
-- Small radius: 4px; medium: 10px; large: 18px; pill only for true pills
-- Cards use borders and tonal contrast before shadows
+- Prefer hairline rules and square edges over rounded rectangles
+- Cards are reserved for comprehension, not default grouping
 - Shadows are low-opacity and reserved for elevated navigation or overlays
+- A light paper grain may sit on the canvas as CSS only
 - Rules and framed compositions echo the established identity without tracing logos
 
 ## Motion

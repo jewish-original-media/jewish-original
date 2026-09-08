@@ -1,0 +1,86 @@
+import Link from "next/link";
+
+import { HistoryEntryCard } from "@/components/history/history-entry-card";
+import { historyCardLocation } from "@/content/history/archive";
+import type { HistoryEntrySummary } from "@/content/history/types";
+import type { HomeHistoryPresentation } from "@/features/homepage/history";
+import { formatHistoricalDate } from "@/lib/history/format-date";
+
+import styles from "@/app/home.module.css";
+
+type HomeHistoryFeatureProps = {
+  history: HomeHistoryPresentation;
+  unavailable: boolean;
+};
+
+function LeadHistory({ entry }: { entry: HistoryEntrySummary }) {
+  const date = formatHistoricalDate(
+    entry.historicalDate,
+    entry.entryKind,
+    entry.observanceRule,
+  );
+  const location = historyCardLocation(entry);
+  const topics = entry.topics.map((topic) => topic.name).join(" · ");
+
+  return (
+    <article className={styles.historyLead}>
+      <p className={styles.historyDate}>{date}</p>
+      <h3 className={styles.historyTitle}>
+        <Link href={`/history/${entry.slug}`}>{entry.title}</Link>
+      </h3>
+      {entry.excerpt ? (
+        <p className={styles.historyExcerpt}>{entry.excerpt}</p>
+      ) : null}
+      <p className={styles.historyMeta}>
+        {[topics, location].filter(Boolean).join(" · ")}
+      </p>
+    </article>
+  );
+}
+
+export function HomeHistoryFeature({
+  history,
+  unavailable,
+}: HomeHistoryFeatureProps) {
+  return (
+    <section
+      className={`${styles.band} ${styles.history}`}
+      aria-label="History"
+    >
+      <div className={styles.bandInner}>
+        <p className={styles.sectionLabel}>History</p>
+        <h2 className={styles.historyHeading}>{history.title}</h2>
+        {unavailable ? (
+          <p className={styles.unavailableNote} role="status">
+            The History archive is briefly unavailable.
+          </p>
+        ) : null}
+        {!unavailable && !history.lead ? (
+          <p className={styles.unavailableNote}>
+            Published History will appear here when a reviewed entry is ready.
+          </p>
+        ) : null}
+        <div className={styles.historyLayout}>
+          {history.lead ? <LeadHistory entry={history.lead} /> : null}
+          {history.supporting.length > 0 ? (
+            <div className={styles.supporting}>
+              {history.supporting.map((entry) => (
+                <HistoryEntryCard
+                  entry={entry}
+                  headingLevel="h3"
+                  key={entry._id}
+                  variant="archive"
+                />
+              ))}
+            </div>
+          ) : null}
+        </div>
+        <p className={styles.historyPath}>
+          <Link className="editorial-link" href="/history">
+            Enter the Archive
+          </Link>
+        </p>
+      </div>
+    </section>
+  );
+}

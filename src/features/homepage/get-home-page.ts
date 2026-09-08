@@ -1,17 +1,14 @@
 import { getHistoryIndex } from "@/content/history/fetch";
-import { getPodcastEpisodes, getPodcastShow } from "@/content/podcasts/fetch";
+import { getPublishedPodcastHome } from "@/content/podcasts/fetch";
 import { getJewishToday } from "@/features/jewish-today";
-import { TTJS_SHOW_SLUG } from "@/lib/podcasts/urls";
 
 import { buildPodcastHomeContract } from "./sections";
 import type { HomePageData, PodcastHomeContract } from "./types";
 
-async function getPublishedPodcastHome(): Promise<PodcastHomeContract> {
-  const show = await getPodcastShow(TTJS_SHOW_SLUG, false);
-  if (!show) return buildPodcastHomeContract(null);
-
-  const episodes = await getPodcastEpisodes(show.slug, false);
-  return buildPodcastHomeContract(show, episodes);
+async function getHomepagePodcasts(): Promise<PodcastHomeContract> {
+  const published = await getPublishedPodcastHome();
+  if (!published) return buildPodcastHomeContract(null);
+  return buildPodcastHomeContract(published.show, published.episodes);
 }
 
 export async function getHomePageData(): Promise<HomePageData> {
@@ -20,7 +17,7 @@ export async function getHomePageData(): Promise<HomePageData> {
     getHistoryIndex(false)
       .then((entries) => ({ status: "live" as const, entries }))
       .catch(() => ({ status: "unavailable" as const, entries: [] })),
-    getPublishedPodcastHome().catch(() => ({
+    getHomepagePodcasts().catch(() => ({
       status: "unavailable" as const,
       show: null,
       episodes: [],

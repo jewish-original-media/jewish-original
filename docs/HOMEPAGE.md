@@ -1,15 +1,16 @@
-# Homepage foundation
+# Homepage
 
-Status: V1 public shell on `feature/integration-homepage`. Composition uses
-live History, Jewish Today, and Podcasts. This is the first launch-quality
-homepage architecture, not a later visual brand restyle.
+Status: Design Director pass on `feature/integration-homepage`. Composition
+still uses live History, Jewish Today, and Podcasts. The visual system is an
+editorial restyle of the working V1 shell, not a second architecture.
 
 The homepage is a Server Component composition. It is not a CMS document.
 
 ## Product direction
 
-The page must communicate a premium editorial publication, a daily Jewish
-utility, a historical archive, and a modern Jewish media brand.
+The page should feel like a living Jewish cultural object: history, memory,
+Torah, culture, current Jewish life, conversation, identity, and storytelling
+in one world.
 
 Approved positioning remains:
 
@@ -27,19 +28,22 @@ as a homepage slogan.
 - View: `HomePageView` in `src/components/home/home-page.tsx`
 
 `getHomePageData()` calls `getJewishToday()` once, `getHistoryIndex()` once,
-and the published Podcast show/episode reads once.
+and `getPublishedPodcastHome()` once. `getJewishToday()` is wrapped in React
+`cache()` so the site header can share the same day.
 
 Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 
 ## Section order
 
-1. **Masthead** — “Remember, rebuild, and create.” Live.
-2. **Jewish Today** — homepage presentation of the same `JewishTodayDay`. Live.
-3. **History** — On This Day lead when a match exists, otherwise archive lead,
-   plus supporting `HistoryEntryCard` items. Live.
-4. **Podcasts** — canonical published read. Live show title, tagline, and
-   latest `EpisodeCard`. Remaining episodes live on `/podcasts`.
-5. **Support** — short invitation into `/support`. Live.
+1. **Masthead** — stacked “Remember, rebuild, and create.” Positioning lives
+   in the lede. Live.
+2. **Jewish Today** — signature daily object from the same `JewishTodayDay`.
+   Live.
+3. **History** — one lead plus up to three supporting archive items. Live.
+4. **Manifesto** — one founder pause. Live.
+5. **Podcasts** — published show, latest `EpisodeCard`, remaining titles as a
+   rail. Live.
+6. **Support** — invitation into `/support`. Live.
 
 Hidden until published documents exist:
 
@@ -50,7 +54,8 @@ Hidden until published documents exist:
 ## Jewish Today
 
 Uses `getJewishToday()` and `HomeJewishToday`. Calendar logic stays in Hebcal.
-On-this-day matches stay in History `getOnThisDayHistory`.
+On-this-day matches stay in History `getOnThisDayHistory`. The Hebrew date is
+the visual object. Do not fetch Hebcal again on the homepage.
 
 ## History
 
@@ -58,15 +63,25 @@ Uses the canonical History system only:
 
 - `getHistoryIndex(false)`
 - `composeHomeHistory()`
-- `HistoryEntryCard`
+- `HomeHistoryFeature` as layout
+- `HistoryEntryCard` for supporting items
+
+The first collection has no public imagery. Typography and dates carry the
+lead. Do not insert empty image boxes.
 
 ## Podcasts
 
-Published `getPodcastShow` / `getPodcastEpisodes` and `EpisodeCard` only.
-The homepage uses the latest published episode as the lead. It does not
-invent episodes or use draft data.
+Published `getPublishedPodcastHome()` and `EpisodeCard` for the latest
+episode. Additional published episodes appear as a title rail, not a second
+card system. Do not invent artwork or autoplay media.
 
 ## Originals, News, and Events
 
 See `docs/ORIGINALS.md`. Homepage slots stay hidden while empty. Do not invent
 articles, headlines, or events.
+
+Future visual languages, when data exists:
+
+- Originals: magazine feature plus quiet secondary stories
+- News: tighter newswire density, rules, source + JOM context
+- Events: date as the visual object

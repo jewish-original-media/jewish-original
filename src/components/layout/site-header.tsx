@@ -6,7 +6,12 @@ import { siteConfig } from "@/lib/site";
 
 import styles from "./site-chrome.module.css";
 
-export function SiteHeader() {
+export type SiteHeaderToday = {
+  gregorianLabel: string;
+  hebrewDate?: string;
+};
+
+export function SiteHeader({ today }: { today?: SiteHeaderToday }) {
   return (
     <header className={styles.header}>
       <Container className={styles.bar}>
@@ -31,6 +36,12 @@ export function SiteHeader() {
               <span aria-hidden="true" className={styles.menuIcon} />
             </summary>
             <nav className={styles.menuPanel} aria-label="Mobile">
+              {today ? (
+                <p className={styles.menuDate}>
+                  {today.hebrewDate ? `${today.hebrewDate} · ` : ""}
+                  {today.gregorianLabel}
+                </p>
+              ) : null}
               <ul className={styles.menuList}>
                 {siteConfig.navigation.map((item) => (
                   <li key={item.href}>

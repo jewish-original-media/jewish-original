@@ -471,3 +471,19 @@ and the four pilot episodes arrived in the Podcast workstream. Integration
 re-read the published documents and surfaced them through the existing
 published-only contract. Integration did not write to Sanity. Production,
 DNS, and the GitHub default branch are unchanged.
+
+## ADR-034 — Design Director pass restyles the working shell
+
+**Status:** Accepted, 2026-09-07
+
+The V1 public shell remains the architecture. This pass changes presentation,
+not data models. Jewish Today, History, and Podcasts stay on their published
+reads. Homepage layout wrappers (`HomeHistoryFeature`, `HomePodcastFeature`)
+may compose canonical cards. They do not create a second article system.
+
+The post-publication Podcast diff from `00fc9b9` is reconciled selectively:
+catalog copy, `getPublishedPodcastHome()`, and extra unpublished-slug
+coverage. Publication scripts and Podcast-branch docs are not imported.
+
+Originals, News, and Events stay hidden. Production, DNS, and the GitHub
+default branch are unchanged.

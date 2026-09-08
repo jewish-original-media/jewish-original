@@ -10,52 +10,77 @@ type HomeJewishTodayProps = {
 };
 
 export function HomeJewishToday({ day }: HomeJewishTodayProps) {
-  const highlights = calendarHighlights(day).slice(0, 2);
+  const highlights = calendarHighlights(day).slice(0, 3);
   const history = day.onThisDay[0];
+  const hasHebrewObject = Boolean(day.hebrewDay && day.hebrewMonth);
 
   return (
-    <section className={styles.todaySection} aria-labelledby="home-today">
-      <div className={styles.todayGrid}>
-        <div>
-          <p className="eyebrow">Jewish Today</p>
-          <h2 className={styles.todayTitle} id="home-today">
-            {day.hebrewDate ?? day.gregorianLabel}
-          </h2>
-          {day.hebrewDateHebrew ? (
-            <p className={styles.todayHebrew} lang="he" dir="rtl">
-              {day.hebrewDateHebrew}
-            </p>
-          ) : null}
-        </div>
+    <section
+      className={`${styles.band} ${styles.today}`}
+      aria-labelledby="home-today"
+    >
+      <div className={styles.bandInner}>
+        <p className={`${styles.sectionLabel} eyebrow`}>Jewish Today</p>
+        <div className={styles.todayObject}>
+          <div className={styles.todayDate}>
+            {hasHebrewObject ? (
+              <>
+                <h2 className={styles.hebrewNumeral} id="home-today">
+                  {day.hebrewDay}
+                  <span className="sr-only">
+                    {` ${day.hebrewMonth}${day.hebrewYear ? ` ${day.hebrewYear}` : ""}`}
+                  </span>
+                </h2>
+                <p className={styles.hebrewMonth} aria-hidden="true">
+                  {day.hebrewMonth}
+                  {day.hebrewYear ? (
+                    <span className={styles.hebrewYear}>{day.hebrewYear}</span>
+                  ) : null}
+                </p>
+              </>
+            ) : (
+              <h2 className={styles.hebrewMonth} id="home-today">
+                {day.hebrewDate ?? day.gregorianLabel}
+              </h2>
+            )}
+            {day.hebrewDateHebrew ? (
+              <p className={styles.hebrewScript} lang="he" dir="rtl">
+                {day.hebrewDateHebrew}
+              </p>
+            ) : null}
+          </div>
 
-        <div className={styles.todayContext}>
-          <p className={styles.todayCivil}>{day.gregorianLabel}</p>
-          {day.parashah ? (
-            <p className={styles.todayMeta}>
-              <span className={styles.todayLabel}>Parashah</span>
-              {day.parashah.title}
+          <div className={styles.todayContext}>
+            <p className={styles.civilDate}>{day.gregorianLabel}</p>
+            {day.parashah ? (
+              <p className={styles.parashah}>{day.parashah.title}</p>
+            ) : null}
+            {highlights.length > 0 ? (
+              <ul className={styles.observanceList}>
+                {highlights.map((item) => (
+                  <li key={item.title}>{item.title}</li>
+                ))}
+              </ul>
+            ) : null}
+            {history ? (
+              <div className={styles.historyMatch}>
+                <p className={styles.sectionLabel}>On this day</p>
+                <p className={styles.historyMatchTitle}>
+                  <Link href={`/history/${history.slug}`}>{history.title}</Link>
+                </p>
+              </div>
+            ) : null}
+            {day.calendarStatus === "unavailable" ? (
+              <p className={styles.unavailableNote}>
+                Hebrew calendar details are briefly unavailable.
+              </p>
+            ) : null}
+            <p className={styles.todayPath}>
+              <Link className="editorial-link" href="/today">
+                Today
+              </Link>
             </p>
-          ) : null}
-          {highlights.map((item) => (
-            <p className={styles.todayMeta} key={item.title}>
-              <span className={styles.todayLabel}>Now</span>
-              {item.title}
-            </p>
-          ))}
-          {history ? (
-            <p className={styles.todayMeta}>
-              <span className={styles.todayLabel}>On this day</span>
-              <Link href={`/history/${history.slug}`}>{history.title}</Link>
-            </p>
-          ) : null}
-          {day.calendarStatus === "unavailable" ? (
-            <p className={styles.todayMeta}>
-              Hebrew calendar details are briefly unavailable.
-            </p>
-          ) : null}
-          <p className={styles.todayLink}>
-            <Link href="/today">Open Jewish Today</Link>
-          </p>
+          </div>
         </div>
       </div>
     </section>
