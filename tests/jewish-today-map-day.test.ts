@@ -5,8 +5,10 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
+  classifyTorahReadingKind,
   mapHebcalDay,
   parseHdate,
+  selectFestivalShabbat,
   selectUpcomingParashahItem,
 } from "../src/integrations/hebcal/map-day";
 import type { HebcalCalendarResponse } from "../src/integrations/hebcal/types";
@@ -37,6 +39,8 @@ describe("Hebcal day mapping", () => {
     assert.equal(day.hebrewYear, 5786);
     assert.equal(day.parashah?.title, "Nitzavim-Vayeilech");
     assert.equal(day.parashah?.observedOn, "2026-09-05");
+    assert.equal(day.parashah?.readingKind, "thisWeek");
+    assert.equal(day.festivalShabbat, undefined);
     assert.deepEqual(day.holidays, []);
     assert.equal(day.onThisDay.length, 0);
   });
@@ -166,5 +170,40 @@ describe("Hebcal day mapping", () => {
     );
 
     assert.equal(selected?.title, "Parashat Nitzavim-Vayeilech");
+    assert.equal(
+      classifyTorahReadingKind(
+        [
+          {
+            title: "Parashat Nitzavim-Vayeilech",
+            date: "2026-09-05T12:00:00-04:00",
+            category: "parashat",
+          },
+        ],
+        "2026-09-09",
+      ),
+      "recent",
+    );
+  });
+
+  it("names the coming festival Saturday without calling last week this week", () => {
+    const items = [
+      {
+        title: "Parashat Nitzavim-Vayeilech",
+        date: "2026-09-05T12:00:00-04:00",
+        category: "parashat" as const,
+      },
+      {
+        title: "Rosh Hashana 5787",
+        date: "2026-09-12T12:00:00-04:00",
+        category: "holiday" as const,
+        yomtov: true,
+      },
+    ];
+
+    const day = mapHebcalDay("2026-09-09", "America/New_York", { items });
+    assert.equal(day.parashah?.readingKind, "recent");
+    assert.equal(day.festivalShabbat?.title, "Rosh Hashana 5787");
+    assert.equal(day.festivalShabbat?.observedOn, "2026-09-12");
+    assert.equal(selectFestivalShabbat(items, "2026-09-12"), undefined);
   });
 });

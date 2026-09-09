@@ -16,7 +16,14 @@ export type JewishTodayHoliday = JewishTodayNamedEvent & {
   yomTov: boolean;
 };
 
+export type TorahReadingKind = "thisWeek" | "recent";
+
 export type JewishTodayParashah = JewishTodayNamedEvent & {
+  observedOn: string;
+  readingKind: TorahReadingKind;
+};
+
+export type JewishTodayFestivalShabbat = JewishTodayNamedEvent & {
   observedOn: string;
 };
 
@@ -51,6 +58,7 @@ export type JewishTodayDay = {
   hebrewDay?: number;
   isShabbat: boolean;
   parashah?: JewishTodayParashah;
+  festivalShabbat?: JewishTodayFestivalShabbat;
   holidays: JewishTodayHoliday[];
   observances: JewishTodayHoliday[];
   omer?: JewishTodayOmer;

@@ -1,15 +1,18 @@
 import type {
   JewishTodayCalendarEvent,
   JewishTodayDay,
+  JewishTodayFestivalShabbat,
   JewishTodayHoliday,
   JewishTodayHolidayKind,
   JewishTodayNamedEvent,
   JewishTodayOmer,
   JewishTodayParashah,
+  TorahReadingKind,
   OnThisDayHistoryEntry,
 } from "../../features/jewish-today/types";
 import {
   formatGregorianLabel,
+  nextSaturdayInclusive,
   timezoneLabel,
   weekdayUtc,
 } from "../../features/jewish-today/timezone";
@@ -87,6 +90,46 @@ export function selectUpcomingParashahItem(
   );
 }
 
+export function classifyTorahReadingKind(
+  items: HebcalItem[],
+  gregorianDate: string,
+): TorahReadingKind {
+  const upcoming = items.find(
+    (item) =>
+      item.category === "parashat" && itemCivilDate(item) >= gregorianDate,
+  );
+  return upcoming ? "thisWeek" : "recent";
+}
+
+export function selectFestivalShabbat(
+  items: HebcalItem[],
+  gregorianDate: string,
+): JewishTodayFestivalShabbat | undefined {
+  const nextSaturday = nextSaturdayInclusive(gregorianDate);
+  if (nextSaturday === gregorianDate) return undefined;
+
+  const hasParashah = items.some(
+    (item) =>
+      item.category === "parashat" && itemCivilDate(item) === nextSaturday,
+  );
+  if (hasParashah) return undefined;
+
+  const festival = items.find(
+    (item) =>
+      item.category === "holiday" &&
+      item.yomtov === true &&
+      itemCivilDate(item) === nextSaturday,
+  );
+  if (!festival) return undefined;
+
+  return {
+    title: festival.title,
+    observedOn: nextSaturday,
+    ...(festival.hebrew ? { titleHebrew: festival.hebrew } : {}),
+    ...(festival.memo ? { memo: festival.memo } : {}),
+  };
+}
+
 function omerDay(item: HebcalItem): number | null {
   const fromOrig = item.title_orig?.match(/^Omer\s+(\d{1,2})$/u);
   if (fromOrig) return Number(fromOrig[1]);
@@ -142,6 +185,8 @@ export function mapHebcalDay(
   const hebdate = todayItems.find((item) => item.category === "hebdate");
   const parsedHebrew = hebdate?.hdate ? parseHdate(hebdate.hdate) : null;
   const parashahItem = selectUpcomingParashahItem(items, gregorianDate);
+  const readingKind = classifyTorahReadingKind(items, gregorianDate);
+  const festivalShabbat = selectFestivalShabbat(items, gregorianDate);
   const omerItem = todayItems.find((item) => item.category === "omer");
   const roshChodeshItem = todayItems.find(
     (item) => item.category === "roshchodesh",
@@ -187,7 +232,7 @@ export function mapHebcalDay(
   }
 
   const omer = omerFromItem(omerItem);
-  const parashah = parashahFromItem(parashahItem);
+  const parashah = parashahFromItem(parashahItem, readingKind);
   const hebrewInHebrew = hebdate ? hebrewDateHebrew(hebdate) : undefined;
 
   return {
@@ -206,6 +251,7 @@ export function mapHebcalDay(
       : {}),
     isShabbat: weekdayUtc(gregorianDate) === 6,
     ...(parashah ? { parashah } : {}),
+    ...(festivalShabbat ? { festivalShabbat } : {}),
     holidays,
     observances,
     ...(omer ? { omer } : {}),
@@ -220,12 +266,14 @@ export function mapHebcalDay(
 
 function parashahFromItem(
   item: HebcalItem | undefined,
+  readingKind: TorahReadingKind,
 ): JewishTodayParashah | undefined {
   if (!item) return undefined;
 
   return {
     title: parashahTitle(item.title),
     observedOn: itemCivilDate(item),
+    readingKind,
     ...(item.hebrew ? { titleHebrew: item.hebrew } : {}),
     ...(item.memo ? { memo: item.memo } : {}),
   };

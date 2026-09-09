@@ -46,8 +46,13 @@ test("publishes the approved show and four pilot episodes", async ({
     }),
   ).toBeVisible();
   await expect(page.getByText("Listening room").first()).toBeVisible();
-  await expect(page.getByText("Meyer Grunberg")).toBeVisible();
-  await expect(page.getByText("Isaac Simon")).toBeVisible();
+  await expect(page.getByText("Meyer Grunberg").first()).toBeVisible();
+  await expect(page.getByText("Isaac Simon").first()).toBeVisible();
+  await expect(
+    page.getByRole("img", {
+      name: "Meyer Grunberg and Isaac Simon standing at a weathered Jerusalem street corner",
+    }),
+  ).toBeVisible();
   await expect(page.getByText("Latest episode")).toBeVisible();
 
   const published = await page.goto(kalman);

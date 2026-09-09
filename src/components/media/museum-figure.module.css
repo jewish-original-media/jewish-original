@@ -1,0 +1,132 @@
+.figure {
+  margin: 0;
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--color-sand) 55%, var(--color-canvas));
+}
+
+.image {
+  object-fit: cover;
+}
+
+.street {
+  aspect-ratio: 5 / 4;
+}
+
+.steps {
+  aspect-ratio: 5 / 4;
+}
+
+.tefillin {
+  aspect-ratio: 4 / 5;
+}
+
+.streetImage {
+  object-position: 48% 22%;
+}
+
+.stepsImage {
+  object-position: 58% 38%;
+}
+
+.tefillinImage {
+  object-position: 32% 28%;
+}
+
+.caption {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid color-mix(in srgb, var(--color-gold) 42%, transparent);
+}
+
+.kind {
+  margin: 0;
+  color: var(--color-navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-navy);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.meta,
+.credit {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.night .kind,
+.night .title {
+  color: var(--color-sand);
+}
+
+.night .meta,
+.night .credit {
+  color: color-mix(in srgb, var(--color-sand) 68%, transparent);
+}
+
+.night .caption {
+  border-top-color: color-mix(in srgb, var(--color-gold) 48%, transparent);
+}
+
+.night .frame {
+  background: #000;
+}
+
+@media (min-width: 48rem) {
+  .street {
+    aspect-ratio: 4 / 5;
+  }
+
+  .steps {
+    aspect-ratio: 4 / 3;
+  }
+
+  .tefillin {
+    aspect-ratio: 16 / 10;
+  }
+
+  .streetImage {
+    object-position: 50% 24%;
+  }
+
+  .stepsImage {
+    object-position: 52% 42%;
+  }
+
+  .tefillinImage {
+    object-position: 38% 30%;
+  }
+}
+
+@media (min-width: 64rem) {
+  .street {
+    aspect-ratio: 4 / 5;
+  }
+
+  .steps {
+    aspect-ratio: 16 / 10;
+  }
+
+  .streetImage {
+    object-position: 50% 26%;
+  }
+
+  .stepsImage {
+    object-position: 48% 40%;
+  }
+}

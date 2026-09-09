@@ -81,40 +81,63 @@ logo on History articles.
 The timeline mark appears to be a legacy/adjacent identity and should not be
 used as the JOM or OTD primary identity without explicit approval.
 
-## Public-site rights classes (2026-09-09)
+## Public-site rights classes (2026-09-09 art-direction pass)
 
 Only classes **A** (JOM-owned / founder-approved) and **B** (known brand asset)
-may appear on the public site.
+may appear on the public site. Class **C** requires a verified Commons/source
+page, license, and a non-thumbnail local or Sanity asset. **D/E** stay private.
 
-| Asset                                                                | Class          | Public use                                                                         |
-| -------------------------------------------------------------------- | -------------- | ---------------------------------------------------------------------------------- |
-| `/brand/ttjs-mark.png`                                               | B              | Night-only TTJS mark                                                               |
-| `/brand/motifs/otd-lion-white.png`                                   | B              | CSS luminance mask                                                                 |
-| `/brand/motifs/otd-lion-gold.png`                                    | B              | Color reference only                                                               |
-| `/brand/motifs/otd-star-white.png`                                   | B              | No-image History mark                                                              |
-| JOM primary white/gold JPEG used by `BrandLogo`                      | B              | Night/black surfaces only                                                          |
-| Founder pack photography (Meyer + Isaac, tefillin, Jerusalem, flags) | C              | Files are **not** in this worktree. Do not publish from memory or external copies. |
-| Host photos cited in `docs/PODCAST_ARCHIVE.md`                       | C              | Missing rights ledger                                                              |
-| Israeli-flag photographs in the founder pack                         | D / do not use | Founder direction forbids flag fields even if later supplied                       |
+| Asset | Class | Public use |
+| ----- | ----- | ---------- |
+| `/brand/ttjs-mark.png` | B | Night-only TTJS mark |
+| `/brand/motifs/otd-lion-white.png` | B | CSS luminance mask |
+| `/brand/motifs/otd-lion-gold.png` | B | Color reference only |
+| `/brand/motifs/otd-star-white.png` | B | No-image History mark |
+| JOM primary white/gold JPEG used by `BrandLogo` | B | Night/black surfaces only |
+| `/media/founder/meyer-isaac-street.webp` | A | Homepage Podcast + TTJS show page |
+| `/media/founder/meyer-isaac-steps.webp` | A | About |
+| `/media/founder/morning-tefillin.webp` | A | Support |
+| Host photos cited in `docs/PODCAST_ARCHIVE.md` | C | Missing rights ledger |
+| Israeli-flag photographs in the founder pack | D | Held. Flag fields. |
+| Unsplash `photo-1697054821057` | E | Held. Stock, not founder-owned. |
+| `ak2` portrait | A / hold | Not a public founder subject. |
+| `meyer.jpg`, `isaac.jpg` headshots | A / hold | Too small; would become team cards. |
+| Re-uploaded JOM / OTD logo rasters | B / hold | Already in `/public/brand`. |
+| `Dachau_execution_coalyard_1945-04-29` | C / hold | US Army / NARA, PD-US. Graphic; thumbnail only; no Sanity write. |
+| `Samuel_Willenberg_Treblinka_2_sierpnia_2013` | C / hold | Adrian Grycuk, CC BY-SA 3.0 PL. Thumbnail only. |
+| `Benghazi_Synagogue_Classroom_before_WWII` | D | Commons Libya-PD tag; US PD tag missing. |
 
-This milestone adds no public photography. Humanity on Podcast and About pages
-comes from names, type, and the approved mark — not invented portraits.
+### Public photography ledger
+
+| Filename | Usage | Owner | Rights | Credit |
+| -------- | ----- | ----- | ------ | ------ |
+| `meyer-isaac-street.webp` | Homepage Podcast, TTJS show page | Jewish Original Media | Class A | Jewish Original Media |
+| `meyer-isaac-steps.webp` | `/about` | Jewish Original Media | Class A | Jewish Original Media |
+| `morning-tefillin.webp` | `/support` | Jewish Original Media | Class A | Jewish Original Media |
+
+Do not hotlink Wikimedia thumbnails. Do not attach History featured media until
+a founder-approved Sanity write uses a verified high-resolution file.
 
 ## Photography
 
-Seven supplied photographs (founder pack; not copied into this worktree):
+Founder-uploaded photographs now in the Cursor asset pack (2026-09-09):
 
-- Israeli flag bunting in an urban setting — 1024×1024
-- Man wearing tefillin and reading — 1024×1024
-- Israeli flag against sky — 1024×683
-- Two show hosts standing outdoors — 1024×1024
-- Israeli flag at a Jerusalem stone site — 683×1024
-- Two show hosts seated on Jerusalem steps — 1024×1024
-- Israeli flag against blue sky — 1024×576
+Used (class A):
 
-The imagery is cohesive with the blue, sand, stone, and gold palette. Before
-publishing, record creator, copyright holder, license, allowed crops, subject
-consent where relevant, and required credit for every image.
+- Meyer and Isaac at a Jerusalem street corner — 1024×1024, `/media/founder/meyer-isaac-street.webp`
+- Meyer and Isaac on Jerusalem limestone steps — 1024×1024, `/media/founder/meyer-isaac-steps.webp`
+- Morning tefillin / Hebrew book — 1024×1024, `/media/founder/morning-tefillin.webp`
+
+Held:
+
+- Israeli flag bunting, Israeli flags against sky or stone
+- Unsplash Western Wall and flag (`photo-1697054821057`)
+- Low-resolution individual headshots (`meyer.jpg`, `isaac.jpg`)
+- `ak2` portrait (not a public JOM founder page subject)
+- Three Wikimedia historical files until high-resolution, rights-cleared History attach is approved
+
+The used files are 1024px WebP derivatives, served through `next/image`. Original
+high-resolution masters are still needed for print and large crops.
 
 ## Non-brand graphical source
 

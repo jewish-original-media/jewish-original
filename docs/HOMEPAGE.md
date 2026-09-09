@@ -1,9 +1,8 @@
 # Homepage
 
-Status: Founder visual refinement on `feature/integration-homepage`, built on
-the approved Design Director checkpoint. Composition still uses live History,
-Jewish Today, and Podcasts. This pass adds Torah depth, inner-page rooms, and
-rights-aware media readiness. It is not a second architecture.
+Status: Jerusalem + museum art-direction pass on `feature/integration-homepage`.
+Composition still uses live History, Jewish Today, and Podcasts. Photography is
+limited to three founder-owned images. It is not a second architecture.
 
 The homepage is a Server Component composition. It is not a CMS document.
 
@@ -56,10 +55,11 @@ Hidden until published documents exist:
 
 Uses `getJewishToday()` and `HomeJewishToday`. Calendar logic stays in Hebcal.
 On-this-day matches stay in History `getOnThisDayHistory`. The Hebrew date is
-the visual object. Ordinary weekdays show **This week in Torah** from the
-upcoming Shabbat portion in the existing Hebcal range. Observance and History
-blocks appear only when they have data. Do not fetch Hebcal again on the
-homepage.
+the visual object. Torah uses Hebcal labels: **This week in Torah**, **Most
+recent Torah portion**, or a separate **Festival** line when the coming
+Saturday is yom tov. The module names Eastern Time. It does not imply
+Jerusalem time. Observance and History blocks appear only when they have data.
+Do not fetch Hebcal again on the homepage.
 
 ## History
 
@@ -77,8 +77,9 @@ column. Do not insert empty image boxes.
 ## Podcasts
 
 Published `getPublishedPodcastHome()` and `EpisodeCard` for the latest
-episode. Additional published episodes appear as a title rail, not a second
-card system. Do not invent artwork or autoplay media.
+episode. The navy field now includes the founder-owned Meyer + Isaac street
+photograph with a museum caption. Additional published episodes appear as a
+title rail, not a second card system. Do not invent artwork or autoplay media.
 
 ## Originals, News, and Events
 

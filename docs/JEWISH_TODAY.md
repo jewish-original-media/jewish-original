@@ -67,7 +67,11 @@ The Integration homepage calls `getJewishToday()` once and passes that result
 to `HomeJewishToday`. The module shows:
 
 - the large Hebrew date object, Hebrew script, and civil date
-- **This week in Torah** when a parashah is available
+- **This week in Torah** when the selected portion is on or after today
+- **Most recent Torah portion** when the coming Saturday has no weekly
+  `parashat` and the system falls back
+- **Festival** when the coming Saturday is a Hebcal `yomtov` without a weekly
+  portion. This is the holiday name, not a guessed leyning.
 - **Today** only when a holiday, Rosh Chodesh, special Shabbat, Omer, or
   other observance is present
 - **On this day** only when a published History match exists
@@ -89,9 +93,13 @@ emits no `parashat` in the forward days.
 `selectUpcomingParashahItem()` in `src/integrations/hebcal/map-day.ts` takes
 the first `parashat` item whose civil date is on or after today. If the range
 only contains an earlier portion, it falls back to the first `parashat` item
-in the response. Stored titles stay hyphenated (`Nitzavim-Vayeilech`) to match
-Hebcal. Display uses an en dash (`Nitzavim–Vayeilech`). Empty remains empty
-when Hebcal returns no portion at all.
+in the response and marks `readingKind: "recent"`. Display then says **Most
+recent Torah portion**, never **This week in Torah**. If the coming Saturday
+is a Hebcal `yomtov` without a weekly portion, `festivalShabbat` carries that
+holiday. Hebcal leyning is not fetched, so the site does not invent a
+festival reading title. Stored titles stay hyphenated (`Nitzavim-Vayeilech`)
+to match Hebcal. Display uses an en dash (`Nitzavim–Vayeilech`). Empty
+remains empty when Hebcal returns no portion at all.
 
 V1 timezone remains Eastern Time. Do not add a second Jewish-calendar library.
 Do not hard-code a parashah.

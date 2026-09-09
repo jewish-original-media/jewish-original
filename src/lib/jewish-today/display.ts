@@ -44,3 +44,9 @@ export function formatParashahDisplayTitle(title?: string) {
   if (!title) return undefined;
   return title.replace(/-/g, "–");
 }
+
+export function torahPortionLabel(readingKind?: "thisWeek" | "recent") {
+  return readingKind === "recent"
+    ? "Most recent Torah portion"
+    : "This week in Torah";
+}

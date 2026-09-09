@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { MuseumFigure } from "@/components/media/museum-figure";
 import { EpisodeCard } from "@/components/podcasts/episode-card";
+import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
 import type { PodcastShow } from "@/content/podcasts/types";
 import type { HomePodcastPresentation } from "@/features/homepage/podcasts";
 import { formatPublishedDate } from "@/lib/podcasts/format";
@@ -89,6 +91,16 @@ export function HomePodcastFeature({
               </p>
             ) : null}
           </div>
+
+          {status === "live" && show ? (
+            <div className={styles.podcastPortrait}>
+              <MuseumFigure
+                photo={FOUNDER_PHOTOS.street}
+                sizes="(max-width: 47.98rem) 100vw, (max-width: 63.98rem) 50vw, 36rem"
+                tone="night"
+              />
+            </div>
+          ) : null}
 
           <div className={styles.podcastMedia}>
             {status === "live" && podcasts.lead ? (

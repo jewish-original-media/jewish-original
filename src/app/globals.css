@@ -110,8 +110,13 @@ body {
   margin: 0;
   background-color: var(--color-canvas);
   background-image:
-    radial-gradient(rgb(46 52 96 / 0.03) 0.65px, transparent 0.75px),
-    linear-gradient(180deg, rgb(238 224 203 / 0.28), transparent 22rem);
+    radial-gradient(rgb(46 52 96 / 0.035) 0.65px, transparent 0.75px),
+    linear-gradient(
+      180deg,
+      rgb(238 224 203 / 0.34),
+      rgb(247 243 234 / 0.2) 18rem,
+      transparent 32rem
+    );
   background-size:
     3px 3px,
     auto;
@@ -547,6 +552,8 @@ svg {
   flex-direction: column;
   gap: var(--space-1);
   margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid color-mix(in srgb, var(--color-gold) 42%, transparent);
   color: var(--color-muted);
   font-size: var(--text-xs);
   line-height: 1.5;
@@ -1485,6 +1492,18 @@ svg {
   padding: var(--space-4);
 }
 
+.podcast-mark-inline {
+  display: block;
+  width: 4.5rem;
+  height: auto;
+  margin-bottom: var(--space-4);
+}
+
+.podcast-hero-portrait {
+  min-width: 0;
+  width: min(28rem, 100%);
+}
+
 .podcast-mark {
   width: 100%;
   height: auto;
@@ -1750,6 +1769,15 @@ svg {
     grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.55fr);
     align-items: end;
     column-gap: clamp(3rem, 6vw, 6rem);
+  }
+
+  .podcast-hero--show .podcast-hero__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.72fr);
+    align-items: start;
+  }
+
+  .podcast-hero-portrait {
+    width: 100%;
   }
 
   .podcast-display {

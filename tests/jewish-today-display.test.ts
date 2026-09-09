@@ -5,6 +5,7 @@ import {
   calendarHighlights,
   firstSentence,
   formatParashahDisplayTitle,
+  torahPortionLabel,
 } from "../src/lib/jewish-today/display";
 
 describe("Jewish Today display helpers", () => {
@@ -35,5 +36,10 @@ describe("Jewish Today display helpers", () => {
       formatParashahDisplayTitle("Nitzavim-Vayeilech"),
       "Nitzavim–Vayeilech",
     );
+  });
+
+  it("does not call a fallback portion this week in Torah", () => {
+    assert.equal(torahPortionLabel("thisWeek"), "This week in Torah");
+    assert.equal(torahPortionLabel("recent"), "Most recent Torah portion");
   });
 });

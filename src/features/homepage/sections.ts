@@ -49,7 +49,7 @@ export const HOME_SECTION_ORDER: readonly HomeSectionContract[] = [
     title: "The Two Tall Jews Show",
     status: "live",
     description:
-      "Published getPodcastShow and one EpisodeCard lead. The catalog holds the remaining published episodes.",
+      "Published getPodcastShow, founder photography, and one EpisodeCard lead. The catalog holds the remaining published episodes.",
   },
   {
     id: "support",

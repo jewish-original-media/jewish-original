@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
+import { MuseumFigure } from "@/components/media/museum-figure";
 import { Container } from "@/components/ui/container";
+import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
 import { siteConfig } from "@/lib/site";
 
 import styles from "@/app/editorial.module.css";
@@ -20,14 +22,22 @@ export default function SupportPage() {
   return (
     <div className={`${styles.page} ${styles.roomSupport}`}>
       <section className={styles.hero}>
-        <Container size="content">
-          <p className="eyebrow">Support</p>
-          <h1 className={styles.title}>Stand with us. Build with us.</h1>
-          <p className={styles.lede}>
-            Help keep Jewish history, culture, and original work in public view.
-            Support remains clearly labeled and secondary to the editorial
-            record.
-          </p>
+        <Container className={styles.supportHero}>
+          <div>
+            <p className="eyebrow">Support the work</p>
+            <h1 className={styles.title}>Stand with us. Build with us.</h1>
+            <p className={styles.lede}>
+              Help keep Jewish history, culture, and original work in public
+              view. Support remains clearly labeled and secondary to the
+              editorial record.
+            </p>
+          </div>
+          <div className={styles.supportPortrait}>
+            <MuseumFigure
+              photo={FOUNDER_PHOTOS.tefillin}
+              sizes="(max-width: 47.98rem) 100vw, (max-width: 63.98rem) 70vw, 38rem"
+            />
+          </div>
         </Container>
       </section>
 

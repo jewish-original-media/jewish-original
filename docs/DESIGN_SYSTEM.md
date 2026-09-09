@@ -179,23 +179,30 @@ Do not make every page visually identical.
 ## Jerusalem material
 
 Atmosphere comes from limestone-warm paper, archival rules, brass-gold dates,
-Hebrew print, and a lightweight CSS grain. Texture should be felt, not noticed.
-Do not use Western Wall heroes, flag fields, skyline silhouettes, or Stars of
-David as wallpaper.
+Hebrew print, faint horizontal strata, and a lightweight CSS grain. Texture
+should be felt, not noticed. Do not use Western Wall heroes, flag fields,
+skyline silhouettes, or Stars of David as wallpaper. Jewish Today may name
+Eastern Time; it must not imply Jerusalem time.
 
 ## Imagery
 
-Treat images as collection objects. Every public image should support alt text,
-caption, creator/source, and rights/credit. History featured media may be a
-photograph, original illustration, artifact, map, or manuscript. Illustrations
-must be labeled as illustrations. No empty image wells. See
+Treat images as collection objects. Public founder photographs use
+`MuseumFigure`: object type, title, place, and credit under a hairline gold
+rule. History featured media uses the same museum language when a
+rights-cleared CMS image exists. History featured media may be a photograph,
+original illustration, artifact, map, or manuscript. Illustrations must be
+labeled as illustrations. No empty image wells. See
 `docs/HISTORY_ILLUSTRATION.md` and `docs/ASSET_INVENTORY.md`.
+
+Approved public photographs use different crops at mobile, tablet, and
+desktop through `object-position` and aspect ratio. Faces and hands stay
+legible. Do not reuse one pair photograph on About and Podcast.
 
 ## Asset handling
 
 Current JOM raster logo exports have baked black backgrounds despite `.png`
 extensions. Approved variants may only be placed on a matching black surface
 until transparent PNG or SVG masters are supplied. OTD circular logos are the
-only supplied transparent marks. Founder photography is documented in the
-inventory but is not in this worktree; do not substitute stock. See
-`ASSET_INVENTORY.md`.
+only supplied transparent marks. Three founder-owned photographs now live in
+`public/media/founder/` and are recorded in `ASSET_INVENTORY.md`. Do not
+substitute stock.

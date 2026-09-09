@@ -3,15 +3,39 @@
 }
 
 .roomAbout .hero {
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--color-sand) 72%, var(--color-canvas)),
-    color-mix(in srgb, var(--color-sand) 38%, var(--color-canvas))
-  );
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 5.5rem,
+      rgb(46 52 96 / 0.03) 5.5rem,
+      rgb(46 52 96 / 0.03) 5.55rem
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-sand) 78%, var(--color-canvas)),
+      color-mix(in srgb, var(--color-sand) 38%, var(--color-canvas))
+    );
 }
 
 .roomSupport .hero {
-  background: color-mix(in srgb, var(--color-sand) 36%, var(--color-paper));
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-gold) 10%, var(--color-sand)),
+      color-mix(in srgb, var(--color-sand) 42%, var(--color-paper))
+    );
+}
+
+.aboutHero,
+.supportHero {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+}
+
+.aboutPortrait,
+.supportPortrait {
+  min-width: 0;
 }
 
 .roomPrivacy {
@@ -233,5 +257,11 @@
 
   .invitations {
     max-width: 42rem;
+  }
+
+  .aboutHero,
+  .supportHero {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: end;
   }
 }

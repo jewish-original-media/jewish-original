@@ -5,6 +5,7 @@ import { formatGregorianLabel } from "@/features/jewish-today/timezone";
 import {
   calendarHighlights,
   formatParashahDisplayTitle,
+  torahPortionLabel,
 } from "@/lib/jewish-today/display";
 
 import styles from "@/app/today/today.module.css";
@@ -18,6 +19,8 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
   const highlights = calendarHighlights(day);
   const showCalendar = calendarReady && highlights.length > 0;
   const showTorah = calendarReady && Boolean(day.parashah);
+  const showFestival = calendarReady && Boolean(day.festivalShabbat);
+  const torahLabel = torahPortionLabel(day.parashah?.readingKind);
   const showHistory = day.onThisDay.length > 0;
 
   return (
@@ -79,14 +82,30 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
         </section>
       ) : null}
 
-      {showTorah && day.parashah ? (
-        <section
-          className={styles.section}
-          aria-labelledby="this-week-in-torah"
-        >
+      {showFestival && day.festivalShabbat ? (
+        <section className={styles.section} aria-labelledby="festival-reading">
           <Container>
-            <p className="eyebrow">This week in Torah</p>
-            <h2 className={styles.sectionTitle} id="this-week-in-torah">
+            <p className="eyebrow">Festival</p>
+            <h2 className={styles.sectionTitle} id="festival-reading">
+              {day.festivalShabbat.title}
+            </h2>
+            {day.festivalShabbat.titleHebrew ? (
+              <p className={styles.sectionHebrew} lang="he" dir="rtl">
+                {day.festivalShabbat.titleHebrew}
+              </p>
+            ) : null}
+            <p className={styles.meta}>
+              {`Read ${formatGregorianLabel(day.festivalShabbat.observedOn)}`}
+            </p>
+          </Container>
+        </section>
+      ) : null}
+
+      {showTorah && day.parashah ? (
+        <section className={styles.section} aria-labelledby="weekly-torah">
+          <Container>
+            <p className="eyebrow">{torahLabel}</p>
+            <h2 className={styles.sectionTitle} id="weekly-torah">
               {formatParashahDisplayTitle(day.parashah.title)}
             </h2>
             {day.parashah.titleHebrew ? (

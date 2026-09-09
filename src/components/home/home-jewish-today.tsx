@@ -5,6 +5,7 @@ import { formatGregorianLabel } from "@/features/jewish-today/timezone";
 import {
   calendarHighlights,
   formatParashahDisplayTitle,
+  torahPortionLabel,
 } from "@/lib/jewish-today/display";
 
 import styles from "@/app/home.module.css";
@@ -57,10 +58,28 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
 
           <div className={styles.todayContext}>
             <p className={styles.civilDate}>{day.gregorianLabel}</p>
+            <p className={styles.todayPlace}>Eastern Time</p>
+
+            {day.festivalShabbat ? (
+              <div className={styles.todayFact}>
+                <p className={styles.sectionLabel}>Festival</p>
+                <p className={styles.parashah}>{day.festivalShabbat.title}</p>
+                {day.festivalShabbat.titleHebrew ? (
+                  <p className={styles.parashahHebrew} lang="he" dir="rtl">
+                    {day.festivalShabbat.titleHebrew}
+                  </p>
+                ) : null}
+                <p className={styles.todayFactNote}>
+                  {`Read ${formatGregorianLabel(day.festivalShabbat.observedOn)}`}
+                </p>
+              </div>
+            ) : null}
 
             {parashahTitle && day.parashah ? (
               <div className={styles.todayFact}>
-                <p className={styles.sectionLabel}>This week in Torah</p>
+                <p className={styles.sectionLabel}>
+                  {torahPortionLabel(day.parashah.readingKind)}
+                </p>
                 <p className={styles.parashah}>{parashahTitle}</p>
                 {day.parashah.titleHebrew ? (
                   <p className={styles.parashahHebrew} lang="he" dir="rtl">

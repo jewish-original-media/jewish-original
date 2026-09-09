@@ -46,7 +46,14 @@ test("serves About from founder-provided copy", async ({ page }) => {
   await expect(
     page.getByRole("heading", { level: 1, name: "Our path forward" }),
   ).toBeVisible();
-  await expect(page.getByText("Meyer Grunberg and Isaac Simon")).toBeVisible();
+  await expect(
+    page.getByText("Meyer Grunberg and Isaac Simon").first(),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("img", {
+      name: "Meyer Grunberg and Isaac Simon on Jerusalem limestone steps",
+    }),
+  ).toBeVisible();
   await expect(page.getByRole("heading", { name: "People" })).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Meyer Grunberg" }),
@@ -67,6 +74,12 @@ test("serves Support without checkout or tax claims", async ({ page }) => {
   expect(response?.status()).toBe(200);
   await expect(
     page.getByRole("heading", { name: "Stand with us. Build with us." }),
+  ).toBeVisible();
+  await expect(page.getByText("Support the work").first()).toBeVisible();
+  await expect(
+    page.getByRole("img", {
+      name: "A man wearing tefillin reads from a Hebrew book",
+    }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Email to support" }),

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
+import { MuseumFigure } from "@/components/media/museum-figure";
 import { HistoryHeroWatermark } from "@/components/history/history-hero-watermark";
 import { Container } from "@/components/ui/container";
+import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
 
 import styles from "@/app/editorial.module.css";
 
@@ -17,14 +19,23 @@ export default function AboutPage() {
     <div className={`${styles.page} ${styles.roomAbout}`}>
       <section className={styles.hero}>
         <HistoryHeroWatermark />
-        <Container size="content">
-          <p className="eyebrow">About</p>
-          <h1 className={styles.title}>Our path forward</h1>
-          <p className={styles.lede}>
-            We’re not here to copy trends. We’re here to remember, to rebuild,
-            and to create.
-          </p>
-          <p className={styles.founders}>Meyer Grunberg and Isaac Simon</p>
+        <Container className={styles.aboutHero}>
+          <div>
+            <p className="eyebrow">About</p>
+            <h1 className={styles.title}>Our path forward</h1>
+            <p className={styles.lede}>
+              We’re not here to copy trends. We’re here to remember, to rebuild,
+              and to create.
+            </p>
+            <p className={styles.founders}>Meyer Grunberg and Isaac Simon</p>
+          </div>
+          <div className={styles.aboutPortrait}>
+            <MuseumFigure
+              photo={FOUNDER_PHOTOS.steps}
+              priority
+              sizes="(max-width: 47.98rem) 100vw, (max-width: 63.98rem) 70vw, 40rem"
+            />
+          </div>
         </Container>
       </section>
 

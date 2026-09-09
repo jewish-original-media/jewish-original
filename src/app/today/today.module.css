@@ -3,11 +3,19 @@
 }
 
 .roomToday .hero {
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--color-sand) 58%, var(--color-canvas)),
-    color-mix(in srgb, var(--color-sky) 22%, var(--color-canvas))
-  );
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 4.25rem,
+      rgb(46 52 96 / 0.03) 4.25rem,
+      rgb(46 52 96 / 0.03) 4.3rem
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-sand) 64%, var(--color-canvas)),
+      color-mix(in srgb, var(--color-sky) 22%, var(--color-canvas))
+    );
 }
 
 .hero {

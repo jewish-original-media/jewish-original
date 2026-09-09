@@ -139,7 +139,21 @@
 .today {
   position: relative;
   overflow: hidden;
-  background: color-mix(in srgb, var(--color-sky) 58%, var(--color-sand));
+  background:
+    linear-gradient(
+      180deg,
+      rgb(238 224 203 / 0.22),
+      transparent 42%,
+      rgb(224 213 192 / 0.18) 100%
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 4.75rem,
+      rgb(46 52 96 / 0.035) 4.75rem,
+      rgb(46 52 96 / 0.035) 4.8rem
+    ),
+    color-mix(in srgb, var(--color-sky) 52%, var(--color-sand));
   border-block: 1px solid
     color-mix(in srgb, var(--color-cerulean) 28%, transparent);
 }
@@ -236,6 +250,15 @@
   text-transform: uppercase;
 }
 
+.todayPlace {
+  margin: var(--space-2) 0 0;
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
 .todayFact {
   margin-top: var(--space-6);
   padding-top: var(--space-5);
@@ -297,7 +320,12 @@
 }
 
 .history {
-  background: var(--color-paper);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-sand) 38%, var(--color-paper)),
+      var(--color-paper) 38%
+    );
 }
 
 .historyHeading {
@@ -479,6 +507,10 @@
   gap: clamp(2rem, 5vw, 3.5rem);
 }
 
+.podcastPortrait {
+  min-width: 0;
+}
+
 .showBlock {
   display: grid;
   gap: var(--space-5);
@@ -649,8 +681,12 @@
     grid-column: 1 / 4;
   }
 
-  .podcastMedia {
+  .podcastPortrait {
     grid-column: 4 / 9;
+  }
+
+  .podcastMedia {
+    grid-column: 1 / 9;
   }
 }
 
@@ -693,6 +729,11 @@
 
   .showBlock {
     grid-column: 1 / 5;
+    align-self: start;
+  }
+
+  .podcastPortrait {
+    grid-column: 6 / 13;
   }
 
   .podcastMedia {

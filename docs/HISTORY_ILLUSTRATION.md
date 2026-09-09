@@ -37,8 +37,11 @@ Public History queries still emit featured media only when rights are
 `HistoryFeaturedMedia` labels illustrations as “Original illustration” and
 shows caption, creator, and credit.
 
-The first five published History articles have no public imagery. Do not attach
-new images to them until a rights ledger exists.
+The first five published History articles have no public imagery. Three
+Wikimedia candidates were inventoried and held (thumbnail uploads; one graphic
+PD file; one CC BY-SA file; one unverified US-PD classroom photograph). Do not
+attach new images until a founder-approved Sanity write uses a verified
+high-resolution file. No illustration prototype was generated.
 
 ## What this is not
 

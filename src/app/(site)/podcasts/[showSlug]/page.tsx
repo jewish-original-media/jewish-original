@@ -4,11 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { MuseumFigure } from "@/components/media/museum-figure";
 import { EpisodeCard } from "@/components/podcasts/episode-card";
 import { PodcastPreviewBanner } from "@/components/podcasts/podcast-preview-banner";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
+import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
 import {
   getPodcastEpisodes,
   getPodcastShow,
@@ -88,6 +90,16 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
                 <li aria-current="page">{show.title}</li>
               </ol>
             </nav>
+            {show.markSrc ? (
+              <Image
+                alt={show.title}
+                className="podcast-mark-inline"
+                height={96}
+                priority
+                src={show.markSrc}
+                width={108}
+              />
+            ) : null}
             <p className="podcast-kicker">Listening room</p>
             <h1 className="podcast-display">{show.title}</h1>
             {show.tagline ? (
@@ -115,18 +127,14 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
               ) : null}
             </div>
           </div>
-          {show.markSrc ? (
-            <div className="podcast-mark-well">
-              <Image
-                alt={show.title}
-                className="podcast-mark"
-                height={320}
-                priority
-                src={show.markSrc}
-                width={360}
-              />
-            </div>
-          ) : null}
+          <div className="podcast-hero-portrait">
+            <MuseumFigure
+              photo={FOUNDER_PHOTOS.street}
+              priority
+              sizes="(max-width: 63.98rem) 100vw, 28rem"
+              tone="night"
+            />
+          </div>
         </Container>
       </section>
 

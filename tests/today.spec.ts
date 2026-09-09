@@ -18,6 +18,8 @@ test("renders an ordinary weekday without empty sections", async ({
   await expect(page.getByText("Tuesday, September 1, 2026")).toBeVisible();
   await expect(page.getByText("19 Elul 5786")).toBeVisible();
   await expect(page.getByText("This week in Torah")).toBeVisible();
+  await expect(page.getByText("Most recent Torah portion")).toHaveCount(0);
+  await expect(page.getByText("Eastern Time")).toBeVisible();
   await expect(
     page.getByRole("heading", { name: /nitzavim.vayeilech/i }),
   ).toBeVisible();
@@ -42,6 +44,19 @@ test("renders an ordinary weekday without empty sections", async ({
     path: `artifacts/today-weekday-${testInfo.project.name}.png`,
     fullPage: true,
   });
+});
+
+test("labels a prior portion when the coming Saturday is a festival", async ({
+  page,
+}) => {
+  await page.goto("/today?date=2026-09-09");
+
+  await expect(page.getByText("Most recent Torah portion")).toBeVisible();
+  await expect(page.getByText("This week in Torah")).toHaveCount(0);
+  await expect(page.getByText("Festival").first()).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /nitzavim.vayeilech/i }),
+  ).toBeVisible();
 });
 
 test("renders holiday, Omer, Shabbat, and Rosh Chodesh fixtures", async ({

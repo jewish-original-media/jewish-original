@@ -509,3 +509,28 @@ item in that range. No second calendar library.
 News and Events ingestion is the next milestone, not this one. Homepage
 order stays Masthead → Today → History → Manifesto → Podcasts → Support.
 Production, DNS, and the GitHub default branch remain unchanged.
+
+## ADR-036 — Jerusalem + museum art direction uses three founder photographs
+
+**Status:** Accepted, 2026-09-09
+
+The Integration checkpoint `e80953dc7fc3a67fe989dcefbaed5bea6a4d3877` remains
+the product shell. This pass adds depth, not a redesign.
+
+Three class A founder photographs may appear publicly:
+
+- Meyer + Isaac, Jerusalem street — homepage Podcast and the TTJS show page
+- Meyer + Isaac, limestone steps — About
+- Morning tefillin — Support
+
+Wikimedia historical files are catalogued and held. The Dachau coal-yard
+photograph is US public domain but graphic and a thumbnail. Willenberg is
+CC BY-SA 3.0 PL and a thumbnail. Benghazi lacks a US public-domain tag.
+No Sanity write. Flag photographs and Unsplash stock stay unpublished.
+
+Jewish Today labels a fallback parashah **Most recent Torah portion**. A
+coming Saturday that is Hebcal `yomtov` without `parashat` is labeled
+**Festival** using the holiday name. V1 timezone remains Eastern Time.
+
+News, Events, Originals, Fast Lane, more Podcast imports, Search,
+newsletter, and community remain out of scope.
