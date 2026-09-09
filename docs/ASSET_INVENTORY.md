@@ -44,9 +44,9 @@ or another approved transparent/vector master. Until then, do not remove
 backgrounds, recolor, redraw, or enlarge the existing rasters for monumental
 use.
 
-JOM atmospheric motifs in `src/components/brand/jom-motif.tsx` are original
-decorative drawings. They are not historical evidence and do not replace
-rights-cleared photography.
+Do not invent decorative icon families to fill empty space. Global JOM
+surfaces use approved brand assets, typography, Hebrew, material treatment,
+or nothing.
 
 ## On This Day in Jewish History
 

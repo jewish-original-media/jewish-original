@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { JomMotif } from "@/components/brand/jom-motif";
 import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/lib/site";
 
@@ -11,9 +10,6 @@ export function SiteFooter() {
     <footer className={styles.footer}>
       <Container className={styles.footerGrid}>
         <div className={styles.footerIdentity}>
-          <div className={styles.footerMotif} aria-hidden="true">
-            <JomMotif name="arch" />
-          </div>
           <p className={styles.footerMark} aria-hidden="true">
             Jewish
             <br />

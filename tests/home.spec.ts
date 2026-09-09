@@ -37,7 +37,7 @@ test("composes the homepage from Jewish Today and published History", async ({
   ).toBeVisible();
   await expect(page.locator("[data-brand-plaque]")).toBeVisible();
   await expect(page.locator("main .history-hero-lion")).toHaveCount(0);
-  await expect(page.locator('[data-motif="arch"]')).toHaveCount(2);
+  await expect(page.locator("[data-motif]")).toHaveCount(0);
   await expect(
     page.getByRole("contentinfo").getByRole("img", { name: /Jewish Original/ }),
   ).toHaveCount(0);

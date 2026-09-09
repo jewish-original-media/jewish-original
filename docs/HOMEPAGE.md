@@ -36,8 +36,8 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 ## Section order
 
 1. **Masthead** — stacked “Remember, rebuild, and create.” Positioning lives
-   in the lede. A Temple-gate line study sits on the right on desktop. The
-   OTD lion is not used here. Live.
+   in the lede. Desktop negative space stays empty. The OTD lion is not used
+   here. Live.
 2. **Jewish Today** — signature daily object from the same `JewishTodayDay`.
    Live.
 3. **History** — one lead plus two supporting archive stories. Live.

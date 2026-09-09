@@ -53,10 +53,6 @@
   background: color-mix(in srgb, var(--color-sand) 55%, var(--color-canvas));
 }
 
-.roomMotif {
-  display: none;
-}
-
 .title {
   max-width: 12ch;
   margin: 0;
@@ -278,16 +274,5 @@
   .body,
   .band {
     padding-block: clamp(3.25rem, 7vw, 6rem);
-  }
-
-  .roomMotif {
-    display: block;
-    position: absolute;
-    top: 12%;
-    inset-inline-end: 52%;
-    width: 5.75rem;
-    color: var(--color-navy);
-    opacity: 0.14;
-    pointer-events: none;
   }
 }

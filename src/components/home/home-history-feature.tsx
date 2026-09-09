@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { JomMotif } from "@/components/brand/jom-motif";
 import { historyCardLocation } from "@/content/history/archive";
 import type { HistoryEntrySummary } from "@/content/history/types";
 import type { HomeHistoryPresentation } from "@/features/homepage/history";
@@ -80,9 +79,6 @@ export function HomeHistoryFeature({
       aria-label="History"
     >
       <div className={styles.bandInner}>
-        <div className={styles.historyMotif} aria-hidden="true">
-          <JomMotif name="seal" />
-        </div>
         <p className={styles.sectionLabel}>History</p>
         <h2 className={styles.historyHeading}>{history.title}</h2>
         {unavailable ? (

@@ -109,12 +109,6 @@
   text-transform: uppercase;
 }
 
-.watermark,
-.todayMotif,
-.historyMotif {
-  display: none;
-}
-
 .today {
   position: relative;
   overflow: hidden;
@@ -269,8 +263,6 @@
 }
 
 .history {
-  position: relative;
-  overflow: hidden;
   background:
     repeating-linear-gradient(
       180deg,
@@ -613,14 +605,6 @@
   font-size: 1.15rem;
 }
 
-@media (max-width: 47.98rem) {
-  .watermark,
-  .todayMotif,
-  .historyMotif {
-    display: none;
-  }
-}
-
 @media (min-width: 48rem) {
   .mastheadGrid,
   .todayObject,
@@ -685,31 +669,7 @@
   }
 
   .mastheadCopy {
-    grid-column: 1 / 10;
-  }
-
-  .watermark,
-  .todayMotif,
-  .historyMotif {
-    display: block;
-    color: var(--color-navy);
-    pointer-events: none;
-  }
-
-  .watermark {
-    grid-column: 10 / 13;
-    justify-self: end;
-    width: min(10.5rem, 100%);
-    opacity: 0.18;
-  }
-
-  .todayMotif,
-  .historyMotif {
-    position: absolute;
-    top: 12%;
-    inset-inline-end: 3%;
-    width: 6.25rem;
-    opacity: 0.12;
+    grid-column: 1 / -1;
   }
 
   .todayDate {
@@ -742,25 +702,9 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .watermark {
-    animation: motif-fade 700ms var(--ease-enter) 120ms both;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .page * {
     transition: none !important;
     animation: none !important;
-  }
-}
-
-@keyframes motif-fade {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 0.18;
   }
 }

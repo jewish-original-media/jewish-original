@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { JomMotif } from "@/components/brand/jom-motif";
 import { MuseumFigure } from "@/components/media/museum-figure";
 import { Container } from "@/components/ui/container";
 import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
@@ -23,9 +22,6 @@ export default function SupportPage() {
   return (
     <div className={`${styles.page} ${styles.roomSupport}`}>
       <section className={styles.hero}>
-        <div className={styles.roomMotif} aria-hidden="true">
-          <JomMotif name="menorah" />
-        </div>
         <Container className={styles.supportHero}>
           <div>
             <p className="eyebrow">Support the work</p>

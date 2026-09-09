@@ -174,13 +174,6 @@
   background: color-mix(in srgb, var(--color-gold) 82%, #8a5a28);
 }
 
-.footerMotif {
-  width: 3.75rem;
-  margin-bottom: var(--space-6);
-  color: color-mix(in srgb, var(--color-gold) 72%, var(--color-sand));
-  opacity: 0.55;
-}
-
 .footerMark {
   margin: 0;
   font-family: var(--font-serif);

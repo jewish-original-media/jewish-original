@@ -192,23 +192,16 @@ Eastern Time; it must not imply Jerusalem time.
 Jewish Original Media is the umbrella. On This Day and The Two Tall Jews Show
 remain distinct sub-brands.
 
-JOM atmospheric motifs are original decorative line studies in
-`src/components/brand/jom-motif.tsx`. They are museum-catalogue drawings, not
-documentary evidence and not clipart:
+Decorative assets must be authentic or absent:
 
-| Motif        | Reference                         | Placement                                 |
-| ------------ | --------------------------------- | ----------------------------------------- |
-| `arch`       | Temple / Jerusalem gate study     | Homepage masthead; quiet footer signature |
-| `manuscript` | Ruled leaf + letter fragment      | Homepage Jewish Today                     |
-| `seal`       | Circular Judean seal / coin study | Homepage History                          |
-| `masonry`    | Stone course plan                 | About                                     |
-| `menorah`    | Seven-branch archaeological line  | Support                                   |
+- approved JOM brand assets
+- approved OTD lion / star in History rooms only
+- approved TTJS marks on Podcast night surfaces only
+- founder-owned photography
+- typography, Hebrew, stone / paper / brass, and simple rules or circles
 
-OTD lion and star stay on History / archive / On This Day surfaces only. They
-are not the generic JOM symbol. TTJS marks stay on Podcast night surfaces.
-
-Do not place a motif in every empty corner. Do not reuse the OTD lion on the
-homepage masthead or About.
+Do not invent icon families. Do not reuse the OTD lion on the homepage
+masthead, About, or other global JOM surfaces. Empty space is intentional.
 
 ## Logo placement
 

@@ -548,9 +548,23 @@ a black plaque with a brass rule. The footer keeps monumental typography.
 Required later: `JOM_Primary_Horizontal_White_Gold_Transparent.svg`.
 
 OTD lion/star stay in History rooms. Homepage and About no longer use the
-lion as a generic JOM watermark. New JOM motifs are original decorative line
-studies (arch, manuscript, seal, masonry, menorah), not documentary images
-and not Wikimedia attachments.
+lion as a generic JOM watermark. Invented site-wide line drawings were
+removed after founder review; global JOM surfaces use type, material, and
+whitespace instead.
 
 News, Events, Originals, History expansion, Production, DNS, and the GitHub
 default branch remain out of scope.
+
+## ADR-038 — Authentic assets only; invented motifs removed
+
+**Status:** Accepted, 2026-09-09
+
+The visual-identity checkpoint `d13c2f4d8381bc77efdae5e0db70e1c6c9b716be`
+is approved except for the invented arch / manuscript / seal / masonry /
+menorah drawings. Those placements and the unused `JomMotif` system are
+removed. Do not invent another icon family.
+
+Priority: authentic asset, then typography, then material, then whitespace.
+If nothing authentic belongs in a space, leave it empty. OTD lion/star remain
+History-only. Header plaque and typographic footer stay until a transparent
+JOM master exists.
