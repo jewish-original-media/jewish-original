@@ -64,7 +64,7 @@
   --width-editorial: 70rem;
   --width-site: 90rem;
   --gutter: clamp(1.25rem, 3.6vw, 4.5rem);
-  --header-height: 4.75rem;
+  --header-height: 5.15rem;
   --grid-gap: clamp(1rem, 2vw, 1.75rem);
 
   /* Motion */
@@ -111,14 +111,22 @@ body {
   background-color: var(--color-canvas);
   background-image:
     radial-gradient(rgb(46 52 96 / 0.035) 0.65px, transparent 0.75px),
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 6.25rem,
+      rgb(46 52 96 / 0.02) 6.25rem,
+      rgb(46 52 96 / 0.02) 6.3rem
+    ),
     linear-gradient(
       180deg,
-      rgb(238 224 203 / 0.34),
-      rgb(247 243 234 / 0.2) 18rem,
-      transparent 32rem
+      rgb(238 224 203 / 0.42),
+      rgb(247 243 234 / 0.18) 22rem,
+      transparent 36rem
     );
   background-size:
     3px 3px,
+    auto,
     auto;
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -410,11 +418,19 @@ svg {
 .history-entry-header {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--color-sand) 78%, var(--color-canvas)),
-    color-mix(in srgb, var(--color-sand) 42%, var(--color-canvas))
-  );
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 5.75rem,
+      rgb(46 52 96 / 0.03) 5.75rem,
+      rgb(46 52 96 / 0.03) 5.8rem
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-sand) 78%, var(--color-canvas)),
+      color-mix(in srgb, var(--color-sand) 42%, var(--color-canvas))
+    );
 }
 
 .history-hero-lion {
@@ -459,6 +475,15 @@ svg {
   font-weight: 400;
   letter-spacing: -0.035em;
   line-height: 0.95;
+}
+
+.history-date-line::after {
+  content: "";
+  display: block;
+  width: 3.25rem;
+  height: 1px;
+  margin-top: var(--space-5);
+  background: color-mix(in srgb, var(--color-gold) 82%, #8a5a28);
 }
 
 .history-archive-rail {
@@ -948,7 +973,7 @@ svg {
   min-height: 2.875rem;
   min-width: 11rem;
   border: 1px solid var(--color-navy);
-  border-radius: var(--radius-sm);
+  border-radius: 0;
   background: var(--color-paper);
   padding-inline: 0.75rem;
   color: var(--color-ink);
@@ -1042,7 +1067,7 @@ svg {
     grid-template-columns: minmax(0, 1.15fr) minmax(14rem, 0.45fr);
     column-gap: clamp(4rem, 7vw, 7.5rem);
     row-gap: 0;
-    padding-block: 4.75rem 5.5rem;
+    padding-block: 5.25rem 6rem;
   }
 
   .history-date-line {
@@ -1126,7 +1151,7 @@ svg {
 
 @media (max-width: 47.99rem) {
   :root {
-    --header-height: 4.75rem;
+    --header-height: 5rem;
   }
 
   .button {
@@ -1342,6 +1367,7 @@ svg {
 .podcast-episode-header {
   background: var(--color-night);
   color: var(--color-paper);
+  border-top: 1px solid color-mix(in srgb, var(--color-gold) 55%, transparent);
 }
 
 .podcast-hero__grid,
@@ -1765,6 +1791,11 @@ svg {
 }
 
 @media (min-width: 64rem) {
+  .podcast-hero__grid,
+  .podcast-episode-hero {
+    padding-block: clamp(4.5rem, 9vw, 7.5rem);
+  }
+
   .podcast-hero__grid {
     grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.55fr);
     align-items: end;

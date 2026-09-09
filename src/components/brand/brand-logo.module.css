@@ -1,0 +1,20 @@
+.plaque {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  padding: 0.22rem 0.34rem 0.28rem;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 78%, #8a5a28);
+}
+
+.mark {
+  display: block;
+  width: 4.55rem;
+  height: auto;
+}
+
+@media (min-width: 40rem) {
+  .mark {
+    width: 5.15rem;
+  }
+}

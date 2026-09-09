@@ -9,7 +9,7 @@
 }
 
 .band {
-  padding-block: clamp(3.5rem, 8vw, 7.5rem);
+  padding-block: clamp(3.25rem, 7vw, 6.25rem);
 }
 
 .bandInner {
@@ -41,31 +41,8 @@
 .masthead {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(3.25rem, 10vw, 8.5rem) clamp(3.75rem, 8vw, 7rem);
+  padding-block: clamp(3.25rem, 9vw, 7.5rem) clamp(3.5rem, 7vw, 6.5rem);
   border-bottom: 1px solid var(--home-rule);
-}
-
-.masthead::after {
-  content: "";
-  position: absolute;
-  inset-inline-end: -4rem;
-  bottom: -6rem;
-  width: min(42vw, 28rem);
-  aspect-ratio: 1;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      135deg,
-      transparent 46%,
-      rgb(210 144 70 / 0.08) 46% 47%,
-      transparent 47%
-    ),
-    linear-gradient(
-      45deg,
-      transparent 46%,
-      rgb(46 52 96 / 0.05) 46% 47%,
-      transparent 47%
-    );
 }
 
 .mastheadGrid {
@@ -89,6 +66,15 @@
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+}
+
+.wordmark::after {
+  content: "";
+  display: block;
+  width: 3.25rem;
+  height: 1px;
+  margin-top: var(--space-5);
+  background: color-mix(in srgb, var(--color-gold) 82%, #8a5a28);
 }
 
 .display {
@@ -123,17 +109,10 @@
   text-transform: uppercase;
 }
 
-.watermark {
+.watermark,
+.todayMotif,
+.historyMotif {
   display: none;
-}
-
-.watermark :global(.history-hero-lion) {
-  display: block;
-  position: relative;
-  top: auto;
-  right: auto;
-  width: min(11rem, 100%);
-  opacity: 0.22;
 }
 
 .today {
@@ -142,50 +121,20 @@
   background:
     linear-gradient(
       180deg,
-      rgb(238 224 203 / 0.22),
+      rgb(238 224 203 / 0.28),
       transparent 42%,
-      rgb(224 213 192 / 0.18) 100%
+      rgb(224 213 192 / 0.2) 100%
     ),
     repeating-linear-gradient(
       180deg,
       transparent,
-      transparent 4.75rem,
-      rgb(46 52 96 / 0.035) 4.75rem,
-      rgb(46 52 96 / 0.035) 4.8rem
+      transparent 5.25rem,
+      rgb(46 52 96 / 0.04) 5.25rem,
+      rgb(46 52 96 / 0.04) 5.3rem
     ),
-    color-mix(in srgb, var(--color-sky) 52%, var(--color-sand));
+    color-mix(in srgb, var(--color-sky) 48%, var(--color-sand));
   border-block: 1px solid
     color-mix(in srgb, var(--color-cerulean) 28%, transparent);
-}
-
-.today::before {
-  content: "";
-  position: absolute;
-  top: 12%;
-  inset-inline-end: 5%;
-  width: 6.5rem;
-  height: 6.5rem;
-  pointer-events: none;
-  opacity: 0.1;
-  background:
-    linear-gradient(
-      30deg,
-      transparent 47%,
-      var(--color-navy) 47% 49%,
-      transparent 49%
-    ),
-    linear-gradient(
-      -30deg,
-      transparent 47%,
-      var(--color-navy) 47% 49%,
-      transparent 49%
-    ),
-    linear-gradient(
-      90deg,
-      transparent 47%,
-      var(--color-navy) 47% 49%,
-      transparent 49%
-    );
 }
 
 .todayObject {
@@ -260,8 +209,8 @@
 }
 
 .todayFact {
-  margin-top: var(--space-6);
-  padding-top: var(--space-5);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
   border-top: 1px solid color-mix(in srgb, var(--color-gold) 40%, transparent);
 }
 
@@ -320,12 +269,30 @@
 }
 
 .history {
+  position: relative;
+  overflow: hidden;
   background:
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 5.75rem,
+      rgb(46 52 96 / 0.03) 5.75rem,
+      rgb(46 52 96 / 0.03) 5.8rem
+    ),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--color-sand) 38%, var(--color-paper)),
-      var(--color-paper) 38%
+      color-mix(in srgb, var(--color-sand) 48%, var(--color-paper)),
+      var(--color-paper) 42%
     );
+}
+
+.historyCatalog {
+  margin: 0;
+  color: var(--color-navy);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .historyHeading {
@@ -349,7 +316,7 @@
 }
 
 .historyDate {
-  margin: var(--space-5) 0 0;
+  margin: var(--space-4) 0 0;
   color: var(--color-gold);
   font-family: var(--font-serif);
   font-size: clamp(2.75rem, 6vw, 5.5rem);
@@ -481,6 +448,15 @@
   line-height: 1.05;
 }
 
+.manifestoQuote::before {
+  content: "";
+  display: block;
+  width: 3.25rem;
+  height: 1px;
+  margin-bottom: var(--space-8);
+  background: color-mix(in srgb, var(--color-gold) 82%, #8a5a28);
+}
+
 .manifestoNote {
   max-width: 22rem;
   margin: var(--space-8) 0 0;
@@ -494,6 +470,7 @@
 .podcasts {
   background: var(--color-navy);
   color: var(--color-sand);
+  border-top: 1px solid color-mix(in srgb, var(--color-gold) 55%, transparent);
 }
 
 .podcasts .sectionLabel,
@@ -637,8 +614,9 @@
 }
 
 @media (max-width: 47.98rem) {
-  .today::before,
-  .masthead::after {
+  .watermark,
+  .todayMotif,
+  .historyMotif {
     display: none;
   }
 }
@@ -691,6 +669,14 @@
 }
 
 @media (min-width: 64rem) {
+  .band {
+    padding-block: clamp(5rem, 9vw, 8.75rem);
+  }
+
+  .masthead {
+    padding-block: clamp(5.5rem, 11vw, 10rem) clamp(5rem, 9vw, 8.5rem);
+  }
+
   .mastheadGrid,
   .todayObject,
   .historyLayout,
@@ -702,13 +688,28 @@
     grid-column: 1 / 10;
   }
 
-  .watermark {
+  .watermark,
+  .todayMotif,
+  .historyMotif {
     display: block;
+    color: var(--color-navy);
+    pointer-events: none;
+  }
+
+  .watermark {
     grid-column: 10 / 13;
     justify-self: end;
-    width: min(11rem, 100%);
-    opacity: 0.16;
-    pointer-events: none;
+    width: min(10.5rem, 100%);
+    opacity: 0.18;
+  }
+
+  .todayMotif,
+  .historyMotif {
+    position: absolute;
+    top: 12%;
+    inset-inline-end: 3%;
+    width: 6.25rem;
+    opacity: 0.12;
   }
 
   .todayDate {
@@ -741,8 +742,25 @@
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .watermark {
+    animation: motif-fade 700ms var(--ease-enter) 120ms both;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .page * {
     transition: none !important;
+    animation: none !important;
+  }
+}
+
+@keyframes motif-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.18;
   }
 }

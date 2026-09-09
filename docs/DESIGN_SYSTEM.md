@@ -10,6 +10,8 @@ the marks.
 ## Visual direction
 
 The experience is modern editorial, warm, historically grounded, and alive.
+It should feel like Jerusalem stone, brass museum hardware, artifact fragments,
+Hebrew manuscript, Temple-scale space, and a high-end cultural institution.
 It favors strong hierarchy, deliberate whitespace, restrained asymmetry,
 photographic storytelling, and subtle archival texture over generic card grids,
 glassmorphism, gradients, or SaaS dashboard conventions.
@@ -180,9 +182,45 @@ Do not make every page visually identical.
 
 Atmosphere comes from limestone-warm paper, archival rules, brass-gold dates,
 Hebrew print, faint horizontal strata, and a lightweight CSS grain. Texture
-should be felt, not noticed. Do not use Western Wall heroes, flag fields,
+should be felt, not noticed. Metal appears as hairline rules and engraved
+details, not chrome gradients. Do not use Western Wall heroes, flag fields,
 skyline silhouettes, or Stars of David as wallpaper. Jewish Today may name
 Eastern Time; it must not imply Jerusalem time.
+
+## Motif language
+
+Jewish Original Media is the umbrella. On This Day and The Two Tall Jews Show
+remain distinct sub-brands.
+
+JOM atmospheric motifs are original decorative line studies in
+`src/components/brand/jom-motif.tsx`. They are museum-catalogue drawings, not
+documentary evidence and not clipart:
+
+| Motif        | Reference                         | Placement                                 |
+| ------------ | --------------------------------- | ----------------------------------------- |
+| `arch`       | Temple / Jerusalem gate study     | Homepage masthead; quiet footer signature |
+| `manuscript` | Ruled leaf + letter fragment      | Homepage Jewish Today                     |
+| `seal`       | Circular Judean seal / coin study | Homepage History                          |
+| `masonry`    | Stone course plan                 | About                                     |
+| `menorah`    | Seven-branch archaeological line  | Support                                   |
+
+OTD lion and star stay on History / archive / On This Day surfaces only. They
+are not the generic JOM symbol. TTJS marks stay on Podcast night surfaces.
+
+Do not place a motif in every empty corner. Do not reuse the OTD lion on the
+homepage masthead or About.
+
+## Logo placement
+
+No approved transparent or vector JOM master exists. Current rasters are
+JPEG-encoded with baked black fields. The header treats the unaltered
+white/gold primary as a small black brand plaque with a brass edge. Do not
+remove the background, recolor, crop the mark, or fake transparency.
+
+The footer keeps the typographic “Jewish Original” lockup. Do not enlarge the
+baked raster there. The required long-term asset is
+`JOM_Primary_Horizontal_White_Gold_Transparent.svg` or another
+designer-approved transparent/vector master.
 
 ## Imagery
 
@@ -201,8 +239,7 @@ legible. Do not reuse one pair photograph on About and Podcast.
 ## Asset handling
 
 Current JOM raster logo exports have baked black backgrounds despite `.png`
-extensions. Approved variants may only be placed on a matching black surface
-until transparent PNG or SVG masters are supplied. OTD circular logos are the
-only supplied transparent marks. Three founder-owned photographs now live in
-`public/media/founder/` and are recorded in `ASSET_INVENTORY.md`. Do not
-substitute stock.
+extensions. The header plaque is the approved interim placement. Do not
+alter the mark. OTD circular logos are the only supplied transparent marks.
+Three founder-owned photographs now live in `public/media/founder/` and are
+recorded in `ASSET_INVENTORY.md`. Do not substitute stock.

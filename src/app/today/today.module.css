@@ -7,9 +7,9 @@
     repeating-linear-gradient(
       180deg,
       transparent,
-      transparent 4.25rem,
-      rgb(46 52 96 / 0.03) 4.25rem,
-      rgb(46 52 96 / 0.03) 4.3rem
+      transparent 4.75rem,
+      rgb(46 52 96 / 0.035) 4.75rem,
+      rgb(46 52 96 / 0.035) 4.8rem
     ),
     linear-gradient(
       180deg,
@@ -198,6 +198,12 @@
 
   .hebrew {
     font-size: clamp(2.1rem, 3.6vw, 2.6rem);
+  }
+}
+
+@media (min-width: 64rem) {
+  .hero {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
   }
 }
 

@@ -34,6 +34,7 @@ test("publishes the five reviewed History articles on the public archive", async
   await expect(
     page.getByRole("heading", { name: "Organizations" }),
   ).toHaveCount(0);
+  await expect(page.locator(".history-hero-lion")).toHaveCount(1);
   await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
   await expect(page.getByText("Theodore Herzl")).toHaveCount(0);
   await expect(page.getByText("Isaak Rülf")).toHaveCount(0);

@@ -7,9 +7,9 @@
     repeating-linear-gradient(
       180deg,
       transparent,
-      transparent 5.5rem,
-      rgb(46 52 96 / 0.03) 5.5rem,
-      rgb(46 52 96 / 0.03) 5.55rem
+      transparent 5.75rem,
+      rgb(46 52 96 / 0.035) 5.75rem,
+      rgb(46 52 96 / 0.035) 5.8rem
     ),
     linear-gradient(
       180deg,
@@ -19,12 +19,11 @@
 }
 
 .roomSupport .hero {
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--color-gold) 10%, var(--color-sand)),
-      color-mix(in srgb, var(--color-sand) 42%, var(--color-paper))
-    );
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-gold) 10%, var(--color-sand)),
+    color-mix(in srgb, var(--color-sand) 42%, var(--color-paper))
+  );
 }
 
 .aboutHero,
@@ -52,6 +51,10 @@
   padding-block: clamp(3rem, 8vw, 6.5rem);
   border-bottom: 1px solid var(--color-rule);
   background: color-mix(in srgb, var(--color-sand) 55%, var(--color-canvas));
+}
+
+.roomMotif {
+  display: none;
 }
 
 .title {
@@ -263,5 +266,28 @@
   .supportHero {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     align-items: end;
+  }
+}
+
+@media (min-width: 64rem) {
+  .hero {
+    padding-block: clamp(4.5rem, 9vw, 7.5rem);
+  }
+
+  .chapter,
+  .body,
+  .band {
+    padding-block: clamp(3.25rem, 7vw, 6rem);
+  }
+
+  .roomMotif {
+    display: block;
+    position: absolute;
+    top: 12%;
+    inset-inline-end: 52%;
+    width: 5.75rem;
+    color: var(--color-navy);
+    opacity: 0.14;
+    pointer-events: none;
   }
 }

@@ -1,4 +1,4 @@
-import { HistoryHeroWatermark } from "@/components/history/history-hero-watermark";
+import { JomMotif } from "@/components/brand/jom-motif";
 import { HomeHistoryFeature } from "@/components/home/home-history-feature";
 import { HomeJewishToday } from "@/components/home/home-jewish-today";
 import { HomePodcastFeature } from "@/components/home/home-podcast-feature";
@@ -46,8 +46,8 @@ export function HomePageView({ data }: HomePageViewProps) {
               ) : null}
             </p>
           </div>
-          <div className={styles.watermark}>
-            <HistoryHeroWatermark />
+          <div className={styles.watermark} aria-hidden="true">
+            <JomMotif name="arch" />
           </div>
         </div>
       </section>

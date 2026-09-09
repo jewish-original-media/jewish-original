@@ -46,6 +46,8 @@ test("serves About from founder-provided copy", async ({ page }) => {
   await expect(
     page.getByRole("heading", { level: 1, name: "Our path forward" }),
   ).toBeVisible();
+  await expect(page.locator(".history-hero-lion")).toHaveCount(0);
+  await expect(page.locator('[data-motif="masonry"]')).toHaveCount(1);
   await expect(
     page.getByText("Meyer Grunberg and Isaac Simon").first(),
   ).toBeVisible();
@@ -75,6 +77,7 @@ test("serves Support without checkout or tax claims", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "Stand with us. Build with us." }),
   ).toBeVisible();
+  await expect(page.locator('[data-motif="menorah"]')).toHaveCount(1);
   await expect(page.getByText("Support the work").first()).toBeVisible();
   await expect(
     page.getByRole("img", {

@@ -1,6 +1,6 @@
 # Homepage
 
-Status: Jerusalem + museum art-direction pass on `feature/integration-homepage`.
+Status: Final visual-identity pass on `feature/integration-homepage`.
 Composition still uses live History, Jewish Today, and Podcasts. Photography is
 limited to three founder-owned images. It is not a second architecture.
 
@@ -36,7 +36,8 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 ## Section order
 
 1. **Masthead** — stacked “Remember, rebuild, and create.” Positioning lives
-   in the lede. Live.
+   in the lede. A Temple-gate line study sits on the right on desktop. The
+   OTD lion is not used here. Live.
 2. **Jewish Today** — signature daily object from the same `JewishTodayDay`.
    Live.
 3. **History** — one lead plus two supporting archive stories. Live.

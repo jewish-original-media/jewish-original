@@ -39,6 +39,15 @@ SVG, EPS, AI, PDF vector master, or transparent JOM raster. Two SVG files found
 elsewhere are a `770` building icon and a World Jewish Congress logo; neither is
 a Jewish Original mark and neither may be substituted.
 
+Required later, from a designer: `JOM_Primary_Horizontal_White_Gold_Transparent.svg`
+or another approved transparent/vector master. Until then, do not remove
+backgrounds, recolor, redraw, or enlarge the existing rasters for monumental
+use.
+
+JOM atmospheric motifs in `src/components/brand/jom-motif.tsx` are original
+decorative drawings. They are not historical evidence and do not replace
+rights-cleared photography.
+
 ## On This Day in Jewish History
 
 Fifteen supplied brand graphics:
@@ -87,33 +96,33 @@ Only classes **A** (JOM-owned / founder-approved) and **B** (known brand asset)
 may appear on the public site. Class **C** requires a verified Commons/source
 page, license, and a non-thumbnail local or Sanity asset. **D/E** stay private.
 
-| Asset | Class | Public use |
-| ----- | ----- | ---------- |
-| `/brand/ttjs-mark.png` | B | Night-only TTJS mark |
-| `/brand/motifs/otd-lion-white.png` | B | CSS luminance mask |
-| `/brand/motifs/otd-lion-gold.png` | B | Color reference only |
-| `/brand/motifs/otd-star-white.png` | B | No-image History mark |
-| JOM primary white/gold JPEG used by `BrandLogo` | B | Night/black surfaces only |
-| `/media/founder/meyer-isaac-street.webp` | A | Homepage Podcast + TTJS show page |
-| `/media/founder/meyer-isaac-steps.webp` | A | About |
-| `/media/founder/morning-tefillin.webp` | A | Support |
-| Host photos cited in `docs/PODCAST_ARCHIVE.md` | C | Missing rights ledger |
-| Israeli-flag photographs in the founder pack | D | Held. Flag fields. |
-| Unsplash `photo-1697054821057` | E | Held. Stock, not founder-owned. |
-| `ak2` portrait | A / hold | Not a public founder subject. |
-| `meyer.jpg`, `isaac.jpg` headshots | A / hold | Too small; would become team cards. |
-| Re-uploaded JOM / OTD logo rasters | B / hold | Already in `/public/brand`. |
-| `Dachau_execution_coalyard_1945-04-29` | C / hold | US Army / NARA, PD-US. Graphic; thumbnail only; no Sanity write. |
-| `Samuel_Willenberg_Treblinka_2_sierpnia_2013` | C / hold | Adrian Grycuk, CC BY-SA 3.0 PL. Thumbnail only. |
-| `Benghazi_Synagogue_Classroom_before_WWII` | D | Commons Libya-PD tag; US PD tag missing. |
+| Asset                                           | Class    | Public use                                                       |
+| ----------------------------------------------- | -------- | ---------------------------------------------------------------- |
+| `/brand/ttjs-mark.png`                          | B        | Night-only TTJS mark                                             |
+| `/brand/motifs/otd-lion-white.png`              | B        | CSS luminance mask                                               |
+| `/brand/motifs/otd-lion-gold.png`               | B        | Color reference only                                             |
+| `/brand/motifs/otd-star-white.png`              | B        | No-image History mark                                            |
+| JOM primary white/gold JPEG used by `BrandLogo` | B        | Header plaque on night only; do not enlarge in the footer        |
+| `/media/founder/meyer-isaac-street.webp`        | A        | Homepage Podcast + TTJS show page                                |
+| `/media/founder/meyer-isaac-steps.webp`         | A        | About                                                            |
+| `/media/founder/morning-tefillin.webp`          | A        | Support                                                          |
+| Host photos cited in `docs/PODCAST_ARCHIVE.md`  | C        | Missing rights ledger                                            |
+| Israeli-flag photographs in the founder pack    | D        | Held. Flag fields.                                               |
+| Unsplash `photo-1697054821057`                  | E        | Held. Stock, not founder-owned.                                  |
+| `ak2` portrait                                  | A / hold | Not a public founder subject.                                    |
+| `meyer.jpg`, `isaac.jpg` headshots              | A / hold | Too small; would become team cards.                              |
+| Re-uploaded JOM / OTD logo rasters              | B / hold | Already in `/public/brand`.                                      |
+| `Dachau_execution_coalyard_1945-04-29`          | C / hold | US Army / NARA, PD-US. Graphic; thumbnail only; no Sanity write. |
+| `Samuel_Willenberg_Treblinka_2_sierpnia_2013`   | C / hold | Adrian Grycuk, CC BY-SA 3.0 PL. Thumbnail only.                  |
+| `Benghazi_Synagogue_Classroom_before_WWII`      | D        | Commons Libya-PD tag; US PD tag missing.                         |
 
 ### Public photography ledger
 
-| Filename | Usage | Owner | Rights | Credit |
-| -------- | ----- | ----- | ------ | ------ |
+| Filename                  | Usage                            | Owner                 | Rights  | Credit                |
+| ------------------------- | -------------------------------- | --------------------- | ------- | --------------------- |
 | `meyer-isaac-street.webp` | Homepage Podcast, TTJS show page | Jewish Original Media | Class A | Jewish Original Media |
-| `meyer-isaac-steps.webp` | `/about` | Jewish Original Media | Class A | Jewish Original Media |
-| `morning-tefillin.webp` | `/support` | Jewish Original Media | Class A | Jewish Original Media |
+| `meyer-isaac-steps.webp`  | `/about`                         | Jewish Original Media | Class A | Jewish Original Media |
+| `morning-tefillin.webp`   | `/support`                       | Jewish Original Media | Class A | Jewish Original Media |
 
 Do not hotlink Wikimedia thumbnails. Do not attach History featured media until
 a founder-approved Sanity write uses a verified high-resolution file.

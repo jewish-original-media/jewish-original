@@ -534,3 +534,23 @@ coming Saturday that is Hebcal `yomtov` without `parashat` is labeled
 
 News, Events, Originals, Fast Lane, more Podcast imports, Search,
 newsletter, and community remain out of scope.
+
+## ADR-037 — Final visual identity uses artifact language, not logo invention
+
+**Status:** Accepted, 2026-09-09
+
+The Integration checkpoint `23c23ab7bbb03d211033e1ca954852fe57b61247` remains
+the product shell. This pass is presentation only.
+
+JOM logo files are not production masters: JPEG-encoded rasters, no alpha,
+baked black fields. The header integrates the unaltered white/gold primary as
+a black plaque with a brass rule. The footer keeps monumental typography.
+Required later: `JOM_Primary_Horizontal_White_Gold_Transparent.svg`.
+
+OTD lion/star stay in History rooms. Homepage and About no longer use the
+lion as a generic JOM watermark. New JOM motifs are original decorative line
+studies (arch, manuscript, seal, masonry, menorah), not documentary images
+and not Wikimedia attachments.
+
+News, Events, Originals, History expansion, Production, DNS, and the GitHub
+default branch remain out of scope.

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
+import { JomMotif } from "@/components/brand/jom-motif";
 import { MuseumFigure } from "@/components/media/museum-figure";
-import { HistoryHeroWatermark } from "@/components/history/history-hero-watermark";
 import { Container } from "@/components/ui/container";
 import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
 
@@ -18,7 +18,9 @@ export default function AboutPage() {
   return (
     <div className={`${styles.page} ${styles.roomAbout}`}>
       <section className={styles.hero}>
-        <HistoryHeroWatermark />
+        <div className={styles.roomMotif} aria-hidden="true">
+          <JomMotif name="masonry" />
+        </div>
         <Container className={styles.aboutHero}>
           <div>
             <p className="eyebrow">About</p>

@@ -13,7 +13,8 @@
   min-height: var(--header-height);
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-5);
+  gap: var(--space-6);
+  padding-block: 0.45rem;
 }
 
 .primaryNav {
@@ -157,17 +158,33 @@
 .footerGrid {
   display: grid;
   gap: var(--space-12);
-  padding-block: clamp(3.5rem, 8vw, 7rem);
+  padding-block: clamp(3.75rem, 8vw, 7.25rem);
 }
 
 .footerIdentity {
   max-width: 42rem;
 }
 
+.footerIdentity::before {
+  content: "";
+  display: block;
+  width: 4.5rem;
+  height: 1px;
+  margin-bottom: var(--space-8);
+  background: color-mix(in srgb, var(--color-gold) 82%, #8a5a28);
+}
+
+.footerMotif {
+  width: 3.75rem;
+  margin-bottom: var(--space-6);
+  color: color-mix(in srgb, var(--color-gold) 72%, var(--color-sand));
+  opacity: 0.55;
+}
+
 .footerMark {
   margin: 0;
   font-family: var(--font-serif);
-  font-size: clamp(3.5rem, 10vw, 7.5rem);
+  font-size: clamp(4rem, 11vw, 8.75rem);
   font-weight: 400;
   letter-spacing: -0.05em;
   line-height: 0.86;
@@ -267,6 +284,7 @@
 
   .footerGrid {
     grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 0.7fr);
+    padding-block: clamp(5.5rem, 10vw, 9rem);
   }
 
   .footerColumns {

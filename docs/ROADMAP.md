@@ -78,7 +78,9 @@ Exit: the homepage has trustworthy daily value with graceful failure behavior.
 
 ## Next milestone — News and Events ingestion
 
-Do not start this until the founder visual refinement is checkpointed.
+The final visual-identity pass is complete on Integration. Do not start News
+or Events until that checkpoint is accepted. Do not begin them in the same
+change.
 
 Founder requirement: both desks belong in V1 if automation is sufficiently
 hands-off. Human intervention is exception-based, not required for each item.

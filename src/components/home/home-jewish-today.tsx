@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { JomMotif } from "@/components/brand/jom-motif";
 import type { JewishTodayDay } from "@/features/jewish-today";
 import { formatGregorianLabel } from "@/features/jewish-today/timezone";
 import {
@@ -26,6 +27,9 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
       aria-labelledby="home-today"
     >
       <div className={styles.bandInner}>
+        <div className={styles.todayMotif} aria-hidden="true">
+          <JomMotif name="manuscript" />
+        </div>
         <p className={`${styles.sectionLabel} eyebrow`}>Jewish Today</p>
         <div className={styles.todayObject}>
           <div className={styles.todayDate}>
