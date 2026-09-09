@@ -45,6 +45,10 @@ test("publishes the approved show and four pilot episodes", async ({
       exact: true,
     }),
   ).toBeVisible();
+  await expect(page.getByText("Listening room").first()).toBeVisible();
+  await expect(page.getByText("Meyer Grunberg")).toBeVisible();
+  await expect(page.getByText("Isaac Simon")).toBeVisible();
+  await expect(page.getByText("Latest episode")).toBeVisible();
 
   const published = await page.goto(kalman);
   expect(published?.status()).toBe(200);

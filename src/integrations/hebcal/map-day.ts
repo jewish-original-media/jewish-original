@@ -77,6 +77,16 @@ function parashahTitle(title: string): string {
   return title.replace(/^Parashat\s+/u, "").trim() || title;
 }
 
+export function selectUpcomingParashahItem(
+  items: HebcalItem[],
+  gregorianDate: string,
+): HebcalItem | undefined {
+  const portions = items.filter((item) => item.category === "parashat");
+  return (
+    portions.find((item) => itemCivilDate(item) >= gregorianDate) ?? portions[0]
+  );
+}
+
 function omerDay(item: HebcalItem): number | null {
   const fromOrig = item.title_orig?.match(/^Omer\s+(\d{1,2})$/u);
   if (fromOrig) return Number(fromOrig[1]);
@@ -131,7 +141,7 @@ export function mapHebcalDay(
   );
   const hebdate = todayItems.find((item) => item.category === "hebdate");
   const parsedHebrew = hebdate?.hdate ? parseHdate(hebdate.hdate) : null;
-  const parashahItem = items.find((item) => item.category === "parashat");
+  const parashahItem = selectUpcomingParashahItem(items, gregorianDate);
   const omerItem = todayItems.find((item) => item.category === "omer");
   const roshChodeshItem = todayItems.find(
     (item) => item.category === "roshchodesh",

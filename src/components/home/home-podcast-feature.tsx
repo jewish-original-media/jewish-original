@@ -59,6 +59,11 @@ export function HomePodcastFeature({
             {status === "live" && show?.tagline ? (
               <p className={styles.showTagline}>{show.tagline}</p>
             ) : null}
+            {status === "live" && show?.hosts.length ? (
+              <p className={styles.hostLine}>
+                With {show.hosts.map((host) => host.name).join(" and ")}
+              </p>
+            ) : null}
             {status === "live" && show ? (
               <p className={styles.platformList}>
                 {show.appleUrl ? (

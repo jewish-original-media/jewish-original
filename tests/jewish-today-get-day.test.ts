@@ -92,4 +92,18 @@ describe("getJewishToday composition", () => {
     assert.equal(day.hebrewDate, undefined);
     assert.equal(day.onThisDay[0]?.slug, "us-liberates-dachau");
   });
+
+  it("asks Hebcal for the previous Saturday through the next Saturday", async () => {
+    let range: [string, string] | undefined;
+    await getJewishToday({
+      date: "2026-09-09",
+      fetchCalendar: async (startDate, endDate) => {
+        range = [startDate, endDate];
+        return load("weekday-2026-09-01.json");
+      },
+      fetchOnThisDay: async () => [],
+    });
+
+    assert.deepEqual(range, ["2026-09-05", "2026-09-12"]);
+  });
 });

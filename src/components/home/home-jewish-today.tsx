@@ -1,7 +1,11 @@
 import Link from "next/link";
 
 import type { JewishTodayDay } from "@/features/jewish-today";
-import { calendarHighlights } from "@/lib/jewish-today/display";
+import { formatGregorianLabel } from "@/features/jewish-today/timezone";
+import {
+  calendarHighlights,
+  formatParashahDisplayTitle,
+} from "@/lib/jewish-today/display";
 
 import styles from "@/app/home.module.css";
 
@@ -13,6 +17,7 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
   const highlights = calendarHighlights(day).slice(0, 3);
   const history = day.onThisDay[0];
   const hasHebrewObject = Boolean(day.hebrewDay && day.hebrewMonth);
+  const parashahTitle = formatParashahDisplayTitle(day.parashah?.title);
 
   return (
     <section
@@ -52,24 +57,44 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
 
           <div className={styles.todayContext}>
             <p className={styles.civilDate}>{day.gregorianLabel}</p>
-            {day.parashah ? (
-              <p className={styles.parashah}>{day.parashah.title}</p>
+
+            {parashahTitle && day.parashah ? (
+              <div className={styles.todayFact}>
+                <p className={styles.sectionLabel}>This week in Torah</p>
+                <p className={styles.parashah}>{parashahTitle}</p>
+                {day.parashah.titleHebrew ? (
+                  <p className={styles.parashahHebrew} lang="he" dir="rtl">
+                    {day.parashah.titleHebrew}
+                  </p>
+                ) : null}
+                <p className={styles.todayFactNote}>
+                  {day.parashah.observedOn === day.gregorianDate
+                    ? "Read this Shabbat"
+                    : `Read ${formatGregorianLabel(day.parashah.observedOn)}`}
+                </p>
+              </div>
             ) : null}
+
             {highlights.length > 0 ? (
-              <ul className={styles.observanceList}>
-                {highlights.map((item) => (
-                  <li key={item.title}>{item.title}</li>
-                ))}
-              </ul>
+              <div className={styles.todayFact}>
+                <p className={styles.sectionLabel}>Today</p>
+                <ul className={styles.observanceList}>
+                  {highlights.map((item) => (
+                    <li key={item.title}>{item.title}</li>
+                  ))}
+                </ul>
+              </div>
             ) : null}
+
             {history ? (
-              <div className={styles.historyMatch}>
+              <div className={styles.todayFact}>
                 <p className={styles.sectionLabel}>On this day</p>
                 <p className={styles.historyMatchTitle}>
                   <Link href={`/history/${history.slug}`}>{history.title}</Link>
                 </p>
               </div>
             ) : null}
+
             {day.calendarStatus === "unavailable" ? (
               <p className={styles.unavailableNote}>
                 Hebrew calendar details are briefly unavailable.

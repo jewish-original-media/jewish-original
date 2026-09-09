@@ -120,15 +120,20 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
               </p>
               <h1 className="history-display">{entry.title}</h1>
               {entry.excerpt ? (
-                <p className="history-lede">{entry.excerpt}</p>
+                <>
+                  <p className="eyebrow history-context-label">
+                    Historical context
+                  </p>
+                  <p className="history-lede">{entry.excerpt}</p>
+                </>
               ) : null}
             </div>
 
             <div className="history-archive-rail">
-              <p className="eyebrow">From the archive</p>
+              <p className="eyebrow">Exhibition</p>
               <p className="history-archive-rail__text">
-                Preserved in the Jewish Original archive and connected through
-                people, place, and time.
+                A room in the Jewish Original archive. Date, place, and sources
+                stay attached to the record.
               </p>
             </div>
           </Container>

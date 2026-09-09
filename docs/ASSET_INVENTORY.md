@@ -81,9 +81,28 @@ logo on History articles.
 The timeline mark appears to be a legacy/adjacent identity and should not be
 used as the JOM or OTD primary identity without explicit approval.
 
+## Public-site rights classes (2026-09-09)
+
+Only classes **A** (JOM-owned / founder-approved) and **B** (known brand asset)
+may appear on the public site.
+
+| Asset                                                                | Class          | Public use                                                                         |
+| -------------------------------------------------------------------- | -------------- | ---------------------------------------------------------------------------------- |
+| `/brand/ttjs-mark.png`                                               | B              | Night-only TTJS mark                                                               |
+| `/brand/motifs/otd-lion-white.png`                                   | B              | CSS luminance mask                                                                 |
+| `/brand/motifs/otd-lion-gold.png`                                    | B              | Color reference only                                                               |
+| `/brand/motifs/otd-star-white.png`                                   | B              | No-image History mark                                                              |
+| JOM primary white/gold JPEG used by `BrandLogo`                      | B              | Night/black surfaces only                                                          |
+| Founder pack photography (Meyer + Isaac, tefillin, Jerusalem, flags) | C              | Files are **not** in this worktree. Do not publish from memory or external copies. |
+| Host photos cited in `docs/PODCAST_ARCHIVE.md`                       | C              | Missing rights ledger                                                              |
+| Israeli-flag photographs in the founder pack                         | D / do not use | Founder direction forbids flag fields even if later supplied                       |
+
+This milestone adds no public photography. Humanity on Podcast and About pages
+comes from names, type, and the approved mark — not invented portraits.
+
 ## Photography
 
-Seven supplied photographs:
+Seven supplied photographs (founder pack; not copied into this worktree):
 
 - Israeli flag bunting in an urban setting — 1024×1024
 - Man wearing tefillin and reading — 1024×1024

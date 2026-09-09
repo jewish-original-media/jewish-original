@@ -1,8 +1,9 @@
 # Homepage
 
-Status: Design Director pass on `feature/integration-homepage`. Composition
-still uses live History, Jewish Today, and Podcasts. The visual system is an
-editorial restyle of the working V1 shell, not a second architecture.
+Status: Founder visual refinement on `feature/integration-homepage`, built on
+the approved Design Director checkpoint. Composition still uses live History,
+Jewish Today, and Podcasts. This pass adds Torah depth, inner-page rooms, and
+rights-aware media readiness. It is not a second architecture.
 
 The homepage is a Server Component composition. It is not a CMS document.
 
@@ -39,7 +40,7 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
    in the lede. Live.
 2. **Jewish Today** — signature daily object from the same `JewishTodayDay`.
    Live.
-3. **History** — one lead plus up to three supporting archive items. Live.
+3. **History** — one lead plus two supporting archive stories. Live.
 4. **Manifesto** — one founder pause. Live.
 5. **Podcasts** — published show, latest `EpisodeCard`, remaining titles as a
    rail. Live.
@@ -55,19 +56,23 @@ Hidden until published documents exist:
 
 Uses `getJewishToday()` and `HomeJewishToday`. Calendar logic stays in Hebcal.
 On-this-day matches stay in History `getOnThisDayHistory`. The Hebrew date is
-the visual object. Do not fetch Hebcal again on the homepage.
+the visual object. Ordinary weekdays show **This week in Torah** from the
+upcoming Shabbat portion in the existing Hebcal range. Observance and History
+blocks appear only when they have data. Do not fetch Hebcal again on the
+homepage.
 
 ## History
 
 Uses the canonical History system only:
 
 - `getHistoryIndex(false)`
-- `composeHomeHistory()`
-- `HomeHistoryFeature` as layout
-- `HistoryEntryCard` for supporting items
+- `composeHomeHistory()` (lead plus two supporting stories)
+- `HomeHistoryFeature` as layout around canonical History data
+- optional `next/image` only when a rights-cleared `primaryImage` exists
 
 The first collection has no public imagery. Typography and dates carry the
-lead. Do not insert empty image boxes.
+lead. Supporting stories are stronger archive pieces, not a third equal card
+column. Do not insert empty image boxes.
 
 ## Podcasts
 
@@ -77,8 +82,9 @@ card system. Do not invent artwork or autoplay media.
 
 ## Originals, News, and Events
 
-See `docs/ORIGINALS.md`. Homepage slots stay hidden while empty. Do not invent
-articles, headlines, or events.
+See `docs/ORIGINALS.md` and `docs/NEWS_EVENTS_NEXT.md`. Homepage slots stay
+hidden while empty. Do not invent articles, headlines, or events. Do not
+implement News or Events ingestion in this milestone.
 
 Future visual languages, when data exists:
 

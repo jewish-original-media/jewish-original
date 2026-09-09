@@ -2,6 +2,26 @@
   background: var(--color-canvas);
 }
 
+.roomAbout .hero {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-sand) 72%, var(--color-canvas)),
+    color-mix(in srgb, var(--color-sand) 38%, var(--color-canvas))
+  );
+}
+
+.roomSupport .hero {
+  background: color-mix(in srgb, var(--color-sand) 36%, var(--color-paper));
+}
+
+.roomPrivacy {
+  background: var(--color-paper);
+}
+
+.roomPrivacy .hero {
+  background: var(--color-paper);
+}
+
 .hero {
   position: relative;
   overflow: hidden;
@@ -79,6 +99,65 @@
   text-transform: uppercase;
 }
 
+.people {
+  display: grid;
+  gap: var(--space-8);
+  margin: var(--space-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.personName {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+.personCaption {
+  margin: var(--space-3) 0 0;
+  color: var(--color-navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.possible {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 36rem;
+  margin: var(--space-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.possible li {
+  padding-block: var(--space-3);
+  border-top: 1px solid var(--color-rule);
+  color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  line-height: 1.5;
+}
+
+.possible li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.independence {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--color-navy);
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+  line-height: 1.55;
+}
+
 .band {
   padding-block: clamp(2.5rem, 6vw, 5rem);
   background: var(--color-paper);
@@ -146,20 +225,13 @@
   line-height: 1.6;
 }
 
-@media (min-width: 64rem) {
+@media (min-width: 48rem) {
+  .people {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-10);
+  }
+
   .invitations {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-  }
-
-  .invitation {
-    padding-inline: clamp(1.25rem, 2vw, 2rem);
-    border-top: 0;
-    border-inline-start: 1px solid var(--color-rule);
-  }
-
-  .invitation:first-child {
-    padding-inline-start: 0;
-    border-inline-start: 0;
+    max-width: 42rem;
   }
 }

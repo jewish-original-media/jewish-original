@@ -59,6 +59,7 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
   const show = await getPodcastShow(showSlug, preview);
   if (!show) notFound();
   const episodes = await getPodcastEpisodes(show.slug, preview);
+  const [latest, ...archive] = episodes;
 
   return (
     <>
@@ -87,15 +88,22 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
                 <li aria-current="page">{show.title}</li>
               </ol>
             </nav>
-            <p className="podcast-kicker">Podcast series</p>
+            <p className="podcast-kicker">Listening room</p>
             <h1 className="podcast-display">{show.title}</h1>
             {show.tagline ? (
               <p className="podcast-tagline">{show.tagline}</p>
             ) : null}
             <p className="podcast-lede">{show.description}</p>
-            <p className="podcast-host-line">
-              Hosted by {show.hosts.map((host) => host.name).join(" and ")}
-            </p>
+            {show.hosts.length ? (
+              <ul className="podcast-hosts">
+                {show.hosts.map((host) => (
+                  <li key={host.slug || host.name}>
+                    <p className="podcast-host-name">{host.name}</p>
+                    <p className="podcast-host-caption">Host</p>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             <div className="podcast-hero-actions">
               {show.appleUrl ? (
                 <ButtonLink href={show.appleUrl}>Apple Podcasts</ButtonLink>
@@ -122,10 +130,22 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
         </Container>
       </section>
 
+      {latest ? (
+        <Section className="podcast-archive-section" spacing="compact">
+          <Container>
+            <p className="eyebrow">Latest episode</p>
+            <h2 className="podcast-section-title">Listen now</h2>
+            <div className="podcast-episode-list">
+              <EpisodeCard episode={latest} />
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
       <Section className="podcast-archive-section" spacing="compact">
         <Container>
           <p className="eyebrow">Episode archive</p>
-          <h2 className="podcast-section-title">Listen in</h2>
+          <h2 className="podcast-section-title">The listening room</h2>
           <p className="podcast-section-copy">
             {preview
               ? `${episodes.length} imported draft episode${episodes.length === 1 ? "" : "s"} are visible in preview only.`
@@ -133,11 +153,13 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
             Empty summaries, transcripts, and History links stay hidden until
             editors add them.
           </p>
-          <div className="podcast-episode-list">
-            {episodes.map((episode) => (
-              <EpisodeCard episode={episode} key={episode._id} />
-            ))}
-          </div>
+          {archive.length ? (
+            <div className="podcast-episode-list">
+              {archive.map((episode) => (
+                <EpisodeCard episode={episode} key={episode._id} />
+              ))}
+            </div>
+          ) : null}
         </Container>
       </Section>
     </>

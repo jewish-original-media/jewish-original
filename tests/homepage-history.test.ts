@@ -35,7 +35,7 @@ test("uses an On This Day match as the homepage lead", () => {
   );
 });
 
-test("keeps only three supporting History items on the homepage", () => {
+test("keeps only two supporting History items on the homepage", () => {
   const lead = entry("lead", "Samuel Willenberg Dies");
   const extras = ["a", "b", "c", "d"].map((id) => entry(id, id));
   const composed = composeHomeHistory([lead, ...extras], []);
@@ -43,7 +43,7 @@ test("keeps only three supporting History items on the homepage", () => {
   assert.equal(composed.lead?._id, "lead");
   assert.deepEqual(
     composed.supporting.map((item) => item._id),
-    ["a", "b", "c"],
+    ["a", "b"],
   );
 });
 

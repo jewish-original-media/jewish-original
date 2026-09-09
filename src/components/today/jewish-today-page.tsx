@@ -2,7 +2,10 @@ import { HistoryEntryCard } from "@/components/history/history-entry-card";
 import { Container } from "@/components/ui/container";
 import type { JewishTodayDay } from "@/features/jewish-today";
 import { formatGregorianLabel } from "@/features/jewish-today/timezone";
-import { calendarHighlights } from "@/lib/jewish-today/display";
+import {
+  calendarHighlights,
+  formatParashahDisplayTitle,
+} from "@/lib/jewish-today/display";
 
 import styles from "@/app/today/today.module.css";
 
@@ -18,7 +21,7 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
   const showHistory = day.onThisDay.length > 0;
 
   return (
-    <article className={styles.page}>
+    <article className={`${styles.page} ${styles.roomToday}`}>
       <section className={styles.hero}>
         <div className={styles.heroRule} aria-hidden="true" />
         <Container>
@@ -84,7 +87,7 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
           <Container>
             <p className="eyebrow">This week in Torah</p>
             <h2 className={styles.sectionTitle} id="this-week-in-torah">
-              {day.parashah.title}
+              {formatParashahDisplayTitle(day.parashah.title)}
             </h2>
             {day.parashah.titleHebrew ? (
               <p className={styles.sectionHebrew} lang="he" dir="rtl">

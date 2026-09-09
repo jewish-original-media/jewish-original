@@ -19,8 +19,10 @@ and structured-data controls.
 
 **Media asset**
 
-Asset, alt text, caption, credit, creator, source URL, rights holder, license,
-usage restrictions, focal point, and rights-review status.
+Asset, alt text, caption, visual kind (photograph, illustration, artifact, map,
+manuscript), credit, creator, source URL, rights holder, license, usage
+restrictions, focal point, and rights-review status. Illustrations must be
+labeled as illustrations and never presented as documentary photographs.
 
 **Source citation**
 

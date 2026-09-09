@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} ${styles.roomAbout}`}>
       <section className={styles.hero}>
         <HistoryHeroWatermark />
         <Container size="content">
@@ -25,6 +25,25 @@ export default function AboutPage() {
             and to create.
           </p>
           <p className={styles.founders}>Meyer Grunberg and Isaac Simon</p>
+        </Container>
+      </section>
+
+      <section className={styles.chapter} aria-labelledby="about-people">
+        <Container size="content">
+          <p className="eyebrow">The house</p>
+          <h2 className={styles.sectionTitle} id="about-people">
+            People
+          </h2>
+          <ul className={styles.people}>
+            <li>
+              <h3 className={styles.personName}>Meyer Grunberg</h3>
+              <p className={styles.personCaption}>Founder</p>
+            </li>
+            <li>
+              <h3 className={styles.personName}>Isaac Simon</h3>
+              <p className={styles.personCaption}>Founder</p>
+            </li>
+          </ul>
         </Container>
       </section>
 

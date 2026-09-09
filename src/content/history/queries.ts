@@ -25,6 +25,8 @@ const imageProjection = `"primaryImage": select(
   defined(primaryImage.alt) => {
     alt,
     caption,
+    visualKind,
+    creator,
     creditLine,
     rightsStatus,
     sourcePageUrl,

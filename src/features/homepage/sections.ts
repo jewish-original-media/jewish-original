@@ -33,7 +33,7 @@ export const HOME_SECTION_ORDER: readonly HomeSectionContract[] = [
     title: "On this day or from the archive",
     status: "live",
     description:
-      "One History lead plus up to three supporting archive items from getHistoryIndex.",
+      "One History lead plus two supporting archive stories from getHistoryIndex.",
   },
   {
     id: "manifesto",

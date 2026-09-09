@@ -13,6 +13,7 @@ import {
   JEWISH_TODAY_TIMEZONE,
   nextSaturdayInclusive,
   parseIsoDate,
+  previousSaturdayInclusive,
   resolveCivilDate,
 } from "./timezone";
 import type { GetJewishTodayOptions, JewishTodayDay } from "./types";
@@ -45,10 +46,11 @@ export const getJewishToday = cache(async function getJewishToday(
   }
 
   try {
+    const startDate = previousSaturdayInclusive(gregorianDate);
     const endDate = nextSaturdayInclusive(gregorianDate);
     const calendar = options.fetchCalendar
-      ? await options.fetchCalendar(gregorianDate, endDate)
-      : await fetchHebcalCalendar(gregorianDate, endDate);
+      ? await options.fetchCalendar(startDate, endDate)
+      : await fetchHebcalCalendar(startDate, endDate);
 
     if (!isHebcalCalendarResponse(calendar)) {
       return emptyJewishTodayDay(gregorianDate, timeZone, onThisDay);

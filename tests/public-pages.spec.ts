@@ -47,6 +47,14 @@ test("serves About from founder-provided copy", async ({ page }) => {
     page.getByRole("heading", { level: 1, name: "Our path forward" }),
   ).toBeVisible();
   await expect(page.getByText("Meyer Grunberg and Isaac Simon")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "People" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Meyer Grunberg" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Isaac Simon" }),
+  ).toBeVisible();
+  await expect(page.getByText("Founder").first()).toBeVisible();
   await expect(
     page.getByText("We’re not here to copy trends.", { exact: false }),
   ).toBeVisible();
@@ -66,6 +74,15 @@ test("serves Support without checkout or tax claims", async ({ page }) => {
   await expect(page.locator("form")).toHaveCount(0);
   await expect(page.getByText(/tax-deductible/i)).toHaveCount(0);
   await expect(page.getByText("10 Days Delivery")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "What your support makes possible" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Sponsorship supports Jewish Original Media."),
+  ).toBeVisible();
+  await expect(
+    page.getByText("It does not determine editorial judgment."),
+  ).toBeVisible();
 });
 
 test("unknown public routes use the editorial 404", async ({ page }) => {

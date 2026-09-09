@@ -2,6 +2,14 @@
   background: var(--color-canvas);
 }
 
+.roomToday .hero {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-sand) 58%, var(--color-canvas)),
+    color-mix(in srgb, var(--color-sky) 22%, var(--color-canvas))
+  );
+}
+
 .hero {
   position: relative;
   overflow: hidden;

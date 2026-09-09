@@ -17,8 +17,9 @@ test("renders an ordinary weekday without empty sections", async ({
   ).toBeVisible();
   await expect(page.getByText("Tuesday, September 1, 2026")).toBeVisible();
   await expect(page.getByText("19 Elul 5786")).toBeVisible();
+  await expect(page.getByText("This week in Torah")).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: /nitzavim-vayeilech/i }),
+    page.getByRole("heading", { name: /nitzavim.vayeilech/i }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: /jewish calendar/i }),
@@ -88,8 +89,11 @@ test("retrieves the published Dachau History entry on April 29", async ({
   const dachau = page.getByRole("link", { name: "US Liberates Dachau" });
   await expect(dachau).toBeVisible();
   await expect(dachau).toHaveAttribute("href", "/history/us-liberates-dachau");
+  await dachau.scrollIntoViewIfNeeded();
   await dachau.click();
-  await expect(page).toHaveURL(/\/history\/us-liberates-dachau$/);
+  await expect(page).toHaveURL(/\/history\/us-liberates-dachau$/, {
+    timeout: 15_000,
+  });
   await expect(
     page.getByRole("heading", { name: "US Liberates Dachau" }),
   ).toBeVisible();

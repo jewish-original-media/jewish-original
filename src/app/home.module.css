@@ -236,11 +236,36 @@
   text-transform: uppercase;
 }
 
+.todayFact {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid color-mix(in srgb, var(--color-gold) 40%, transparent);
+}
+
+.todayFact:first-of-type {
+  margin-top: var(--space-5);
+}
+
 .parashah {
-  margin: var(--space-4) 0 0;
-  max-width: 28rem;
+  margin: var(--space-3) 0 0;
+  max-width: 22rem;
   font-family: var(--font-serif);
-  font-size: 1.2rem;
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.parashahHebrew {
+  margin: var(--space-2) 0 0;
+  color: var(--color-navy);
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+}
+
+.todayFactNote {
+  margin: var(--space-2) 0 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
 }
 
 .observanceList {
@@ -258,12 +283,6 @@
 
 .todayPath {
   margin-top: var(--space-6);
-}
-
-.historyMatch {
-  margin-top: var(--space-6);
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--home-rule);
 }
 
 .historyMatchTitle {
@@ -352,18 +371,66 @@
 .supporting {
   display: grid;
   gap: 0;
-}
-
-.supporting :global(.history-entry-card) {
   min-width: 0;
-  border-top: 1px solid var(--home-rule);
-  background: transparent;
-  padding: 1.25rem 0;
 }
 
-.supporting :global(.history-related-link),
-.supporting :global(.history-archive-card-title) {
-  overflow-wrap: anywhere;
+.supportingStory {
+  min-width: 0;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--home-rule);
+}
+
+.supportingStory:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.supportingMedia {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: var(--space-4);
+}
+
+.supportingMedia img {
+  object-fit: cover;
+}
+
+.supportingDate {
+  margin: 0;
+  color: var(--color-gold);
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.supportingTitle {
+  max-width: 16ch;
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 2.1vw, 1.95rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.supportingTitle a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.supportingTitle a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.supportingExcerpt {
+  max-width: 28rem;
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
 }
 
 .historyPath {
@@ -438,6 +505,15 @@
   color: color-mix(in srgb, var(--color-sand) 82%, white);
   font-family: var(--font-serif);
   font-size: 1.15rem;
+}
+
+.hostLine {
+  margin: 0;
+  color: var(--color-sand);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .platformList {

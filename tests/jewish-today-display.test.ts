@@ -4,6 +4,7 @@ import { describe, it } from "node:test";
 import {
   calendarHighlights,
   firstSentence,
+  formatParashahDisplayTitle,
 } from "../src/lib/jewish-today/display";
 
 describe("Jewish Today display helpers", () => {
@@ -27,5 +28,12 @@ describe("Jewish Today display helpers", () => {
     assert.equal(items[0]?.title, "Pesach I");
     assert.equal(items[0]?.memo, "Passover.");
     assert.equal(items[1]?.title, "18th day of the Omer");
+  });
+
+  it("displays hyphenated parashah titles with an en dash", () => {
+    assert.equal(
+      formatParashahDisplayTitle("Nitzavim-Vayeilech"),
+      "Nitzavim–Vayeilech",
+    );
   });
 });

@@ -487,3 +487,25 @@ coverage. Publication scripts and Podcast-branch docs are not imported.
 
 Originals, News, and Events stay hidden. Production, DNS, and the GitHub
 default branch are unchanged.
+
+## ADR-035 — Founder visual refinement stays inside the approved shell
+
+**Status:** Accepted, 2026-09-09
+
+The Design Director checkpoint `b7fbfd549cbc6e48b9b6302c00fee6051071b823` is
+the approved foundation. This pass does not redesign the site. It adds Torah
+depth on ordinary weekdays, two stronger History supporting stories, museum
+labeling for History media (including a future illustration kind), richer
+inner rooms, and a patronage `/support` destination.
+
+Images are collection objects. Only class A/B assets may be public. No
+founder photography was present in the worktree, so none was invented or
+replaced with stock.
+
+Jewish Today still uses one Hebcal request (`today` through next Saturday,
+Diaspora, Eastern Time). The weekly parashah is the first upcoming `parashat`
+item in that range. No second calendar library.
+
+News and Events ingestion is the next milestone, not this one. Homepage
+order stays Masthead → Today → History → Manifesto → Podcasts → Support.
+Production, DNS, and the GitHub default branch remain unchanged.

@@ -50,9 +50,14 @@ export type HistoryCitation = {
   };
 };
 
+export type HistoryVisualKind =
+  "photograph" | "illustration" | "artifact" | "map" | "manuscript";
+
 export type HistoryImage = {
   alt: string;
   caption?: string;
+  visualKind?: HistoryVisualKind;
+  creator?: string;
   creditLine?: string;
   rightsStatus: "cleared" | "publicDomain" | "licensed";
   sourcePageUrl?: string;

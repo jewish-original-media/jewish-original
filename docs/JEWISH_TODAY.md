@@ -42,12 +42,13 @@ rollover, candle-lighting, or location consent. Diaspora Torah readings
 A daily visit should answer, in this order:
 
 1. What Jewish day is it?
-2. What is happening in the Jewish calendar?
-3. What Torah portion belongs to this week?
+2. Where are we in Torah this week?
+3. Is anything being observed today?
 4. What happened on this date in Jewish history?
 
-Empty sections are omitted. An ordinary weekday may show only the date, the
-weekly portion, and a quiet Hebcal credit.
+Empty sections are omitted. Do not invent observances, History matches, or
+Torah readings. An ordinary weekday should still show the weekly portion when
+Hebcal provides one.
 
 ## Data contract
 
@@ -62,17 +63,38 @@ published History matches. History uses `HistoryEntryCard` `variant="archive"`.
 
 ### Compact homepage module
 
-The Integration homepage now calls `getJewishToday()` once and passes that
-result to `JewishTodayModule`. The module shows:
+The Integration homepage calls `getJewishToday()` once and passes that result
+to `HomeJewishToday`. The module shows:
 
-- the Hebrew date
-- one calendar highlight or, if none, the parashah
-- one History title when a published match exists
-- a link to `/today`
+- the large Hebrew date object, Hebrew script, and civil date
+- **This week in Torah** when a parashah is available
+- **Today** only when a holiday, Rosh Chodesh, special Shabbat, Omer, or
+  other observance is present
+- **On this day** only when a published History match exists
+- `Today →` into `/today`
 
-Do not call Hebcal or write a second on-this-day query from the homepage
-module. The homepage History section uses `getHistoryIndex`, not another
-Jewish Today fetch. See `docs/HOMEPAGE.md`.
+Do not fill empty states with placeholder copy. Do not call Hebcal or write a
+second on-this-day query from the homepage module. The homepage History
+section uses `getHistoryIndex`, not another Jewish Today fetch. See
+`docs/HOMEPAGE.md`.
+
+## Weekly Torah
+
+Hebcal’s Diaspora calendar (`i=off`) usually emits `category: "parashat"` on
+the Shabbat of the reading, not on every weekday. One cached request covers
+the previous Saturday through the next Saturday inclusive. That keeps last
+week’s portion available when the coming Saturday is a festival and Hebcal
+emits no `parashat` in the forward days.
+
+`selectUpcomingParashahItem()` in `src/integrations/hebcal/map-day.ts` takes
+the first `parashat` item whose civil date is on or after today. If the range
+only contains an earlier portion, it falls back to the first `parashat` item
+in the response. Stored titles stay hyphenated (`Nitzavim-Vayeilech`) to match
+Hebcal. Display uses an en dash (`Nitzavim–Vayeilech`). Empty remains empty
+when Hebcal returns no portion at all.
+
+V1 timezone remains Eastern Time. Do not add a second Jewish-calendar library.
+Do not hard-code a parashah.
 
 ## History matching
 
@@ -107,8 +129,8 @@ because it is GPL-2.0; linking that library into this application would
 require GPL terms that the project has not adopted. Hebcal’s hosted JSON is
 CC BY 4.0 and may be used commercially with attribution.
 
-One cached request covers today through the next Saturday. Credit appears as
-“Calendar by Hebcal.”
+One cached request covers the previous Saturday through the next Saturday.
+Credit appears as “Calendar by Hebcal.”
 
 ## Caching and failure
 

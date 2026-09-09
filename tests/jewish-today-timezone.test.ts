@@ -5,6 +5,7 @@ import {
   civilDateInTimeZone,
   isIsoDate,
   nextSaturdayInclusive,
+  previousSaturdayInclusive,
   resolveCivilDate,
   weekdayUtc,
 } from "../src/features/jewish-today/timezone";
@@ -29,6 +30,12 @@ describe("Jewish Today timezone", () => {
     assert.equal(nextSaturdayInclusive("2026-09-01"), "2026-09-05");
     assert.equal(nextSaturdayInclusive("2026-09-05"), "2026-09-05");
     assert.equal(weekdayUtc("2026-09-05"), 6);
+  });
+
+  it("includes the previous Saturday so last week’s portion can still be derived", () => {
+    assert.equal(previousSaturdayInclusive("2026-09-09"), "2026-09-05");
+    assert.equal(previousSaturdayInclusive("2026-09-05"), "2026-09-05");
+    assert.equal(previousSaturdayInclusive("2026-09-01"), "2026-08-29");
   });
 
   it("prefers an explicit valid date over the clock", () => {

@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 
-import { HistoryEntryCard } from "@/components/history/history-entry-card";
 import { historyCardLocation } from "@/content/history/archive";
 import type { HistoryEntrySummary } from "@/content/history/types";
 import type { HomeHistoryPresentation } from "@/features/homepage/history";
@@ -13,18 +13,21 @@ type HomeHistoryFeatureProps = {
   unavailable: boolean;
 };
 
-function LeadHistory({ entry }: { entry: HistoryEntrySummary }) {
-  const date = formatHistoricalDate(
+function historyDate(entry: HistoryEntrySummary) {
+  return formatHistoricalDate(
     entry.historicalDate,
     entry.entryKind,
     entry.observanceRule,
   );
+}
+
+function LeadHistory({ entry }: { entry: HistoryEntrySummary }) {
   const location = historyCardLocation(entry);
   const topics = entry.topics.map((topic) => topic.name).join(" · ");
 
   return (
     <article className={styles.historyLead}>
-      <p className={styles.historyDate}>{date}</p>
+      <p className={styles.historyDate}>{historyDate(entry)}</p>
       <h3 className={styles.historyTitle}>
         <Link href={`/history/${entry.slug}`}>{entry.title}</Link>
       </h3>
@@ -34,6 +37,33 @@ function LeadHistory({ entry }: { entry: HistoryEntrySummary }) {
       <p className={styles.historyMeta}>
         {[topics, location].filter(Boolean).join(" · ")}
       </p>
+    </article>
+  );
+}
+
+function SupportingHistory({ entry }: { entry: HistoryEntrySummary }) {
+  const location = historyCardLocation(entry);
+
+  return (
+    <article className={styles.supportingStory}>
+      {entry.primaryImage ? (
+        <div className={styles.supportingMedia}>
+          <Image
+            alt={entry.primaryImage.alt}
+            fill
+            sizes="(max-width: 64rem) 100vw, 22rem"
+            src={entry.primaryImage.asset.url}
+          />
+        </div>
+      ) : null}
+      <p className={styles.supportingDate}>{historyDate(entry)}</p>
+      <h3 className={styles.supportingTitle}>
+        <Link href={`/history/${entry.slug}`}>{entry.title}</Link>
+      </h3>
+      {entry.excerpt ? (
+        <p className={styles.supportingExcerpt}>{entry.excerpt}</p>
+      ) : null}
+      {location ? <p className={styles.historyMeta}>{location}</p> : null}
     </article>
   );
 }
@@ -65,12 +95,7 @@ export function HomeHistoryFeature({
           {history.supporting.length > 0 ? (
             <div className={styles.supporting}>
               {history.supporting.map((entry) => (
-                <HistoryEntryCard
-                  entry={entry}
-                  headingLevel="h3"
-                  key={entry._id}
-                  variant="archive"
-                />
+                <SupportingHistory entry={entry} key={entry._id} />
               ))}
             </div>
           ) : null}

@@ -159,9 +159,43 @@ not recolor or outline the mark. Do not place it on sand or white.
 - Navigation works without JavaScript and remains keyboard accessible.
 - Images preserve focal subjects and expose meaningful alternative text.
 
+## Rooms
+
+One visual system. Different rooms:
+
+| Room                | Route                        | Feeling                            |
+| ------------------- | ---------------------------- | ---------------------------------- |
+| Lobby               | `/`                          | Front page / museum entrance       |
+| Daily ritual        | `/today`                     | Hebrew date, Torah, observance     |
+| Archive / gallery   | `/history`                   | Dated collection                   |
+| Exhibition          | `/history/[slug]`            | One object, sources, related rooms |
+| Listening room      | `/podcasts` and show/episode | Voices, night field                |
+| Institutional story | `/about`                     | People and path                    |
+| Patronage           | `/support`                   | Cultural support, not SaaS pricing |
+| Quiet legal room    | `/privacy`                   | Current product behavior           |
+
+Do not make every page visually identical.
+
+## Jerusalem material
+
+Atmosphere comes from limestone-warm paper, archival rules, brass-gold dates,
+Hebrew print, and a lightweight CSS grain. Texture should be felt, not noticed.
+Do not use Western Wall heroes, flag fields, skyline silhouettes, or Stars of
+David as wallpaper.
+
+## Imagery
+
+Treat images as collection objects. Every public image should support alt text,
+caption, creator/source, and rights/credit. History featured media may be a
+photograph, original illustration, artifact, map, or manuscript. Illustrations
+must be labeled as illustrations. No empty image wells. See
+`docs/HISTORY_ILLUSTRATION.md` and `docs/ASSET_INVENTORY.md`.
+
 ## Asset handling
 
 Current JOM raster logo exports have baked black backgrounds despite `.png`
 extensions. Approved variants may only be placed on a matching black surface
 until transparent PNG or SVG masters are supplied. OTD circular logos are the
-only supplied transparent marks. See `ASSET_INVENTORY.md`.
+only supplied transparent marks. Founder photography is documented in the
+inventory but is not in this worktree; do not substitute stock. See
+`ASSET_INVENTORY.md`.

@@ -76,6 +76,38 @@ Exit: the homepage has trustworthy daily value with graceful failure behavior.
 - Later: confirm official YouTube episode IDs, review transcripts, and import the remaining feed
 - Build editorial story templates and social-to-site publishing workflows after the podcast foundation is approved
 
+## Next milestone — News and Events ingestion
+
+Do not start this until the founder visual refinement is checkpointed.
+
+Founder requirement: both desks belong in V1 if automation is sufficiently
+hands-off. Human intervention is exception-based, not required for each item.
+
+**News**
+
+- Almost entirely automated
+- Trusted Jewish RSS/API sources
+- Normalize, dedupe, relevance filter, topic/desk classification
+- Short AI-written JOM context
+- Outbound link to the original publisher
+- Do not republish publisher articles
+
+**Events**
+
+- Low-maintenance ingestion from trustworthy structured sources (ICS, official
+  calendars, partner feeds, appropriate APIs)
+- Manual override/entry remains available
+- Automation does the daily work
+
+Implement from the existing News + Events product specification
+(`docs/CONTENT_MODEL.md`, `docs/NEWS_EVENTS_NEXT.md`). Do not add homepage
+placeholder sections before real items exist.
+
+Likely later homepage sequence, judged only after real content exists:
+
+Masthead → Today → History → Originals → What We’re Following → Podcast →
+Upcoming Events → Manifesto / Support.
+
 ## Milestone 4 — Curation and distribution
 
 - Approved-feed ingestion with source policy, deduplication, and editor approval

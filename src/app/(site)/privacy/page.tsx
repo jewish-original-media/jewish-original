@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} ${styles.roomPrivacy}`}>
       <section className={styles.hero}>
         <Container size="content">
           <p className="eyebrow">Privacy</p>

@@ -18,7 +18,7 @@ const partner = `mailto:${siteConfig.email}?subject=${encodeURIComponent("Partne
 
 export default function SupportPage() {
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} ${styles.roomSupport}`}>
       <section className={styles.hero}>
         <Container size="content">
           <p className="eyebrow">Support</p>
@@ -90,8 +90,34 @@ export default function SupportPage() {
         </Container>
       </section>
 
+      <section className={styles.chapter} aria-labelledby="support-possible">
+        <Container size="content">
+          <p className="eyebrow">Patronage</p>
+          <h2 className={styles.sectionTitle} id="support-possible">
+            What your support makes possible
+          </h2>
+          <p className={styles.copy}>
+            Support helps the work Jewish Original already does in public:
+          </p>
+          <ul className={styles.possible}>
+            <li>research and preserve Jewish history</li>
+            <li>maintain the public History archive</li>
+            <li>produce The Two Tall Jews Show</li>
+            <li>build Jewish Today</li>
+            <li>create original Jewish writing and media</li>
+            <li>document Jewish culture</li>
+            <li>develop educational resources</li>
+            <li>keep Jewish Original accessible</li>
+          </ul>
+        </Container>
+      </section>
+
       <section className={styles.body}>
         <Container size="content">
+          <p className={styles.independence}>
+            Sponsorship supports Jewish Original Media. It does not determine
+            editorial judgment.
+          </p>
           <p className={styles.note}>
             Write {siteConfig.email}. There is no checkout on this page, and we
             do not claim tax deductibility.

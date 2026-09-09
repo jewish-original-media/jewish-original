@@ -109,11 +109,12 @@ body {
   min-height: 100vh;
   margin: 0;
   background-color: var(--color-canvas);
-  background-image: radial-gradient(
-    rgb(46 52 96 / 0.028) 0.7px,
-    transparent 0.8px
-  );
-  background-size: 3px 3px;
+  background-image:
+    radial-gradient(rgb(46 52 96 / 0.03) 0.65px, transparent 0.75px),
+    linear-gradient(180deg, rgb(238 224 203 / 0.28), transparent 22rem);
+  background-size:
+    3px 3px,
+    auto;
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-size: var(--text-base);
@@ -358,9 +359,13 @@ svg {
   text-wrap: balance;
 }
 
+.history-context-label {
+  margin: var(--space-8) 0 0;
+}
+
 .history-lede {
   max-width: 38rem;
-  margin: var(--space-6) 0 0;
+  margin: var(--space-3) 0 0;
   color: var(--color-charcoal);
   font-family: var(--font-serif);
   font-size: clamp(1.125rem, 1.5vw, 1.375rem);
@@ -400,7 +405,11 @@ svg {
 .history-entry-header {
   position: relative;
   overflow: hidden;
-  background: color-mix(in srgb, var(--color-sand) 68%, var(--color-canvas));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-sand) 78%, var(--color-canvas)),
+    color-mix(in srgb, var(--color-sand) 42%, var(--color-canvas))
+  );
 }
 
 .history-hero-lion {
@@ -440,10 +449,11 @@ svg {
 .history-date-line {
   margin: var(--space-10) 0 0;
   color: var(--color-gold);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 3.4vw, 3.25rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
 }
 
 .history-archive-rail {
@@ -510,6 +520,15 @@ svg {
 
 .history-featured-media {
   margin: 0;
+}
+
+.history-featured-media__kind {
+  margin: 0 0 var(--space-3);
+  color: var(--color-navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
 }
 
 .history-featured-media__frame {
@@ -1391,6 +1410,41 @@ svg {
   font-size: var(--text-sm);
   font-weight: 650;
   letter-spacing: 0.04em;
+}
+
+.podcast-hosts {
+  display: grid;
+  gap: var(--space-6);
+  margin: var(--space-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.podcast-host-name {
+  margin: 0;
+  max-width: 14ch;
+  color: var(--color-paper);
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+.podcast-host-caption {
+  margin: var(--space-2) 0 0;
+  color: var(--color-gold);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+@media (min-width: 40rem) {
+  .podcast-hosts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-8);
+  }
 }
 
 .podcast-hero-actions {

@@ -4,7 +4,11 @@ import { describe, it } from "node:test";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { mapHebcalDay, parseHdate } from "../src/integrations/hebcal/map-day";
+import {
+  mapHebcalDay,
+  parseHdate,
+  selectUpcomingParashahItem,
+} from "../src/integrations/hebcal/map-day";
 import type { HebcalCalendarResponse } from "../src/integrations/hebcal/types";
 
 const fixtures = join(
@@ -127,5 +131,40 @@ describe("Hebcal day mapping", () => {
     assert.equal(day.specialShabbat[0]?.title, "Shabbat Zachor");
     assert.equal(day.holidays.length, 0);
     assert.equal(day.parashah?.title, "Tetzaveh");
+  });
+
+  it("selects the upcoming Shabbat parashah from a multi-day Hebcal range", () => {
+    const selected = selectUpcomingParashahItem(
+      [
+        {
+          title: "Parashat Ki Tavo",
+          date: "2026-08-29T12:00:00-04:00",
+          category: "parashat",
+        },
+        {
+          title: "Parashat Nitzavim-Vayeilech",
+          date: "2026-09-05T12:00:00-04:00",
+          category: "parashat",
+        },
+      ],
+      "2026-09-01",
+    );
+
+    assert.equal(selected?.title, "Parashat Nitzavim-Vayeilech");
+  });
+
+  it("falls back to last week’s portion when the coming Saturday has none", () => {
+    const selected = selectUpcomingParashahItem(
+      [
+        {
+          title: "Parashat Nitzavim-Vayeilech",
+          date: "2026-09-05T12:00:00-04:00",
+          category: "parashat",
+        },
+      ],
+      "2026-09-09",
+    );
+
+    assert.equal(selected?.title, "Parashat Nitzavim-Vayeilech");
   });
 });

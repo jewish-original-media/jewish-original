@@ -39,3 +39,8 @@ export function calendarHighlights(input: {
 
   return items;
 }
+
+export function formatParashahDisplayTitle(title?: string) {
+  if (!title) return undefined;
+  return title.replace(/-/g, "–");
+}

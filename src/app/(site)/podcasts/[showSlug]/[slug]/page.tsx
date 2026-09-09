@@ -110,6 +110,7 @@ export default async function PodcastEpisodePage({ params }: EpisodePageProps) {
                 </li>
               </ol>
             </nav>
+            <p className="podcast-kicker">Listening room</p>
             <p className="podcast-date-line">
               {[date, duration, number].filter(Boolean).join(" · ")}
             </p>
@@ -161,8 +162,8 @@ export default async function PodcastEpisodePage({ params }: EpisodePageProps) {
               <section className="podcast-block">
                 <h2 className="podcast-section-title">Chapters</h2>
                 <ol className="podcast-chapter-list">
-                  {episode.chapters.map((chapter) => (
-                    <li key={`${chapter.start}-${chapter.title}`}>
+                  {episode.chapters.map((chapter, index) => (
+                    <li key={`${chapter.start}-${chapter.title}-${index}`}>
                       <span>{chapter.start}</span>
                       <span>{chapter.title}</span>
                     </li>

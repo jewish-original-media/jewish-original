@@ -19,7 +19,7 @@ export function composeHomeHistory(
     null;
   const supporting = entries
     .filter((entry) => entry._id !== lead?._id)
-    .slice(0, 3);
+    .slice(0, 2);
 
   return {
     lead,

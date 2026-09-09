@@ -86,6 +86,12 @@ export function nextSaturdayInclusive(isoDate: string): string {
   return addUtcDays(isoDate, daysUntilSaturday);
 }
 
+export function previousSaturdayInclusive(isoDate: string): string {
+  const weekday = weekdayUtc(isoDate);
+  const daysSinceSaturday = weekday === 6 ? 0 : weekday + 1;
+  return addUtcDays(isoDate, -daysSinceSaturday);
+}
+
 export function formatGregorianLabel(isoDate: string): string {
   const parsed = parseIsoDate(isoDate);
   if (!parsed) {
