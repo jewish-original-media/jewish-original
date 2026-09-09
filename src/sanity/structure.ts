@@ -107,6 +107,83 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.listItem()
+        .title("News")
+        .child(
+          S.list()
+            .title("News")
+            .items([
+              S.listItem()
+                .title("Sources")
+                .child(
+                  S.documentList()
+                    .title("News sources")
+                    .apiVersion(sanityEnv.apiVersion)
+                    .schemaType("ingestSource")
+                    .filter('_type == "ingestSource" && kind == "news"'),
+                ),
+              S.listItem()
+                .title("Published")
+                .child(
+                  S.documentList()
+                    .title("Published news")
+                    .apiVersion(sanityEnv.apiVersion)
+                    .schemaType("curatedNewsItem")
+                    .filter(
+                      '_type == "curatedNewsItem" && status == "published"',
+                    ),
+                ),
+              S.listItem()
+                .title("Exceptions")
+                .child(
+                  S.documentList()
+                    .title("News exceptions")
+                    .apiVersion(sanityEnv.apiVersion)
+                    .schemaType("ingestException")
+                    .filter(
+                      '_type == "ingestException" && kind == "news" && status == "open"',
+                    ),
+                ),
+            ]),
+        ),
+      S.listItem()
+        .title("Events")
+        .child(
+          S.list()
+            .title("Events")
+            .items([
+              S.listItem()
+                .title("Sources")
+                .child(
+                  S.documentList()
+                    .title("Event sources")
+                    .apiVersion(sanityEnv.apiVersion)
+                    .schemaType("ingestSource")
+                    .filter('_type == "ingestSource" && kind == "events"'),
+                ),
+              S.listItem()
+                .title("Published / upcoming")
+                .child(
+                  S.documentList()
+                    .title("Published events")
+                    .apiVersion(sanityEnv.apiVersion)
+                    .schemaType("event")
+                    .filter('_type == "event" && status == "published"'),
+                ),
+              S.listItem()
+                .title("Exceptions")
+                .child(
+                  S.documentList()
+                    .title("Event exceptions")
+                    .apiVersion(sanityEnv.apiVersion)
+                    .schemaType("ingestException")
+                    .filter(
+                      '_type == "ingestException" && kind == "events" && status == "open"',
+                    ),
+                ),
+            ]),
+        ),
+      S.divider(),
+      S.listItem()
         .title("Reference data")
         .child(
           S.list()

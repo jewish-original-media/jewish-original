@@ -78,15 +78,19 @@ homepage hides Originals until a published article exists.
 
 ### Curated news item
 
-Publisher reference, original headline, canonical source URL, publication date,
-editorial summary, category/topics, legally usable media reference, selection
-note, expiration date, and status. The source article is linked, not copied.
+Outward-linking record, not a republished article. Publisher / source
+reference, original headline, canonical HTTPS URL, source publication
+datetime, JOM-written context, one of four desks (Jewish World, Israel,
+Culture, Heritage), topics, provenance, status, expiration, ingest
+metadata, and internal confidence fields. Do not store RSS descriptions or
+publisher images. See `docs/NEWS_EVENTS.md`.
 
 ### Event
 
-Name, organizer reference, event mode, venue, structured address, coordinates,
-timezone, start/end, recurrence information, external URL, description, source,
-media, geographic reach, review status, and expiration.
+Title, organizer, canonical URL, source UID, start/end, the event’s own IANA
+timezone, attendance mode, venue/city/region/country, online URL, short JOM
+context, topics, provenance, status, expiration, and ingest metadata. Do not
+apply Jewish Today timezone rules. Do not store official blurbs as public copy.
 
 ### Culture item
 

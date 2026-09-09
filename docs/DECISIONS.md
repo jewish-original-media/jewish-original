@@ -568,3 +568,21 @@ Priority: authentic asset, then typography, then material, then whitespace.
 If nothing authentic belongs in a space, leave it empty. OTD lion/star remain
 History-only. Header plaque and typographic footer stay until a transparent
 JOM master exists.
+
+## ADR-039 — News and Events automation without a design pass
+
+**Status:** Accepted, 2026-09-09
+
+Implement the research plan from `research/news-events@128a537` on
+`feature/integration-homepage` without merging that branch and without
+redesigning the frozen visual baseline.
+
+News is an outward-linking curated record. Events own their timezone. Four
+News desks only. JNS is capped. Haaretz and wire services stay out. AI is a
+swappable Gateway provider, defaulting to `openai/gpt-4.1-nano`, and must not
+publish when unconfigured. Cron writes stay fail-closed behind
+`CRON_SECRET`, Gateway credentials, a write token, and
+`INGEST_WRITES_ENABLED`.
+
+Nav stays unchanged until volume gates are met. Homepage modules render only
+when real published items exist.

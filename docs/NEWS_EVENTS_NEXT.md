@@ -1,10 +1,10 @@
 # Next milestone: News and Events ingestion
 
-Status: specified, not implemented.
+Status: architecture implemented on Integration. No live News/Event records.
 
 The founder wants both desks in V1 if the automation can stay sufficiently
-hands-off. This milestone records the decision. It does not ingest feeds, add
-homepage placeholders, or invent items.
+hands-off. `/news` and `/events` exist. Homepage slots still hide while empty.
+Ingest writes are blocked until AI Gateway and founder write authorization.
 
 ## News
 
@@ -43,18 +43,15 @@ The content model is the Event document in `docs/CONTENT_MODEL.md`.
 
 Do not add News or Events sections until real items exist.
 
-Current sequence:
+Current empty sequence remains frozen:
 
 Masthead → Today → History → Manifesto → Podcasts → Support
 
-Likely later sequence, judged only after real content exists:
+When real News and Events exist:
 
-Masthead → Today → History → Originals → What We’re Following → Podcast →
-Upcoming Events → Manifesto / Support
+Masthead → Today → History → What We’re Following → Podcast → Upcoming Events
+→ Manifesto / Support
 
-## Out of scope until this next milestone
+Originals stay hidden.
 
-- News ingestion
-- Events ingestion
-- homepage News/Event placeholders
-- publisher article republication
+See `docs/NEWS_EVENTS.md` and `docs/specs/NEWS_EVENTS_AUTOMATION_PLAN.md`.

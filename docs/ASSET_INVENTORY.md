@@ -154,6 +154,9 @@ high-resolution masters are still needed for print and large crops.
 
 Its relationship to the approved OTD lion system should be confirmed before use.
 
+News and Events use no new decorative marks. Do not invent a wire or
+calendar icon family.
+
 ## Required follow-up assets
 
 1. Preferred web master:

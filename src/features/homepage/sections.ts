@@ -60,6 +60,33 @@ export const HOME_SECTION_ORDER: readonly HomeSectionContract[] = [
   },
 ] as const;
 
+export const HOME_INTENDED_ORDER_WHEN_POPULATED = [
+  "masthead",
+  "jewish-today",
+  "history",
+  "news",
+  "podcasts",
+  "events",
+  "manifesto",
+  "support",
+] as const;
+
+export function resolveHomeSectionOrder(input: {
+  newsCount: number;
+  eventCount: number;
+}) {
+  const showNews = input.newsCount > 0;
+  const showEvents = input.eventCount >= 2;
+  if (!showNews && !showEvents) {
+    return HOME_SECTION_ORDER.map((section) => section.id);
+  }
+  return HOME_INTENDED_ORDER_WHEN_POPULATED.filter((id) => {
+    if (id === "news") return showNews;
+    if (id === "events") return showEvents;
+    return true;
+  });
+}
+
 export const HIDDEN_HOME_MODULES: readonly HiddenHomeModule[] = [
   {
     id: "originals",

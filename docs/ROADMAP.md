@@ -78,9 +78,9 @@ Exit: the homepage has trustworthy daily value with graceful failure behavior.
 
 ## Next milestone — News and Events ingestion
 
-The final visual-identity pass is complete on Integration. Do not start News
-or Events until that checkpoint is accepted. Do not begin them in the same
-change.
+Architecture is on Integration after visual checkpoint `3c69d40`. Public
+`/news` and `/events` exist. Live AI publishing and Sanity writes wait for
+founder Gateway / cron / write-token configuration.
 
 Founder requirement: both desks belong in V1 if automation is sufficiently
 hands-off. Human intervention is exception-based, not required for each item.

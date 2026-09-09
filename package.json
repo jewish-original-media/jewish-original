@@ -12,6 +12,8 @@
     "format:check": "prettier --check .",
     "test:jewish-today": "tsx --test tests/jewish-today-*.test.ts",
     "test:homepage": "tsx --test tests/homepage-*.test.ts tests/public-media.test.ts",
+    "test:ingest": "tsx --test tests/ingest-*.test.ts",
+    "ingest:dry-run": "tsx scripts/ingest/dry-run.ts",
     "test:history-body": "tsx --test tests/history-body-conversion.test.ts tests/history-seo.test.ts tests/history-content-warnings.test.ts tests/history-featured-media.test.ts tests/history-on-this-day.test.ts tests/history-archive.test.ts",
     "test:podcasts": "tsx --test tests/podcasts-youtube.test.ts tests/podcasts-seo.test.ts tests/podcasts-rss.test.ts tests/podcasts-platforms.test.ts",
     "podcasts:rss-dry-run": "tsx scripts/podcasts/import-rss.ts",

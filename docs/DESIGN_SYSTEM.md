@@ -236,3 +236,12 @@ extensions. The header plaque is the approved interim placement. Do not
 alter the mark. OTD circular logos are the only supplied transparent marks.
 Three founder-owned photographs now live in `public/media/founder/` and are
 recorded in `ASSET_INVENTORY.md`. Do not substitute stock.
+
+## News and Events
+
+News is a tight newswire: hairline rules, publisher labels, time, headline,
+short JOM context, outbound arrow. No card grid. No publisher images.
+
+Events is a museum calendar: the date is the graphic object. Title,
+organizer, place or Online, and the event’s own timezone follow. Do not make
+the two desks visually identical. Do not invent icons for either.

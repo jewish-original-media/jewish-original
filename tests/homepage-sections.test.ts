@@ -4,8 +4,10 @@ import { test } from "node:test";
 import {
   HIDDEN_HOME_MODULES,
   HISTORY_HOME_CONTRACT,
+  HOME_INTENDED_ORDER_WHEN_POPULATED,
   HOME_SECTION_ORDER,
   PODCASTS_HOME_CONTRACT,
+  resolveHomeSectionOrder,
 } from "../src/features/homepage/sections";
 
 test("homepage section order is masthead, today, history, manifesto, podcasts, support", () => {
@@ -37,4 +39,38 @@ test("Originals, News, and Events stay hidden until published documents exist", 
     ["originals", "news", "events"],
   );
   assert.ok(HIDDEN_HOME_MODULES.every((module) => module.status === "hidden"));
+  assert.deepEqual(resolveHomeSectionOrder({ newsCount: 0, eventCount: 0 }), [
+    "masthead",
+    "jewish-today",
+    "history",
+    "manifesto",
+    "podcasts",
+    "support",
+  ]);
+});
+
+test("populated News and Events insert without inventing Originals", () => {
+  assert.deepEqual(
+    [...HOME_INTENDED_ORDER_WHEN_POPULATED],
+    [
+      "masthead",
+      "jewish-today",
+      "history",
+      "news",
+      "podcasts",
+      "events",
+      "manifesto",
+      "support",
+    ],
+  );
+  assert.deepEqual(resolveHomeSectionOrder({ newsCount: 3, eventCount: 3 }), [
+    "masthead",
+    "jewish-today",
+    "history",
+    "news",
+    "podcasts",
+    "events",
+    "manifesto",
+    "support",
+  ]);
 });

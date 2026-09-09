@@ -1,5 +1,7 @@
+import { HomeEvents } from "@/components/home/home-events";
 import { HomeHistoryFeature } from "@/components/home/home-history-feature";
 import { HomeJewishToday } from "@/components/home/home-jewish-today";
+import { HomeNews } from "@/components/home/home-news";
 import { HomePodcastFeature } from "@/components/home/home-podcast-feature";
 import { ButtonLink } from "@/components/ui/button-link";
 import {
@@ -20,6 +22,31 @@ export function HomePageView({ data }: HomePageViewProps) {
     data.jewishToday.onThisDay,
   );
   const podcasts = composeHomePodcasts(data.podcasts.episodes);
+  const showNews = data.news.length > 0;
+  const showEvents = data.events.length >= 2;
+  const desksLive = showNews || showEvents;
+  const manifesto = (
+    <section
+      className={`${styles.band} ${styles.manifesto}`}
+      aria-label="Legacy"
+    >
+      <div className={styles.bandInner}>
+        <p className={styles.sectionLabel}>For what lasts</p>
+        <blockquote className={styles.manifestoQuote}>
+          We don’t ask what’s going viral. We ask what’s worth remembering in
+          100 years.
+        </blockquote>
+        <p className={styles.manifestoNote}>Jewish Original Media</p>
+      </div>
+    </section>
+  );
+  const podcast = (
+    <HomePodcastFeature
+      podcasts={podcasts}
+      show={data.podcasts.show}
+      status={data.podcasts.status}
+    />
+  );
 
   return (
     <div className={styles.page}>
@@ -55,25 +82,19 @@ export function HomePageView({ data }: HomePageViewProps) {
         unavailable={data.history.status === "unavailable"}
       />
 
-      <section
-        className={`${styles.band} ${styles.manifesto}`}
-        aria-label="Legacy"
-      >
-        <div className={styles.bandInner}>
-          <p className={styles.sectionLabel}>For what lasts</p>
-          <blockquote className={styles.manifestoQuote}>
-            We don’t ask what’s going viral. We ask what’s worth remembering in
-            100 years.
-          </blockquote>
-          <p className={styles.manifestoNote}>Jewish Original Media</p>
-        </div>
-      </section>
-
-      <HomePodcastFeature
-        podcasts={podcasts}
-        show={data.podcasts.show}
-        status={data.podcasts.status}
-      />
+      {showNews ? <HomeNews items={data.news} /> : null}
+      {desksLive ? (
+        <>
+          {podcast}
+          {showEvents ? <HomeEvents items={data.events} /> : null}
+          {manifesto}
+        </>
+      ) : (
+        <>
+          {manifesto}
+          {podcast}
+        </>
+      )}
 
       <section
         className={`${styles.band} ${styles.support}`}

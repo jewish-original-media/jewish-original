@@ -41,7 +41,7 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 2. **Jewish Today** — signature daily object from the same `JewishTodayDay`.
    Live.
 3. **History** — one lead plus two supporting archive stories. Live.
-4. **Manifesto** — one founder pause. Live.
+4. **Manifesto** — one founder pause. Live while News/Events are empty.
 5. **Podcasts** — published show, latest `EpisodeCard`, remaining titles as a
    rail. Live.
 6. **Support** — invitation into `/support`. Live.
@@ -49,8 +49,11 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 Hidden until published documents exist:
 
 - Originals
-- What We’re Following (News)
-- Upcoming Events
+- What We’re Following (News) — after History, before Podcasts
+- Upcoming Events — after Podcasts, before Manifesto
+
+When both desks have real items, Manifesto moves after Events so the frozen
+empty rhythm is not disturbed until there is something to follow.
 
 ## Jewish Today
 
@@ -84,9 +87,8 @@ title rail, not a second card system. Do not invent artwork or autoplay media.
 
 ## Originals, News, and Events
 
-See `docs/ORIGINALS.md` and `docs/NEWS_EVENTS_NEXT.md`. Homepage slots stay
-hidden while empty. Do not invent articles, headlines, or events. Do not
-implement News or Events ingestion in this milestone.
+See `docs/ORIGINALS.md` and `docs/NEWS_EVENTS.md`. Homepage slots stay
+hidden while empty. Do not invent articles, headlines, or events.
 
 Future visual languages, when data exists:
 
