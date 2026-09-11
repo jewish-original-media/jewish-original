@@ -75,7 +75,7 @@ export function resolveHomeSectionOrder(input: {
   newsCount: number;
   eventCount: number;
 }) {
-  const showNews = input.newsCount > 0;
+  const showNews = input.newsCount >= 3;
   const showEvents = input.eventCount >= 2;
   if (!showNews && !showEvents) {
     return HOME_SECTION_ORDER.map((section) => section.id);

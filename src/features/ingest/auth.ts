@@ -10,8 +10,12 @@ function secretsMatch(received: string, expected: string) {
 }
 
 export function authorizeCronRequest(request: Request) {
-  const expected = process.env.CRON_SECRET;
-  if (!expected) {
+  const cronSecret = process.env.CRON_SECRET;
+  const previewSecret =
+    process.env.VERCEL_ENV === "preview"
+      ? process.env.DRAFT_MODE_SECRET
+      : undefined;
+  if (!cronSecret && !previewSecret) {
     return { ok: false as const, status: 503, error: "cron-unconfigured" };
   }
 
@@ -19,7 +23,10 @@ export function authorizeCronRequest(request: Request) {
   const bearer = header.startsWith("Bearer ") ? header.slice(7) : "";
   const query = new URL(request.url).searchParams.get("secret") || "";
   const received = bearer || query;
-  if (!received || !secretsMatch(received, expected)) {
+  const authorized = [cronSecret, previewSecret].some(
+    (expected) => expected && received && secretsMatch(received, expected),
+  );
+  if (!authorized) {
     return { ok: false as const, status: 401, error: "unauthorized" };
   }
   return { ok: true as const };

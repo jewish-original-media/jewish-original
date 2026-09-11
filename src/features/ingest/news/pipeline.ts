@@ -45,6 +45,7 @@ export type NewsCandidate = {
   expiresAt: string;
   relevance: number;
   deskConfidence: number;
+  model?: string;
 };
 
 export type NewsDecision = {
@@ -296,6 +297,7 @@ export async function runNewsIngest(options: NewsIngestOptions = {}) {
           expiresAt: newsExpiresAt(gated.published).toISOString(),
           relevance: ai.output.relevance,
           deskConfidence: ai.output.deskConfidence,
+          model: ai.model,
         };
         stats.autoPublished += 1;
         sourcePublished += 1;

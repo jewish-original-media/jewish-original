@@ -9,6 +9,10 @@ import {
   composeHomePodcasts,
   type HomePageData,
 } from "@/features/homepage";
+import {
+  shouldShowHomepageEvents,
+  shouldShowHomepageNews,
+} from "@/features/ingest/select";
 
 import styles from "@/app/home.module.css";
 
@@ -22,8 +26,8 @@ export function HomePageView({ data }: HomePageViewProps) {
     data.jewishToday.onThisDay,
   );
   const podcasts = composeHomePodcasts(data.podcasts.episodes);
-  const showNews = data.news.length > 0;
-  const showEvents = data.events.length >= 2;
+  const showNews = shouldShowHomepageNews(data.news.length);
+  const showEvents = shouldShowHomepageEvents(data.events);
   const desksLive = showNews || showEvents;
   const manifesto = (
     <section

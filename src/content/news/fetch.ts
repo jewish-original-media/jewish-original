@@ -1,6 +1,6 @@
 import "server-only";
 
-import { INGEST_WINDOWS } from "@/features/ingest/config";
+import { INGEST_CAPS, INGEST_WINDOWS } from "@/features/ingest/config";
 import { isWithinDays } from "@/features/ingest/freshness";
 import { selectHomepageNews } from "@/features/ingest/news/diversity";
 import { getPublishedSanityClient } from "@/lib/sanity/client";
@@ -42,5 +42,6 @@ export async function getHomepageNews() {
         INGEST_WINDOWS.homepageNewsDays,
       ),
     ),
+    { limit: INGEST_CAPS.homepageNewsPrefer },
   );
 }

@@ -586,3 +586,14 @@ publish when unconfigured. Cron writes stay fail-closed behind
 
 Nav stays unchanged until volume gates are met. Homepage modules render only
 when real published items exist.
+
+## ADR-040 — News and Events persist only approved ingest types
+
+**Status:** Accepted, 2026-09-11
+
+Ingest writes use deterministic IDs and `createOrReplace`. Allowed types:
+`curatedNewsItem`, `event`, `ingestSource`, `ingestRun`, `ingestException`,
+`ingestReceipt`. History, Podcast, Jewish Today, and reference records are
+out of scope. First publication caps News at 10 selected items and Events
+at actual qualifying upcoming programs. Homepage News requires 3 items.
+Homepage Events require two organizers and two geography buckets.

@@ -45,6 +45,7 @@ export type EventCandidate = {
   onlineUrl?: string;
   jomContext: string;
   expiresAt: string;
+  model?: string;
 };
 
 export type EventDecision = {
@@ -254,6 +255,7 @@ export async function runEventsIngest(options: EventIngestOptions = {}) {
           onlineUrl:
             gated.attendance === "in-person" ? undefined : gated.url.href,
           jomContext: ai.output.context,
+          model: ai.model,
           expiresAt: eventExpiresAt(
             gated.start,
             endAt ? new Date(endAt) : null,

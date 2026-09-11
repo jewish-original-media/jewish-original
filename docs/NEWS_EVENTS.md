@@ -55,4 +55,6 @@ Neither desk is in primary nav yet.
 
 Cron and `npm run ingest:dry-run` default to no Sanity writes. Publication
 requires `CRON_SECRET`, a Gateway credential, `SANITY_API_WRITE_TOKEN`, and
-`INGEST_WRITES_ENABLED=1`. Do not enable that on Production in this milestone.
+`INGEST_WRITES_ENABLED=1`. Writes are scoped to `curatedNewsItem`, `event`,
+`ingestSource`, `ingestRun`, `ingestException`, and `ingestReceipt` only.
+Do not enable that on Production in this milestone.

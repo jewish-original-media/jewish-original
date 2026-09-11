@@ -47,6 +47,14 @@ test("Originals, News, and Events stay hidden until published documents exist", 
     "podcasts",
     "support",
   ]);
+  assert.deepEqual(resolveHomeSectionOrder({ newsCount: 2, eventCount: 1 }), [
+    "masthead",
+    "jewish-today",
+    "history",
+    "manifesto",
+    "podcasts",
+    "support",
+  ]);
 });
 
 test("populated News and Events insert without inventing Originals", () => {
