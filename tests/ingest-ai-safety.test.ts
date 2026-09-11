@@ -47,8 +47,16 @@ describe("structured AI output validation", () => {
     assert.equal(result.ok, true);
   });
 
-  it("rejects unknown keys, URLs, overlap, and injection flags", () => {
-    assert.equal(validateNewsAiOutput({ ...valid, extra: true }).ok, false);
+  it("accepts extra keys while still rejecting URLs, overlap, and injection flags", () => {
+    assert.equal(validateNewsAiOutput({ ...valid, extra: true }).ok, true);
+    assert.equal(
+      validateNewsAiOutput({
+        ...valid,
+        relevance: "0.88",
+        desk: "Jewish World",
+      }).ok,
+      true,
+    );
     assert.equal(
       validateNewsAiOutput({
         ...valid,

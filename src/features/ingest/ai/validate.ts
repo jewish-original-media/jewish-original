@@ -7,22 +7,45 @@ import {
 import { contextLooksUnsafe, detectPromptInjection } from "../injection";
 import { sentenceCount, twelveWordOverlap } from "../text";
 import type { EventAiOutput, NewsAiOutput } from "./types";
-import { NEWS_AI_KEYS } from "./types";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function asNumber(value: unknown) {
-  return typeof value === "number" && Number.isFinite(value) ? value : null;
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (
+    typeof value === "string" &&
+    value.trim() &&
+    Number.isFinite(Number(value))
+  ) {
+    return Number(value);
+  }
+  return null;
 }
 
 function asBoolean(value: unknown) {
-  return typeof value === "boolean" ? value : null;
+  if (typeof value === "boolean") return value;
+  if (value === "true") return true;
+  if (value === "false") return false;
+  return null;
 }
 
 function asString(value: unknown) {
   return typeof value === "string" ? value.trim() : null;
+}
+
+const DESK_ALIASES: Record<string, NewsDesk> = {
+  "jewish-world": "jewish-world",
+  "jewish world": "jewish-world",
+  israel: "israel",
+  culture: "culture",
+  heritage: "heritage",
+};
+
+function asDesk(value: unknown) {
+  const raw = asString(value)?.toLowerCase();
+  return raw ? (DESK_ALIASES[raw] ?? null) : null;
 }
 
 export function parseJsonObject(text: string) {
@@ -37,14 +60,10 @@ export function validateNewsAiOutput(
   sourceText = "",
 ): { ok: true; output: NewsAiOutput } | { ok: false; error: string } {
   if (!isRecord(raw)) return { ok: false, error: "schema-not-object" };
-  const extra = Object.keys(raw).filter(
-    (key) => !NEWS_AI_KEYS.includes(key as (typeof NEWS_AI_KEYS)[number]),
-  );
-  if (extra.length) return { ok: false, error: "unknown-keys" };
 
   const relevance = asNumber(raw.relevance);
   const deskConfidence = asNumber(raw.deskConfidence);
-  const desk = asString(raw.desk);
+  const desk = asDesk(raw.desk);
   const context = asString(raw.context);
   const reason = asString(raw.reason) || "";
   const requiresHuman = asBoolean(raw.requiresHuman);

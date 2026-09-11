@@ -112,13 +112,17 @@ export async function classifyNewsItem(input: {
     defaultDesk: input.defaultDesk,
   });
 
+  let lastError = "schema-validation-failed";
   for (const model of [provider.model, provider.fallbackModel]) {
     const result = await gatewayJson({
       system: NEWS_SYSTEM_PROMPT,
       user,
       model,
     });
-    if (!result.ok) continue;
+    if (!result.ok) {
+      lastError = result.error;
+      continue;
+    }
     try {
       const parsed = validateNewsAiOutput(
         parseJsonObject(result.content),
@@ -127,12 +131,13 @@ export async function classifyNewsItem(input: {
       if (parsed.ok) {
         return { ok: true, output: parsed.output, model, usage: result.usage };
       }
+      lastError = parsed.error;
     } catch {
-      continue;
+      lastError = "unparseable-json";
     }
   }
 
-  return { ok: false, error: "schema-validation-failed" };
+  return { ok: false, error: lastError };
 }
 
 export async function classifyEventItem(input: {
@@ -155,22 +160,27 @@ export async function classifyEventItem(input: {
     sourceText: input.sourceText,
   });
 
+  let lastError = "schema-validation-failed";
   for (const model of [provider.model, provider.fallbackModel]) {
     const result = await gatewayJson({
       system: EVENT_SYSTEM_PROMPT,
       user,
       model,
     });
-    if (!result.ok) continue;
+    if (!result.ok) {
+      lastError = result.error;
+      continue;
+    }
     try {
       const parsed = validateEventAiOutput(parseJsonObject(result.content));
       if (parsed.ok) {
         return { ok: true, output: parsed.output, model, usage: result.usage };
       }
+      lastError = parsed.error;
     } catch {
-      continue;
+      lastError = "unparseable-json";
     }
   }
 
-  return { ok: false, error: "schema-validation-failed" };
+  return { ok: false, error: lastError };
 }
