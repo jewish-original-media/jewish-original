@@ -92,6 +92,17 @@ async function gatewayJson({ system, user, model }: ChatJsonArgs) {
   };
 }
 
+function isRateLimited(error: string) {
+  return error === "gateway-429";
+}
+
+async function gatewayJsonWithRetry(args: ChatJsonArgs) {
+  const first = await gatewayJson(args);
+  if (first.ok || !isRateLimited(first.error)) return first;
+  await new Promise((resolve) => setTimeout(resolve, 800));
+  return gatewayJson(args);
+}
+
 export async function classifyNewsItem(input: {
   publisher: string;
   headline: string;
@@ -114,13 +125,14 @@ export async function classifyNewsItem(input: {
 
   let lastError = "schema-validation-failed";
   for (const model of [provider.model, provider.fallbackModel]) {
-    const result = await gatewayJson({
+    const result = await gatewayJsonWithRetry({
       system: NEWS_SYSTEM_PROMPT,
       user,
       model,
     });
     if (!result.ok) {
       lastError = result.error;
+      if (isRateLimited(result.error)) break;
       continue;
     }
     try {
@@ -162,13 +174,14 @@ export async function classifyEventItem(input: {
 
   let lastError = "schema-validation-failed";
   for (const model of [provider.model, provider.fallbackModel]) {
-    const result = await gatewayJson({
+    const result = await gatewayJsonWithRetry({
       system: EVENT_SYSTEM_PROMPT,
       user,
       model,
     });
     if (!result.ok) {
       lastError = result.error;
+      if (isRateLimited(result.error)) break;
       continue;
     }
     try {

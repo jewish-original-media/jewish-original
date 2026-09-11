@@ -107,6 +107,20 @@ export async function loadEventExisting(
   );
 }
 
+export function isTransientIngestReason(reason: string) {
+  return reason.startsWith("gateway-") || reason === "unconfigured";
+}
+
+function persistableExceptions<T extends { action: string; reason: string }>(
+  decisions: readonly T[],
+) {
+  return decisions.filter(
+    (decision) =>
+      decision.action === "exception" &&
+      !isTransientIngestReason(decision.reason),
+  );
+}
+
 async function commitDocuments(
   client: SanityClient,
   documents: IngestWriteDocument[],
@@ -131,9 +145,7 @@ export async function persistNewsRun(options: PersistNewsOptions) {
         )
         .map((decision) => decision.candidate);
 
-  const exceptions = options.decisions.filter(
-    (decision) => decision.action === "exception",
-  );
+  const exceptions = persistableExceptions(options.decisions);
 
   const documents: IngestWriteDocument[] = [
     ...buildApprovedSourceDocuments(now),
@@ -183,9 +195,7 @@ export async function persistEventsRun(options: PersistEventsOptions) {
         )
         .map((decision) => decision.candidate);
 
-  const exceptions = options.decisions.filter(
-    (decision) => decision.action === "exception",
-  );
+  const exceptions = persistableExceptions(options.decisions);
 
   const documents: IngestWriteDocument[] = [
     ...buildApprovedSourceDocuments(now),

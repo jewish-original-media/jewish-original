@@ -8,6 +8,7 @@ import {
   buildEventDocument,
   buildNewsExceptionDocument,
 } from "../src/features/ingest/documents";
+import { isTransientIngestReason } from "../src/features/ingest/persist";
 import {
   contextLooksGeneric,
   newsNavEligible,
@@ -186,6 +187,12 @@ describe("first-publish selection", () => {
     );
     assert.ok(selected.length <= 10);
     assert.ok(selected.filter((item) => item.publisher === "JTA").length <= 2);
+  });
+
+  it("does not persist transient gateway exceptions", () => {
+    assert.equal(isTransientIngestReason("gateway-429"), true);
+    assert.equal(isTransientIngestReason("low-confidence"), false);
+    assert.equal(isTransientIngestReason("ambiguous-attendance"), false);
   });
 
   it("gates homepage and nav from real inventory", () => {
