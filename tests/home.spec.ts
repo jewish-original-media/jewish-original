@@ -105,7 +105,12 @@ test("composes the homepage from Jewish Today and published History", async ({
   await expect(
     page.getByRole("heading", { name: "Stand with us. Build with us." }),
   ).toBeVisible();
-  await expect(page.getByText("What We’re Following")).toHaveCount(0);
+  const following = page.getByRole("region", {
+    name: "What we’re following",
+  });
+  await expect(following).toBeVisible();
+  await expect(following.locator("li")).toHaveCount(3);
+  await expect(following.locator("a[href^='/news/']")).toHaveCount(0);
   await expect(page.getByText("Upcoming Events")).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Originals" })).toHaveCount(0);
   await expect(

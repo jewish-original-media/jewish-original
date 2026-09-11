@@ -1,7 +1,8 @@
 # News and Events
 
-Status: architecture live on `feature/integration-homepage`. No News or Event
-records have been written. Visual baseline `3c69d40` stays frozen.
+Status: first live News publish on `feature/integration-homepage`. Four
+outward-linking News items are published. No Events qualified. Visual
+baseline `3c69d40` stays frozen.
 
 ## Operating rule
 
@@ -29,10 +30,10 @@ Events.
 
 ## AI
 
-Provider abstraction talks to Vercel AI Gateway when credentials exist.
-Default model: `openai/gpt-4.1-nano` ($0.10 / $0.40 per 1M). Fallback:
-`openai/gpt-4o-mini`. Override with `NEWS_AI_MODEL`. No AI SDK was added
-because no provider is configured yet.
+Provider abstraction talks to Vercel AI Gateway. Default model:
+`openai/gpt-4.1-nano`. Live Preview classify currently sticks to the
+working fallback `openai/gpt-4o-mini` after nano 429s. Override with
+`NEWS_AI_MODEL`.
 
 Deterministic filters run first. The model only classifies survivors. It cannot
 set publication status.
@@ -49,7 +50,10 @@ Masthead → Today → History → What We’re Following → Podcasts → Upcom
 Events → Manifesto → Support
 
 Homepage News hides at 0 items. Homepage Events hides below 2 upcoming items.
-Neither desk is in primary nav yet.
+Homepage News shows when at least 3 published items exist, preferring 3
+and capping 5 with at most 2 per publisher. News stays out of primary nav
+until at least 5 items and 3 publishers. Events stay off Home and nav
+until more than one organizer and geo exist.
 
 ## Writes
 
