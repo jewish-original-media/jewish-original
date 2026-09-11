@@ -194,6 +194,9 @@ export async function runNewsIngest(options: NewsIngestOptions = {}) {
         });
         aiCalls += 1;
         stats.aiCalls += 1;
+        if (!options.classify) {
+          await new Promise((resolve) => setTimeout(resolve, 1600));
+        }
         if (!ai.ok) {
           stats.exceptions += 1;
           decisions.push({

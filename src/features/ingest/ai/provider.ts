@@ -96,11 +96,22 @@ function isRateLimited(error: string) {
   return error === "gateway-429";
 }
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function gatewayJsonWithRetry(args: ChatJsonArgs) {
   const first = await gatewayJson(args);
   if (first.ok || !isRateLimited(first.error)) return first;
-  await new Promise((resolve) => setTimeout(resolve, 800));
+  await sleep(2000);
   return gatewayJson(args);
+}
+
+let stickyModel: string | undefined;
+
+function modelsToTry(provider: { model: string; fallbackModel: string }) {
+  if (stickyModel) return [stickyModel];
+  return [provider.model, provider.fallbackModel];
 }
 
 export async function classifyNewsItem(input: {
@@ -124,7 +135,7 @@ export async function classifyNewsItem(input: {
   });
 
   let lastError = "schema-validation-failed";
-  for (const model of [provider.model, provider.fallbackModel]) {
+  for (const model of modelsToTry(provider)) {
     const result = await gatewayJsonWithRetry({
       system: NEWS_SYSTEM_PROMPT,
       user,
@@ -132,7 +143,7 @@ export async function classifyNewsItem(input: {
     });
     if (!result.ok) {
       lastError = result.error;
-      if (isRateLimited(result.error)) break;
+      if (isRateLimited(result.error)) await sleep(2000);
       continue;
     }
     try {
@@ -141,6 +152,7 @@ export async function classifyNewsItem(input: {
         input.sourceText,
       );
       if (parsed.ok) {
+        stickyModel = model;
         return { ok: true, output: parsed.output, model, usage: result.usage };
       }
       lastError = parsed.error;
@@ -173,7 +185,7 @@ export async function classifyEventItem(input: {
   });
 
   let lastError = "schema-validation-failed";
-  for (const model of [provider.model, provider.fallbackModel]) {
+  for (const model of modelsToTry(provider)) {
     const result = await gatewayJsonWithRetry({
       system: EVENT_SYSTEM_PROMPT,
       user,
@@ -181,12 +193,13 @@ export async function classifyEventItem(input: {
     });
     if (!result.ok) {
       lastError = result.error;
-      if (isRateLimited(result.error)) break;
+      if (isRateLimited(result.error)) await sleep(2000);
       continue;
     }
     try {
       const parsed = validateEventAiOutput(parseJsonObject(result.content));
       if (parsed.ok) {
+        stickyModel = model;
         return { ok: true, output: parsed.output, model, usage: result.usage };
       }
       lastError = parsed.error;
