@@ -94,10 +94,8 @@ const BLOCKED_SOURCE_IDS = [
   "jom-history:xlsx-f163dbda3fd82eb1:Import:row-0111",
 ];
 
-const DACHAU_PUBLISHED_ID =
-  "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
-const JOOP_PUBLISHED_ID =
-  "historyEntry.jom-513f6a739543db8be9034576144811f9";
+const DACHAU_PUBLISHED_ID = "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
+const JOOP_PUBLISHED_ID = "historyEntry.jom-513f6a739543db8be9034576144811f9";
 const DACHAU_CHECKSUM =
   "6cfe3c730a10af5e1a85fdcd736a407980488b6242a3498171186c92e15a2d00";
 const JOOP_CHECKSUM =
@@ -165,7 +163,8 @@ async function main() {
   const client = createWriteClient();
   const blockedPublishedIds = BLOCKED_SOURCE_IDS.map(publishedIdFromSource);
 
-  const before = await client.fetch(`{
+  const before = await client.fetch(
+    `{
     "bialystok": *[_id == $bialystok][0]${DRAFT_PROJECTION},
     "willenberg": *[_id == $willenberg][0]${DRAFT_PROJECTION},
     "tripoli": *[_id == $tripoli][0]${DRAFT_PROJECTION},
@@ -174,14 +173,16 @@ async function main() {
     "dachau": *[_id == $dachau][0]{_id, title, "slug": slug.current, provenance{sourceBodyChecksum}},
     "joop": *[_id == $joop][0]{_id, title, "slug": slug.current, provenance{sourceBodyChecksum}},
     "blockedPublished": *[_id in $blockedIds]._id
-  }`, {
-    bialystok: RECORDS[0].draftId,
-    willenberg: RECORDS[1].draftId,
-    tripoli: RECORDS[2].draftId,
-    dachau: DACHAU_PUBLISHED_ID,
-    joop: JOOP_PUBLISHED_ID,
-    blockedIds: blockedPublishedIds,
-  });
+  }`,
+    {
+      bialystok: RECORDS[0].draftId,
+      willenberg: RECORDS[1].draftId,
+      tripoli: RECORDS[2].draftId,
+      dachau: DACHAU_PUBLISHED_ID,
+      joop: JOOP_PUBLISHED_ID,
+      blockedIds: blockedPublishedIds,
+    },
+  );
 
   const drafts = {
     bialystok: before.bialystok,
@@ -245,7 +246,9 @@ async function main() {
       throw new Error(`${record.key} source body no longer matches checksum.`);
     }
     if (bodyText(draft.body) !== record.body) {
-      throw new Error(`${record.key} editorial body is not the founder-final text.`);
+      throw new Error(
+        `${record.key} editorial body is not the founder-final text.`,
+      );
     }
     const verified = (draft.citations || []).filter(
       (citation: { verificationStatus?: string }) =>
@@ -263,8 +266,10 @@ async function main() {
     }
   }
 
-  if (drafts.bialystok.seo?.title !==
-    "Bialystok Ghetto Is Sealed — August 1, 1941 | Jewish Original") {
+  if (
+    drafts.bialystok.seo?.title !==
+    "Bialystok Ghetto Is Sealed — August 1, 1941 | Jewish Original"
+  ) {
     throw new Error("Bialystok SEO title is not the founder-final text.");
   }
   if (
@@ -313,7 +318,8 @@ async function main() {
     });
   }
 
-  const after = await client.fetch(`{
+  const after = await client.fetch(
+    `{
     "published": *[_id in $publishedIds] | order(slug.current asc) {
       _id, _createdAt, _updatedAt, title, "slug": slug.current, workflowStatus,
       provenance{sourceBodyChecksum,originalImportIdentifier,sourceSheet,sourceRow}
@@ -324,16 +330,21 @@ async function main() {
     "dachauChecksum": *[_id == $dachau][0].provenance.sourceBodyChecksum,
     "joopChecksum": *[_id == $joop][0].provenance.sourceBodyChecksum,
     "blockedPublished": *[_id in $blockedIds]._id
-  }`, {
-    publishedIds: RECORDS.map((record) => record.publishedId),
-    allowedSlugs: ALLOWED_SLUGS,
-    dachau: DACHAU_PUBLISHED_ID,
-    joop: JOOP_PUBLISHED_ID,
-    blockedIds: blockedPublishedIds,
-  });
+  }`,
+    {
+      publishedIds: RECORDS.map((record) => record.publishedId),
+      allowedSlugs: ALLOWED_SLUGS,
+      dachau: DACHAU_PUBLISHED_ID,
+      joop: JOOP_PUBLISHED_ID,
+      blockedIds: blockedPublishedIds,
+    },
+  );
 
   const publishedSlugs = [...(after.publishedSlugs || [])].sort();
-  if (after.publishedHistory !== 5 || publishedSlugs.join() !== ALLOWED_SLUGS.join()) {
+  if (
+    after.publishedHistory !== 5 ||
+    publishedSlugs.join() !== ALLOWED_SLUGS.join()
+  ) {
     throw new Error(
       `Publication invariant failed: ${JSON.stringify(after.publishedSlugs)}.`,
     );
@@ -365,7 +376,9 @@ async function main() {
     }
   }
 
-  process.stdout.write(`${JSON.stringify({ apply: true, ...after }, null, 2)}\n`);
+  process.stdout.write(
+    `${JSON.stringify({ apply: true, ...after }, null, 2)}\n`,
+  );
 }
 
 main().catch((error: unknown) => {

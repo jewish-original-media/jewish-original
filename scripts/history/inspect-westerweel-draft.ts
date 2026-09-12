@@ -1,9 +1,9 @@
 import { getCliClient } from "sanity/cli";
 
-const JOOP_DRAFT_ID = "drafts.historyEntry.jom-513f6a739543db8be9034576144811f9";
+const JOOP_DRAFT_ID =
+  "drafts.historyEntry.jom-513f6a739543db8be9034576144811f9";
 const JOOP_PUBLISHED_ID = "historyEntry.jom-513f6a739543db8be9034576144811f9";
-const DACHAU_PUBLISHED_ID =
-  "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
+const DACHAU_PUBLISHED_ID = "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
 
 async function main() {
   const client = getCliClient({
@@ -38,16 +38,19 @@ async function main() {
     }`,
     { id: JOOP_DRAFT_ID },
   );
-  const counts = await client.fetch(`{
+  const counts = await client.fetch(
+    `{
     "publishedHistory": count(*[_type == "historyEntry" && !(_id in path("drafts.**"))]),
     "joopPublished": count(*[_id == $joopPublished]),
     "dachauPublished": count(*[_id == $dachauPublished]),
     "yadVashemSource": *[_id == "source.yad-vashem"][0]{_id,name,canonicalUrl},
     "yadVashemOrg": *[_id == "organization.yad-vashem"][0]{_id,name}
-  }`, {
-    joopPublished: JOOP_PUBLISHED_ID,
-    dachauPublished: DACHAU_PUBLISHED_ID,
-  });
+  }`,
+    {
+      joopPublished: JOOP_PUBLISHED_ID,
+      dachauPublished: DACHAU_PUBLISHED_ID,
+    },
+  );
 
   process.stdout.write(`${JSON.stringify({ joop, counts }, null, 2)}\n`);
 }

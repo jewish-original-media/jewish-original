@@ -50,9 +50,14 @@ export type HistoryCitation = {
   };
 };
 
+export type HistoryVisualKind =
+  "photograph" | "illustration" | "artifact" | "map" | "manuscript";
+
 export type HistoryImage = {
   alt: string;
   caption?: string;
+  visualKind?: HistoryVisualKind;
+  creator?: string;
   creditLine?: string;
   rightsStatus: "cleared" | "publicDomain" | "licensed";
   sourcePageUrl?: string;
@@ -107,16 +112,12 @@ export type HistoryEntry = HistoryEntrySummary & {
     openGraphDescription?: string;
   };
   workflowStatus?: string;
+  _createdAt?: string;
   _updatedAt: string;
 };
 
 export type HistoryFilterType =
-  | "topic"
-  | "era"
-  | "place"
-  | "region"
-  | "person"
-  | "organization";
+  "topic" | "era" | "place" | "region" | "person" | "organization";
 
 export type HistoryFilter = {
   type: HistoryFilterType;

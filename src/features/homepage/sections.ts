@@ -1,0 +1,143 @@
+import type {
+  PodcastEpisodeSummary,
+  PodcastShow,
+} from "@/content/podcasts/types";
+
+import type {
+  HiddenHomeModule,
+  HomeSectionContract,
+  HistoryHomeContract,
+  PodcastHomeContract,
+} from "./types";
+
+export const HOME_SECTION_ORDER: readonly HomeSectionContract[] = [
+  {
+    id: "masthead",
+    eyebrow: "Jewish Original Media",
+    title: "Remember, rebuild, and create.",
+    status: "live",
+    description:
+      "One restrained opening. Positioning lives in the lede, not as a slogan stack.",
+  },
+  {
+    id: "jewish-today",
+    eyebrow: "Jewish Today",
+    title: "Daily Jewish context",
+    status: "live",
+    description:
+      "Uses getJewishToday() once. Homepage presents the same day. Do not fetch Hebcal again.",
+  },
+  {
+    id: "history",
+    eyebrow: "History",
+    title: "On this day or from the archive",
+    status: "live",
+    description:
+      "One History lead plus two supporting archive stories from getHistoryIndex.",
+  },
+  {
+    id: "manifesto",
+    eyebrow: "Legacy",
+    title: "What’s worth remembering in 100 years",
+    status: "live",
+    description:
+      "One founder line as a magazine pause. Not a slogan stack and not a CTA.",
+  },
+  {
+    id: "podcasts",
+    eyebrow: "Podcasts",
+    title: "The Two Tall Jews Show",
+    status: "live",
+    description:
+      "Published getPodcastShow, founder photography, and one EpisodeCard lead. The catalog holds the remaining published episodes.",
+  },
+  {
+    id: "support",
+    eyebrow: "Support",
+    title: "Stand with us",
+    status: "live",
+    description: "A short invitation into /support. No invented campaigns.",
+  },
+] as const;
+
+export const HOME_INTENDED_ORDER_WHEN_POPULATED = [
+  "masthead",
+  "jewish-today",
+  "history",
+  "originals",
+  "news",
+  "podcasts",
+  "events",
+  "manifesto",
+  "support",
+] as const;
+
+export function resolveHomeSectionOrder(input: {
+  originalsCount?: number;
+  newsCount: number;
+  eventCount: number;
+}) {
+  const showOriginals = (input.originalsCount ?? 0) >= 1;
+  const showNews = input.newsCount >= 3;
+  const showEvents = input.eventCount >= 2;
+  if (!showOriginals && !showNews && !showEvents) {
+    return HOME_SECTION_ORDER.map((section) => section.id);
+  }
+  return HOME_INTENDED_ORDER_WHEN_POPULATED.filter((id) => {
+    if (id === "originals") return showOriginals;
+    if (id === "news") return showNews;
+    if (id === "events") return showEvents;
+    return true;
+  });
+}
+
+export const HIDDEN_HOME_MODULES: readonly HiddenHomeModule[] = [
+  {
+    id: "originals",
+    title: "Originals",
+    status: "hidden",
+    reason: "no-published-documents",
+  },
+  {
+    id: "news",
+    title: "What We’re Following",
+    status: "hidden",
+    reason: "no-published-documents",
+  },
+  {
+    id: "events",
+    title: "Upcoming Events",
+    status: "hidden",
+    reason: "no-published-documents",
+  },
+] as const;
+
+export const HISTORY_HOME_CONTRACT: HistoryHomeContract = {
+  status: "live",
+  entries: [],
+};
+
+export const PODCASTS_HOME_CONTRACT: PodcastHomeContract = {
+  status: "preparing",
+  show: null,
+  episodes: [],
+};
+
+export function buildPodcastHomeContract(
+  show: PodcastShow | null,
+  episodes: PodcastEpisodeSummary[] = [],
+): PodcastHomeContract {
+  if (!show) {
+    return {
+      status: "preparing",
+      show: null,
+      episodes: [],
+    };
+  }
+
+  return {
+    status: "live",
+    show,
+    episodes,
+  };
+}

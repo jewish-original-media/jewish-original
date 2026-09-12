@@ -46,7 +46,11 @@ describe("Today in Jewish History matching", () => {
 
   it("excludes drafts, duplicates, incomplete dates, and Hebrew-calendar events", () => {
     assert.equal(
-      matchesOnThisDayHistory({ ...dachau, workflowStatus: "needsReview" }, 4, 29),
+      matchesOnThisDayHistory(
+        { ...dachau, workflowStatus: "needsReview" },
+        4,
+        29,
+      ),
       false,
     );
     assert.equal(

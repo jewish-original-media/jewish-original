@@ -54,9 +54,7 @@ async function main() {
       await expect(page.getByText("Private editorial preview")).toBeVisible({
         timeout: 20_000,
       });
-      await expect(
-        page.getByRole("heading", { level: 1 }),
-      ).toBeVisible();
+      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       await page.evaluate(() => document.fonts.ready);
       await page.waitForTimeout(850);
       await page.screenshot({

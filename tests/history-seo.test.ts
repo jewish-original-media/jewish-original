@@ -48,6 +48,7 @@ function entry(overrides: Partial<HistoryEntry> = {}): HistoryEntry {
       description:
         "On April 29, 1945, American troops liberated approximately 32,000 prisoners from Dachau. Learn the history of the camp, its victims, and its liberation.",
     },
+    _createdAt: "2026-08-28T00:00:00.000Z",
     _updatedAt: "2026-09-01T00:00:00.000Z",
     ...overrides,
   };
@@ -84,4 +85,6 @@ test("builds JSON-LD from the reviewed excerpt, date, places, and verified citat
     "https://encyclopedia.ushmm.org/content/en/article/dachau",
   ]);
   assert.equal(jsonLd.image, undefined);
+  assert.equal(jsonLd.datePublished, "2026-08-28T00:00:00.000Z");
+  assert.equal(jsonLd.dateModified, "2026-09-01T00:00:00.000Z");
 });

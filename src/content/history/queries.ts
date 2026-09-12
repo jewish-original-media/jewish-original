@@ -25,6 +25,8 @@ const imageProjection = `"primaryImage": select(
   defined(primaryImage.alt) => {
     alt,
     caption,
+    visualKind,
+    creator,
     creditLine,
     rightsStatus,
     sourcePageUrl,
@@ -131,6 +133,7 @@ export const historyEntryQuery = defineQuery(`*[
   }, []),
   seo,
   "workflowStatus": select($preview => workflowStatus),
+  _createdAt,
   _updatedAt
 }`);
 

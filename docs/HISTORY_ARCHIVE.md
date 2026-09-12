@@ -12,12 +12,12 @@ Jewish Original historical archive.
 
 Public routes in this milestone:
 
-| Route | Purpose | Indexed |
-| --- | --- | --- |
-| `/history` | Archive landing and discovery home | Yes |
-| `/history/[slug]` | Reviewed History article | Yes, when published |
-| `/history?month=&day=` | Civil-date browse | No; canonical `/history` |
-| `/history?topic=` / `era` / `place` / `region` / `person` / `organization` | Taxonomy browse | No; canonical `/history` |
+| Route                                                                      | Purpose                            | Indexed                  |
+| -------------------------------------------------------------------------- | ---------------------------------- | ------------------------ |
+| `/history`                                                                 | Archive landing and discovery home | Yes                      |
+| `/history/[slug]`                                                          | Reviewed History article           | Yes, when published      |
+| `/history?month=&day=`                                                     | Civil-date browse                  | No; canonical `/history` |
+| `/history?topic=` / `era` / `place` / `region` / `person` / `organization` | Taxonomy browse                    | No; canonical `/history` |
 
 No `/history/topic/[slug]`, `/history/era/[slug]`, or `/history/place/[slug]`
 routes yet. Query parameters are enough while the public collection is small.

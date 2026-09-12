@@ -340,3 +340,277 @@ Sealed` with the existing slug; Willenberg sculpture wording; Tripoli
 approximate “about 120” death toll. Immutable source bodies and checksums
 were not rewritten. Dachau and Joop were not modified. Isaak Rülf, Herzl,
 and Ze’evi remain unpublished. Published History count is 5.
+
+## ADR-026 — Jewish Today uses Hebcal REST, not the GPL library
+
+**Status:** Accepted, 2026-09-01
+
+Jewish Today is a calculated daily utility. It does not store each calendar day
+in Sanity. Calendar data comes from the Hebcal REST calendar API through a
+typed adapter in `src/integrations/hebcal`. History matches come from
+History’s `getOnThisDayHistory`.
+
+`@hebcal/core` is not installed. That package is GPL-2.0; using it here would
+require this application to be distributed under GPL terms the project has not
+adopted. The hosted API is CC BY 4.0 with required Hebcal.com attribution.
+
+V1 “today” is the civil Gregorian date in `America/New_York`. Sunset, visitor
+timezone, Israel schedule, and candle-lighting are deferred.
+
+See `docs/JEWISH_TODAY.md`.
+
+## ADR-027 — Integration bases on local main, not the GitHub default
+
+**Status:** Accepted, 2026-09-03
+
+GitHub’s default branch is `milestone-1-sanity-history`. That default was not
+changed. The Integration branch still starts from local `main` at `7b0ed78`
+because that commit is the last shared stable ancestor of History, Jewish
+Today, and Podcasts. Remote `main` has not been created. Podcasts remain
+isolated.
+
+## ADR-028 — Homepage composes live modules and reserved slots
+
+**Status:** Accepted, 2026-09-03
+
+The homepage is server-composed, not a CMS document. It calls
+`getJewishToday()` once and renders `JewishTodayModule`. After History merge
+it also reads published archive entries through `getHistoryIndex` and renders
+`HistoryEntryCard`. Podcasts, News, Events, Culture, and Support remain
+reserved. See `docs/HOMEPAGE.md` and `docs/INTEGRATION.md`.
+
+## ADR-029 — Frozen History merges into Integration
+
+**Status:** Accepted, 2026-09-04
+
+`milestone-1-sanity-history` at `3539211` is merged into
+`feature/integration-homepage`. Temporary Jewish Today adapters
+`fetchOnThisDayHistory`, `TodayHistoryCard`, and `formatOnThisDayDate` are
+removed. Jewish Today and the homepage consume History’s
+`getOnThisDayHistory`, `HistoryEntryCard`, and `formatHistoricalDate`.
+Podcasts are not merged. Production, DNS, and the GitHub default branch are
+unchanged.
+
+## ADR-030 — Podcast foundation uses the official RSS feed and nested URLs
+
+**Status:** Accepted, 2026-09-02
+
+Authored as ADR-023 on `feature/podcasts`. Renumbered here so History
+ADR-023 (Westerweel) and later History/Integration ADRs stay stable.
+
+The Two Tall Jews Show archive is imported from the official public RSS
+feed `https://anchor.fm/s/29786d14/podcast/rss`, not from guessed YouTube
+scrapes or the marketing homepage. The feed contains 66 items. Season and
+episode numbers are preserved as source metadata even when implausible.
+
+Durable public URLs are:
+
+- `/podcasts` — Podcasts home
+- `/podcasts/the-two-tall-jews-show` — show archive
+- `/podcasts/the-two-tall-jews-show/[slug]` — episode
+
+The editorial show title is The Two Tall Jews Show. The RSS collection
+title Jewish Original Media is stored as source metadata.
+
+Video stays on YouTube with a privacy-friendly lazy facade when an editor
+confirms a watch URL. Audio uses the official enclosure. Transcripts are
+split into raw (Advanced) and reviewed (public). AI may suggest and must
+not publish.
+
+The public catalog reads published Sanity documents only. Unpublished
+pilot drafts stay out of `/podcasts`, show pages, episode pages, and the
+sitemap.
+
+## ADR-031 — Four-pilot drafts use verified multi-platform links
+
+**Status:** Accepted, 2026-09-04
+
+Authored as ADR-024 on `feature/podcasts`. Renumbered here so History
+ADR-024 remains Publication Batch 2 preparation.
+
+Episode media may include official RSS audio plus verified YouTube, Spotify,
+and Apple episode URLs. Primary media is YouTube when a verified official
+episode video exists, otherwise native RSS audio. Spotify and Apple are
+Listen alternatives, not stacked players.
+
+Apple episode URLs were verified through the official iTunes lookup, matched
+by RSS GUID. Spotify episode pages were taken from the official RSS link.
+No official TTJS YouTube episode IDs were verified. Description YouTube
+links remain guest-channel evidence only.
+
+The four-pilot import writes `drafts.*` documents only and is idempotent by
+RSS GUID. It does not publish and does not import the remaining catalog.
+
+## ADR-032 — Frozen Podcasts merge into Integration
+
+**Status:** Accepted, 2026-09-04
+
+`feature/podcasts` at `0d939d3` is merged into `feature/integration-homepage`.
+History desks remain. Podcast shows, episodes, and workflow join the same
+Studio. One draft-mode enable route serves History, podcast shows, and
+podcast episodes. The homepage Podcast slot uses the canonical published
+Podcast read and the existing “Podcasts are being prepared.” state while
+published count is 0. Research branches, Production, DNS, and the GitHub
+default branch are unchanged.
+
+## ADR-033 — V1 public shell uses live destinations only
+
+**Status:** Accepted, 2026-09-04
+
+Public navigation is Today, History, Podcasts, About, and Support. The logo
+returns Home. Originals, News, and Events stay out of the nav and homepage
+until published documents exist. Search remains deferred.
+
+The homepage opening uses one founder line, “Remember, rebuild, and create,”
+with the approved positioning as the lede. About and Support use
+founder-provided copy. Privacy describes current product behavior and is
+marked for founder legal review.
+
+During this milestone, founder approval to publish The Two Tall Jews Show
+and the four pilot episodes arrived in the Podcast workstream. Integration
+re-read the published documents and surfaced them through the existing
+published-only contract. Integration did not write to Sanity. Production,
+DNS, and the GitHub default branch are unchanged.
+
+## ADR-034 — Design Director pass restyles the working shell
+
+**Status:** Accepted, 2026-09-07
+
+The V1 public shell remains the architecture. This pass changes presentation,
+not data models. Jewish Today, History, and Podcasts stay on their published
+reads. Homepage layout wrappers (`HomeHistoryFeature`, `HomePodcastFeature`)
+may compose canonical cards. They do not create a second article system.
+
+The post-publication Podcast diff from `00fc9b9` is reconciled selectively:
+catalog copy, `getPublishedPodcastHome()`, and extra unpublished-slug
+coverage. Publication scripts and Podcast-branch docs are not imported.
+
+Originals, News, and Events stay hidden. Production, DNS, and the GitHub
+default branch are unchanged.
+
+## ADR-035 — Founder visual refinement stays inside the approved shell
+
+**Status:** Accepted, 2026-09-09
+
+The Design Director checkpoint `b7fbfd549cbc6e48b9b6302c00fee6051071b823` is
+the approved foundation. This pass does not redesign the site. It adds Torah
+depth on ordinary weekdays, two stronger History supporting stories, museum
+labeling for History media (including a future illustration kind), richer
+inner rooms, and a patronage `/support` destination.
+
+Images are collection objects. Only class A/B assets may be public. No
+founder photography was present in the worktree, so none was invented or
+replaced with stock.
+
+Jewish Today still uses one Hebcal request (`today` through next Saturday,
+Diaspora, Eastern Time). The weekly parashah is the first upcoming `parashat`
+item in that range. No second calendar library.
+
+News and Events ingestion is the next milestone, not this one. Homepage
+order stays Masthead → Today → History → Manifesto → Podcasts → Support.
+Production, DNS, and the GitHub default branch remain unchanged.
+
+## ADR-036 — Jerusalem + museum art direction uses three founder photographs
+
+**Status:** Accepted, 2026-09-09
+
+The Integration checkpoint `e80953dc7fc3a67fe989dcefbaed5bea6a4d3877` remains
+the product shell. This pass adds depth, not a redesign.
+
+Three class A founder photographs may appear publicly:
+
+- Meyer + Isaac, Jerusalem street — homepage Podcast and the TTJS show page
+- Meyer + Isaac, limestone steps — About
+- Morning tefillin — Support
+
+Wikimedia historical files are catalogued and held. The Dachau coal-yard
+photograph is US public domain but graphic and a thumbnail. Willenberg is
+CC BY-SA 3.0 PL and a thumbnail. Benghazi lacks a US public-domain tag.
+No Sanity write. Flag photographs and Unsplash stock stay unpublished.
+
+Jewish Today labels a fallback parashah **Most recent Torah portion**. A
+coming Saturday that is Hebcal `yomtov` without `parashat` is labeled
+**Festival** using the holiday name. V1 timezone remains Eastern Time.
+
+News, Events, Originals, Fast Lane, more Podcast imports, Search,
+newsletter, and community remain out of scope.
+
+## ADR-037 — Final visual identity uses artifact language, not logo invention
+
+**Status:** Accepted, 2026-09-09
+
+The Integration checkpoint `23c23ab7bbb03d211033e1ca954852fe57b61247` remains
+the product shell. This pass is presentation only.
+
+JOM logo files are not production masters: JPEG-encoded rasters, no alpha,
+baked black fields. The header integrates the unaltered white/gold primary as
+a black plaque with a brass rule. The footer keeps monumental typography.
+Required later: `JOM_Primary_Horizontal_White_Gold_Transparent.svg`.
+
+OTD lion/star stay in History rooms. Homepage and About no longer use the
+lion as a generic JOM watermark. Invented site-wide line drawings were
+removed after founder review; global JOM surfaces use type, material, and
+whitespace instead.
+
+News, Events, Originals, History expansion, Production, DNS, and the GitHub
+default branch remain out of scope.
+
+## ADR-038 — Authentic assets only; invented motifs removed
+
+**Status:** Accepted, 2026-09-09
+
+The visual-identity checkpoint `d13c2f4d8381bc77efdae5e0db70e1c6c9b716be`
+is approved except for the invented arch / manuscript / seal / masonry /
+menorah drawings. Those placements and the unused `JomMotif` system are
+removed. Do not invent another icon family.
+
+Priority: authentic asset, then typography, then material, then whitespace.
+If nothing authentic belongs in a space, leave it empty. OTD lion/star remain
+History-only. Header plaque and typographic footer stay until a transparent
+JOM master exists.
+
+## ADR-039 — News and Events automation without a design pass
+
+**Status:** Accepted, 2026-09-09
+
+Implement the research plan from `research/news-events@128a537` on
+`feature/integration-homepage` without merging that branch and without
+redesigning the frozen visual baseline.
+
+News is an outward-linking curated record. Events own their timezone. Four
+News desks only. JNS is capped. Haaretz and wire services stay out. AI is a
+swappable Gateway provider, defaulting to `openai/gpt-4.1-nano`, and must not
+publish when unconfigured. Cron writes stay fail-closed behind
+`CRON_SECRET`, Gateway credentials, a write token, and
+`INGEST_WRITES_ENABLED`.
+
+Nav stays unchanged until volume gates are met. Homepage modules render only
+when real published items exist.
+
+## ADR-040 — News and Events persist only approved ingest types
+
+**Status:** Accepted, 2026-09-11
+
+Ingest writes use deterministic IDs and `createOrReplace`. Allowed types:
+`curatedNewsItem`, `event`, `ingestSource`, `ingestRun`, `ingestException`,
+`ingestReceipt`. History, Podcast, Jewish Today, and reference records are
+out of scope. First publication caps News at 10 selected items and Events
+at actual qualifying upcoming programs. Homepage News requires 3 items.
+Homepage Events require two organizers and two geography buckets.
+
+## ADR-041 — Originals are the JOM journal, not a blog
+
+**Status:** Accepted, 2026-09-12
+
+The existing `article` document is the Originals model. Do not add
+`blogPost` or `newsletterPost`. Public name is Originals. Routes are
+`/originals` and `/originals/[slug]`.
+
+The first published essays adapt founder-approved About copy: _Our Path
+Forward_ and _What Drives Us_. Do not invent additional Originals to fill
+the journal. Nav and homepage expose Originals only after a published
+essay exists.
+
+News stays out of primary nav until five strong items and three publishers
+exist. Events stay off Home, nav, and sitemap while inventory is thin.
+Production, DNS, and the GitHub default branch remain unchanged.

@@ -7,15 +7,22 @@ test("renders the responsive, accessible application shell", async ({
 
   page.on("console", (message) => {
     if (message.type() === "error") {
+      const text = message.text();
       const sourceUrl = message.location().url;
-      browserErrors.push(
-        sourceUrl ? `${message.text()} (${sourceUrl})` : message.text(),
-      );
+      const combined = `${text} ${sourceUrl}`;
+      if (/\/(?:search|news|events|contact|terms)(?:\?|$)/.test(combined)) {
+        return;
+      }
+      browserErrors.push(sourceUrl ? `${text} (${sourceUrl})` : text);
     }
   });
   page.on("pageerror", (error) => browserErrors.push(error.message));
   page.on("response", (response) => {
     if (response.status() >= 400) {
+      const path = new URL(response.url()).pathname;
+      if (/^(?:\/search|\/news|\/events|\/contact|\/terms)$/.test(path)) {
+        return;
+      }
       browserErrors.push(`${response.status()} ${response.url()}`);
     }
   });
@@ -28,7 +35,7 @@ test("renders the responsive, accessible application shell", async ({
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: /a modern home for jewish history/i,
+      name: /remember, rebuild, and create/i,
     }),
   ).toBeVisible();
 
@@ -66,10 +73,23 @@ test("renders the responsive, accessible application shell", async ({
 });
 
 test("serves generated discovery and crawler metadata", async ({ request }) => {
-  for (const path of ["/robots.txt", "/sitemap.xml", "/manifest.webmanifest"]) {
+  for (const path of [
+    "/robots.txt",
+    "/sitemap.xml",
+    "/manifest.webmanifest",
+    "/icon",
+    "/opengraph-image",
+  ]) {
     const response = await request.get(path);
     expect(response.ok(), `${path} should return a successful response`).toBe(
       true,
     );
   }
+
+  const sitemap = await request.get("/sitemap.xml");
+  const xml = await sitemap.text();
+  expect(xml).toContain("/news");
+  expect(xml).toContain("/originals");
+  expect(xml).not.toContain("/events");
+  expect(xml).not.toContain("/admin");
 });

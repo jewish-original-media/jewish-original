@@ -16,7 +16,8 @@ try {
 
 const HISTORY_DRAFT_ID =
   "drafts.historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
-const HISTORY_PUBLISHED_ID = "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
+const HISTORY_PUBLISHED_ID =
+  "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
 const EXPECTED_SLUG = "us-liberates-dachau";
 const SOURCE_BODY_CHECKSUM =
   "6cfe3c730a10af5e1a85fdcd736a407980488b6242a3498171186c92e15a2d00";
@@ -44,7 +45,9 @@ const DRAFT_PROJECTION = `{
 
 function bodyText(blocks: { children?: { text?: string }[] }[] | undefined) {
   return (blocks || [])
-    .map((block) => (block.children || []).map((child) => child.text || "").join(""))
+    .map((block) =>
+      (block.children || []).map((child) => child.text || "").join(""),
+    )
     .join("\n\n");
 }
 
@@ -72,7 +75,7 @@ async function main() {
   const apply = process.argv.includes("--apply");
   const client = createWriteClient();
 
-  const draft = await client.fetch( `*[_id == $id][0]${DRAFT_PROJECTION}`, {
+  const draft = await client.fetch(`*[_id == $id][0]${DRAFT_PROJECTION}`, {
     id: HISTORY_DRAFT_ID,
   });
   if (!draft) {
@@ -85,7 +88,9 @@ async function main() {
     throw new Error("Refusing to publish an unexpected title.");
   }
   if (draft.provenance?.sourceBody !== EXPECTED_SOURCE_BODY) {
-    throw new Error("Immutable source body does not match the imported original.");
+    throw new Error(
+      "Immutable source body does not match the imported original.",
+    );
   }
   if (draft.provenance?.sourceBodyChecksum !== SOURCE_BODY_CHECKSUM) {
     throw new Error("Source body checksum changed; refusing to publish.");
@@ -112,11 +117,14 @@ async function main() {
     publishedHistory: number;
     publishedSlugs: string[];
     dachauPublished: string | null;
-  }>(`{
+  }>(
+    `{
     "publishedHistory": count(*[_type == "historyEntry" && !(_id in path("drafts.**"))]),
     "publishedSlugs": *[_type == "historyEntry" && !(_id in path("drafts.**"))].slug.current,
     "dachauPublished": *[_id == $id][0]._id
-  }`, { id: HISTORY_PUBLISHED_ID });
+  }`,
+    { id: HISTORY_PUBLISHED_ID },
+  );
 
   if (
     publishedBefore.dachauPublished &&
@@ -184,7 +192,8 @@ async function main() {
     publishedId: HISTORY_PUBLISHED_ID,
   });
 
-  const after = await client.fetch(`{
+  const after = await client.fetch(
+    `{
     "published": *[_id == $publishedId][0]{
       _id, _createdAt, _updatedAt, title, "slug": slug.current, workflowStatus,
       provenance{sourceBodyChecksum}
@@ -192,18 +201,27 @@ async function main() {
     "publishedHistory": count(*[_type == "historyEntry" && !(_id in path("drafts.**"))]),
     "publishedSlugs": *[_type == "historyEntry" && !(_id in path("drafts.**"))].slug.current,
     "draftHistory": count(*[_type == "historyEntry" && _id in path("drafts.**")])
-  }`, { publishedId: HISTORY_PUBLISHED_ID });
+  }`,
+    { publishedId: HISTORY_PUBLISHED_ID },
+  );
 
-  if (after.publishedHistory !== 1 || after.publishedSlugs.join() !== EXPECTED_SLUG) {
+  if (
+    after.publishedHistory !== 1 ||
+    after.publishedSlugs.join() !== EXPECTED_SLUG
+  ) {
     throw new Error(
       `Publication invariant failed: ${JSON.stringify(after.publishedSlugs)}.`,
     );
   }
-  if (after.published?.provenance?.sourceBodyChecksum !== SOURCE_BODY_CHECKSUM) {
+  if (
+    after.published?.provenance?.sourceBodyChecksum !== SOURCE_BODY_CHECKSUM
+  ) {
     throw new Error("Published document source checksum changed.");
   }
 
-  process.stdout.write(`${JSON.stringify({ apply: true, ...after }, null, 2)}\n`);
+  process.stdout.write(
+    `${JSON.stringify({ apply: true, ...after }, null, 2)}\n`,
+  );
 }
 
 main().catch((error: unknown) => {

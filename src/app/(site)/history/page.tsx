@@ -26,10 +26,11 @@ import {
   formatCivilDateLabel,
   isValidGregorianMonthDay,
 } from "@/lib/history/on-this-day";
+import { JsonLd } from "@/components/seo/json-ld";
 import {
   buildHistoryArchiveJsonLd,
   buildHistoryArchiveMetadata,
-  serializeJsonLd,
+  buildHistoryBreadcrumbJsonLd,
 } from "@/lib/seo/history";
 
 type HistoryIndexPageProps = {
@@ -94,8 +95,8 @@ export default async function HistoryIndexPage({
   const today = civilDateParts();
   const invalidDate = Boolean(
     search.month &&
-      search.day &&
-      !isValidGregorianMonthDay(search.month, search.day),
+    search.day &&
+    !isValidGregorianMonthDay(search.month, search.day),
   );
   const dateQuery =
     search.month && !invalidDate
@@ -132,12 +133,10 @@ export default async function HistoryIndexPage({
     <>
       {preview ? <HistoryPreviewBanner /> : null}
       {!preview && !search.isBrowsing ? (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: serializeJsonLd(buildHistoryArchiveJsonLd(publishedEntries)),
-          }}
-          type="application/ld+json"
-        />
+        <>
+          <JsonLd data={buildHistoryArchiveJsonLd(publishedEntries)} />
+          <JsonLd data={buildHistoryBreadcrumbJsonLd()} />
+        </>
       ) : null}
 
       <header className="history-entry-header">
@@ -156,8 +155,8 @@ export default async function HistoryIndexPage({
             <p className="history-date-line">{formatCivilDateLabel(today)}</p>
             <h1 className="history-display">On this day in Jewish history.</h1>
             <p className="history-lede">
-              A living archive of reviewed Jewish historical stories, dated
-              with care and opened only when they are ready to be public.
+              A living archive of reviewed Jewish historical stories, dated with
+              care and opened only when they are ready to be public.
             </p>
           </div>
           <aside className="history-archive-rail">
@@ -168,8 +167,7 @@ export default async function HistoryIndexPage({
                 : "Stories are preserved in their original voice and connected across people, place, and time."}
             </p>
             <p className="history-archive-rail__note">
-              Historical dates use the civil Gregorian calendar in Eastern
-              Time.
+              Historical dates use the civil Gregorian calendar in Eastern Time.
             </p>
           </aside>
         </Container>
@@ -277,9 +275,9 @@ export default async function HistoryIndexPage({
             <p className="eyebrow">Browse the archive</p>
             <h2 className="history-section-title">Look up a date</h2>
             <p className="history-archive-browse__lede">
-              Choose a month and day to see reviewed historical events that
-              fall on that civil date. Recurring observances are kept on the
-              Jewish calendar, not this fixed-date list.
+              Choose a month and day to see reviewed historical events that fall
+              on that civil date. Recurring observances are kept on the Jewish
+              calendar, not this fixed-date list.
             </p>
           </div>
           <HistoryDateBrowse day={search.day} month={search.month} />

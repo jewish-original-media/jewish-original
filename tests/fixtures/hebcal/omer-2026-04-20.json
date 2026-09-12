@@ -1,0 +1,33 @@
+{
+  "range": { "start": "2026-04-20", "end": "2026-04-25" },
+  "items": [
+    {
+      "title": "3rd of Iyyar",
+      "date": "2026-04-20",
+      "hdate": "3 Iyyar 5786",
+      "category": "hebdate",
+      "hebrew": "ג׳ אייר",
+      "heDateParts": { "y": "תשפ״ו", "m": "אייר", "d": "ג׳" }
+    },
+    {
+      "title": "18th day of the Omer",
+      "date": "2026-04-20",
+      "hdate": "3 Iyyar 5786",
+      "category": "omer",
+      "title_orig": "Omer 18",
+      "hebrew": "עומר יום 18",
+      "omer": {
+        "count": {
+          "en": "Today is 18 days, which are 2 weeks and 4 days of the Omer"
+        },
+        "sefira": { "en": "Eternity within Beauty" }
+      }
+    },
+    {
+      "title": "Parashat Achrei Mot-Kedoshim",
+      "date": "2026-04-25",
+      "category": "parashat",
+      "hebrew": "פרשת אחרי מות־קדשים"
+    }
+  ]
+}

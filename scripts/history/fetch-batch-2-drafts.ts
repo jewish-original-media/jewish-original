@@ -8,7 +8,8 @@ async function loadEnv() {
   for (const line of file.split("\n")) {
     const [name, value] = line.split("=", 2);
     if (!name || value === undefined || !/^[A-Z0-9_]+$/.test(name)) continue;
-    if (!process.env[name]) process.env[name] = value.replace(/^["']|["']$/g, "");
+    if (!process.env[name])
+      process.env[name] = value.replace(/^["']|["']$/g, "");
   }
 }
 
@@ -63,8 +64,7 @@ async function main() {
 
   const packets = result.bySource.map((doc: Record<string, unknown>) => {
     const provenance = doc.provenance as
-      | { sourceBody?: string; sourceBodyChecksum?: string }
-      | undefined;
+      { sourceBody?: string; sourceBodyChecksum?: string } | undefined;
     const body = ((doc.body as { children?: { text?: string }[] }[]) || [])
       .map((block) =>
         (block.children || []).map((child) => child.text || "").join(""),

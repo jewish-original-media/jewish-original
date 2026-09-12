@@ -49,14 +49,43 @@ import waits until more records can be published honestly.
 - Define timezone and geolocation consent behavior
 - Compose the useful daily homepage from verified data and original history
 
+Checkpointed and frozen on `feature/jewish-today`, then merged into
+`feature/integration-homepage` with frozen History `3539211`. Hebcal REST
+adapter, `JewishTodayDay`, standalone `/today`, canonical History matching,
+published History routes, and a homepage that renders `JewishTodayModule`
+plus live History cards are on Integration. Frozen Podcasts `0d939d3` are
+also merged: public catalog, unified Studio, and a homepage Podcast module
+that stays in the prepared state until a document is published. The V1
+public shell now includes live navigation, About, Support, Privacy, and a
+Design Director editorial homepage.
+Sunset/local timezone, Israel schedule, and candle-lighting remain later
+work. See `docs/JEWISH_TODAY.md`, `docs/JEWISH_TODAY_CONVERGENCE.md`,
+`docs/HOMEPAGE.md`, and `docs/INTEGRATION.md`.
+
 Exit: the homepage has trustworthy daily value with graceful failure behavior.
 
 ## Milestone 3 — Podcast and original editorial
 
-- Model shows, guests, episodes, articles, authors, and transcripts
-- Import the podcast archive and build durable episode pages
-- Add transcription review, timestamps, media embeds, and related history
-- Build editorial story templates and social-to-site publishing workflows
+- Model shows and episodes against existing people, places, topics, and History
+- Build `/podcasts`, the TTJS show page, and episode templates from the official RSS feed
+- Import the four approved pilot episodes as unpublished Sanity drafts with verified Apple and Spotify links
+- Keep publication blocked; do not import the remaining catalog until founder review
+- Merged into `feature/integration-homepage` at frozen checkpoint `0d939d3`
+- Founder-approved publication of The Two Tall Jews Show and the four pilots
+  on 2026-09-04; Integration re-read published documents and did not write
+- Later: confirm official YouTube episode IDs, review transcripts, and import the remaining feed
+- Originals journal (`article` documents, `/originals`, homepage band, Studio
+  desk) is on Integration Preview. First public essays adapt founder About
+  copy. Do not invent additional Originals.
+
+## Next milestone — Final visual review, then Production cutover
+
+Content-depth (Originals + News maturity review) is on Integration Preview.
+See `docs/ORIGINALS.md`, `docs/V1_LAUNCH.md`, and `docs/SOURCE_OF_TRUTH.md`.
+
+Do not expand History from Integration. Do not attach `jewishoriginal.com`
+until the founder-approved Production checklist is run after the final
+visual pass.
 
 ## Milestone 4 — Curation and distribution
 

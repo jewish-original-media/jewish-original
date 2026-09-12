@@ -4,8 +4,7 @@ const HISTORY_DRAFT_ID =
   "drafts.historyEntry.jom-513f6a739543db8be9034576144811f9";
 const HISTORY_PUBLISHED_ID =
   "historyEntry.jom-513f6a739543db8be9034576144811f9";
-const DACHAU_PUBLISHED_ID =
-  "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
+const DACHAU_PUBLISHED_ID = "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
 const SOURCE_BODY_CHECKSUM =
   "f2578f96248d2ea97d0b0edaa00af88ad29dc1d0078e00863f2d9a6914560ba3";
 const EXPECTED_SOURCE_BODY =
@@ -258,8 +257,7 @@ async function main() {
     titleMatches: after.title === APPROVED_TITLE,
     slugUnchanged: after.slug === APPROVED_SLUG,
     seoTitleMatches: after.seo?.title === APPROVED_SEO_TITLE,
-    seoDescriptionMatches:
-      after.seo?.description === APPROVED_SEO_DESCRIPTION,
+    seoDescriptionMatches: after.seo?.description === APPROVED_SEO_DESCRIPTION,
     calendarSystem: after.historicalDate?.calendarSystem,
     dateUnchanged:
       after.historicalDate?.start?.year === 1944 &&
@@ -291,7 +289,9 @@ async function main() {
       counts.joopPublished !== 0 ||
       counts.dachauPublished !== 1)
   ) {
-    throw new Error(`Patch verification failed: ${JSON.stringify(verification)}`);
+    throw new Error(
+      `Patch verification failed: ${JSON.stringify(verification)}`,
+    );
   }
 
   process.stdout.write(`${JSON.stringify(verification, null, 2)}\n`);

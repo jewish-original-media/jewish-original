@@ -1,0 +1,278 @@
+.page {
+  background: var(--color-canvas);
+}
+
+.roomAbout .hero {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 5.75rem,
+      rgb(46 52 96 / 0.035) 5.75rem,
+      rgb(46 52 96 / 0.035) 5.8rem
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-sand) 78%, var(--color-canvas)),
+      color-mix(in srgb, var(--color-sand) 38%, var(--color-canvas))
+    );
+}
+
+.roomSupport .hero {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-gold) 10%, var(--color-sand)),
+    color-mix(in srgb, var(--color-sand) 42%, var(--color-paper))
+  );
+}
+
+.aboutHero,
+.supportHero {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+}
+
+.aboutPortrait,
+.supportPortrait {
+  min-width: 0;
+}
+
+.roomPrivacy {
+  background: var(--color-paper);
+}
+
+.roomPrivacy .hero {
+  background: var(--color-paper);
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(3rem, 8vw, 6.5rem);
+  border-bottom: 1px solid var(--color-rule);
+  background: color-mix(in srgb, var(--color-sand) 55%, var(--color-canvas));
+}
+
+.title {
+  max-width: 12ch;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-section);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.lede {
+  max-width: 34rem;
+  margin: var(--space-7) 0 0;
+  color: var(--color-navy);
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  line-height: 1.65;
+}
+
+.body {
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+}
+
+.chapter {
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+  border-top: 1px solid var(--color-rule);
+}
+
+.chapter:first-child {
+  border-top: 0;
+}
+
+.chapterDrive {
+  background: color-mix(in srgb, var(--color-sand) 42%, var(--color-canvas));
+}
+
+.prose,
+.stack {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.sectionTitle {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 3vw, 2.75rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.copy {
+  margin: var(--space-5) 0 0;
+  max-width: 38rem;
+  color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  font-size: clamp(1.0625rem, 1.4vw, 1.2rem);
+  line-height: 1.75;
+}
+
+.founders {
+  margin: var(--space-8) 0 0;
+  color: var(--color-navy);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.people {
+  display: grid;
+  gap: var(--space-8);
+  margin: var(--space-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.personName {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+.personCaption {
+  margin: var(--space-3) 0 0;
+  color: var(--color-navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.possible {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 36rem;
+  margin: var(--space-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.possible li {
+  padding-block: var(--space-3);
+  border-top: 1px solid var(--color-rule);
+  color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  line-height: 1.5;
+}
+
+.possible li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.independence {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--color-navy);
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+  line-height: 1.55;
+}
+
+.band {
+  padding-block: clamp(2.5rem, 6vw, 5rem);
+  background: var(--color-paper);
+  border-block: 1px solid var(--color-rule);
+}
+
+.invitations {
+  display: grid;
+  gap: 0;
+}
+
+.invitation {
+  padding-block: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--color-rule);
+}
+
+.invitation:first-child {
+  border-top: 0;
+}
+
+.index {
+  margin: 0 0 var(--space-4);
+  color: var(--color-gold);
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.amount {
+  margin: var(--space-3) 0 0;
+  color: var(--color-navy);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.note {
+  margin: var(--space-8) 0 0;
+  max-width: 36rem;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.review {
+  margin: var(--space-8) 0 0;
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-gold);
+  color: var(--color-charcoal);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+@media (min-width: 48rem) {
+  .people {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-10);
+  }
+
+  .invitations {
+    max-width: 42rem;
+  }
+
+  .aboutHero,
+  .supportHero {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: end;
+  }
+}
+
+@media (min-width: 64rem) {
+  .hero {
+    padding-block: clamp(4.5rem, 9vw, 7.5rem);
+  }
+
+  .chapter,
+  .body,
+  .band {
+    padding-block: clamp(3.25rem, 7vw, 6rem);
+  }
+}

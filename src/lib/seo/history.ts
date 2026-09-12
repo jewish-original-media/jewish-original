@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 
-import type { HistoryEntry, HistoryEntrySummary } from "@/content/history/types";
+import type {
+  HistoryEntry,
+  HistoryEntrySummary,
+} from "@/content/history/types";
 import { formatHistoricalDate } from "@/lib/history/format-date";
+import { serializeJsonLd } from "@/lib/seo/serialize";
+import { breadcrumbJsonLd } from "@/lib/seo/site";
 import { siteConfig } from "@/lib/site";
 
 export function historyEntryUrl(slug: string) {
@@ -75,15 +80,14 @@ export function buildHistoryMetadata(
   preview: boolean,
 ): Metadata {
   const url = historyEntryUrl(entry.slug);
-  const title = entry.seo?.title
-    ? { absolute: entry.seo.title }
-    : entry.title;
+  const title = entry.seo?.title ? { absolute: entry.seo.title } : entry.title;
   const description =
     entry.seo?.description ||
     entry.excerpt ||
     `A Jewish Original history entry about ${entry.title}.`;
   const image = entry.primaryImage?.asset.url;
-  const socialTitle = entry.seo?.openGraphTitle || entry.seo?.title || entry.title;
+  const socialTitle =
+    entry.seo?.openGraphTitle || entry.seo?.title || entry.title;
 
   return {
     title,
@@ -131,6 +135,7 @@ export function buildHistoryJsonLd(entry: HistoryEntry) {
       entry.excerpt || `A Jewish Original history entry about ${entry.title}.`,
     url,
     mainEntityOfPage: url,
+    datePublished: entry._createdAt,
     dateModified: entry._updatedAt,
     temporalCoverage: formatHistoricalDate(
       entry.historicalDate,
@@ -151,6 +156,18 @@ export function buildHistoryJsonLd(entry: HistoryEntry) {
   };
 }
 
-export function serializeJsonLd(value: unknown) {
-  return JSON.stringify(value).replace(/</g, "\\u003c");
+export { serializeJsonLd };
+
+export function buildHistoryBreadcrumbJsonLd(entry?: {
+  title: string;
+  slug: string;
+}) {
+  const items = [
+    { name: "Jewish Original", path: "/" },
+    { name: "History", path: "/history" },
+  ];
+  if (entry) {
+    items.push({ name: entry.title, path: `/history/${entry.slug}` });
+  }
+  return breadcrumbJsonLd(items);
 }

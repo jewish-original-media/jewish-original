@@ -51,14 +51,11 @@ const WILLENBERG_DRAFT_ID =
   "drafts.historyEntry.jom-eeb6299e20e45397ffe278ce0930d45c";
 const TRIPOLI_DRAFT_ID =
   "drafts.historyEntry.jom-d68726d23439a8e6135c869acacfd547";
-const DACHAU_PUBLISHED_ID =
-  "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
-const JOOP_PUBLISHED_ID =
-  "historyEntry.jom-513f6a739543db8be9034576144811f9";
+const DACHAU_PUBLISHED_ID = "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
+const JOOP_PUBLISHED_ID = "historyEntry.jom-513f6a739543db8be9034576144811f9";
 
 const SOURCE_CHECKSUMS = {
-  bialystok:
-    "b046934661a0214fb443a2835ce8e0a463b1227bee4094f4e700568a5873a930",
+  bialystok: "b046934661a0214fb443a2835ce8e0a463b1227bee4094f4e700568a5873a930",
   willenberg:
     "12f1127a816e2e187661bde4c52a743f62a3e3233b0509c020e15dab047e262a",
   tripoli: "ee3b09857951bcaf588de88869a5c0fe3d98a0fb48e9f0da157f8b3e7d4e08e9",
@@ -149,7 +146,8 @@ async function main() {
   const apply = process.argv.includes("--apply");
   const client = createHistoryClient(apply);
 
-  const before = await client.fetch(`{
+  const before = await client.fetch(
+    `{
     "bialystok": *[_id == $bialystok][0]${DRAFT_PROJECTION},
     "willenberg": *[_id == $willenberg][0]${DRAFT_PROJECTION},
     "tripoli": *[_id == $tripoli][0]${DRAFT_PROJECTION},
@@ -165,13 +163,15 @@ async function main() {
         "historyEntry.jom-3cc6eb0e579ceb50b4abe057c31456cc"
       ]]._id
     }
-  }`, {
-    bialystok: BIALYSTOK_DRAFT_ID,
-    willenberg: WILLENBERG_DRAFT_ID,
-    tripoli: TRIPOLI_DRAFT_ID,
-    dachau: DACHAU_PUBLISHED_ID,
-    joop: JOOP_PUBLISHED_ID,
-  });
+  }`,
+    {
+      bialystok: BIALYSTOK_DRAFT_ID,
+      willenberg: WILLENBERG_DRAFT_ID,
+      tripoli: TRIPOLI_DRAFT_ID,
+      dachau: DACHAU_PUBLISHED_ID,
+      joop: JOOP_PUBLISHED_ID,
+    },
+  );
 
   if (!before.bialystok || !before.willenberg || !before.tripoli) {
     throw new Error("Missing one or more Batch 2 drafts.");
@@ -200,7 +200,11 @@ async function main() {
     }
   }
 
-  assertUnpublishedSource(before.bialystok, SOURCE_CHECKSUMS.bialystok, "Bialystok");
+  assertUnpublishedSource(
+    before.bialystok,
+    SOURCE_CHECKSUMS.bialystok,
+    "Bialystok",
+  );
   assertUnpublishedSource(
     before.willenberg,
     SOURCE_CHECKSUMS.willenberg,
@@ -273,7 +277,8 @@ async function main() {
       .commit({ autoGenerateArrayKeys: false });
   }
 
-  const after = await client.fetch(`{
+  const after = await client.fetch(
+    `{
     "bialystok": *[_id == $bialystok][0]${DRAFT_PROJECTION},
     "willenberg": *[_id == $willenberg][0]${DRAFT_PROJECTION},
     "tripoli": *[_id == $tripoli][0]${DRAFT_PROJECTION},
@@ -288,13 +293,15 @@ async function main() {
         "historyEntry.jom-3cc6eb0e579ceb50b4abe057c31456cc"
       ]]._id
     }
-  }`, {
-    bialystok: BIALYSTOK_DRAFT_ID,
-    willenberg: WILLENBERG_DRAFT_ID,
-    tripoli: TRIPOLI_DRAFT_ID,
-    dachau: DACHAU_PUBLISHED_ID,
-    joop: JOOP_PUBLISHED_ID,
-  });
+  }`,
+    {
+      bialystok: BIALYSTOK_DRAFT_ID,
+      willenberg: WILLENBERG_DRAFT_ID,
+      tripoli: TRIPOLI_DRAFT_ID,
+      dachau: DACHAU_PUBLISHED_ID,
+      joop: JOOP_PUBLISHED_ID,
+    },
+  );
 
   const verification = {
     mode: apply ? "apply" : "dry-run",
@@ -320,7 +327,8 @@ async function main() {
     },
     willenberg: {
       title: after.willenberg.title,
-      bodyMatches: bodyText(after.willenberg.body) === WILLENBERG_PARAGRAPHS.join("\n\n"),
+      bodyMatches:
+        bodyText(after.willenberg.body) === WILLENBERG_PARAGRAPHS.join("\n\n"),
       sourceUnchanged:
         after.willenberg.provenance?.sourceBodyChecksum ===
           SOURCE_CHECKSUMS.willenberg &&
@@ -331,9 +339,11 @@ async function main() {
     tripoli: {
       excerpt: after.tripoli.excerpt,
       seoDescription: after.tripoli.seo?.description,
-      bodyMatches: bodyText(after.tripoli.body) === TRIPOLI_PARAGRAPHS.join("\n\n"),
+      bodyMatches:
+        bodyText(after.tripoli.body) === TRIPOLI_PARAGRAPHS.join("\n\n"),
       sourceUnchanged:
-        after.tripoli.provenance?.sourceBodyChecksum === SOURCE_CHECKSUMS.tripoli &&
+        after.tripoli.provenance?.sourceBodyChecksum ===
+          SOURCE_CHECKSUMS.tripoli &&
         after.tripoli.provenance?.sourceBody ===
           before.tripoli.provenance?.sourceBody,
       workflowStatus: after.tripoli.workflowStatus,
@@ -362,7 +372,9 @@ async function main() {
       after.willenberg.workflowStatus !== "ready" ||
       after.tripoli.workflowStatus !== "ready";
     if (failed) {
-      throw new Error(`Founder-edit verification failed: ${JSON.stringify(verification)}`);
+      throw new Error(
+        `Founder-edit verification failed: ${JSON.stringify(verification)}`,
+      );
     }
   }
 

@@ -1,0 +1,179 @@
+import type { Metadata } from "next";
+import { draftMode } from "next/headers";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+import { MuseumFigure } from "@/components/media/museum-figure";
+import { EpisodeCard } from "@/components/podcasts/episode-card";
+import { PodcastPreviewBanner } from "@/components/podcasts/podcast-preview-banner";
+import { ButtonLink } from "@/components/ui/button-link";
+import { Container } from "@/components/ui/container";
+import { Section } from "@/components/ui/section";
+import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
+import {
+  getPodcastEpisodes,
+  getPodcastShow,
+  getPublishedPodcastShowSlugs,
+} from "@/content/podcasts/fetch";
+import { JsonLd } from "@/components/seo/json-ld";
+import {
+  buildPodcastBreadcrumbJsonLd,
+  buildPodcastShowJsonLd,
+  buildPodcastShowMetadata,
+} from "@/lib/seo/podcasts";
+
+type ShowPageProps = {
+  params: Promise<{ showSlug: string }>;
+};
+
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  try {
+    return await getPublishedPodcastShowSlugs();
+  } catch {
+    return [];
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: ShowPageProps): Promise<Metadata> {
+  const [{ showSlug }, { isEnabled: preview }] = await Promise.all([
+    params,
+    draftMode(),
+  ]);
+  const show = await getPodcastShow(showSlug, preview);
+  if (!show) {
+    return { title: "Podcast", robots: { index: false, follow: false } };
+  }
+  const metadata = buildPodcastShowMetadata(show);
+  return preview
+    ? { ...metadata, robots: { index: false, follow: false } }
+    : metadata;
+}
+
+export default async function PodcastShowPage({ params }: ShowPageProps) {
+  const [{ showSlug }, { isEnabled: preview }] = await Promise.all([
+    params,
+    draftMode(),
+  ]);
+  const show = await getPodcastShow(showSlug, preview);
+  if (!show) notFound();
+  const episodes = await getPodcastEpisodes(show.slug, preview);
+  const [latest, ...archive] = episodes;
+
+  return (
+    <>
+      {preview ? <PodcastPreviewBanner /> : null}
+      {!preview ? (
+        <>
+          <JsonLd data={buildPodcastShowJsonLd(show, episodes)} />
+          <JsonLd
+            data={buildPodcastBreadcrumbJsonLd({
+              showTitle: show.title,
+              showSlug: show.slug,
+            })}
+          />
+        </>
+      ) : null}
+      <section className="podcast-hero podcast-hero--show">
+        <Container className="podcast-hero__grid">
+          <div>
+            <nav aria-label="Breadcrumb">
+              <ol className="podcast-breadcrumb">
+                <li>
+                  <Link href="/">Jewish Original</Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li>
+                  <Link href="/podcasts">Podcasts</Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li aria-current="page">{show.title}</li>
+              </ol>
+            </nav>
+            {show.markSrc ? (
+              <Image
+                alt={show.title}
+                className="podcast-mark-inline"
+                height={96}
+                priority
+                src={show.markSrc}
+                width={108}
+              />
+            ) : null}
+            <p className="podcast-kicker">Listening room</p>
+            <h1 className="podcast-display">{show.title}</h1>
+            {show.tagline ? (
+              <p className="podcast-tagline">{show.tagline}</p>
+            ) : null}
+            <p className="podcast-lede">{show.description}</p>
+            {show.hosts.length ? (
+              <ul className="podcast-hosts">
+                {show.hosts.map((host) => (
+                  <li key={host.slug || host.name}>
+                    <p className="podcast-host-name">{host.name}</p>
+                    <p className="podcast-host-caption">Host</p>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            <div className="podcast-hero-actions">
+              {show.appleUrl ? (
+                <ButtonLink href={show.appleUrl}>Apple Podcasts</ButtonLink>
+              ) : null}
+              {show.spotifyUrl ? (
+                <ButtonLink href={show.spotifyUrl} variant="secondary">
+                  Spotify
+                </ButtonLink>
+              ) : null}
+            </div>
+          </div>
+          <div className="podcast-hero-portrait">
+            <MuseumFigure
+              photo={FOUNDER_PHOTOS.street}
+              priority
+              sizes="(max-width: 63.98rem) 100vw, 28rem"
+              tone="night"
+            />
+          </div>
+        </Container>
+      </section>
+
+      {latest ? (
+        <Section className="podcast-archive-section" spacing="compact">
+          <Container>
+            <p className="eyebrow">Latest episode</p>
+            <h2 className="podcast-section-title">Listen now</h2>
+            <div className="podcast-episode-list">
+              <EpisodeCard episode={latest} />
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
+      <Section className="podcast-archive-section" spacing="compact">
+        <Container>
+          <p className="eyebrow">Episode archive</p>
+          <h2 className="podcast-section-title">The listening room</h2>
+          <p className="podcast-section-copy">
+            {preview
+              ? `${episodes.length} imported draft episode${episodes.length === 1 ? "" : "s"} are visible in preview only.`
+              : `${episodes.length} published episode${episodes.length === 1 ? "" : "s"} from The Two Tall Jews Show.`}{" "}
+            Empty summaries, transcripts, and History links stay hidden until
+            editors add them.
+          </p>
+          {archive.length ? (
+            <div className="podcast-episode-list">
+              {archive.map((episode) => (
+                <EpisodeCard episode={episode} key={episode._id} />
+              ))}
+            </div>
+          ) : null}
+        </Container>
+      </Section>
+    </>
+  );
+}

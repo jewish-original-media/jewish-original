@@ -97,9 +97,15 @@ async function main() {
         organizations: (joop?.organizations || []).map(
           (organization: { name?: string }) => organization.name,
         ),
-        people: (joop?.people || []).map((person: { name?: string }) => person.name),
-        places: (joop?.places || []).map((place: { name?: string }) => place.name),
-        topics: (joop?.topics || []).map((topic: { name?: string }) => topic.name),
+        people: (joop?.people || []).map(
+          (person: { name?: string }) => person.name,
+        ),
+        places: (joop?.places || []).map(
+          (place: { name?: string }) => place.name,
+        ),
+        topics: (joop?.topics || []).map(
+          (topic: { name?: string }) => topic.name,
+        ),
         sourceBodyUnchanged: joop?.provenance?.sourceBody === JOOP_SOURCE_BODY,
         sourceChecksumMatches:
           joop?.provenance?.sourceBodyChecksum === JOOP_SOURCE_CHECKSUM &&
@@ -136,7 +142,8 @@ async function main() {
           result.dachau?.provenance?.sourceBodyChecksum ===
             DACHAU_SOURCE_CHECKSUM,
         batchUnpublished: {
-          bialystok: !result.bialystokPublished && Boolean(result.bialystokDraft),
+          bialystok:
+            !result.bialystokPublished && Boolean(result.bialystokDraft),
           willenberg:
             !result.willenbergPublished && Boolean(result.willenbergDraft),
           rulf: !result.rulfPublished && Boolean(result.rulfDraft),
