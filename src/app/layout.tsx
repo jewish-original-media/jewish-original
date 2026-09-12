@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Jost, Libre_Baskerville } from "next/font/google";
 
+import { SiteAnalytics } from "@/components/analytics/providers";
+import { isPreviewDeployment } from "@/lib/seo/site";
 import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
@@ -45,10 +47,9 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: isPreviewDeployment()
+    ? { index: false, follow: false }
+    : { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
@@ -67,7 +68,10 @@ export default function RootLayout({
       className={`${sans.variable} ${serif.variable}`}
       data-scroll-behavior="smooth"
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <SiteAnalytics />
+      </body>
     </html>
   );
 }

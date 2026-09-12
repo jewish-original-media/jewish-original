@@ -26,10 +26,11 @@ import {
   formatCivilDateLabel,
   isValidGregorianMonthDay,
 } from "@/lib/history/on-this-day";
+import { JsonLd } from "@/components/seo/json-ld";
 import {
   buildHistoryArchiveJsonLd,
   buildHistoryArchiveMetadata,
-  serializeJsonLd,
+  buildHistoryBreadcrumbJsonLd,
 } from "@/lib/seo/history";
 
 type HistoryIndexPageProps = {
@@ -132,14 +133,10 @@ export default async function HistoryIndexPage({
     <>
       {preview ? <HistoryPreviewBanner /> : null}
       {!preview && !search.isBrowsing ? (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: serializeJsonLd(
-              buildHistoryArchiveJsonLd(publishedEntries),
-            ),
-          }}
-          type="application/ld+json"
-        />
+        <>
+          <JsonLd data={buildHistoryArchiveJsonLd(publishedEntries)} />
+          <JsonLd data={buildHistoryBreadcrumbJsonLd()} />
+        </>
       ) : null}
 
       <header className="history-entry-header">

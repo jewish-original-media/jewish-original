@@ -14,8 +14,8 @@
 - **Media:** Sanity Assets for editorial media; no second media service now
 - **Search:** Sanity queries initially; PostgreSQL full-text/`pg_trgm` when unified
   cross-content search requires it; a hosted search engine only after measured need
-- **Analytics:** none during foundation; enable the minimum first-party measurement
-  only after a public product creates a defined question and consent requirement
+- **Analytics:** Vercel Web Analytics and Speed Insights on the public site;
+  cookieless; no advertising pixels or cookie banner
 - **Monitoring:** framework and hosting diagnostics first; add Sentry only after a
   concrete error-triage or alerting gap is demonstrated
 

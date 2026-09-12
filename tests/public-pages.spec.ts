@@ -25,6 +25,12 @@ test("public navigation and footer expose only live destinations", async ({
   await expect(nav.getByRole("link", { name: "News" })).toHaveCount(0);
   await expect(nav.getByRole("link", { name: "Events" })).toHaveCount(0);
   await expect(nav.getByRole("link", { name: "Originals" })).toHaveCount(0);
+  await expect(
+    page.getByRole("contentinfo").getByRole("link", { name: "News" }),
+  ).toHaveAttribute("href", "/news");
+  await expect(
+    page.getByRole("contentinfo").getByRole("link", { name: "Events" }),
+  ).toHaveCount(0);
 
   await expect(
     page.getByRole("link", { name: "Search Jewish Original Media" }),
@@ -68,6 +74,12 @@ test("serves About from founder-provided copy", async ({ page }) => {
     page.getByText("We’re not here to copy trends.", { exact: false }),
   ).toBeVisible();
   await expect(page.getByText("We’re in it for legacy.")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Sources, corrections, and tools" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/uses automation and AI-assisted tools/i),
+  ).toBeVisible();
   await expect(page.getByText("Private editorial preview")).toHaveCount(0);
 });
 
@@ -123,5 +135,6 @@ test("serves an honest Privacy page for current product behavior", async ({
   ).toBeVisible();
   await expect(page.getByText(/marketing cookies/i)).toBeVisible();
   await expect(page.getByText(/founder review required/i)).toBeVisible();
-  await expect(page.getByText(/not enabled on this build/i)).toBeVisible();
+  await expect(page.getByText(/vercel web analytics/i)).toBeVisible();
+  await expect(page.getByText(/cookieless/i)).toBeVisible();
 });

@@ -13,6 +13,14 @@ export const siteConfig = {
     { label: "About", href: "/about" },
     { label: "Support", href: "/support", emphasis: true },
   ],
+  footerExplore: [
+    { label: "Today", href: "/today" },
+    { label: "History", href: "/history" },
+    { label: "Podcasts", href: "/podcasts" },
+    { label: "News", href: "/news" },
+    { label: "About", href: "/about" },
+    { label: "Support", href: "/support" },
+  ],
   footerUtility: [{ label: "Privacy", href: "/privacy" }],
 } as const;
 

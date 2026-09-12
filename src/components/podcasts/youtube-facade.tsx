@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { useState } from "react";
 
 import {
@@ -43,7 +44,10 @@ export function YouTubeFacade({ videoId, title }: YouTubeFacadeProps) {
       <div className="podcast-media-frame">
         <button
           className="podcast-youtube-facade"
-          onClick={() => setPlaying(true)}
+          onClick={() => {
+            track("podcast_listen");
+            setPlaying(true);
+          }}
           type="button"
         >
           {/* External poster is decorative; the button name is the accessible name. */}

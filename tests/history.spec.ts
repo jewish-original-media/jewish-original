@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { readJsonLd } from "./helpers/json-ld";
+
 test("publishes the five reviewed History articles on the public archive", async ({
   page,
 }) => {
@@ -224,17 +226,18 @@ test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Dachau"
     "https://jewishoriginal.com/history/us-liberates-dachau",
   );
 
-  const jsonLd = JSON.parse(
-    (await page.locator('script[type="application/ld+json"]').textContent()) ||
-      "{}",
-  ) as {
+  const jsonLd = await readJsonLd<{
     "@type"?: string;
     headline?: string;
     url?: string;
     citation?: string[];
-  };
+    datePublished?: string;
+    dateModified?: string;
+  }>(page, "Article");
   expect(jsonLd["@type"]).toBe("Article");
   expect(jsonLd.headline).toBe("US Liberates Dachau");
+  expect(jsonLd.datePublished).toBeTruthy();
+  expect(jsonLd.dateModified).toBeTruthy();
   expect(jsonLd.url).toBe(
     "https://jewishoriginal.com/history/us-liberates-dachau",
   );
@@ -303,15 +306,12 @@ test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Westerw
     "https://jewishoriginal.com/history/joop-westerweel-murdered",
   );
 
-  const jsonLd = JSON.parse(
-    (await page.locator('script[type="application/ld+json"]').textContent()) ||
-      "{}",
-  ) as {
+  const jsonLd = await readJsonLd<{
     "@type"?: string;
     headline?: string;
     url?: string;
     citation?: string[];
-  };
+  }>(page, "Article");
   expect(jsonLd["@type"]).toBe("Article");
   expect(jsonLd.headline).toBe("Joop Westerweel Is Murdered at Vught");
   expect(jsonLd.url).toBe(
@@ -429,10 +429,11 @@ test("serves the published Batch 2 articles with founder-final copy and metadata
     "content",
     "Bialystok Ghetto Is Sealed — August 1, 1941 | Jewish Original",
   );
-  const bialystokJsonLd = JSON.parse(
-    (await page.locator('script[type="application/ld+json"]').textContent()) ||
-      "{}",
-  ) as { "@type"?: string; headline?: string; citation?: string[] };
+  const bialystokJsonLd = await readJsonLd<{
+    "@type"?: string;
+    headline?: string;
+    citation?: string[];
+  }>(page, "Article");
   expect(bialystokJsonLd["@type"]).toBe("Article");
   expect(bialystokJsonLd.headline).toBe("Bialystok Ghetto Is Sealed");
   expect(bialystokJsonLd.citation).toEqual(
@@ -467,10 +468,11 @@ test("serves the published Batch 2 articles with founder-final copy and metadata
     "href",
     "https://jewishoriginal.com/history/samuel-willenberg-dies",
   );
-  const willenbergJsonLd = JSON.parse(
-    (await page.locator('script[type="application/ld+json"]').textContent()) ||
-      "{}",
-  ) as { "@type"?: string; headline?: string; citation?: string[] };
+  const willenbergJsonLd = await readJsonLd<{
+    "@type"?: string;
+    headline?: string;
+    citation?: string[];
+  }>(page, "Article");
   expect(willenbergJsonLd["@type"]).toBe("Article");
   expect(willenbergJsonLd.headline).toBe("Samuel Willenberg Dies");
   expect(willenbergJsonLd.citation).toEqual(
@@ -502,10 +504,11 @@ test("serves the published Batch 2 articles with founder-final copy and metadata
     "content",
     "On November 5, 1945, anti-Jewish riots broke out in Tripoli, killing about 120 Jews over three days.",
   );
-  const tripoliJsonLd = JSON.parse(
-    (await page.locator('script[type="application/ld+json"]').textContent()) ||
-      "{}",
-  ) as { "@type"?: string; headline?: string; citation?: string[] };
+  const tripoliJsonLd = await readJsonLd<{
+    "@type"?: string;
+    headline?: string;
+    citation?: string[];
+  }>(page, "Article");
   expect(tripoliJsonLd["@type"]).toBe("Article");
   expect(tripoliJsonLd.headline).toBe(
     "Anti-Jewish Riots Break Out in Tripoli, Libya",

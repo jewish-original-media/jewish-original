@@ -21,11 +21,12 @@ import {
 } from "@/content/history/fetch";
 import { formatContentWarningList } from "@/lib/history/content-warnings";
 import { formatHistoricalDate } from "@/lib/history/format-date";
+import { JsonLd } from "@/components/seo/json-ld";
 import {
+  buildHistoryBreadcrumbJsonLd,
   buildHistoryJsonLd,
   buildHistoryMetadata,
   historyEntryUrl,
-  serializeJsonLd,
 } from "@/lib/seo/history";
 
 type HistoryPageProps = {
@@ -85,12 +86,15 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
         <HistoryPreviewBanner workflowStatus={entry.workflowStatus} />
       ) : null}
       {!preview ? (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: serializeJsonLd(buildHistoryJsonLd(entry)),
-          }}
-          type="application/ld+json"
-        />
+        <>
+          <JsonLd data={buildHistoryJsonLd(entry)} />
+          <JsonLd
+            data={buildHistoryBreadcrumbJsonLd({
+              title: entry.title,
+              slug: entry.slug,
+            })}
+          />
+        </>
       ) : null}
 
       <article>

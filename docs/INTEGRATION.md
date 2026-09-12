@@ -1,8 +1,8 @@
 # Integration branch
 
-Status: V1 public shell on History + Jewish Today + Podcast convergence. Do
-not merge to the GitHub default branch. Do not deploy production. Do not
-publish Sanity content.
+Status: V1 public shell plus first live News and launch-readiness
+infrastructure. Do not merge to the GitHub default branch. Do not deploy
+production. Do not attach jewishoriginal.com.
 
 ## Branch and worktree
 

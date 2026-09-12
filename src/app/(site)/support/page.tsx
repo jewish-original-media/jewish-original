@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
 
+import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import { MuseumFigure } from "@/components/media/museum-figure";
+import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/ui/container";
 import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
+import { breadcrumbJsonLd, buildPageMetadata } from "@/lib/seo/site";
 import { siteConfig } from "@/lib/site";
 
 import styles from "@/app/editorial.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Support Jewish Original",
   description:
     "Stand with Jewish Original Media. Support, sponsor, or partner without leaving the editorial work secondary.",
-  alternates: { canonical: "/support" },
-};
+  path: "/support",
+});
 
 const donate = `mailto:${siteConfig.email}?subject=${encodeURIComponent("Support Jewish Original")}`;
 const sponsor = `mailto:${siteConfig.email}?subject=${encodeURIComponent("Sponsor Jewish Original")}`;
@@ -21,6 +24,12 @@ const partner = `mailto:${siteConfig.email}?subject=${encodeURIComponent("Partne
 export default function SupportPage() {
   return (
     <div className={`${styles.page} ${styles.roomSupport}`}>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Support", path: "/support" },
+        ])}
+      />
       <section className={styles.hero}>
         <Container className={styles.supportHero}>
           <div>
@@ -56,9 +65,13 @@ export default function SupportPage() {
               contact path when they are ready.
             </p>
             <p className={styles.actions}>
-              <a className="button button--primary" href={donate}>
+              <TrackedAnchor
+                className="button button--primary"
+                event="support_click"
+                href={donate}
+              >
                 Email to support
-              </a>
+              </TrackedAnchor>
             </p>
           </article>
 
@@ -74,9 +87,13 @@ export default function SupportPage() {
               channels.
             </p>
             <p className={styles.actions}>
-              <a className="button button--secondary" href={sponsor}>
+              <TrackedAnchor
+                className="button button--secondary"
+                event="support_click"
+                href={sponsor}
+              >
                 Email to sponsor
-              </a>
+              </TrackedAnchor>
             </p>
           </article>
 
@@ -92,9 +109,13 @@ export default function SupportPage() {
               communities, and elevate shared missions online and in person.
             </p>
             <p className={styles.actions}>
-              <a className="button button--secondary" href={partner}>
+              <TrackedAnchor
+                className="button button--secondary"
+                event="support_click"
+                href={partner}
+              >
                 Email to partner
-              </a>
+              </TrackedAnchor>
             </p>
           </article>
         </Container>

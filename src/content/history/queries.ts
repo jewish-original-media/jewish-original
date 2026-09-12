@@ -133,6 +133,7 @@ export const historyEntryQuery = defineQuery(`*[
   }, []),
   seo,
   "workflowStatus": select($preview => workflowStatus),
+  _createdAt,
   _updatedAt
 }`);
 

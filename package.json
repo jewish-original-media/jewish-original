@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:jewish-today": "tsx --test tests/jewish-today-*.test.ts",
-    "test:homepage": "tsx --test tests/homepage-*.test.ts tests/public-media.test.ts",
+    "test:homepage": "tsx --test tests/homepage-*.test.ts tests/public-media.test.ts tests/site-seo.test.ts",
     "test:ingest": "tsx --test tests/ingest-*.test.ts",
     "ingest:dry-run": "tsx scripts/ingest/dry-run.ts",
     "ingest:first-publish": "tsx scripts/ingest/first-publish.ts",
@@ -40,6 +40,8 @@
   "dependencies": {
     "@sanity/client": "^8.4.0",
     "@sanity/icons": "^5.2.1",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "next": "^16.3.3",
     "next-sanity": "^13.3.3",
     "react": "^19.2.8",

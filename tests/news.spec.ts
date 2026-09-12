@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { readJsonLd } from "./helpers/json-ld";
+
 test("serves /news as a text-first outward-linking desk", async ({ page }) => {
   const response = await page.goto("/news");
   expect(response?.status()).toBe(200);
@@ -26,6 +28,15 @@ test("serves /news as a text-first outward-linking desk", async ({ page }) => {
   await expect(page.getByText("Jerusalem Post").first()).toBeVisible();
   await expect(page.locator('a[href^="/news/"]')).toHaveCount(0);
   await expect(page.locator("main img")).toHaveCount(0);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://jewishoriginal.com/news",
+  );
+  const collection = await readJsonLd<{ "@type"?: string }>(
+    page,
+    "CollectionPage",
+  );
+  expect(collection["@type"]).toBe("CollectionPage");
   const hrefs = await page
     .locator("main ol a")
     .evaluateAll((anchors) =>

@@ -1,11 +1,12 @@
-# Next milestone: News and Events first live inventory
+# Next News and Events work
 
-Status: persistence is implemented on Integration. First live publication
-runs only when Preview Gateway, write token, and `INGEST_WRITES_ENABLED=1`
-are present.
+First live News inventory is published on Integration. Events remain empty
+until broader official calendars qualify.
 
-Homepage News appears only with at least 3 published items. Homepage Events
-appear only when upcoming inventory has at least two organizers and two
-geography buckets. News nav requires 5 items and 3 publishers.
+News stays out of primary nav until at least 5 strong items and 3
+publishers. Homepage News is on. Events stay off Home, nav, and sitemap.
 
-See `docs/NEWS_EVENTS.md` and `docs/specs/NEWS_EVENTS_AUTOMATION_PLAN.md`.
+Do not expand the source allowlist in this stream. Do not add manual Event
+filler for launch symmetry.
+
+See `docs/NEWS_EVENTS.md` and `docs/V1_LAUNCH.md`.

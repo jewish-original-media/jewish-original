@@ -73,10 +73,22 @@ test("renders the responsive, accessible application shell", async ({
 });
 
 test("serves generated discovery and crawler metadata", async ({ request }) => {
-  for (const path of ["/robots.txt", "/sitemap.xml", "/manifest.webmanifest"]) {
+  for (const path of [
+    "/robots.txt",
+    "/sitemap.xml",
+    "/manifest.webmanifest",
+    "/icon",
+    "/opengraph-image",
+  ]) {
     const response = await request.get(path);
     expect(response.ok(), `${path} should return a successful response`).toBe(
       true,
     );
   }
+
+  const sitemap = await request.get("/sitemap.xml");
+  const xml = await sitemap.text();
+  expect(xml).toContain("/news");
+  expect(xml).not.toContain("/events");
+  expect(xml).not.toContain("/admin");
 });

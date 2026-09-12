@@ -1,3 +1,5 @@
+import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
+
 type EpisodePlatformLinksProps = {
   appleUrl?: string;
   audioUrl?: string;
@@ -28,9 +30,14 @@ export function EpisodePlatformLinks({
       {youtubeUrl ? (
         <div>
           <p className="podcast-kicker">Watch</p>
-          <a href={youtubeUrl} rel="noreferrer" target="_blank">
+          <TrackedAnchor
+            event="podcast_listen"
+            href={youtubeUrl}
+            rel="noreferrer"
+            target="_blank"
+          >
             YouTube
-          </a>
+          </TrackedAnchor>
         </div>
       ) : null}
       {listen.length ? (
@@ -44,9 +51,14 @@ export function EpisodePlatformLinks({
                     ·
                   </span>
                 ) : null}
-                <a href={item.href} rel="noreferrer" target="_blank">
+                <TrackedAnchor
+                  event="podcast_listen"
+                  href={item.href}
+                  rel="noreferrer"
+                  target="_blank"
+                >
                   {item.label}
-                </a>
+                </TrackedAnchor>
               </span>
             ))}
           </p>

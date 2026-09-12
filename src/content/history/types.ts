@@ -112,6 +112,7 @@ export type HistoryEntry = HistoryEntrySummary & {
     openGraphDescription?: string;
   };
   workflowStatus?: string;
+  _createdAt?: string;
   _updatedAt: string;
 };
 

@@ -16,10 +16,11 @@ import {
   getPodcastShow,
   getPublishedPodcastShowSlugs,
 } from "@/content/podcasts/fetch";
+import { JsonLd } from "@/components/seo/json-ld";
 import {
+  buildPodcastBreadcrumbJsonLd,
   buildPodcastShowJsonLd,
   buildPodcastShowMetadata,
-  serializeJsonLd,
 } from "@/lib/seo/podcasts";
 
 type ShowPageProps = {
@@ -67,12 +68,15 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
     <>
       {preview ? <PodcastPreviewBanner /> : null}
       {!preview ? (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: serializeJsonLd(buildPodcastShowJsonLd(show, episodes)),
-          }}
-          type="application/ld+json"
-        />
+        <>
+          <JsonLd data={buildPodcastShowJsonLd(show, episodes)} />
+          <JsonLd
+            data={buildPodcastBreadcrumbJsonLd({
+              showTitle: show.title,
+              showSlug: show.slug,
+            })}
+          />
+        </>
       ) : null}
       <section className="podcast-hero podcast-hero--show">
         <Container className="podcast-hero__grid">

@@ -1,20 +1,28 @@
 import type { Metadata } from "next";
 
+import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/ui/container";
+import { breadcrumbJsonLd, buildPageMetadata } from "@/lib/seo/site";
 import { siteConfig } from "@/lib/site";
 
 import styles from "@/app/editorial.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Privacy",
   description:
     "How Jewish Original Media currently treats public-site analytics, cookies, and contact.",
-  alternates: { canonical: "/privacy" },
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (
     <div className={`${styles.page} ${styles.roomPrivacy}`}>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Privacy", path: "/privacy" },
+        ])}
+      />
       <section className={styles.hero}>
         <Container size="content">
           <p className="eyebrow">Privacy</p>
@@ -37,11 +45,12 @@ export default function PrivacyPage() {
             </p>
           </div>
           <div>
-            <h2 className={styles.sectionTitle}>Intended analytics</h2>
+            <h2 className={styles.sectionTitle}>First-party analytics</h2>
             <p className={styles.copy}>
-              We intend to use Vercel Web Analytics and Speed Insights to
-              understand traffic and page performance. Those tools are not
-              enabled on this build.
+              The public site uses Vercel Web Analytics and Speed Insights to
+              understand traffic and page performance. Those tools are
+              first-party and cookieless. There is no advertising pixel and no
+              cookie banner for analytics.
             </p>
           </div>
           <div>

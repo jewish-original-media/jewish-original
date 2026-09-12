@@ -5,6 +5,7 @@ import {
   getPublishedPodcastShowSlugs,
   getPublishedPodcastSlugs,
 } from "@/content/podcasts/fetch";
+import { publicStaticSitemapPaths } from "@/lib/seo/site";
 import { siteConfig } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -15,51 +16,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   return [
-    {
-      url: siteConfig.url,
-      changeFrequency: "daily",
-      priority: 1,
-    },
-    {
-      url: `${siteConfig.url}/today`,
-      changeFrequency: "daily",
-      priority: 0.8,
-    },
-    {
-      url: `${siteConfig.url}/history`,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: `${siteConfig.url}/podcasts`,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteConfig.url}/news`,
-      changeFrequency: "hourly",
-      priority: 0.6,
-    },
-    {
-      url: `${siteConfig.url}/events`,
-      changeFrequency: "daily",
-      priority: 0.6,
-    },
-    {
-      url: `${siteConfig.url}/about`,
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${siteConfig.url}/support`,
-      changeFrequency: "monthly",
-      priority: 0.4,
-    },
-    {
-      url: `${siteConfig.url}/privacy`,
-      changeFrequency: "yearly",
-      priority: 0.2,
-    },
+    ...publicStaticSitemapPaths().map((path) => ({
+      url: path === "/" ? siteConfig.url : `${siteConfig.url}${path}`,
+      changeFrequency:
+        path === "/" || path === "/today" || path === "/news"
+          ? ("daily" as const)
+          : path === "/privacy"
+            ? ("yearly" as const)
+            : ("weekly" as const),
+      priority:
+        path === "/"
+          ? 1
+          : path === "/history"
+            ? 0.9
+            : path === "/today" || path === "/podcasts"
+              ? 0.8
+              : path === "/news"
+                ? 0.6
+                : path === "/about"
+                  ? 0.5
+                  : path === "/support"
+                    ? 0.4
+                    : 0.2,
+    })),
     ...historySlugs.map(({ slug }) => ({
       url: `${siteConfig.url}/history/${slug}`,
       changeFrequency: "monthly" as const,

@@ -10,10 +10,11 @@ import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { getPodcastEpisodes, getPodcastShow } from "@/content/podcasts/fetch";
 import { TTJS_SHOW_SLUG } from "@/lib/podcasts/urls";
+import { JsonLd } from "@/components/seo/json-ld";
 import {
+  buildPodcastBreadcrumbJsonLd,
   buildPodcastHomeJsonLd,
   buildPodcastHomeMetadata,
-  serializeJsonLd,
 } from "@/lib/seo/podcasts";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -48,12 +49,10 @@ export default async function PodcastsPage() {
     <>
       {preview ? <PodcastPreviewBanner /> : null}
       {!preview ? (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: serializeJsonLd(buildPodcastHomeJsonLd(show)),
-          }}
-          type="application/ld+json"
-        />
+        <>
+          <JsonLd data={buildPodcastHomeJsonLd(show)} />
+          <JsonLd data={buildPodcastBreadcrumbJsonLd()} />
+        </>
       ) : null}
       <section className="podcast-hero">
         <Container className="podcast-hero__grid">

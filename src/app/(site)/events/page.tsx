@@ -2,15 +2,20 @@ import type { Metadata } from "next";
 
 import { EventsIndex } from "@/components/events/events-index";
 import { getPublishedEventsIndex } from "@/content/events/fetch";
+import { buildPageMetadata } from "@/lib/seo/site";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: "Events",
-  description:
-    "Upcoming Jewish cultural programs from official calendars and JOM-owned records.",
-  alternates: { canonical: "/events" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const items = await getPublishedEventsIndex().catch(() => []);
+  return buildPageMetadata({
+    title: "Events",
+    description:
+      "Upcoming Jewish cultural programs from official calendars and JOM-owned records.",
+    path: "/events",
+    index: items.length > 0,
+  });
+}
 
 export default async function EventsPage() {
   const items = await getPublishedEventsIndex().catch(() => []);

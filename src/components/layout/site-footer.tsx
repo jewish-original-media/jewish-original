@@ -26,7 +26,7 @@ export function SiteFooter() {
           <div>
             <p className={styles.footerLabel}>Explore</p>
             <ul className={styles.footerList}>
-              {siteConfig.navigation.map((item) => (
+              {siteConfig.footerExplore.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href}>{item.label}</Link>
                 </li>

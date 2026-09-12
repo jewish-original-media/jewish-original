@@ -1,8 +1,9 @@
 # News and Events
 
 Status: first live News publish on `feature/integration-homepage`. Four
-outward-linking News items are published. No Events qualified. Visual
-baseline `3c69d40` stays frozen.
+outward-linking News items are published. Homepage News is on; News stays
+out of primary nav. Footer includes News. No Events qualified. Visual
+baseline `3c69d40` stays frozen except the News desk presentation.
 
 ## Operating rule
 

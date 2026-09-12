@@ -8,6 +8,8 @@ import {
   podcastsHomePath,
 } from "@/lib/podcasts/urls";
 import { youtubeWatchUrl } from "@/lib/podcasts/youtube";
+import { serializeJsonLd } from "@/lib/seo/serialize";
+import { breadcrumbJsonLd } from "@/lib/seo/site";
 import { siteConfig } from "@/lib/site";
 
 export function podcastHomeUrl() {
@@ -205,8 +207,31 @@ export function buildPodcastEpisodeJsonLd(episode: PodcastEpisode) {
   };
 }
 
-export function serializeJsonLd(value: unknown) {
-  return JSON.stringify(value).replace(/</g, "\\u003c");
+export { serializeJsonLd };
+
+export function buildPodcastBreadcrumbJsonLd(input?: {
+  showTitle: string;
+  showSlug: string;
+  episodeTitle?: string;
+  episodeSlug?: string;
+}) {
+  const items = [
+    { name: "Jewish Original", path: "/" },
+    { name: "Podcasts", path: "/podcasts" },
+  ];
+  if (input) {
+    items.push({
+      name: input.showTitle,
+      path: `/podcasts/${input.showSlug}`,
+    });
+    if (input.episodeTitle && input.episodeSlug) {
+      items.push({
+        name: input.episodeTitle,
+        path: `/podcasts/${input.showSlug}/${input.episodeSlug}`,
+      });
+    }
+  }
+  return breadcrumbJsonLd(items);
 }
 
 export function formatEpisodeDateLabel(publishedAt: string) {

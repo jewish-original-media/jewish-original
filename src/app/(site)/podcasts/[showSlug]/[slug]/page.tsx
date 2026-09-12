@@ -21,11 +21,12 @@ import {
   formatEpisodeNumber,
   formatPublishedDate,
 } from "@/lib/podcasts/format";
+import { JsonLd } from "@/components/seo/json-ld";
 import {
+  buildPodcastBreadcrumbJsonLd,
   buildPodcastEpisodeJsonLd,
   buildPodcastEpisodeMetadata,
   podcastEpisodeUrl,
-  serializeJsonLd,
 } from "@/lib/seo/podcasts";
 
 type EpisodePageProps = {
@@ -83,12 +84,17 @@ export default async function PodcastEpisodePage({ params }: EpisodePageProps) {
         <PodcastPreviewBanner workflowStatus={episode.workflowStatus} />
       ) : null}
       {!preview ? (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: serializeJsonLd(buildPodcastEpisodeJsonLd(episode)),
-          }}
-          type="application/ld+json"
-        />
+        <>
+          <JsonLd data={buildPodcastEpisodeJsonLd(episode)} />
+          <JsonLd
+            data={buildPodcastBreadcrumbJsonLd({
+              showTitle: episode.showTitle,
+              showSlug: episode.showSlug,
+              episodeTitle: episode.title,
+              episodeSlug: episode.slug,
+            })}
+          />
+        </>
       ) : null}
       <article>
         <header className="podcast-episode-header">

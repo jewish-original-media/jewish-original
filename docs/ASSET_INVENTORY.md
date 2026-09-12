@@ -157,6 +157,12 @@ Its relationship to the approved OTD lion system should be confirmed before use.
 News and Events use no new decorative marks. Do not invent a wire or
 calendar icon family.
 
+V1 social and app icons are typography-led (`src/app/opengraph-image.tsx`,
+`icon.tsx`, `apple-icon.tsx`): Navy, Sand, and Gold with JOM lettering. The
+supplied JOM JPEG is not used there because it has a baked black field. Do
+not treat these generated marks as a redrawn logo. Replace them when a
+transparent vector master exists.
+
 ## Required follow-up assets
 
 1. Preferred web master:
