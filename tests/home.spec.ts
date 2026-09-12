@@ -63,7 +63,9 @@ test("composes the homepage from Jewish Today and published History", async ({
   await page.goto("/");
   await expect(page.getByRole("region", { name: "History" })).toBeVisible();
   await expect(
-    page.getByText(/This week in Torah|Most recent Torah portion/),
+    page.getByText(
+      /This week in Torah|Most recent Torah portion|Festival|Rosh Hashana/,
+    ),
   ).toBeVisible();
   await expect(
     page.getByRole("img", {
@@ -85,6 +87,17 @@ test("composes the homepage from Jewish Today and published History", async ({
     }
   }
   expect(visibleHistoryTitles).toHaveLength(3);
+  const originals = page.getByRole("region", { name: "Originals" });
+  await expect(originals).toBeVisible();
+  await expect(
+    originals.getByRole("heading", { name: "Our Path Forward" }),
+  ).toBeVisible();
+  await expect(
+    originals.getByRole("link", { name: "What Drives Us" }),
+  ).toBeVisible();
+  await expect(
+    originals.getByRole("link", { name: "The journal" }),
+  ).toHaveAttribute("href", "/originals");
   await expect(
     page.getByRole("heading", { name: "The Two Tall Jews Show" }),
   ).toBeVisible();
@@ -115,7 +128,6 @@ test("composes the homepage from Jewish Today and published History", async ({
   ).toHaveAttribute("href", "/news");
   await expect(following.locator("a[href^='/news/']")).toHaveCount(0);
   await expect(page.getByText("Upcoming Events")).toHaveCount(0);
-  await expect(page.getByRole("heading", { name: "Originals" })).toHaveCount(0);
   await expect(
     page
       .getByRole("region", { name: "Podcasts" })

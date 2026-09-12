@@ -89,6 +89,7 @@ test("serves generated discovery and crawler metadata", async ({ request }) => {
   const sitemap = await request.get("/sitemap.xml");
   const xml = await sitemap.text();
   expect(xml).toContain("/news");
+  expect(xml).toContain("/originals");
   expect(xml).not.toContain("/events");
   expect(xml).not.toContain("/admin");
 });

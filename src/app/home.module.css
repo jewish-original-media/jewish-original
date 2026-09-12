@@ -584,6 +584,111 @@
   text-transform: uppercase;
 }
 
+.originals {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-olive) 9%, var(--color-sand)),
+    color-mix(in srgb, var(--color-sand) 42%, var(--color-paper))
+  );
+  border-block: 1px solid var(--home-rule);
+}
+
+.originalLead {
+  max-width: 42rem;
+}
+
+.originalMeta {
+  margin: var(--space-5) 0 0;
+  color: var(--color-navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.originalTitle {
+  max-width: 14ch;
+  margin: var(--space-4) 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 5.2vw, 4.6rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+
+.originalTitle a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.originalTitle a:hover,
+.originalTitle a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.originalExcerpt {
+  max-width: 36rem;
+  margin: var(--space-6) 0 0;
+  color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  font-size: clamp(1.08rem, 1.6vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.originalRail {
+  display: grid;
+  gap: 0;
+  max-width: 36rem;
+  margin: var(--space-10) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.originalRail li {
+  border-top: 1px solid var(--home-rule);
+}
+
+.originalRail a {
+  display: grid;
+  gap: 0.35rem;
+  padding-block: 1.15rem;
+  color: inherit;
+  text-decoration: none;
+  min-height: 2.75rem;
+}
+
+.originalRail a:hover .originalRailTitle,
+.originalRail a:focus-visible .originalRailTitle {
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.originalRailTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.originalPath {
+  margin: var(--space-8) 0 0;
+}
+
+.originalPath a {
+  color: var(--color-navy);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.originalPath a:hover,
+.originalPath a:focus-visible {
+  color: var(--color-gold);
+}
+
 .news {
   background: var(--color-paper);
   border-block: 1px solid var(--home-rule);

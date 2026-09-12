@@ -10,6 +10,8 @@ const GENERIC_CONTEXT = [
   /it is important to note/i,
   /as (an? )?(ai|language model)/i,
   /readers should (know|understand) that this/i,
+  /highlights (ongoing efforts|the intersection)/i,
+  /according to reports\.?$/i,
 ];
 
 export function contextLooksGeneric(context: string) {

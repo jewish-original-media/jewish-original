@@ -1,6 +1,7 @@
 import type { PublicEventCard } from "@/content/events/types";
 import type { HistoryEntrySummary } from "@/content/history/types";
 import type { CuratedNewsCard } from "@/content/news/types";
+import type { OriginalSummary } from "@/content/originals/types";
 import type {
   PodcastEpisodeSummary,
   PodcastShow,
@@ -52,6 +53,7 @@ export type HomePageData = {
   jewishToday: import("@/features/jewish-today").JewishTodayDay;
   history: HistoryHomeContract;
   podcasts: PodcastHomeContract;
+  originals: OriginalSummary[];
   news: CuratedNewsCard[];
   events: PublicEventCard[];
 };

@@ -11,7 +11,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:jewish-today": "tsx --test tests/jewish-today-*.test.ts",
-    "test:homepage": "tsx --test tests/homepage-*.test.ts tests/public-media.test.ts tests/site-seo.test.ts",
+    "test:homepage": "tsx --test tests/homepage-*.test.ts tests/public-media.test.ts tests/site-seo.test.ts tests/site-nav.test.ts",
+    "test:originals": "tsx --test tests/originals-*.test.ts tests/site-nav.test.ts",
     "test:ingest": "tsx --test tests/ingest-*.test.ts",
     "ingest:dry-run": "tsx scripts/ingest/dry-run.ts",
     "ingest:first-publish": "tsx scripts/ingest/first-publish.ts",
@@ -31,7 +32,12 @@
     "history:prepare-editorial:dry-run": "sanity exec scripts/history/prepare-editorial-pilot.ts --with-user-token",
     "history:prepare-editorial": "sanity exec scripts/history/prepare-editorial-pilot.ts --with-user-token -- --apply",
     "history:seed-entities:dry-run": "sanity exec scripts/history/seed-editorial-pilot-entities.ts --with-user-token",
-    "history:seed-entities": "sanity exec scripts/history/seed-editorial-pilot-entities.ts --with-user-token -- --apply"
+    "history:seed-entities": "sanity exec scripts/history/seed-editorial-pilot-entities.ts --with-user-token -- --apply",
+    "originals:inspect": "tsx scripts/originals/inspect-inventory.ts",
+    "originals:publish-house:dry-run": "sanity exec scripts/originals/publish-house-essays.ts --with-user-token",
+    "originals:publish-house": "sanity exec scripts/originals/publish-house-essays.ts --with-user-token -- --apply",
+    "news:tighten-desk:dry-run": "sanity exec scripts/news/tighten-first-desk.ts --with-user-token",
+    "news:tighten-desk": "sanity exec scripts/news/tighten-first-desk.ts --with-user-token -- --apply"
   },
   "private": true,
   "engines": {

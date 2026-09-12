@@ -106,6 +106,36 @@ export const structure: StructureResolver = (S) =>
             ),
         ),
       S.divider(),
+      S.documentTypeListItem("article").title("All Originals"),
+      S.listItem()
+        .title("Originals workflow")
+        .child(
+          S.list()
+            .title("Originals workflow")
+            .items(
+              (
+                [
+                  ["Draft", "draft"],
+                  ["Review", "review"],
+                  ["Scheduled", "scheduled"],
+                  ["Published", "published"],
+                  ["Archived", "archived"],
+                ] as const
+              ).map(([title, status]) =>
+                S.listItem()
+                  .title(title)
+                  .child(
+                    S.documentList()
+                      .title(title)
+                      .apiVersion(sanityEnv.apiVersion)
+                      .schemaType("article")
+                      .filter('_type == "article" && workflowStatus == $status')
+                      .params({ status }),
+                  ),
+              ),
+            ),
+        ),
+      S.divider(),
       S.listItem()
         .title("News")
         .child(

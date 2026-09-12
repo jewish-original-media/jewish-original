@@ -2,8 +2,10 @@
 
 Status: first live News publish on `feature/integration-homepage`. Four
 outward-linking News items are published. Homepage News is on; News stays
-out of primary nav. Footer includes News. No Events qualified. Visual
-baseline `3c69d40` stays frozen except the News desk presentation.
+out of primary nav because the desk is still two publishers. Footer includes
+News. No Events qualified. Generic JOM closers were tightened against the
+same headlines. Visual baseline stays frozen except the News desk
+presentation.
 
 ## Operating rule
 
@@ -47,8 +49,8 @@ Masthead → Today → History → Manifesto → Podcasts → Support
 
 When real items exist:
 
-Masthead → Today → History → What We’re Following → Podcasts → Upcoming
-Events → Manifesto → Support
+Masthead → Today → History → Originals → What We’re Following → Podcasts →
+Upcoming Events → Manifesto → Support
 
 Homepage News hides at 0 items. Homepage Events hides below 2 upcoming items.
 Homepage News shows when at least 3 published items exist, preferring 3

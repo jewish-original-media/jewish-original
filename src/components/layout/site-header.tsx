@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { Container } from "@/components/ui/container";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, type SiteNavItem } from "@/lib/site";
 
 import styles from "./site-chrome.module.css";
 
@@ -11,14 +11,20 @@ export type SiteHeaderToday = {
   hebrewDate?: string;
 };
 
-export function SiteHeader({ today }: { today?: SiteHeaderToday }) {
+export function SiteHeader({
+  today,
+  navigation = siteConfig.navigation,
+}: {
+  today?: SiteHeaderToday;
+  navigation?: readonly SiteNavItem[];
+}) {
   return (
     <header className={styles.header}>
       <Container className={styles.bar}>
         <BrandLogo priority />
 
         <nav className={styles.primaryNav} aria-label="Primary">
-          {siteConfig.navigation.map((item) => (
+          {navigation.map((item) => (
             <Link
               key={item.href}
               className={`${styles.navLink} ${"emphasis" in item && item.emphasis ? styles.support : ""}`.trim()}
@@ -43,7 +49,7 @@ export function SiteHeader({ today }: { today?: SiteHeaderToday }) {
                 </p>
               ) : null}
               <ul className={styles.menuList}>
-                {siteConfig.navigation.map((item) => (
+                {navigation.map((item) => (
                   <li key={item.href}>
                     <Link
                       className={`${styles.menuLink} ${"emphasis" in item && item.emphasis ? styles.support : ""}`.trim()}

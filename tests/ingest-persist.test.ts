@@ -144,6 +144,12 @@ describe("first-publish selection", () => {
       contextLooksGeneric("This article discusses a vote in Israel."),
       true,
     );
+    assert.equal(
+      contextLooksGeneric(
+        "This event highlights the intersection of technology and heritage, according to reports.",
+      ),
+      true,
+    );
     const selected = selectFirstNewsBatch([
       publishDecision({
         sourceId: "jns",

@@ -26,6 +26,8 @@ test("serves /news as a text-first outward-linking desk", async ({ page }) => {
   ).toBeVisible();
   await expect(page.getByText("JTA").first()).toBeVisible();
   await expect(page.getByText("Jerusalem Post").first()).toBeVisible();
+  await expect(page.getByText(/according to reports/i)).toHaveCount(0);
+  await expect(page.getByText(/highlights the intersection/i)).toHaveCount(0);
   await expect(page.locator('a[href^="/news/"]')).toHaveCount(0);
   await expect(page.locator("main img")).toHaveCount(0);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(

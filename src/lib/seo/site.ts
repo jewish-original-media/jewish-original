@@ -103,11 +103,12 @@ export function publicStaticSitemapPaths(options?: {
     "/today",
     "/history",
     "/podcasts",
+    "/originals",
     "/news",
     "/about",
     "/support",
     "/privacy",
   ];
-  if (options?.includeEvents) paths.splice(5, 0, "/events");
+  if (options?.includeEvents) paths.splice(6, 0, "/events");
   return paths;
 }

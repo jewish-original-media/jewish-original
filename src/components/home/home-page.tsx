@@ -2,6 +2,7 @@ import { HomeEvents } from "@/components/home/home-events";
 import { HomeHistoryFeature } from "@/components/home/home-history-feature";
 import { HomeJewishToday } from "@/components/home/home-jewish-today";
 import { HomeNews } from "@/components/home/home-news";
+import { HomeOriginals } from "@/components/home/home-originals";
 import { HomePodcastFeature } from "@/components/home/home-podcast-feature";
 import { ButtonLink } from "@/components/ui/button-link";
 import {
@@ -86,6 +87,7 @@ export function HomePageView({ data }: HomePageViewProps) {
         unavailable={data.history.status === "unavailable"}
       />
 
+      {data.originals.length ? <HomeOriginals items={data.originals} /> : null}
       {showNews ? <HomeNews items={data.news} /> : null}
       {desksLive ? (
         <>

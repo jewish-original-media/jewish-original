@@ -64,6 +64,7 @@ export const HOME_INTENDED_ORDER_WHEN_POPULATED = [
   "masthead",
   "jewish-today",
   "history",
+  "originals",
   "news",
   "podcasts",
   "events",
@@ -72,15 +73,18 @@ export const HOME_INTENDED_ORDER_WHEN_POPULATED = [
 ] as const;
 
 export function resolveHomeSectionOrder(input: {
+  originalsCount?: number;
   newsCount: number;
   eventCount: number;
 }) {
+  const showOriginals = (input.originalsCount ?? 0) >= 1;
   const showNews = input.newsCount >= 3;
   const showEvents = input.eventCount >= 2;
-  if (!showNews && !showEvents) {
+  if (!showOriginals && !showNews && !showEvents) {
     return HOME_SECTION_ORDER.map((section) => section.id);
   }
   return HOME_INTENDED_ORDER_WHEN_POPULATED.filter((id) => {
+    if (id === "originals") return showOriginals;
     if (id === "news") return showNews;
     if (id === "events") return showEvents;
     return true;

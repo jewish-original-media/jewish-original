@@ -57,13 +57,14 @@ test("Originals, News, and Events stay hidden until published documents exist", 
   ]);
 });
 
-test("populated News and Events insert without inventing Originals", () => {
+test("populated Originals, News, and Events insert in journal order", () => {
   assert.deepEqual(
     [...HOME_INTENDED_ORDER_WHEN_POPULATED],
     [
       "masthead",
       "jewish-today",
       "history",
+      "originals",
       "news",
       "podcasts",
       "events",
@@ -81,4 +82,21 @@ test("populated News and Events insert without inventing Originals", () => {
     "manifesto",
     "support",
   ]);
+  assert.deepEqual(
+    resolveHomeSectionOrder({
+      originalsCount: 2,
+      newsCount: 3,
+      eventCount: 0,
+    }),
+    [
+      "masthead",
+      "jewish-today",
+      "history",
+      "originals",
+      "news",
+      "podcasts",
+      "manifesto",
+      "support",
+    ],
+  );
 });

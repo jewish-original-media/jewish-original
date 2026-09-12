@@ -1,8 +1,8 @@
 # Integration branch
 
-Status: V1 public shell plus first live News and launch-readiness
-infrastructure. Do not merge to the GitHub default branch. Do not deploy
-production. Do not attach jewishoriginal.com.
+Status: V1 public shell plus Originals journal, first live News, and
+launch-readiness infrastructure. Do not merge to the GitHub default branch.
+Do not deploy production. Do not attach jewishoriginal.com.
 
 ## Branch and worktree
 
@@ -35,8 +35,8 @@ Integration owns shared surfaces. The Podcast merge kept:
 - History’s `(site)` chrome for `/`, `/today`, `/history`, `/podcasts`,
   `/about`, `/support`, and `/privacy`
 - History + Podcast schema, unified Studio desks, and one draft-mode route
-- sitemap Home, Today, History, published History slugs, Support, and
-  published Podcast indexes only
+- sitemap Home, Today, History, published History slugs, Support,
+  published Podcast indexes, `/originals`, and published Original slugs
 - Jewish Today `/today`, Hebcal, homepage composition, and Playwright port
   `3020` / `PLAYWRIGHT_BASE_URL`
 

@@ -74,16 +74,18 @@ Exit: the homepage has trustworthy daily value with graceful failure behavior.
 - Founder-approved publication of The Two Tall Jews Show and the four pilots
   on 2026-09-04; Integration re-read published documents and did not write
 - Later: confirm official YouTube episode IDs, review transcripts, and import the remaining feed
-- Build editorial story templates and social-to-site publishing workflows after the podcast foundation is approved
+- Originals journal (`article` documents, `/originals`, homepage band, Studio
+  desk) is on Integration Preview. First public essays adapt founder About
+  copy. Do not invent additional Originals.
 
-## Next milestone — Production cutover
+## Next milestone — Final visual review, then Production cutover
 
-News + Events automation and V1 launch infrastructure are on Integration
-Preview. See `docs/V1_LAUNCH.md` and `docs/SOURCE_OF_TRUTH.md`.
+Content-depth (Originals + News maturity review) is on Integration Preview.
+See `docs/ORIGINALS.md`, `docs/V1_LAUNCH.md`, and `docs/SOURCE_OF_TRUTH.md`.
 
-Do not begin Originals. Do not expand History. Do not attach
-`jewishoriginal.com` until the founder-approved Production checklist is
-run.
+Do not expand History from Integration. Do not attach `jewishoriginal.com`
+until the founder-approved Production checklist is run after the final
+visual pass.
 
 ## Milestone 4 — Curation and distribution
 

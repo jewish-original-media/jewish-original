@@ -130,9 +130,10 @@ Gregorian month/day match. Do not persist generated calendar days. Recurring
 observances remain `historyEntry.entryKind = recurringObservance` and are not
 on-this-day History matches through History `getOnThisDayHistory`. See
 `docs/JEWISH_TODAY.md`. The homepage composes that calculated day plus
-published History cards, the published Podcast show and latest episode, and a
-Support invitation. Originals, News, and Events stay hidden until published
-documents exist. It does not become a CMS document. See `docs/HOMEPAGE.md`.
+published History cards, published Originals when they exist, the News desk
+when volume qualifies, the published Podcast show and latest episode, and a
+Support invitation. Events stay hidden until published documents earn the
+slot. It does not become a CMS document. See `docs/HOMEPAGE.md`.
 
 ## Relationships and IDs
 

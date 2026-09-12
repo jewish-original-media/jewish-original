@@ -1,6 +1,7 @@
 import { getHomepageEvents } from "@/content/events/fetch";
 import { getHistoryIndex } from "@/content/history/fetch";
 import { getHomepageNews } from "@/content/news/fetch";
+import { getHomepageOriginals } from "@/content/originals/fetch";
 import { getPublishedPodcastHome } from "@/content/podcasts/fetch";
 import { getJewishToday } from "@/features/jewish-today";
 
@@ -14,25 +15,33 @@ async function getHomepagePodcasts(): Promise<PodcastHomeContract> {
 }
 
 export async function getHomePageData(): Promise<HomePageData> {
-  const [jewishToday, publishedHistory, publishedPodcasts, news, events] =
-    await Promise.all([
-      getJewishToday(),
-      getHistoryIndex(false)
-        .then((entries) => ({ status: "live" as const, entries }))
-        .catch(() => ({ status: "unavailable" as const, entries: [] })),
-      getHomepagePodcasts().catch(() => ({
-        status: "unavailable" as const,
-        show: null,
-        episodes: [],
-      })),
-      getHomepageNews().catch(() => []),
-      getHomepageEvents().catch(() => []),
-    ]);
+  const [
+    jewishToday,
+    publishedHistory,
+    publishedPodcasts,
+    originals,
+    news,
+    events,
+  ] = await Promise.all([
+    getJewishToday(),
+    getHistoryIndex(false)
+      .then((entries) => ({ status: "live" as const, entries }))
+      .catch(() => ({ status: "unavailable" as const, entries: [] })),
+    getHomepagePodcasts().catch(() => ({
+      status: "unavailable" as const,
+      show: null,
+      episodes: [],
+    })),
+    getHomepageOriginals().catch(() => []),
+    getHomepageNews().catch(() => []),
+    getHomepageEvents().catch(() => []),
+  ]);
 
   return {
     jewishToday,
     history: publishedHistory,
     podcasts: publishedPodcasts,
+    originals,
     news,
     events,
   };

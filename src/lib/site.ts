@@ -24,4 +24,37 @@ export const siteConfig = {
   footerUtility: [{ label: "Privacy", href: "/privacy" }],
 } as const;
 
-export type SiteNavItem = (typeof siteConfig.navigation)[number];
+export type SiteNavItem = {
+  label: string;
+  href: string;
+  emphasis?: boolean;
+};
+
+export function resolvePrimaryNavigation(input?: {
+  originalsLive?: boolean;
+  newsLive?: boolean;
+}): SiteNavItem[] {
+  return [
+    { label: "Today", href: "/today" },
+    { label: "History", href: "/history" },
+    input?.originalsLive ? { label: "Originals", href: "/originals" } : null,
+    { label: "Podcasts", href: "/podcasts" },
+    input?.newsLive ? { label: "News", href: "/news" } : null,
+    { label: "About", href: "/about" },
+    { label: "Support", href: "/support", emphasis: true },
+  ].filter((item): item is SiteNavItem => item !== null);
+}
+
+export function resolveFooterExplore(input?: {
+  originalsLive?: boolean;
+}): SiteNavItem[] {
+  return [
+    { label: "Today", href: "/today" },
+    { label: "History", href: "/history" },
+    input?.originalsLive ? { label: "Originals", href: "/originals" } : null,
+    { label: "Podcasts", href: "/podcasts" },
+    { label: "News", href: "/news" },
+    { label: "About", href: "/about" },
+    { label: "Support", href: "/support" },
+  ].filter((item): item is SiteNavItem => item !== null);
+}

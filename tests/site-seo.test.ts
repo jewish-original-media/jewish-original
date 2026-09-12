@@ -17,6 +17,7 @@ test("lists only launch-ready static sitemap paths", () => {
     "/today",
     "/history",
     "/podcasts",
+    "/originals",
     "/news",
     "/about",
     "/support",

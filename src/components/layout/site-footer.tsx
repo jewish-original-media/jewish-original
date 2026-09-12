@@ -1,11 +1,15 @@
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, type SiteNavItem } from "@/lib/site";
 
 import styles from "./site-chrome.module.css";
 
-export function SiteFooter() {
+export function SiteFooter({
+  explore = siteConfig.footerExplore,
+}: {
+  explore?: readonly SiteNavItem[];
+}) {
   return (
     <footer className={styles.footer}>
       <Container className={styles.footerGrid}>
@@ -26,7 +30,7 @@ export function SiteFooter() {
           <div>
             <p className={styles.footerLabel}>Explore</p>
             <ul className={styles.footerList}>
-              {siteConfig.footerExplore.map((item) => (
+              {explore.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href}>{item.label}</Link>
                 </li>

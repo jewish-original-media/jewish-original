@@ -597,3 +597,20 @@ Ingest writes use deterministic IDs and `createOrReplace`. Allowed types:
 out of scope. First publication caps News at 10 selected items and Events
 at actual qualifying upcoming programs. Homepage News requires 3 items.
 Homepage Events require two organizers and two geography buckets.
+
+## ADR-041 — Originals are the JOM journal, not a blog
+
+**Status:** Accepted, 2026-09-12
+
+The existing `article` document is the Originals model. Do not add
+`blogPost` or `newsletterPost`. Public name is Originals. Routes are
+`/originals` and `/originals/[slug]`.
+
+The first published essays adapt founder-approved About copy: _Our Path
+Forward_ and _What Drives Us_. Do not invent additional Originals to fill
+the journal. Nav and homepage expose Originals only after a published
+essay exists.
+
+News stays out of primary nav until five strong items and three publishers
+exist. Events stay off Home, nav, and sitemap while inventory is thin.
+Production, DNS, and the GitHub default branch remain unchanged.

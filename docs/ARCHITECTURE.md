@@ -181,9 +181,10 @@ See `docs/JEWISH_TODAY.md`, `docs/HOMEPAGE.md`, and ADR-026.
 `/` is assembled by `getHomePageData()` in `src/features/homepage`. Jewish
 Today, published History, Support, and published Podcasts are live modules.
 Podcasts use the canonical published show/episode read. The homepage shows
-one latest `EpisodeCard` and routes into `/podcasts`. Originals, News, and
-Events stay hidden until published documents exist. Do not invent editorial
-items to fill those slots.
+one latest `EpisodeCard` and routes into `/podcasts`. Published Originals
+appear as a journal band. News appears when the desk has enough published
+items. Events stay hidden until published documents exist. Do not invent
+editorial items to fill empty slots.
 
 Loading and unexpected homepage errors live in `src/app/(site)/(home)/` so
 they do not wrap `/today` or `/history`. Expected Jewish Today failures stay

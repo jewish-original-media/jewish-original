@@ -1,8 +1,9 @@
 # Homepage
 
-Status: Final visual-identity pass on `feature/integration-homepage`.
-Composition still uses live History, Jewish Today, and Podcasts. Photography is
-limited to three founder-owned images. It is not a second architecture.
+Status: content-depth pass on `feature/integration-homepage`. Composition uses
+live History, Jewish Today, published Originals, News, and Podcasts.
+Photography is limited to founder-owned images. It is not a second
+architecture.
 
 The homepage is a Server Component composition. It is not a CMS document.
 
@@ -41,19 +42,18 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 2. **Jewish Today** — signature daily object from the same `JewishTodayDay`.
    Live.
 3. **History** — one lead plus two supporting archive stories. Live.
-4. **Manifesto** — one founder pause. Live while News/Events are empty.
-5. **Podcasts** — published show, latest `EpisodeCard`, remaining titles as a
-   rail. Live.
-6. **Support** — invitation into `/support`. Live.
+4. **Originals** — one featured house essay plus quieter supporting titles.
+   Live once a published Original exists.
+5. **What We’re Following** — outbound News desk. Live at three published
+   items. Not a card grid of publisher stories.
+6. **Podcasts** — published show, latest `EpisodeCard`, remaining titles as a
+   rail. Live. Moves after News when the desk is on.
+7. **Manifesto** — one founder pause. After Podcasts when News is live;
+   between History and Podcasts when News is empty.
+8. **Support** — invitation into `/support`. Live.
 
-Hidden until published documents exist:
-
-- Originals
-- What We’re Following (News) — after History, before Podcasts
-- Upcoming Events — after Podcasts, before Manifesto
-
-When both desks have real items, Manifesto moves after Events so the frozen
-empty rhythm is not disturbed until there is something to follow.
+Upcoming Events stay hidden until inventory earns the slot. Do not invent
+articles, headlines, or events.
 
 ## Jewish Today
 
@@ -87,11 +87,8 @@ title rail, not a second card system. Do not invent artwork or autoplay media.
 
 ## Originals, News, and Events
 
-See `docs/ORIGINALS.md` and `docs/NEWS_EVENTS.md`. Homepage slots stay
-hidden while empty. Do not invent articles, headlines, or events.
-
-Future visual languages, when data exists:
+See `docs/ORIGINALS.md` and `docs/NEWS_EVENTS.md`.
 
 - Originals: magazine feature plus quiet secondary stories
 - News: tighter newswire density, rules, source + JOM context
-- Events: date as the visual object
+- Events: date as the visual object; still hidden while inventory is thin

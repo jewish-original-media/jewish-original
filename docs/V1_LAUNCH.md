@@ -6,6 +6,7 @@ DNS, and `main` cutover are not done.
 ## Live public inventory
 
 - History: 5 published articles
+- Originals: 2 published house essays
 - Podcasts: 1 show, 4 episodes
 - News: 4 outbound items, 2 publishers; homepage module on; nav off
 - Events: 0 published; route intact; homepage, nav, and sitemap off
@@ -13,10 +14,11 @@ DNS, and `main` cutover are not done.
 
 ## Public chrome
 
-Primary nav: Today, History, Podcasts, About, Support.
+Primary nav: Today, History, Originals, Podcasts, About, Support.
 
-Footer adds News because the desk is live. Events stay out until inventory
-is meaningfully broader.
+Footer adds Originals and News. Events stay out until inventory is
+meaningfully broader. News stays out of primary nav until five strong items
+and three publishers exist.
 
 ## Trust
 
@@ -37,8 +39,9 @@ Preview deployments send `robots.txt` disallow-all. Production robots will
 allow `/` and disallow `/admin/` and `/api/`.
 
 Sitemap includes Home, Today, History (published slugs only), Podcasts
-(published show/episodes only), News, About, Support, Privacy. No Events, no
-drafts, no `/admin`, no query URLs, no podcast dev fixture.
+(published show/episodes only), Originals (published slugs only), News,
+About, Support, Privacy. No Events, no drafts, no `/admin`, no query URLs,
+no podcast dev fixture.
 
 Default social image is typography-led (`opengraph-image`). Favicon and app
 icon are typography-led “JO” marks. The supplied JOM raster logo is not used
@@ -52,11 +55,12 @@ for social or icons because it has a baked black field.
 4. Protect `main`
 5. Verify Production env vars (read token, draft secret, site URL, analytics)
 6. Do not enable ingest writes or cron on Production until founder approval
-7. Production smoke of `/`, `/today`, `/history`, `/podcasts`, `/news`, `/about`, `/support`, `/privacy`
+7. Production smoke of `/`, `/today`, `/history`, `/originals`, `/podcasts`, `/news`, `/about`, `/support`, `/privacy`
 8. Attach `jewishoriginal.com` and `www` with apex/www redirect
 9. Confirm SSL
 10. Add Search Console and submit `/sitemap.xml`
 
 ## Next
 
-Founder Production cutover. Not Originals. Not History expansion.
+Founder visual pass on the content-rich Preview, then Production cutover.
+Not History expansion from Integration. Not DNS from this branch.

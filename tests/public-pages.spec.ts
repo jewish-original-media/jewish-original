@@ -19,12 +19,18 @@ test("public navigation and footer expose only live destinations", async ({
     "/today",
   );
   await expect(nav.getByRole("link", { name: "History" })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Originals" })).toHaveAttribute(
+    "href",
+    "/originals",
+  );
   await expect(nav.getByRole("link", { name: "Podcasts" })).toBeVisible();
   await expect(nav.getByRole("link", { name: "About" })).toBeVisible();
   await expect(nav.getByRole("link", { name: "Support" })).toBeVisible();
   await expect(nav.getByRole("link", { name: "News" })).toHaveCount(0);
   await expect(nav.getByRole("link", { name: "Events" })).toHaveCount(0);
-  await expect(nav.getByRole("link", { name: "Originals" })).toHaveCount(0);
+  await expect(
+    page.getByRole("contentinfo").getByRole("link", { name: "Originals" }),
+  ).toHaveAttribute("href", "/originals");
   await expect(
     page.getByRole("contentinfo").getByRole("link", { name: "News" }),
   ).toHaveAttribute("href", "/news");
