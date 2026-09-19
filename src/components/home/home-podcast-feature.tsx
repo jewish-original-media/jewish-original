@@ -118,7 +118,7 @@ export function HomePodcastFeature({
             ) : null}
             {podcasts.more.length > 0 ? (
               <ol className={styles.episodeRail}>
-                {podcasts.more.map((episode) => (
+                {podcasts.more.slice(0, 2).map((episode) => (
                   <li key={episode._id}>
                     <Link
                       href={podcastEpisodePath(episode.showSlug, episode.slug)}

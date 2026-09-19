@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import type { OriginalArticle } from "@/content/originals/types";
-import { authorLine } from "@/lib/originals/display";
+import { authorLine, isSampleOriginal } from "@/lib/originals/display";
 import { breadcrumbJsonLd } from "@/lib/seo/site";
 import { siteConfig } from "@/lib/site";
 
@@ -68,6 +68,7 @@ export function buildOriginalMetadata(
   const image = article.featuredMedia?.asset.url;
   const socialTitle =
     article.seo?.openGraphTitle || article.seo?.title || article.title;
+  const sample = isSampleOriginal(article.slug);
 
   return {
     title,
@@ -76,7 +77,7 @@ export function buildOriginalMetadata(
       canonical: article.seo?.canonicalUrl || url,
     },
     robots:
-      preview || article.seo?.noIndex
+      preview || sample || article.seo?.noIndex
         ? { index: false, follow: false }
         : { index: true, follow: true },
     openGraph: {
@@ -101,6 +102,7 @@ export function buildOriginalMetadata(
 
 export function buildOriginalJsonLd(article: OriginalArticle) {
   const url = originalArticleUrl(article.slug);
+  const sample = isSampleOriginal(article.slug);
   return {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -110,10 +112,12 @@ export function buildOriginalJsonLd(article: OriginalArticle) {
     mainEntityOfPage: url,
     datePublished: article.publishedAt || article._createdAt,
     dateModified: article._updatedAt,
-    author: article.authors.map((author) => ({
-      "@type": "Person",
-      name: author.name,
-    })),
+    author: sample
+      ? []
+      : article.authors.map((author) => ({
+          "@type": "Person",
+          name: author.name,
+        })),
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,

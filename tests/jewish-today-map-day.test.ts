@@ -40,6 +40,7 @@ describe("Hebcal day mapping", () => {
     assert.equal(day.parashah?.title, "Nitzavim-Vayeilech");
     assert.equal(day.parashah?.observedOn, "2026-09-05");
     assert.equal(day.parashah?.readingKind, "thisWeek");
+    assert.deepEqual(day.parashah?.torahReadings, ["Deuteronomy 29:9-31:30"]);
     assert.equal(day.festivalShabbat, undefined);
     assert.deepEqual(day.holidays, []);
     assert.equal(day.onThisDay.length, 0);

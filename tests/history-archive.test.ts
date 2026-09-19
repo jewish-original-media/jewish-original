@@ -3,8 +3,10 @@ import test from "node:test";
 
 import {
   collectPublishedFacets,
+  filterAndSortHistoryArchive,
   historyArchiveHref,
   historyCardLocation,
+  paginateHistoryArchive,
   parseHistoryArchiveSearch,
 } from "../src/content/history/archive";
 import type { HistoryEntrySummary } from "../src/content/history/types";
@@ -12,6 +14,7 @@ import { buildHistoryArchiveMetadata } from "../src/lib/seo/history";
 
 const dachau: HistoryEntrySummary = {
   _id: "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc",
+  _createdAt: "2026-08-30T12:00:00Z",
   title: "US Liberates Dachau",
   slug: "us-liberates-dachau",
   excerpt: "American troops liberated Dachau on April 29, 1945.",
@@ -39,32 +42,80 @@ const dachau: HistoryEntrySummary = {
 test("parses date and taxonomy archive search without inventing values", () => {
   assert.deepEqual(parseHistoryArchiveSearch({}), {
     filter: undefined,
+    query: undefined,
+    topic: undefined,
+    place: undefined,
     month: undefined,
     day: undefined,
+    sort: "historical-newest",
+    page: 1,
     isBrowsing: false,
   });
   assert.deepEqual(parseHistoryArchiveSearch({ month: "4", day: "29" }), {
     filter: undefined,
+    query: undefined,
+    topic: undefined,
+    place: undefined,
     month: 4,
     day: 29,
+    sort: "historical-newest",
+    page: 1,
     isBrowsing: true,
   });
   assert.deepEqual(parseHistoryArchiveSearch({ day: "29" }), {
     filter: undefined,
+    query: undefined,
+    topic: undefined,
+    place: undefined,
     month: undefined,
     day: undefined,
+    sort: "historical-newest",
+    page: 1,
     isBrowsing: false,
   });
   assert.deepEqual(parseHistoryArchiveSearch({ topic: "holocaust" }), {
     filter: { type: "topic", slug: "holocaust" },
+    query: undefined,
+    topic: "holocaust",
+    place: undefined,
     month: undefined,
     day: undefined,
+    sort: "historical-newest",
+    page: 1,
     isBrowsing: true,
   });
   assert.equal(
     parseHistoryArchiveSearch({ topic: "not a slug" }).filter,
     undefined,
   );
+});
+
+test("searches and combines public fields before pagination", () => {
+  const tripoli: HistoryEntrySummary = {
+    ...dachau,
+    _id: "tripoli",
+    _createdAt: "2026-09-02T12:00:00Z",
+    title: "Anti-Jewish Riots Break Out in Tripoli, Libya",
+    slug: "anti-jewish-riots-tripoli",
+    historicalDate: {
+      calendarSystem: "gregorian",
+      precision: "day",
+      start: { year: 1945, month: 11, day: 5 },
+    },
+    topics: [{ name: "Antisemitism", slug: "antisemitism" }],
+    places: [{ name: "Tripoli", slug: "tripoli" }],
+  };
+  const search = parseHistoryArchiveSearch({
+    q: "tripoli antisemitism",
+    place: "tripoli",
+    sort: "added-newest",
+  });
+  const results = filterAndSortHistoryArchive([dachau, tripoli], search);
+  assert.deepEqual(
+    results.map((entry) => entry.slug),
+    ["anti-jewish-riots-tripoli"],
+  );
+  assert.equal(paginateHistoryArchive(results, 4).page, 1);
 });
 
 test("builds durable archive query URLs instead of empty taxonomy routes", () => {

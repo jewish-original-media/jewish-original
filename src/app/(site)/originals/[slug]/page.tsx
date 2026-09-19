@@ -13,6 +13,7 @@ import {
   buildOriginalMetadata,
   buildOriginalsBreadcrumbJsonLd,
 } from "@/lib/seo/originals";
+import { isSampleOriginal } from "@/lib/originals/display";
 
 type OriginalPageProps = {
   params: Promise<{ slug: string }>;
@@ -52,12 +53,13 @@ export default async function OriginalArticlePage({
   ]);
   const article = await getOriginalArticle(slug, preview);
   if (!article) notFound();
+  const sample = isSampleOriginal(article.slug);
 
   return (
     <>
       {!preview ? (
         <>
-          <JsonLd data={buildOriginalJsonLd(article)} />
+          {!sample ? <JsonLd data={buildOriginalJsonLd(article)} /> : null}
           <JsonLd
             data={buildOriginalsBreadcrumbJsonLd({
               title: article.title,

@@ -5,6 +5,7 @@ import { historyCardLocation } from "@/content/history/archive";
 import type { HistoryEntrySummary } from "@/content/history/types";
 import type { HomeHistoryPresentation } from "@/features/homepage/history";
 import { formatHistoricalDate } from "@/lib/history/format-date";
+import { firstSentence } from "@/lib/jewish-today/display";
 
 import styles from "@/app/home.module.css";
 
@@ -33,7 +34,9 @@ function LeadHistory({ entry }: { entry: HistoryEntrySummary }) {
         <Link href={`/history/${entry.slug}`}>{entry.title}</Link>
       </h3>
       {entry.excerpt ? (
-        <p className={styles.historyExcerpt}>{entry.excerpt}</p>
+        <p className={styles.historyExcerpt}>
+          {firstSentence(entry.excerpt, 140)}
+        </p>
       ) : null}
       <p className={styles.historyMeta}>
         {[topics, location].filter(Boolean).join(" · ")}
@@ -62,7 +65,9 @@ function SupportingHistory({ entry }: { entry: HistoryEntrySummary }) {
         <Link href={`/history/${entry.slug}`}>{entry.title}</Link>
       </h3>
       {entry.excerpt ? (
-        <p className={styles.supportingExcerpt}>{entry.excerpt}</p>
+        <p className={styles.supportingExcerpt}>
+          {firstSentence(entry.excerpt, 110)}
+        </p>
       ) : null}
       {location ? <p className={styles.historyMeta}>{location}</p> : null}
     </article>

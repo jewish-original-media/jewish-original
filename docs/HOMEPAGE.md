@@ -46,12 +46,12 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 3. **History** — one lead plus two supporting archive stories, with
    headlines taking priority over dates. Live.
 4. **Originals** — one featured house essay plus quieter supporting titles
-   in a two-column journal arrangement. Live once a published Original
-   exists.
+   in a two-column journal arrangement. Placeholder essays carry the same
+   sample notice as the journal and do not display founder bylines.
 5. **What We’re Following** — outbound News desk. Live at three published
    items. Not a card grid of publisher stories.
-6. **Podcasts** — published show, latest `EpisodeCard`, remaining titles as a
-   rail beside the founder portrait. Live. Always follows News when the
+6. **Podcasts** — published show, latest `EpisodeCard`, and at most two
+   supporting titles beside the founder portrait. Live. Always follows News when the
    desk is on; no longer waits on a manifesto pause.
 7. **Support** — visitor-facing invitation into `/support`. Live.
 
@@ -88,8 +88,9 @@ column. Do not insert empty image boxes.
 
 Published `getPublishedPodcastHome()` and `EpisodeCard` for the latest
 episode. The navy field now includes the founder-owned Meyer + Isaac street
-photograph with a museum caption. Additional published episodes appear as a
-title rail, not a second card system. Do not invent artwork or autoplay media.
+photograph with a museum caption. At most two additional published episodes
+appear as a title rail, not a second card system. Do not invent artwork or
+autoplay media.
 
 ## Originals, News, and Events
 

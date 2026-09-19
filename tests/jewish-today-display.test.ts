@@ -5,6 +5,7 @@ import {
   calendarHighlights,
   firstSentence,
   formatParashahDisplayTitle,
+  sefariaPassageHref,
   torahPortionLabel,
 } from "../src/lib/jewish-today/display";
 
@@ -41,5 +42,12 @@ describe("Jewish Today display helpers", () => {
   it("does not call a fallback portion this week in Torah", () => {
     assert.equal(torahPortionLabel("thisWeek"), "This week in Torah");
     assert.equal(torahPortionLabel("recent"), "Most recent Torah portion");
+  });
+
+  it("links a verified Torah reference to Sefaria", () => {
+    assert.equal(
+      sefariaPassageHref("Deuteronomy 29:9-31:30"),
+      "https://www.sefaria.org/Deuteronomy_29.9-31.30?lang=bi",
+    );
   });
 });

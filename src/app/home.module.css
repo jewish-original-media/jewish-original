@@ -636,6 +636,17 @@
   line-height: 1.6;
 }
 
+.originalSample {
+  width: fit-content;
+  margin: var(--space-5) 0 0;
+  border-inline-start: 2px solid var(--color-gold);
+  padding-inline-start: var(--space-4);
+  color: var(--color-navy);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  line-height: 1.5;
+}
+
 .originalRail {
   display: grid;
   gap: 0;
@@ -1034,7 +1045,7 @@
 }
 
 .exhibition .wordmark::after {
-  display: none;
+  display: block;
 }
 
 .exhibition .display {
@@ -1363,6 +1374,73 @@
 .exhibition .supportAction {
   grid-column: 2;
   justify-self: start;
+}
+
+.exhibition .news {
+  background: var(--color-paper);
+}
+
+.exhibition .newsTitle {
+  max-width: 14ch;
+  margin: var(--space-4) 0 var(--space-8);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1.08;
+}
+
+.exhibition .newsLead {
+  padding-bottom: var(--space-5);
+}
+
+.exhibition .newsLeadLink .newsHeadline {
+  max-width: 28ch;
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+}
+
+.exhibition .newsContext {
+  max-width: 42ch;
+}
+
+.exhibition .events {
+  background: color-mix(in srgb, var(--color-sand) 62%, var(--color-canvas));
+}
+
+.exhibition .eventsTitle {
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1.08;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .exhibition .display {
+    animation: exhibition-rise 560ms var(--ease-enter) both;
+  }
+
+  .exhibition .lede,
+  .exhibition .heroActions {
+    animation: exhibition-rise 560ms var(--ease-enter) 80ms both;
+  }
+
+  .exhibition .heroFigure {
+    animation: exhibition-rise 620ms var(--ease-enter) 120ms both;
+  }
+
+  .primaryPath,
+  .secondaryPath,
+  .chapterNav a {
+    transition:
+      background-color var(--duration-standard) var(--ease-standard),
+      color var(--duration-standard) var(--ease-standard),
+      border-color var(--duration-standard) var(--ease-standard);
+  }
+}
+
+@keyframes exhibition-rise {
+  from {
+    translate: 0 0.7rem;
+  }
+
+  to {
+    translate: 0 0;
+  }
 }
 
 @media (max-width: 55.98rem) {

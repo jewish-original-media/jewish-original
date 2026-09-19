@@ -71,6 +71,7 @@ export type HistoryImage = {
 
 export type HistoryEntrySummary = {
   _id: string;
+  _createdAt?: string;
   title: string;
   slug: string;
   excerpt?: string;

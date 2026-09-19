@@ -84,12 +84,15 @@ scale.
 
 History archive scale:
 
-- Landing H1 reuses the article display scale: “On this day in Jewish history.”
-- Featured card title: `clamp(1.85rem, 3.4vw, 2.75rem)`, serif, max 18ch
+- Landing H1 reuses the article display scale: “Explore Jewish history.”
 - Archive list title: `clamp(1.25rem, 1.8vw, 1.6rem)`, serif
 - Related titles stay on the smaller article scale
-- Date browse uses native month/day selects, not a 365-day grid
-- Taxonomy links are compact sentence-case lists, not filter chips
+- Search is the first control. Date, Topic, Place, and Sort live in a native
+  disclosure labeled Filters.
+- Controls use square native inputs and selects, not a dashboard panel.
+- Active choices use removable chips because they communicate query state;
+  result cards remain typographic and unboxed.
+- Date browse uses native month/day selects, not a 365-day grid.
 
 Archive cards must work with and without a rights-cleared 16:9 image. The
 no-image treatment is typographic. Do not insert a generic photograph or an

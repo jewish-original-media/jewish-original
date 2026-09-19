@@ -5,7 +5,11 @@ import { HistoryCitations } from "@/components/history/history-citations";
 import { OriginalsBody } from "@/components/originals/originals-body";
 import { Container } from "@/components/ui/container";
 import type { OriginalArticle } from "@/content/originals/types";
-import { authorLine, formatOriginalDate } from "@/lib/originals/display";
+import {
+  formatOriginalDate,
+  isSampleOriginal,
+  SAMPLE_ORIGINAL_NOTICE,
+} from "@/lib/originals/display";
 
 import styles from "@/app/originals.module.css";
 
@@ -16,6 +20,7 @@ export function OriginalsArticleView({
   article: OriginalArticle;
   preview: boolean;
 }) {
+  const sample = isSampleOriginal(article.slug);
   const relatedHistory = article.relatedHistory.filter((item) => item.entry);
   const relatedPodcasts = article.relatedPodcastEpisodes.filter(
     (item) => item.episode?.showSlug && item.episode.slug,
@@ -43,8 +48,11 @@ export function OriginalsArticleView({
           {article.excerpt ? (
             <p className={styles.articleLede}>{article.excerpt}</p>
           ) : null}
+          {sample ? (
+            <p className={styles.sampleBanner}>{SAMPLE_ORIGINAL_NOTICE}</p>
+          ) : null}
           <p className={styles.articleMeta}>
-            <span>{authorLine(article.authors) || "Jewish Original"}</span>
+            <span>{sample ? "Editorial sample" : "Jewish Original"}</span>
             {article.publishedAt ? (
               <time dateTime={article.publishedAt}>
                 {formatOriginalDate(article.publishedAt)}

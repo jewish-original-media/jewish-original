@@ -627,3 +627,26 @@ navigation numbers live destinations; Originals remains conditional. The
 manifesto band is removed because that founder line now lives in the published
 house essay. Production, DNS, Sanity writes, and the GitHub default branch
 remain unchanged.
+
+## ADR-043 — V1 discovery is URL-backed and editorially honest
+
+**Status:** Accepted, 2026-09-19
+
+History discovery operates over the complete public-ready summary query before
+pagination. Search covers only text already present on eligible summaries.
+Topic, Place, Gregorian month/day, historical oldest/newest, and Recently
+Added combine through GET parameters so links are durable and browser Back
+works without a client state store. Recently Added means Sanity `_createdAt`;
+it is never presented as the historical date.
+
+Jewish Today remains Eastern Time and Diaspora (`i=off`). Hebcal’s verified
+`leyning.torah` references produce Sefaria study links. Missing references
+produce no link. Gregorian History anniversaries remain separate from Hebrew
+calendar information, and unmatched dates receive an archive invitation
+instead of an unrelated story.
+
+`our-path-forward` and `what-drives-us` are presentation-level samples until
+approved replacements exist. They retain their source records, show the exact
+sample notice, suppress founder bylines and Article author metadata, are
+`noindex`, and stay out of the sitemap. No Sanity write, Production change,
+DNS change, or default-branch change is involved.

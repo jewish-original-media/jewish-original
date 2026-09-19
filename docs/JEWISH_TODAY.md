@@ -31,11 +31,14 @@ Global navigation and footer were not changed in this milestone.
 
 **Technical rule:** the civil Gregorian date in `America/New_York`.
 
-**User-facing language:** “Shown for Eastern Time. Jewish days begin at sunset.”
+**User-facing language:** “Shown for Eastern Time. Jewish days begin at sunset.
+Torah readings follow the Diaspora calendar.”
 
 This version does not use the visitor’s timezone, Jerusalem time, sunset
-rollover, candle-lighting, or location consent. Diaspora Torah readings
-(`i=off`) match the Eastern Time civil date.
+rollover, candle-lighting, or location consent. The displayed Hebrew date is
+the Hebcal date attached to the Eastern civil date. The interface names the
+sunset boundary but does not claim a location-specific halachic rollover.
+Diaspora Torah readings (`i=off`) match the Eastern Time civil date.
 
 ## Information hierarchy
 
@@ -43,12 +46,13 @@ A daily visit should answer, in this order:
 
 1. What Jewish day is it?
 2. Where are we in Torah this week?
-3. Is anything being observed today?
-4. What happened on this date in Jewish history?
+3. What happened on this Gregorian date in Jewish history?
+4. Is anything else being observed today?
 
-Empty sections are omitted. Do not invent observances, History matches, or
-Torah readings. An ordinary weekday should still show the weekly portion when
-Hebcal provides one.
+Do not invent observances, History matches, or Torah readings. The History
+section uses a quiet archive invitation when there is no exact Gregorian
+anniversary match. An ordinary weekday should still show the weekly portion
+when Hebcal provides one.
 
 ## Data contract
 
@@ -90,14 +94,18 @@ the previous Saturday through the next Saturday inclusive. That keeps last
 week’s portion available when the coming Saturday is a festival and Hebcal
 emits no `parashat` in the forward days.
 
-`selectUpcomingParashahItem()` in `src/integrations/hebcal/map-day.ts` takes
+Hebcal leyning is enabled. `selectUpcomingParashahItem()` in
+`src/integrations/hebcal/map-day.ts` takes
 the first `parashat` item whose civil date is on or after today. If the range
 only contains an earlier portion, it falls back to the first `parashat` item
 in the response and marks `readingKind: "recent"`. Display then says **Most
 recent Torah portion**, never **This week in Torah**. If the coming Saturday
 is a Hebcal `yomtov` without a weekly portion, `festivalShabbat` carries that
-holiday. Hebcal leyning is not fetched, so the site does not invent a
-festival reading title. Stored titles stay hyphenated (`Nitzavim-Vayeilech`)
+holiday. Verified `leyning.torah` references are split into passages and linked
+to Sefaria using Sefaria’s documented text-reference URL format. Combined
+portions remain one verified range; holiday readings may expose more than one
+passage. If Hebcal supplies no reference, no study link appears. Stored titles
+stay hyphenated (`Nitzavim-Vayeilech`)
 to match Hebcal. Display uses an en dash (`Nitzavim–Vayeilech`). Empty
 remains empty when Hebcal returns no portion at all.
 

@@ -21,7 +21,7 @@ export function buildHebcalCalendarUrl(
     s: "on",
     o: "on",
     d: "on",
-    leyning: "off",
+    leyning: "on",
     i: "off",
     c: "off",
     hdp: "1",

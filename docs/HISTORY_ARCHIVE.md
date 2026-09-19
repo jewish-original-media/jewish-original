@@ -1,12 +1,10 @@
 # History Archive and Discovery
 
-Status: V1 public archive on `milestone-1-sanity-history`. Five History
-articles are published: `US Liberates Dachau`, `Joop Westerweel Is
-Murdered at Vught`, `Bialystok Ghetto Is Sealed`, `Samuel Willenberg Dies`,
-and `Anti-Jewish Riots Break Out in Tripoli, Libya`. Remaining first-20
-drafts stay unpublished. This page
-is the public home of **On This Day in Jewish History** and the broader
-Jewish Original historical archive.
+Status: V1 public discovery interface on `feature/integration-homepage`.
+Only public Sanity History documents with `workflowStatus == "ready"` are
+eligible. Drafts and other workflow states stay unpublished. This page is the
+public home of **On This Day in Jewish History** and the broader Jewish
+Original historical archive.
 
 ## Information architecture
 
@@ -17,7 +15,8 @@ Public routes in this milestone:
 | `/history`                                                                 | Archive landing and discovery home | Yes                      |
 | `/history/[slug]`                                                          | Reviewed History article           | Yes, when published      |
 | `/history?month=&day=`                                                     | Civil-date browse                  | No; canonical `/history` |
-| `/history?topic=` / `era` / `place` / `region` / `person` / `organization` | Taxonomy browse                    | No; canonical `/history` |
+| `/history?q=&topic=&place=&sort=&page=`                                    | Search, filter, sort, pagination   | No; canonical `/history` |
+| Legacy `era` / `region` / `person` / `organization` query links            | Backward-compatible taxonomy view  | No; canonical `/history` |
 
 No `/history/topic/[slug]`, `/history/era/[slug]`, or `/history/place/[slug]`
 routes yet. Query parameters are enough while the public collection is small.
@@ -28,17 +27,19 @@ Sitemap includes `/history` and published article slugs only.
 
 ## Progressive disclosure
 
-The landing is designed for one published story and for hundreds later.
+The landing is designed for a small collection and for hundreds later.
 
-- The hero names the product even when today has no matching story.
-- **Today in Jewish History** appears only when a published Gregorian
-  month/day match exists. It is omitted rather than filled with invented copy.
-- **From the archive** features the newest published story. That story is not
-  repeated in a second list until more published entries exist.
-- **Browse the archive** offers date lookup plus taxonomy links derived from
-  published entries only.
-- People and Organizations stay hidden until a published story actually
-  references them.
+- The hero gives search priority and offers a direct link to today’s civil
+  month/day.
+- Search, filtering, and sorting run against the full eligible collection
+  before pagination.
+- Search covers titles, excerpts, people, places, topics, eras, regions, and
+  organizations already present on public summaries.
+- Topic and place are the visible V1 facets. Their options are derived only
+  from eligible public entries.
+- Date, topic, place, sort, and page state live in the URL. Native GET
+  navigation preserves browser Back and works without client JavaScript.
+- Six results appear per page. Empty states never substitute unrelated stories.
 
 ## Today in Jewish History
 
@@ -78,8 +79,9 @@ make a year axis meaningful.
 ## Taxonomy discovery
 
 Facets are collected from published History summaries, not from the full
-Sanity taxonomy catalog. Empty groups do not render. The reusable pattern is
-`HistoryTaxonomyNav` plus query-parameter filters.
+Sanity taxonomy catalog. The initial interface exposes Topic and Place inside
+the secondary **Filters** control. Legacy taxonomy query parameters continue
+to resolve so old links do not break.
 
 ## Cards and images
 
@@ -93,11 +95,13 @@ Cards show date, title, excerpt, topics, and a place when present. A 16:9
 image appears only when `primaryImage` is rights-cleared. No-image cards are
 typographic. There is no generic photograph and no empty image well.
 
-## Search
+## Search and sort
 
-No Algolia or other paid search. Keyword search is deferred. Date and
-taxonomy query parameters are the V1 filter foundation and can later accept
-`q=` without changing the route.
+No Algolia or other paid search is needed for V1. Server-side in-memory search
+operates on the complete published summary query, then combines exact facet
+and Gregorian date filters. Historical newest/oldest sort uses
+`historicalDate.start`. **Recently added** uses Sanity `_createdAt` and is
+labeled separately so ingest time is never confused with historical time.
 
 ## Motion
 

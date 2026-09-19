@@ -2,7 +2,11 @@ import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
 import type { OriginalSummary } from "@/content/originals/types";
-import { authorLine, formatOriginalDate } from "@/lib/originals/display";
+import {
+  formatOriginalDate,
+  isSampleOriginal,
+  SAMPLE_ORIGINAL_NOTICE,
+} from "@/lib/originals/display";
 
 import styles from "@/app/originals.module.css";
 
@@ -57,13 +61,18 @@ function OriginalTeaser({
   headingLevel: "h2" | "h3";
   item: OriginalSummary;
 }) {
+  const sample = isSampleOriginal(item.slug);
+
   return (
     <Link href={`/originals/${item.slug}`}>
       <p className={styles.meta}>
-        {authorLine(item.authors) || "Jewish Original"}
+        {sample ? "Editorial sample" : "Jewish Original"}
         {item.publishedAt ? ` · ${formatOriginalDate(item.publishedAt)}` : ""}
       </p>
       <Heading className={styles.headline}>{item.title}</Heading>
+      {sample ? (
+        <p className={styles.sampleNotice}>{SAMPLE_ORIGINAL_NOTICE}</p>
+      ) : null}
       {item.excerpt ? <p className={styles.excerpt}>{item.excerpt}</p> : null}
     </Link>
   );

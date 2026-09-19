@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { HistoryEntryCard } from "@/components/history/history-entry-card";
 import { Container } from "@/components/ui/container";
 import type { JewishTodayDay } from "@/features/jewish-today";
@@ -5,6 +7,7 @@ import { formatGregorianLabel } from "@/features/jewish-today/timezone";
 import {
   calendarHighlights,
   formatParashahDisplayTitle,
+  sefariaPassageHref,
   torahPortionLabel,
 } from "@/lib/jewish-today/display";
 
@@ -43,7 +46,8 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
             </p>
           ) : null}
           <p className={styles.note}>
-            Shown for Eastern Time. Jewish days begin at sunset.
+            Shown for Eastern Time. Jewish days begin at sunset. Torah readings
+            follow the Diaspora calendar.
           </p>
           {!calendarReady ? (
             <p className={styles.status} role="status">
@@ -97,6 +101,21 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
             <p className={styles.meta}>
               {`Read ${formatGregorianLabel(day.festivalShabbat.observedOn)}`}
             </p>
+            {day.festivalShabbat.torahReadings.length ? (
+              <ul className={styles.studyLinks}>
+                {day.festivalShabbat.torahReadings.map((reading) => (
+                  <li key={reading}>
+                    <a
+                      href={sefariaPassageHref(reading)}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      Study {reading} on Sefaria
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </Container>
         </section>
       ) : null}
@@ -118,6 +137,21 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
                 ? "Read this Shabbat"
                 : `Read ${formatGregorianLabel(day.parashah.observedOn)}`}
             </p>
+            {day.parashah.torahReadings.length ? (
+              <ul className={styles.studyLinks}>
+                {day.parashah.torahReadings.map((reading) => (
+                  <li key={reading}>
+                    <a
+                      href={sefariaPassageHref(reading)}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      Study {reading} on Sefaria
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </Container>
         </section>
       ) : null}
@@ -128,9 +162,9 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
           aria-labelledby="today-in-history"
         >
           <Container size="content">
-            <p className="eyebrow">From the archive</p>
+            <p className="eyebrow">Gregorian anniversary</p>
             <h2 className={styles.sectionTitle} id="today-in-history">
-              Today in Jewish History
+              On This Day in Jewish history
             </h2>
             <div className={styles.historyList}>
               {day.onThisDay.map((entry) => (
@@ -143,7 +177,29 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
             </div>
           </Container>
         </section>
-      ) : null}
+      ) : (
+        <section
+          className={styles.historySection}
+          aria-labelledby="today-in-history"
+        >
+          <Container size="content">
+            <p className="eyebrow">Gregorian anniversary</p>
+            <h2 className={styles.sectionTitle} id="today-in-history">
+              On This Day in Jewish history
+            </h2>
+            <p className={styles.historyEmpty}>
+              No published archive story is attached to this Gregorian
+              anniversary yet.
+            </p>
+            <Link
+              className={styles.archiveLink}
+              href={`/history?month=${Number(day.gregorianDate.slice(5, 7))}&day=${Number(day.gregorianDate.slice(8, 10))}`}
+            >
+              Explore this date in the archive
+            </Link>
+          </Container>
+        </section>
+      )}
 
       <footer className={styles.credit}>
         <Container>

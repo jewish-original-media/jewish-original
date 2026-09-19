@@ -14,7 +14,10 @@
       "date": "2026-09-05",
       "hdate": "23 Elul 5786",
       "category": "parashat",
-      "hebrew": "פרשת נצבים־וילך"
+      "hebrew": "פרשת נצבים־וילך",
+      "leyning": {
+        "torah": "Deuteronomy 29:9-31:30"
+      }
     }
   ]
 }

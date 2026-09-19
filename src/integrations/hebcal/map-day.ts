@@ -80,6 +80,15 @@ function parashahTitle(title: string): string {
   return title.replace(/^Parashat\s+/u, "").trim() || title;
 }
 
+function torahReadings(item: HebcalItem): string[] {
+  return (
+    item.leyning?.torah
+      ?.split(";")
+      .map((reading) => reading.trim())
+      .filter(Boolean) ?? []
+  );
+}
+
 export function selectUpcomingParashahItem(
   items: HebcalItem[],
   gregorianDate: string,
@@ -125,6 +134,7 @@ export function selectFestivalShabbat(
   return {
     title: festival.title,
     observedOn: nextSaturday,
+    torahReadings: torahReadings(festival),
     ...(festival.hebrew ? { titleHebrew: festival.hebrew } : {}),
     ...(festival.memo ? { memo: festival.memo } : {}),
   };
@@ -274,6 +284,7 @@ function parashahFromItem(
     title: parashahTitle(item.title),
     observedOn: itemCivilDate(item),
     readingKind,
+    torahReadings: torahReadings(item),
     ...(item.hebrew ? { titleHebrew: item.hebrew } : {}),
     ...(item.memo ? { memo: item.memo } : {}),
   };

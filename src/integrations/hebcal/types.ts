@@ -28,6 +28,9 @@ export type HebcalItem = {
   title_orig?: string;
   heDateParts?: HebcalHeDateParts;
   omer?: HebcalOmerDetails;
+  leyning?: {
+    torah?: string;
+  };
   link?: string;
 };
 

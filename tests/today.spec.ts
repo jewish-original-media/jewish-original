@@ -24,6 +24,14 @@ test("renders an ordinary weekday without empty sections", async ({
     page.getByRole("heading", { name: /nitzavim.vayeilech/i }),
   ).toBeVisible();
   await expect(
+    page.getByRole("link", {
+      name: "Study Deuteronomy 29:9-31:30 on Sefaria",
+    }),
+  ).toHaveAttribute(
+    "href",
+    "https://www.sefaria.org/Deuteronomy_29.9-31.30?lang=bi",
+  );
+  await expect(
     page.getByRole("heading", { name: /jewish calendar/i }),
   ).toHaveCount(0);
   await expect(
@@ -31,9 +39,9 @@ test("renders an ordinary weekday without empty sections", async ({
   ).toHaveCount(0);
   await expect(
     page.getByText(
-      "No published History entries match this Gregorian date yet.",
+      "No published archive story is attached to this Gregorian anniversary yet.",
     ),
-  ).toHaveCount(0);
+  ).toBeVisible();
   await expect(
     page.getByText(/civil gregorian|america\/new_york/i),
   ).toHaveCount(0);

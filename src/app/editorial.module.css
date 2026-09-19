@@ -276,3 +276,57 @@
     padding-block: clamp(3.25rem, 7vw, 6rem);
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .title,
+  .lede {
+    animation: editorial-rise 520ms var(--ease-enter) both;
+  }
+
+  .lede {
+    animation-delay: 70ms;
+  }
+
+  .aboutPortrait,
+  .supportPortrait {
+    animation: editorial-figure 620ms var(--ease-enter) 120ms both;
+  }
+
+  .invitation {
+    transition:
+      background-color var(--duration-standard) var(--ease-standard),
+      padding-inline var(--duration-standard) var(--ease-standard);
+  }
+
+  .invitation:hover {
+    padding-inline: var(--space-4);
+    background: color-mix(in srgb, var(--color-sand) 30%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@keyframes editorial-rise {
+  from {
+    translate: 0 0.75rem;
+  }
+
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes editorial-figure {
+  from {
+    translate: 0.7rem 0;
+  }
+
+  to {
+    translate: 0 0;
+  }
+}

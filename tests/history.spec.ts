@@ -9,7 +9,7 @@ test("publishes the five reviewed History articles on the public archive", async
 
   expect(response?.status()).toBe(200);
   await expect(
-    page.getByRole("heading", { name: /on this day in jewish history/i }),
+    page.getByRole("heading", { name: /explore jewish history/i }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "US Liberates Dachau" }),
@@ -28,14 +28,12 @@ test("publishes the five reviewed History articles on the public archive", async
       name: "Anti-Jewish Riots Break Out in Tripoli, Libya",
     }),
   ).toHaveCount(1);
-  await expect(page.getByRole("heading", { name: "Topics" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Eras" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Places" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Regions" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "People" })).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Organizations" }),
-  ).toHaveCount(0);
+    page.getByRole("searchbox", { name: "Search the public archive" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /^\d+ stories$/ }),
+  ).toBeVisible();
   await expect(page.locator(".history-hero-lion")).toHaveCount(1);
   await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
   await expect(page.getByText("Theodore Herzl")).toHaveCount(0);
@@ -55,15 +53,14 @@ test("browses published history by civil date without fabricating a match", asyn
   page,
 }) => {
   await page.goto("/history");
+  await page.getByText("Filters", { exact: true }).click();
   await page.getByLabel("Month").selectOption("4");
   await page.getByLabel("Day").selectOption("29");
-  await page.getByRole("button", { name: /view this day/i }).click();
+  await page.getByRole("button", { name: /apply filters/i }).click();
 
   await expect(page).toHaveURL(/month=4/);
   await expect(page).toHaveURL(/day=29/);
-  await expect(
-    page.getByRole("heading", { name: "On April 29" }),
-  ).toBeVisible();
+  await expect(page.getByText("Date: April 29")).toBeVisible();
   await expect(
     page.getByRole("link", { name: "US Liberates Dachau" }),
   ).toBeVisible();
@@ -73,9 +70,7 @@ test("browses published history by civil date without fabricating a match", asyn
   );
 
   await page.goto("/history?month=8&day=11");
-  await expect(
-    page.getByRole("heading", { name: "On August 11" }),
-  ).toBeVisible();
+  await expect(page.getByText("Date: August 11")).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Joop Westerweel Is Murdered at Vught" }),
   ).toBeVisible();
@@ -84,9 +79,7 @@ test("browses published history by civil date without fabricating a match", asyn
   ).toHaveCount(0);
 
   await page.goto("/history?month=8&day=1");
-  await expect(
-    page.getByRole("heading", { name: "On August 1" }),
-  ).toBeVisible();
+  await expect(page.getByText("Date: August 1")).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Bialystok Ghetto Is Sealed" }),
   ).toBeVisible();
@@ -105,7 +98,7 @@ test("browses published history by civil date without fabricating a match", asyn
 
   await page.goto("/history?month=9&day=2");
   await expect(
-    page.getByText("No reviewed story is attached to this date yet."),
+    page.getByText("No reviewed stories match these filters."),
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "US Liberates Dachau" }),
@@ -120,7 +113,7 @@ test("filters the archive by published taxonomy and keeps empty people hidden", 
 }) => {
   const response = await page.goto("/history?topic=holocaust");
   expect(response?.status()).toBe(200);
-  await expect(page.getByRole("heading", { name: "Holocaust" })).toBeVisible();
+  await expect(page.getByText("Topic: Holocaust")).toBeVisible();
   await expect(
     page.getByRole("link", { name: "US Liberates Dachau" }),
   ).toBeVisible();
@@ -149,8 +142,54 @@ test("filters the archive by published taxonomy and keeps empty people hidden", 
 
   await page.goto("/history?person=theodor-herzl");
   await expect(
-    page.getByText("No reviewed entry currently matches this connection."),
+    page.getByText("No reviewed stories match these filters."),
   ).toBeVisible();
+});
+
+test("searches the full archive, combines filters, sorts, and restores browser Back", async ({
+  page,
+}) => {
+  await page.goto("/history");
+  const nextPage = page.getByRole("link", { name: "Next →" });
+  await expect(nextPage).toHaveAttribute("href", "/history?page=2");
+  await nextPage.click();
+  await expect(page).toHaveURL(/page=2/);
+  await expect(page.getByText("Page 2 of 2")).toBeVisible();
+  await page.goBack();
+  await expect(page).toHaveURL(/\/history$/);
+  const filterSummary = page.locator("summary").filter({ hasText: "Filters" });
+  await filterSummary.focus();
+  await expect(filterSummary).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.getByLabel("Topic")).toBeVisible();
+  await page.keyboard.press("Enter");
+
+  const search = page.getByRole("searchbox", {
+    name: "Search the public archive",
+  });
+  await search.fill("Tripoli");
+  await page.getByRole("button", { name: "Search", exact: true }).click();
+  await expect(page).toHaveURL(/q=Tripoli/);
+  await expect(
+    page.getByRole("link", {
+      name: "Anti-Jewish Riots Break Out in Tripoli, Libya",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "US Liberates Dachau" }),
+  ).toHaveCount(0);
+
+  await page.getByLabel("Topic").selectOption("antisemitism");
+  await page.getByLabel("Sort").selectOption("historical-oldest");
+  await page.getByRole("button", { name: "Apply filters" }).click();
+  await expect(page).toHaveURL(/topic=antisemitism/);
+  await expect(page).toHaveURL(/sort=historical-oldest/);
+  await expect(page.getByRole("heading", { name: "1 story" })).toBeVisible();
+
+  await page.goBack();
+  await expect(page).toHaveURL(/q=Tripoli/);
+  await expect(page).not.toHaveURL(/topic=antisemitism/);
+  await expect(search).toHaveValue("Tripoli");
 });
 
 test("serves the five published History articles and keeps other slugs unpublished", async ({

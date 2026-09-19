@@ -3,6 +3,7 @@ import Link from "next/link";
 import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import type { CuratedNewsCard } from "@/content/news/types";
 import { formatNewsTime } from "@/lib/news/display";
+import { firstSentence } from "@/lib/jewish-today/display";
 
 import styles from "@/app/home.module.css";
 
@@ -66,7 +67,11 @@ function NewsDeskLink({
         </time>
       </span>
       <span className={styles.newsHeadline}>{item.headline}</span>
-      <span className={styles.newsContext}>{item.jomContext}</span>
+      {lead && item.jomContext ? (
+        <span className={styles.newsContext}>
+          {firstSentence(item.jomContext, 120)}
+        </span>
+      ) : null}
       <span className={styles.newsSource}>Read at {item.publisher}</span>
     </TrackedAnchor>
   );

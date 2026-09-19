@@ -50,3 +50,8 @@ export function torahPortionLabel(readingKind?: "thisWeek" | "recent") {
     ? "Most recent Torah portion"
     : "This week in Torah";
 }
+
+export function sefariaPassageHref(reference: string) {
+  const path = reference.trim().replace(/\s+/g, "_").replace(/:/g, ".");
+  return `https://www.sefaria.org/${encodeURI(path)}?lang=bi`;
+}

@@ -21,10 +21,12 @@ export type TorahReadingKind = "thisWeek" | "recent";
 export type JewishTodayParashah = JewishTodayNamedEvent & {
   observedOn: string;
   readingKind: TorahReadingKind;
+  torahReadings: string[];
 };
 
 export type JewishTodayFestivalShabbat = JewishTodayNamedEvent & {
   observedOn: string;
+  torahReadings: string[];
 };
 
 export type JewishTodayOmer = {

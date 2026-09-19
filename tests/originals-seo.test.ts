@@ -50,12 +50,16 @@ test("Originals home metadata uses a CollectionPage canonical", () => {
 });
 
 test("published Original metadata is indexable Article JSON-LD", () => {
-  const published = article();
+  const published = article({
+    title: "An Approved Essay",
+    slug: "an-approved-essay",
+    seo: { title: "An Approved Essay" },
+  });
   const metadata = buildOriginalMetadata(published, false);
-  assert.deepEqual(metadata.title, { absolute: "Our Path Forward" });
+  assert.deepEqual(metadata.title, { absolute: "An Approved Essay" });
   assert.equal(
     metadata.alternates?.canonical,
-    "https://jewishoriginal.com/originals/our-path-forward",
+    "https://jewishoriginal.com/originals/an-approved-essay",
   );
   assert.deepEqual(metadata.robots, { index: true, follow: true });
   assert.equal(
@@ -64,19 +68,25 @@ test("published Original metadata is indexable Article JSON-LD", () => {
   );
   assert.equal(
     originalArticleUrl(published.slug),
-    "https://jewishoriginal.com/originals/our-path-forward",
+    "https://jewishoriginal.com/originals/an-approved-essay",
   );
 
   const jsonLd = buildOriginalJsonLd(published);
   assert.equal(jsonLd["@type"], "Article");
-  assert.equal(jsonLd.headline, "Our Path Forward");
+  assert.equal(jsonLd.headline, "An Approved Essay");
   assert.deepEqual(jsonLd.author, [
     { "@type": "Person", name: "Meyer Grunberg" },
     { "@type": "Person", name: "Isaac Simon" },
   ]);
 });
 
-test("preview and noindex Originals stay out of the index", () => {
+test("samples, previews, and noindex Originals stay out of the index", () => {
+  const sample = article();
+  assert.deepEqual(buildOriginalMetadata(sample, false).robots, {
+    index: false,
+    follow: false,
+  });
+  assert.deepEqual(buildOriginalJsonLd(sample).author, []);
   const preview = buildOriginalMetadata(article(), true);
   assert.deepEqual(preview.robots, { index: false, follow: false });
   const flagged = buildOriginalMetadata(

@@ -157,6 +157,38 @@
   gap: var(--space-8);
 }
 
+.studyLinks {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.studyLinks a,
+.archiveLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: var(--color-navy);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-underline-offset: 0.24em;
+}
+
+.historyEmpty {
+  max-width: 34rem;
+  margin: var(--space-5) 0 0;
+  color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  line-height: 1.65;
+}
+
+.archiveLink {
+  margin-top: var(--space-4);
+}
+
 .credit {
   padding-block: var(--space-8) var(--space-12);
 }
@@ -253,12 +285,10 @@
 
 @keyframes today-rise {
   from {
-    opacity: 0;
     translate: 0 0.6rem;
   }
 
   to {
-    opacity: 1;
     translate: 0 0;
   }
 }

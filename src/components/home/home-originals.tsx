@@ -1,7 +1,11 @@
 import Link from "next/link";
 
 import type { OriginalSummary } from "@/content/originals/types";
-import { authorLine, formatOriginalDate } from "@/lib/originals/display";
+import {
+  formatOriginalDate,
+  isSampleOriginal,
+  SAMPLE_ORIGINAL_NOTICE,
+} from "@/lib/originals/display";
 
 import styles from "@/app/home.module.css";
 
@@ -10,6 +14,7 @@ export function HomeOriginals({ items }: { items: OriginalSummary[] }) {
 
   const [lead, ...rest] = items;
   if (!lead) return null;
+  const leadIsSample = isSampleOriginal(lead.slug);
 
   return (
     <section
@@ -20,7 +25,7 @@ export function HomeOriginals({ items }: { items: OriginalSummary[] }) {
         <p className={styles.sectionLabel}>Originals</p>
         <article className={styles.originalLead}>
           <p className={styles.originalMeta}>
-            {authorLine(lead.authors) || "Jewish Original"}
+            {leadIsSample ? "Editorial sample" : "Jewish Original"}
             {lead.publishedAt
               ? ` · ${formatOriginalDate(lead.publishedAt)}`
               : ""}
@@ -31,6 +36,9 @@ export function HomeOriginals({ items }: { items: OriginalSummary[] }) {
           {lead.excerpt ? (
             <p className={styles.originalExcerpt}>{lead.excerpt}</p>
           ) : null}
+          {leadIsSample ? (
+            <p className={styles.originalSample}>{SAMPLE_ORIGINAL_NOTICE}</p>
+          ) : null}
         </article>
         {rest.length ? (
           <ol className={styles.originalRail}>
@@ -38,7 +46,9 @@ export function HomeOriginals({ items }: { items: OriginalSummary[] }) {
               <li key={item._id}>
                 <Link href={`/originals/${item.slug}`}>
                   <span className={styles.originalMeta}>
-                    {authorLine(item.authors) || "Jewish Original"}
+                    {isSampleOriginal(item.slug)
+                      ? "Editorial sample"
+                      : "Jewish Original"}
                   </span>
                   <span className={styles.originalRailTitle}>{item.title}</span>
                 </Link>

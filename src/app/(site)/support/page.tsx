@@ -44,6 +44,7 @@ export default function SupportPage() {
           <div className={styles.supportPortrait}>
             <MuseumFigure
               photo={FOUNDER_PHOTOS.tefillin}
+              priority
               sizes="(max-width: 47.98rem) 100vw, (max-width: 63.98rem) 70vw, 38rem"
             />
           </div>

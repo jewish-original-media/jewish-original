@@ -7,6 +7,7 @@ import {
   getPublishedPodcastSlugs,
 } from "@/content/podcasts/fetch";
 import { publicStaticSitemapPaths } from "@/lib/seo/site";
+import { isSampleOriginal } from "@/lib/originals/display";
 import { siteConfig } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -59,10 +60,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
-    ...originalSlugs.map(({ slug }) => ({
-      url: `${siteConfig.url}/originals/${slug}`,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    })),
+    ...originalSlugs
+      .filter(({ slug }) => !isSampleOriginal(slug))
+      .map(({ slug }) => ({
+        url: `${siteConfig.url}/originals/${slug}`,
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      })),
   ];
 }

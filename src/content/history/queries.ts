@@ -41,6 +41,7 @@ const imageProjection = `"primaryImage": select(
 
 const summaryProjection = `{
   _id,
+  _createdAt,
   title,
   "slug": slug.current,
   excerpt,

@@ -39,16 +39,26 @@ Public reads require `workflowStatus == "published"`, no draft ID, and a
 publication date. Scheduled essays stay in `scheduled` until an editor
 publishes them. Archived documents never appear.
 
-## First public essays
+## Editorial samples
 
-The first two published Originals adapt founder-approved About copy. They do
-not invent founder history.
+The founder has identified the first two records as placeholder editorial
+samples:
 
-1. **Our Path Forward** (`our-path-forward`)
-2. **What Drives Us** (`what-drives-us`)
+1. `article.our-path-forward` / `our-path-forward`
+2. `article.what-drives-us` / `what-drives-us`
 
-Authors: Meyer Grunberg and Isaac Simon. Featured media on the first essay is
-the class A founder photograph already used on `/about`.
+The application preserves those source documents but labels both listing and
+detail presentation: **“Sample editorial content. Final essays coming soon.”**
+Sample presentation does not show `authors` as a byline or emit author
+metadata. Sample detail pages are `noindex`, omit Article JSON-LD, and are
+excluded from the sitemap. The class A founder photograph on the first sample
+keeps its factual alt text and credit.
+
+No Sanity mutation is part of this UI workstream. The content workstream can
+replace the sample by reviewing these fields on the two documents: `title`,
+`excerpt`, `body`, `authors`, `publishedAt`, `featuredMedia`, `seo`, and
+`workflowStatus`. Once final copy and authorship are explicitly approved, the
+application’s temporary sample-slug registry can be removed.
 
 Do not generate filler essays to thicken the journal.
 
@@ -64,6 +74,7 @@ Desk: All Originals plus Draft / Review / Scheduled / Published / Archived.
 
 ## SEO
 
-Canonical, Open Graph, CollectionPage on the index, Article JSON-LD on essays,
-BreadcrumbList on both. Sitemap includes `/originals` and published slugs
-only.
+Canonical, Open Graph, and CollectionPage apply to the index. Final approved
+essays receive Article JSON-LD and sitemap entries. Sample details receive a
+canonical and BreadcrumbList for navigation but remain `noindex` and outside
+the sitemap.
