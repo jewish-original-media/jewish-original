@@ -99,19 +99,58 @@ test("serves Support without checkout or tax claims", async ({ page }) => {
     }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Write about one-time support" }),
-  ).toHaveAttribute("href", /mailto:hello@jewishoriginal\.com/);
+    page.getByRole("navigation", { name: "Support paths" }),
+  ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Inquire about this day" }),
+    page.getByRole("link", { name: /give once/i }).first(),
+  ).toHaveAttribute("href", "#give-once");
+  const oneTime = page.getByRole("link", {
+    name: "Open a one-time support draft",
+  });
+  await expect(oneTime).toHaveAttribute(
+    "href",
+    /mailto:hello@jewishoriginal\.com\?subject=/,
+  );
+  const href = await oneTime.getAttribute("href");
+  expect(href).toContain("Opening%20this%20draft%20does%20not%20send");
+  expect(href).not.toContain("\n");
+  await expect(
+    page.getByRole("link", { name: "Open an email draft about this day" }),
   ).toBeVisible();
   await expect(page.getByText("$360")).toBeVisible();
+  await expect(page.getByText("$18 each month")).toBeVisible();
+  await expect(
+    page
+      .locator("#write")
+      .getByRole("link", { name: "hello@jewishoriginal.com" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Copy address" }),
+  ).toBeVisible();
   await expect(page.getByText("Continue to payment")).toHaveCount(0);
+  await expect(page.getByText(/stripe/i)).toHaveCount(0);
+  await expect(page.getByText(/demonstration/i)).toHaveCount(0);
+  await expect(page.getByText(/checkout is not ready/i)).toHaveCount(0);
+  await expect(page.getByText(/inquiry was submitted/i)).toHaveCount(0);
   await expect(page.locator("form")).toHaveCount(0);
   await expect(page.getByText(/tax-deductible/i)).toHaveCount(0);
   await expect(page.getByText("10 Days Delivery")).toHaveCount(0);
   await expect(
     page.getByText("Jewish Original Media is a for-profit business.").first(),
   ).toBeVisible();
+
+  await page
+    .getByRole("link", { name: /give once/i })
+    .first()
+    .focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#give-once")).toBeInViewport();
+  await page
+    .getByRole("link", { name: "Open a one-time support draft" })
+    .focus();
+  await expect(
+    page.getByRole("link", { name: "Open a one-time support draft" }),
+  ).toBeFocused();
 });
 
 test("unknown public routes use the editorial 404", async ({ page }) => {

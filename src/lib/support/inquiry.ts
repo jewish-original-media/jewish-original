@@ -18,7 +18,7 @@ export type SupportInquiryOffer =
   | "podcast-episode"
   | "custom";
 
-const OFFER_LABELS: Record<SupportInquiryOffer, string> = {
+export const SUPPORT_OFFER_LABELS: Record<SupportInquiryOffer, string> = {
   "one-time": "One-time support",
   "monthly-18": "Monthly support, $18",
   "monthly-36": "Monthly support, $36",
@@ -30,9 +30,9 @@ const OFFER_LABELS: Record<SupportInquiryOffer, string> = {
 };
 
 export function supportInquiryMailto(offer: SupportInquiryOffer) {
-  const subject = `Jewish Original support: ${OFFER_LABELS[offer]}`;
+  const subject = `Jewish Original support: ${SUPPORT_OFFER_LABELS[offer]}`;
   const body = [
-    `Offer: ${OFFER_LABELS[offer]}`,
+    `Offer: ${SUPPORT_OFFER_LABELS[offer]}`,
     "Preferred date or episode:",
     "Name:",
     "Email:",
@@ -40,6 +40,7 @@ export function supportInquiryMailto(offer: SupportInquiryOffer) {
     "A brief message:",
     "",
     "Opening this draft does not send a message. Press send when the note is ready.",
+    "We will confirm availability and deliverables before asking for payment.",
   ].join("\n");
 
   return `mailto:${siteConfig.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;

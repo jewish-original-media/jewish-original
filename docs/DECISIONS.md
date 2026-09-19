@@ -707,3 +707,22 @@ interaction, never Apple or Spotify page URLs as files. `/support` follows
 the reviewed revenue-prep structure with email actions until approved
 payment links exist. About uses institutional copy and does not repeat
 unlabeled sample essays.
+
+## ADR-047 — Support offers stay inquiry-led across conflicting deliverables
+
+**Status:** Accepted, 2026-09-19
+
+The revenue-prep package and the founder’s earlier plan do not agree on
+sponsorship deliverables. The package describes a shorter podcast credit, a
+website acknowledgment for a Day in Jewish History, and a limited month
+bundle. The earlier plan describes a beginning-and-end podcast message of
+about 30 seconds, a History day that includes blog and social, and exclusive
+monthly recognition.
+
+`/support` does not adopt either version as a public promise. Featured
+prices stay $360 / $180 / $36. Monthly $18 / $36 / $72 remain the current
+public options and are confirmed before payment. Custom month, article, and
+major-project rates stay off the catalog. Every action opens an email draft.
+Availability and deliverables are confirmed before payment is requested.
+No Stripe products, test Payment Links, or demonstration checkout ship on
+the public page.

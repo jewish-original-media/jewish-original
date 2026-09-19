@@ -188,6 +188,61 @@
   border-block: 1px solid var(--color-rule);
 }
 
+.paths {
+  display: grid;
+  gap: 0;
+  margin-top: var(--space-8);
+}
+
+.path {
+  display: grid;
+  gap: var(--space-3);
+  padding-block: clamp(1.75rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--color-rule);
+  color: inherit;
+  text-decoration: none;
+}
+
+.path:first-child {
+  border-top: 0;
+}
+
+.path:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.pathTitle {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.4vw, 1.85rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.pathCopy {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.supportTarget {
+  scroll-margin-top: calc(var(--header-height) + 1rem);
+}
+
+.monthlyBand {
+  background: color-mix(in srgb, var(--color-sand) 48%, var(--color-canvas));
+}
+
+.featured {
+  background: color-mix(in srgb, var(--color-sand) 28%, var(--color-paper));
+  border-top: 2px solid color-mix(in srgb, var(--color-gold) 72%, transparent);
+}
+
 .invitations {
   display: grid;
   gap: 0;
@@ -241,6 +296,29 @@
   line-height: 1.6;
 }
 
+.address {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.addressValue {
+  color: var(--color-navy);
+  font-size: 1.05rem;
+  font-weight: 650;
+  user-select: all;
+}
+
+.addressStatus {
+  flex-basis: 100%;
+  margin: 0;
+  min-height: 1.4em;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
 .review {
   margin: var(--space-8) 0 0;
   padding: var(--space-4) 0;
@@ -254,6 +332,17 @@
   .people {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-10);
+  }
+
+  .paths {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--space-8);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .path {
+    border-top: 0;
+    padding-block: var(--space-8);
   }
 
   .invitations {
