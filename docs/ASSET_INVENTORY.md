@@ -105,7 +105,7 @@ page, license, and a non-thumbnail local or Sanity asset. **D/E** stay private.
 | JOM primary white/gold JPEG used by `BrandLogo` | B        | Header plaque on night only; do not enlarge in the footer        |
 | `/media/founder/meyer-isaac-street.webp`        | A        | Homepage Podcast + TTJS show page                                |
 | `/media/founder/meyer-isaac-steps.webp`         | A        | About                                                            |
-| `/media/founder/morning-tefillin.webp`          | A        | Support                                                          |
+| `/media/founder/morning-tefillin.webp`          | A        | Homepage masthead + Support                                      |
 | Host photos cited in `docs/PODCAST_ARCHIVE.md`  | C        | Missing rights ledger                                            |
 | Israeli-flag photographs in the founder pack    | D        | Held. Flag fields.                                               |
 | Unsplash `photo-1697054821057`                  | E        | Held. Stock, not founder-owned.                                  |
@@ -122,7 +122,7 @@ page, license, and a non-thumbnail local or Sanity asset. **D/E** stay private.
 | ------------------------- | -------------------------------- | --------------------- | ------- | --------------------- |
 | `meyer-isaac-street.webp` | Homepage Podcast, TTJS show page | Jewish Original Media | Class A | Jewish Original Media |
 | `meyer-isaac-steps.webp`  | `/about`                         | Jewish Original Media | Class A | Jewish Original Media |
-| `morning-tefillin.webp`   | `/support`                       | Jewish Original Media | Class A | Jewish Original Media |
+| `morning-tefillin.webp`   | Homepage masthead, `/support`    | Jewish Original Media | Class A | Jewish Original Media |
 
 Do not hotlink Wikimedia thumbnails. Do not attach History featured media until
 a founder-approved Sanity write uses a verified high-resolution file.

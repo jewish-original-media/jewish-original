@@ -36,14 +36,6 @@ export const HOME_SECTION_ORDER: readonly HomeSectionContract[] = [
       "One History lead plus two supporting archive stories from getHistoryIndex.",
   },
   {
-    id: "manifesto",
-    eyebrow: "Legacy",
-    title: "What’s worth remembering in 100 years",
-    status: "live",
-    description:
-      "One founder line as a magazine pause. Not a slogan stack and not a CTA.",
-  },
-  {
     id: "podcasts",
     eyebrow: "Podcasts",
     title: "The Two Tall Jews Show",
@@ -68,7 +60,6 @@ export const HOME_INTENDED_ORDER_WHEN_POPULATED = [
   "news",
   "podcasts",
   "events",
-  "manifesto",
   "support",
 ] as const;
 

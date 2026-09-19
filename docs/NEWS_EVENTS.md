@@ -45,12 +45,12 @@ set publication status.
 
 Frozen empty order remains:
 
-Masthead → Today → History → Manifesto → Podcasts → Support
+Masthead → Today → History → Podcasts → Support
 
 When real items exist:
 
 Masthead → Today → History → Originals → What We’re Following → Podcasts →
-Upcoming Events → Manifesto → Support
+Upcoming Events → Support
 
 Homepage News hides at 0 items. Homepage Events hides below 2 upcoming items.
 Homepage News shows when at least 3 published items exist, preferring 3

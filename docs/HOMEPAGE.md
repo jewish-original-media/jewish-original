@@ -1,7 +1,7 @@
 # Homepage
 
-Status: content-depth pass on `feature/integration-homepage`. Composition uses
-live History, Jewish Today, published Originals, News, and Podcasts.
+Status: exhibition homepage pass on `feature/integration-homepage`. Composition
+uses live History, Jewish Today, published Originals, News, and Podcasts.
 Photography is limited to founder-owned images. It is not a second
 architecture.
 
@@ -37,20 +37,26 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 ## Section order
 
 1. **Masthead** — stacked “Remember, rebuild, and create.” Positioning lives
-   in the lede. Desktop negative space stays empty. The OTD lion is not used
-   here. Live.
-2. **Jewish Today** — signature daily object from the same `JewishTodayDay`.
+   in the lede. A two-column exhibition hero pairs that copy with the
+   class A morning-tefillin photograph, History/Today paths, and numbered
+   chapter navigation. Originals appears in the chapter nav only when a
+   published essay exists. The OTD lion is not used here. Live.
+2. **Jewish Today** — compact daily almanac from the same `JewishTodayDay`.
    Live.
-3. **History** — one lead plus two supporting archive stories. Live.
-4. **Originals** — one featured house essay plus quieter supporting titles.
-   Live once a published Original exists.
+3. **History** — one lead plus two supporting archive stories, with
+   headlines taking priority over dates. Live.
+4. **Originals** — one featured house essay plus quieter supporting titles
+   in a two-column journal arrangement. Live once a published Original
+   exists.
 5. **What We’re Following** — outbound News desk. Live at three published
    items. Not a card grid of publisher stories.
 6. **Podcasts** — published show, latest `EpisodeCard`, remaining titles as a
-   rail. Live. Moves after News when the desk is on.
-7. **Manifesto** — one founder pause. After Podcasts when News is live;
-   between History and Podcasts when News is empty.
-8. **Support** — invitation into `/support`. Live.
+   rail beside the founder portrait. Live. Always follows News when the
+   desk is on; no longer waits on a manifesto pause.
+7. **Support** — visitor-facing invitation into `/support`. Live.
+
+The separate manifesto band is removed so the founder line is not repeated
+beside the published _Our Path Forward_ essay.
 
 Upcoming Events stay hidden until inventory earns the slot. Do not invent
 articles, headlines, or events.

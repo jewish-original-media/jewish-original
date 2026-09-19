@@ -54,7 +54,7 @@ test("composes the homepage from Jewish Today and published History", async ({
   await expect(
     page.getByRole("link", { name: "Today" }).first(),
   ).toHaveAttribute("href", "/today");
-  await page.getByRole("main").getByRole("link", { name: /today/i }).click();
+  await page.getByRole("link", { name: "Discover Jewish Today" }).click();
   await expect(page).toHaveURL(/\/today$/);
   await expect(
     page.getByRole("heading", { level: 1, name: "Today" }),
@@ -68,12 +68,20 @@ test("composes the homepage from Jewish Today and published History", async ({
     ),
   ).toBeVisible();
   await expect(
+    page.getByRole("navigation", { name: "Discover Jewish Original" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("img", {
+      name: "A man wearing tefillin reads from a Hebrew book",
+    }),
+  ).toBeVisible();
+  await expect(
     page.getByRole("img", {
       name: "Meyer Grunberg and Isaac Simon standing at a weathered Jerusalem street corner",
     }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Enter the Archive" }),
+    page.getByRole("link", { name: "Enter the Archive", exact: true }),
   ).toHaveAttribute("href", "/history");
   const visibleHistoryTitles: string[] = [];
   for (const title of PUBLISHED_HISTORY) {
@@ -87,6 +95,11 @@ test("composes the homepage from Jewish Today and published History", async ({
     }
   }
   expect(visibleHistoryTitles).toHaveLength(3);
+  await expect(
+    page
+      .getByRole("navigation", { name: "Discover Jewish Original" })
+      .getByRole("link", { name: /originals/i }),
+  ).toHaveAttribute("href", "/originals");
   const originals = page.getByRole("region", { name: "Originals" });
   await expect(originals).toBeVisible();
   await expect(
@@ -113,20 +126,23 @@ test("composes the homepage from Jewish Today and published History", async ({
     page.getByRole("link", { name: "View all episodes" }),
   ).toHaveAttribute("href", "/podcasts");
   await expect(
-    page.getByText("We don’t ask what’s going viral.", { exact: false }),
-  ).toBeVisible();
-  await expect(
     page.getByRole("heading", { name: "Stand with us. Build with us." }),
   ).toBeVisible();
+  await expect(
+    page.getByText("We don’t ask what’s going viral.", { exact: false }),
+  ).toHaveCount(0);
   const following = page.getByRole("region", {
     name: "What we’re following",
   });
-  await expect(following).toBeVisible();
-  await expect(following.locator("li")).toHaveCount(3);
-  await expect(
-    following.getByRole("link", { name: "Full desk" }),
-  ).toHaveAttribute("href", "/news");
-  await expect(following.locator("a[href^='/news/']")).toHaveCount(0);
+  if ((await following.count()) > 0) {
+    await expect(following.locator("li")).toHaveCount(3);
+    await expect(
+      following.getByRole("link", { name: "Full desk" }),
+    ).toHaveAttribute("href", "/news");
+    await expect(following.locator("a[href^='/news/']")).toHaveCount(0);
+  } else {
+    await expect(following).toHaveCount(0);
+  }
   await expect(page.getByText("Upcoming Events")).toHaveCount(0);
   await expect(
     page

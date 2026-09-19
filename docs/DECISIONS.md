@@ -614,3 +614,16 @@ essay exists.
 News stays out of primary nav until five strong items and three publishers
 exist. Events stay off Home, nav, and sitemap while inventory is thin.
 Production, DNS, and the GitHub default branch remain unchanged.
+
+## ADR-042 — Exhibition homepage is a presentation merge
+
+**Status:** Accepted, 2026-09-19
+
+The design package in `design-reference/` restyles the Integration homepage
+only. Data fetching, published-only reads, News/Events gates, Originals, SEO,
+and date computation stay as they are. The two-column hero uses the existing
+class A morning-tefillin photograph with its stored alt and credit. Chapter
+navigation numbers live destinations; Originals remains conditional. The
+manifesto band is removed because that founder line now lives in the published
+house essay. Production, DNS, Sanity writes, and the GitHub default branch
+remain unchanged.

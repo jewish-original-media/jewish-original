@@ -65,6 +65,6 @@ export const FOUNDER_PHOTOS = {
     rightsClass: "A",
     owner: "Jewish Original Media",
     notes:
-      "Founder-uploaded photograph of daily Jewish life. Used on Support. The subject is not named in public caption.",
+      "Founder-uploaded photograph of daily Jewish life. Used on the homepage masthead and Support. The subject is not named in public caption.",
   },
 } as const satisfies Record<string, PublicFounderPhoto>;

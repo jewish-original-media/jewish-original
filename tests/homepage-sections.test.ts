@@ -10,16 +10,16 @@ import {
   resolveHomeSectionOrder,
 } from "../src/features/homepage/sections";
 
-test("homepage section order is masthead, today, history, manifesto, podcasts, support", () => {
+test("homepage section order is masthead, today, history, podcasts, support", () => {
   assert.deepEqual(
     HOME_SECTION_ORDER.map((section) => section.id),
-    ["masthead", "jewish-today", "history", "manifesto", "podcasts", "support"],
+    ["masthead", "jewish-today", "history", "podcasts", "support"],
   );
 });
 
 test("live homepage modules do not invent later desks", () => {
   assert.ok(HOME_SECTION_ORDER.every((section) => section.status === "live"));
-  assert.equal(HOME_SECTION_ORDER.length, 6);
+  assert.equal(HOME_SECTION_ORDER.length, 5);
 });
 
 test("History homepage contract uses published archive entries", () => {
@@ -43,7 +43,6 @@ test("Originals, News, and Events stay hidden until published documents exist", 
     "masthead",
     "jewish-today",
     "history",
-    "manifesto",
     "podcasts",
     "support",
   ]);
@@ -51,7 +50,6 @@ test("Originals, News, and Events stay hidden until published documents exist", 
     "masthead",
     "jewish-today",
     "history",
-    "manifesto",
     "podcasts",
     "support",
   ]);
@@ -68,7 +66,6 @@ test("populated Originals, News, and Events insert in journal order", () => {
       "news",
       "podcasts",
       "events",
-      "manifesto",
       "support",
     ],
   );
@@ -79,7 +76,6 @@ test("populated Originals, News, and Events insert in journal order", () => {
     "news",
     "podcasts",
     "events",
-    "manifesto",
     "support",
   ]);
   assert.deepEqual(
@@ -95,7 +91,6 @@ test("populated Originals, News, and Events insert in journal order", () => {
       "originals",
       "news",
       "podcasts",
-      "manifesto",
       "support",
     ],
   );

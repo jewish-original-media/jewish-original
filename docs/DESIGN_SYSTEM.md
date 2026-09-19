@@ -56,7 +56,10 @@ Usage:
 
 Public type scale:
 
-- Display: `clamp(3rem, 8.4vw, 8.75rem)` — homepage masthead only
+- Display: `clamp(3rem, 8.4vw, 8.75rem)` — homepage masthead default;
+  exhibition homepage tightens to `clamp(3.5rem, 6.4vw, 6.4rem)` desktop and
+  `clamp(3.2rem, 12vw, 5.3rem)` mobile so the tefillin portrait can sit beside
+  the opening line
 - Section display: `clamp(2.35rem, 5vw, 6.25rem)`
 - Feature headline: `clamp(2rem, 3.8vw, 4.75rem)`
 - Article / card headline: `1.35rem` to `2.25rem`
