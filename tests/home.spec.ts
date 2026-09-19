@@ -174,11 +174,12 @@ test("composes the homepage from Jewish Today and published History", async ({
 test("homepage rhythm holds at publication widths", async ({
   page,
 }, testInfo) => {
-  if (testInfo.project.name !== "desktop") {
-    test.skip();
-  }
+  const viewports =
+    testInfo.project.name === "mobile"
+      ? VIEWPORTS.filter((viewport) => viewport.width <= 768)
+      : VIEWPORTS.filter((viewport) => viewport.width >= 768);
 
-  for (const viewport of VIEWPORTS) {
+  for (const viewport of viewports) {
     await page.setViewportSize({
       width: viewport.width,
       height: viewport.height,

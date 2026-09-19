@@ -50,6 +50,12 @@ const episodeSummaryProjection = `{
     count(guests) > 0 => guests[]->name,
     coalesce(sourceGuestNames, [])
   ),
+  audioUrl,
+  youtubeId,
+  youtubeUrl,
+  spotifyUrl,
+  appleUrl,
+  primaryMedia,
   ${episodeArtworkProjection}
 }`;
 

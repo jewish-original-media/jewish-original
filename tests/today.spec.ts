@@ -43,8 +43,8 @@ test("renders an ordinary weekday without empty sections", async ({
     ),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Explore this date in the archive" }),
-  ).toHaveAttribute("href", "/history?month=9&day=1");
+    page.getByRole("link", { name: "Browse the archive" }),
+  ).toHaveAttribute("href", "/history");
   await expect(
     page.getByText(/civil gregorian|america\/new_york/i),
   ).toHaveCount(0);

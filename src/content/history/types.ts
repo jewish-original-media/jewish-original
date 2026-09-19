@@ -85,6 +85,7 @@ export type HistoryEntrySummary = {
   eras: HistoryReference[];
   organizations: HistoryReference[];
   geographicRegions: HistoryReference[];
+  eventLocation?: string;
   primaryImage?: HistoryImage;
 };
 

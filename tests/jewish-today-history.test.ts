@@ -49,7 +49,7 @@ describe("Jewish Today uses canonical History matching", () => {
       geographicRegions: [],
     };
 
-    assert.equal(historyCardLocation(entry), "Tegernsee");
+    assert.equal(historyCardLocation(entry), undefined);
     assert.equal("primaryImage" in entry, false);
   });
 });

@@ -45,6 +45,12 @@ export type PodcastEpisodeSummary = {
   episodeNumber?: number;
   guestNames: string[];
   artwork?: PodcastArtwork;
+  audioUrl?: string;
+  youtubeId?: string;
+  youtubeUrl?: string;
+  spotifyUrl?: string;
+  appleUrl?: string;
+  primaryMedia?: "auto" | "youtube" | "audio";
 };
 
 export type PodcastEpisode = PodcastEpisodeSummary & {

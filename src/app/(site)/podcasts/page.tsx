@@ -3,7 +3,7 @@ import { draftMode } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
-import { EpisodeCard } from "@/components/podcasts/episode-card";
+import { EpisodeRow } from "@/components/podcasts/episode-row";
 import { PodcastPreviewBanner } from "@/components/podcasts/podcast-preview-banner";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
@@ -111,12 +111,12 @@ export default async function PodcastsPage() {
           </h2>
           <p className="podcast-section-copy">
             {preview
-              ? "These four imported drafts are visible only in authenticated preview. They are not published."
-              : "Four founder-approved episodes from the archive. The remaining catalog stays unpublished."}
+              ? "These imported drafts are visible only in authenticated preview. They are not published."
+              : `${episodes.length} published episode${episodes.length === 1 ? "" : "s"} from The Two Tall Jews Show.`}
           </p>
           <div className="podcast-episode-list">
             {episodes.map((episode) => (
-              <EpisodeCard episode={episode} key={episode._id} />
+              <EpisodeRow episode={episode} key={episode._id} />
             ))}
           </div>
         </Container>

@@ -156,6 +156,59 @@ test("previews a hosts-only finale and source chapters on the premier", async ({
   await expect(page.locator("iframe")).toHaveCount(0);
 });
 
+test("plays published episode audio one at a time from the feed", async ({
+  page,
+}) => {
+  await page.goto("/podcasts");
+  const players = page.locator(".podcast-episode-row audio");
+  await expect(players.first()).toBeVisible();
+  const count = await players.count();
+  expect(count).toBeGreaterThan(1);
+
+  for (let index = 0; index < count; index += 1) {
+    await expect(players.nth(index)).toHaveAttribute("preload", "none");
+  }
+
+  await expect(
+    page.getByRole("link", { name: "Episode page" }).first(),
+  ).toBeVisible();
+
+  await players.first().evaluate((element) => {
+    const audio = element as HTMLAudioElement;
+    return audio.play();
+  });
+  await expect
+    .poll(() =>
+      players.first().evaluate((element) => !(element as HTMLAudioElement).paused),
+    )
+    .toBe(true);
+
+  await players.nth(1).evaluate((element) => {
+    const audio = element as HTMLAudioElement;
+    return audio.play();
+  });
+  await expect
+    .poll(() =>
+      players.first().evaluate((element) => (element as HTMLAudioElement).paused),
+    )
+    .toBe(true);
+  await expect
+    .poll(() =>
+      players.nth(1).evaluate((element) => !(element as HTMLAudioElement).paused),
+    )
+    .toBe(true);
+
+  await players.nth(1).evaluate((element) => {
+    const audio = element as HTMLAudioElement;
+    audio.currentTime = 12;
+  });
+  await expect
+    .poll(() =>
+      players.nth(1).evaluate((element) => (element as HTMLAudioElement).currentTime),
+    )
+    .toBeGreaterThan(10);
+});
+
 test("loads the YouTube facade only after a labeled fixture click", async ({
   page,
 }) => {

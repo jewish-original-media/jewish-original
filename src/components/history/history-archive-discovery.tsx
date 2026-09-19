@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { HistoryEntryCard } from "@/components/history/history-entry-card";
+import { HistorySearchCombobox } from "@/components/history/history-search-combobox";
 import {
   FILTER_LABELS,
   historyArchiveHref,
@@ -84,22 +85,14 @@ export function HistoryArchiveDiscovery({
         <div className="history-discovery__search">
           <label htmlFor="history-search">Search the public archive</label>
           <div className="history-discovery__search-row">
-            <input
-              defaultValue={search.query}
-              id="history-search"
-              maxLength={80}
-              name="q"
-              placeholder="Search people, places, topics, or stories"
-              type="search"
-            />
+            <HistorySearchCombobox facets={facets} search={search} />
             <button className="button button--primary" type="submit">
               Search
             </button>
           </div>
           <p className="history-discovery__search-help">
-            Searches reviewed public stories by title, summary, people, places,
-            topics, eras, regions, and organizations. Drafts stay out of these
-            results.
+            Search published stories by title, summary, people, places, topics,
+            and regions. Suggestions use the public archive only.
           </p>
         </div>
 

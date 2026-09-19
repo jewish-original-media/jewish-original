@@ -55,6 +55,7 @@ const summaryProjection = `{
   "eras": coalesce(eras[]->${referenceProjection}, []),
   "organizations": coalesce(organizations[]->${referenceProjection}, []),
   "geographicRegions": coalesce(geographicRegions[]->${referenceProjection}, []),
+  eventLocation,
   ${imageProjection}
 }`;
 

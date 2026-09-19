@@ -15,7 +15,10 @@ import { HistoryPreviewBanner } from "@/components/history/history-preview-banne
 import { HistoryReferenceList } from "@/components/history/history-reference-list";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { hasPublishedRelatedHistoryEntry } from "@/content/history/archive";
+import {
+  hasPublishedRelatedHistoryEntry,
+  historyEventLocation,
+} from "@/content/history/archive";
 import {
   getHistoryEntry,
   getPublishedHistorySlugs,
@@ -79,7 +82,7 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
   const relatedEntries = entry.relatedHistory.filter((relationship) =>
     hasPublishedRelatedHistoryEntry(relationship.entry),
   );
-  const placeLabel = entry.places[0]?.name;
+  const eventLocation = historyEventLocation(entry);
 
   return (
     <>
@@ -121,7 +124,7 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
 
               <p className="history-date-line">
                 {displayDate}
-                {placeLabel ? ` · ${placeLabel}` : null}
+                {eventLocation ? ` · ${eventLocation}` : null}
               </p>
               <h1 className="history-display">{entry.title}</h1>
               {entry.excerpt ? (
@@ -137,8 +140,8 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
             <div className="history-archive-rail">
               <p className="eyebrow">Exhibition</p>
               <p className="history-archive-rail__text">
-                A room in the Jewish Original archive. Date, place, and sources
-                stay attached to the record.
+                Date and sources stay with the record. Related places appear
+                beside the story.
               </p>
             </div>
           </Container>
@@ -230,8 +233,7 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
                 </h2>
                 <p className="history-support__text">
                   If this history matters to you, you can{" "}
-                  <Link href="/support">support Jewish Original</Link> as the
-                  archive is prepared with care.
+                  <Link href="/support">support Jewish Original</Link>.
                 </p>
               </section>
             </div>

@@ -115,9 +115,10 @@ records are published.
 - `archive` for lists and date/taxonomy results
 - `related` for the approved article template
 
-Cards show date, title, excerpt, topics, a specific place when present, and a
-separate geographic region when present. A region is never used as a place
-fallback. Dates with `calendarSystem: other` display as under review unless
+Cards show date, title, excerpt, topics, and a geographic region when present.
+Related places stay in the article sidebar. The date line uses a specific
+event-location field only when that field is present. The first related place
+is never treated as the event location. Dates with `calendarSystem: other` display as under review unless
 an editor supplied `displayText`. A 16:9 image appears only when
 `primaryImage` is rights-cleared. No-image cards are typographic. There is no
 generic photograph and no empty image well.
@@ -126,7 +127,10 @@ generic photograph and no empty image well.
 
 No Algolia or other paid search is needed for V1. Server-side in-memory search
 operates on the complete published summary query, then combines exact facet
-and Gregorian date filters. Historical newest/oldest sort uses
+and Gregorian date filters. Lightweight autocomplete suggests up to six
+published topics, people, places, or regions. Selecting a suggestion applies
+that filter. Enter still submits the keyword search. The GET form works
+without JavaScript. Historical newest/oldest sort uses
 `historicalDate.start`. **Recently updated** uses Sanity `_updatedAt`, falling
 back to `_createdAt` only when no update exists, so bulk import time is not
 presented as a new publication. It is never confused with historical time. Year-only, Julian, and recurring records remain in unfiltered results with

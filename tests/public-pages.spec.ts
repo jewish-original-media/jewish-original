@@ -56,7 +56,7 @@ test("serves About from founder-provided copy", async ({ page }) => {
   const response = await page.goto("/about");
   expect(response?.status()).toBe(200);
   await expect(
-    page.getByRole("heading", { level: 1, name: "Our path forward" }),
+    page.getByRole("heading", { level: 1, name: "Jewish Original Media" }),
   ).toBeVisible();
   await expect(page.locator(".history-hero-lion")).toHaveCount(0);
   await expect(page.locator("[data-motif]")).toHaveCount(0);
@@ -68,18 +68,13 @@ test("serves About from founder-provided copy", async ({ page }) => {
       name: "Meyer Grunberg and Isaac Simon on Jerusalem limestone steps",
     }),
   ).toBeVisible();
-  await expect(page.getByRole("heading", { name: "People" })).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Meyer Grunberg" }),
+    page.getByRole("heading", { name: "What we publish" }),
   ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Isaac Simon" }),
-  ).toBeVisible();
-  await expect(page.getByText("Founder").first()).toBeVisible();
   await expect(
     page.getByText("We’re not here to copy trends.", { exact: false }),
-  ).toBeVisible();
-  await expect(page.getByText("We’re in it for legacy.")).toBeVisible();
+  ).toHaveCount(0);
+  await expect(page.getByText("We’re in it for legacy.")).toHaveCount(0);
   await expect(
     page.getByRole("heading", { name: "Sources, corrections, and tools" }),
   ).toBeVisible();
@@ -93,29 +88,29 @@ test("serves Support without checkout or tax claims", async ({ page }) => {
   const response = await page.goto("/support");
   expect(response?.status()).toBe(200);
   await expect(
-    page.getByRole("heading", { name: "Stand with us. Build with us." }),
+    page.getByRole("heading", {
+      name: "Help keep this history in the world.",
+    }),
   ).toBeVisible();
   await expect(page.locator("[data-motif]")).toHaveCount(0);
-  await expect(page.getByText("Support the work").first()).toBeVisible();
   await expect(
     page.getByRole("img", {
       name: "A man wearing tefillin reads from a Hebrew book",
     }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Email to support" }),
+    page.getByRole("link", { name: "Write about one-time support" }),
   ).toHaveAttribute("href", /mailto:hello@jewishoriginal\.com/);
+  await expect(
+    page.getByRole("link", { name: "Inquire about this day" }),
+  ).toBeVisible();
+  await expect(page.getByText("$360")).toBeVisible();
+  await expect(page.getByText("Continue to payment")).toHaveCount(0);
   await expect(page.locator("form")).toHaveCount(0);
   await expect(page.getByText(/tax-deductible/i)).toHaveCount(0);
   await expect(page.getByText("10 Days Delivery")).toHaveCount(0);
   await expect(
-    page.getByRole("heading", { name: "What your support makes possible" }),
-  ).toBeVisible();
-  await expect(
-    page.getByText("Sponsorship supports Jewish Original Media."),
-  ).toBeVisible();
-  await expect(
-    page.getByText("It does not determine editorial judgment."),
+    page.getByText("Jewish Original Media is a for-profit business.").first(),
   ).toBeVisible();
 });
 

@@ -691,3 +691,19 @@ are not live anniversaries until review confirms them.
 The homepage remains curated: one History lead and two supporting stories,
 preferring a verified On This Day match when one exists. Integration does not
 publish drafts, write to Sanity, or change Production, DNS, or `main`.
+
+## ADR-046 — Visual storytelling stays rights-cleared and inquiry-led
+
+**Status:** Accepted, 2026-09-19
+
+Homepage desks use approved photography only where the record has it. History
+cards stay typographic until rights-cleared featured media exist. History
+headers show the complete lion mark with contain sizing. Article date lines
+do not treat a related place as the event location. Public citations keep
+titles and source links and hold bibliographic review notes for preview.
+History search suggestions come from published-ready taxonomy only.
+Podcast feed rows play enclosure audio or load a provider embed on
+interaction, never Apple or Spotify page URLs as files. `/support` follows
+the reviewed revenue-prep structure with email actions until approved
+payment links exist. About uses institutional copy and does not repeat
+unlabeled sample essays.

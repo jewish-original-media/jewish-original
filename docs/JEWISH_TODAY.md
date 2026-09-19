@@ -81,6 +81,9 @@ to `HomeJewishToday`. The module shows:
 - **On this day** only when a published History match exists
 - `Today →` into `/today`
 
+When `/today` has no published Gregorian anniversary, the page links to
+`/history` (“Browse the archive”) instead of a date-filtered empty result.
+
 Do not fill empty states with placeholder copy. Do not call Hebcal or write a
 second on-this-day query from the homepage module. The homepage History
 section uses `getHistoryIndex`, not another Jewish Today fetch. See

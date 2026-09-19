@@ -18,28 +18,15 @@
     );
 }
 
+.sequence {
+  display: grid;
+}
+
 .hero {
   position: relative;
-  overflow: hidden;
-  padding-block: clamp(1.75rem, 4vw, 3.25rem);
+  overflow: visible;
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
   background: color-mix(in srgb, var(--color-sand) 42%, var(--color-canvas));
-}
-
-.heroRule {
-  pointer-events: none;
-  position: absolute;
-  top: 12%;
-  right: 0;
-  width: 1px;
-  height: 76%;
-  background: color-mix(in srgb, var(--color-gold) 58%, transparent);
-  transform-origin: top;
-}
-
-@media (min-width: 40rem) {
-  .heroRule {
-    right: 11%;
-  }
 }
 
 .kicker {
@@ -49,38 +36,52 @@
 .todayTitle {
   margin: 0;
   max-width: 10ch;
-  font-size: clamp(2.35rem, 6vw, 4rem);
+  padding-block: 0.08em;
+  font-size: clamp(2.35rem, 6vw, 3.4rem);
   font-weight: 450;
   letter-spacing: -0.04em;
-  line-height: 0.95;
+  line-height: 1.12;
+}
+
+.datePair,
+.torahPair,
+.hebrewPair {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
 }
 
 .gregorian {
-  margin: var(--space-4) 0 0;
+  margin: 0;
   max-width: 28rem;
   color: var(--color-charcoal);
   font-family: var(--font-serif);
-  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
   line-height: 1.45;
 }
 
-.hebrew {
-  margin: var(--space-5) 0 0;
-  max-width: 16ch;
+.hebrewPair {
   color: var(--color-navy);
   font-family: var(--font-serif);
-  font-size: clamp(1.85rem, 4.4vw, 3rem);
-  font-weight: 400;
-  line-height: 1.18;
+  font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+  line-height: 1.35;
 }
 
-.hebrewLatin {
-  margin: var(--space-3) 0 0;
-  color: var(--color-navy);
+.hebrewPair span[lang="he"] {
+  display: block;
+}
+
+.hebrewPair span:last-child {
+  font-family: var(--font-sans);
   font-size: var(--text-sm);
   font-weight: 650;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.hebrew,
+.hebrewLatin {
+  margin: 0;
 }
 
 .note,
@@ -103,13 +104,14 @@
   font-family: var(--font-serif);
 }
 
-.section {
-  padding-block: clamp(1.5rem, 3.2vw, 2.5rem);
+.section,
+.historySection {
+  padding-block: clamp(1.15rem, 2.4vw, 1.85rem);
+  border-top: 1px solid var(--color-rule);
 }
 
 .historySection {
-  padding-block: clamp(1.75rem, 3.8vw, 3rem);
-  background: color-mix(in srgb, var(--color-sand) 28%, var(--color-canvas));
+  background: transparent;
 }
 
 .sectionTitle,
@@ -223,19 +225,9 @@
   font-family: var(--font-serif);
 }
 
-@media (min-width: 48rem) and (max-width: 63.99rem) {
-  .todayTitle {
-    font-size: clamp(2.75rem, 5vw, 3.5rem);
-  }
-
-  .hebrew {
-    font-size: clamp(2.1rem, 3.6vw, 2.6rem);
-  }
-}
-
 @media (min-width: 64rem) {
   .hero {
-    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    padding-block: clamp(1.75rem, 3vw, 2.75rem);
   }
 }
 

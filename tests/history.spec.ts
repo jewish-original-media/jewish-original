@@ -29,7 +29,7 @@ test("publishes the five reviewed History articles on the public archive", async
     }),
   ).toHaveCount(1);
   await expect(
-    page.getByRole("searchbox", { name: "Search the public archive" }),
+    page.getByRole("combobox", { name: "Search the public archive" }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: /^\d+ stories$/ }),
@@ -158,10 +158,11 @@ test("searches the full archive, combines filters, sorts, and restores browser B
   await expect(page.getByLabel("Topic")).toBeVisible();
   await page.keyboard.press("Enter");
 
-  const search = page.getByRole("searchbox", {
+  const search = page.getByRole("combobox", {
     name: "Search the public archive",
   });
   await search.fill("Tripoli");
+  await search.press("Escape");
   await page.getByRole("button", { name: "Search", exact: true }).click();
   await expect(page).toHaveURL(/q=Tripoli/);
   await expect(
@@ -184,6 +185,21 @@ test("searches the full archive, combines filters, sorts, and restores browser B
   await expect(page).toHaveURL(/q=Tripoli/);
   await expect(page).not.toHaveURL(/topic=antisemitism/);
   await expect(search).toHaveValue("Tripoli");
+});
+
+test("suggests published taxonomy and applies a filter without a keyword", async ({
+  page,
+}) => {
+  await page.goto("/history");
+  const search = page.getByRole("combobox", {
+    name: "Search the public archive",
+  });
+  await search.fill("Holo");
+  const suggestion = page.getByRole("option", { name: "Holocaust Topic" });
+  await expect(suggestion).toBeVisible();
+  await suggestion.click();
+  await expect(page).toHaveURL(/topic=holocaust/);
+  await expect(page).not.toHaveURL(/[?&]q=/);
 });
 
 test("serves the five published History articles and keeps other slugs unpublished", async ({
@@ -383,7 +399,9 @@ test("serves an honest support foundation without a payment form", async ({
 
   expect(response?.status()).toBe(200);
   await expect(
-    page.getByRole("heading", { name: /stand with us\. build with us/i }),
+    page.getByRole("heading", {
+      name: /help keep this history in the world/i,
+    }),
   ).toBeVisible();
   await expect(page.locator("form")).toHaveCount(0);
   await expect(page.getByText(/tax-deductible/i)).toHaveCount(0);
@@ -488,6 +506,10 @@ test("serves the published Batch 2 articles with founder-final copy and metadata
   await expect(
     page.getByRole("heading", { name: "Samuel Willenberg Dies" }),
   ).toBeVisible();
+  await expect(page.locator(".history-date-line")).toHaveText(
+    /February 19, 2016/,
+  );
+  await expect(page.locator(".history-date-line")).not.toHaveText(/Treblinka/);
   await expect(
     page.getByText(/created sculptures about what he had witnessed/i),
   ).toBeVisible();

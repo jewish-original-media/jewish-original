@@ -6,6 +6,7 @@ import {
   isSampleOriginal,
   SAMPLE_ORIGINAL_NOTICE,
 } from "@/lib/originals/display";
+import { firstSentence } from "@/lib/jewish-today/display";
 
 import styles from "@/app/home.module.css";
 
@@ -34,7 +35,9 @@ export function HomeOriginals({ items }: { items: OriginalSummary[] }) {
             <Link href={`/originals/${lead.slug}`}>{lead.title}</Link>
           </h2>
           {lead.excerpt ? (
-            <p className={styles.originalExcerpt}>{lead.excerpt}</p>
+            <p className={styles.originalExcerpt}>
+              {firstSentence(lead.excerpt, 120)}
+            </p>
           ) : null}
           {leadIsSample ? (
             <p className={styles.originalSample}>{SAMPLE_ORIGINAL_NOTICE}</p>

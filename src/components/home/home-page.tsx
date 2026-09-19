@@ -133,8 +133,7 @@ export function HomePageView({ data }: HomePageViewProps) {
             Stand with us. Build with us.
           </h2>
           <p className={styles.supportCopy}>
-            Help keep Jewish memory, culture, and original work in public view.
-            Help us preserve what matters and share it with the next generation.
+            Help keep Jewish history, culture, and original work in public view.
           </p>
           <ButtonLink className={styles.supportAction} href="/support">
             Support Jewish Original

@@ -29,10 +29,12 @@
   min-height: 2.75rem;
   display: inline-flex;
   align-items: center;
+  padding-block: 0.35em;
   color: var(--color-paper);
   font-size: 0.68rem;
   font-weight: 650;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
   text-decoration: none;
   text-transform: uppercase;
 }

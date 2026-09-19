@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { MuseumFigure } from "@/components/media/museum-figure";
-import { EpisodeCard } from "@/components/podcasts/episode-card";
+import { EpisodeRow } from "@/components/podcasts/episode-row";
 import { PodcastPreviewBanner } from "@/components/podcasts/podcast-preview-banner";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
@@ -148,7 +148,7 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
             <p className="eyebrow">Latest episode</p>
             <h2 className="podcast-section-title">Listen now</h2>
             <div className="podcast-episode-list">
-              <EpisodeCard episode={latest} />
+              <EpisodeRow episode={latest} />
             </div>
           </Container>
         </Section>
@@ -161,14 +161,12 @@ export default async function PodcastShowPage({ params }: ShowPageProps) {
           <p className="podcast-section-copy">
             {preview
               ? `${episodes.length} imported draft episode${episodes.length === 1 ? "" : "s"} are visible in preview only.`
-              : `${episodes.length} published episode${episodes.length === 1 ? "" : "s"} from The Two Tall Jews Show.`}{" "}
-            Empty summaries, transcripts, and History links stay hidden until
-            editors add them.
+              : `${episodes.length} published episode${episodes.length === 1 ? "" : "s"} from The Two Tall Jews Show.`}
           </p>
           {archive.length ? (
             <div className="podcast-episode-list">
               {archive.map((episode) => (
-                <EpisodeCard episode={episode} key={episode._id} />
+                <EpisodeRow episode={episode} key={episode._id} />
               ))}
             </div>
           ) : null}

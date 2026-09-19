@@ -29,12 +29,14 @@ export default function AboutPage() {
         <Container className={styles.aboutHero}>
           <div>
             <p className="eyebrow">About</p>
-            <h1 className={styles.title}>Our path forward</h1>
+            <h1 className={styles.title}>Jewish Original Media</h1>
             <p className={styles.lede}>
-              We’re not here to copy trends. We’re here to remember, to rebuild,
-              and to create.
+              A modern home for Jewish history, culture, education, connection,
+              and identity.
             </p>
-            <p className={styles.founders}>Meyer Grunberg and Isaac Simon</p>
+            <p className={styles.founders}>
+              Founded by Meyer Grunberg and Isaac Simon
+            </p>
           </div>
           <div className={styles.aboutPortrait}>
             <MuseumFigure
@@ -46,70 +48,20 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className={styles.chapter} aria-labelledby="about-people">
+      <section className={styles.chapter} aria-labelledby="about-house">
         <Container size="content">
           <p className="eyebrow">The house</p>
-          <h2 className={styles.sectionTitle} id="about-people">
-            People
-          </h2>
-          <ul className={styles.people}>
-            <li>
-              <h3 className={styles.personName}>Meyer Grunberg</h3>
-              <p className={styles.personCaption}>Founder</p>
-            </li>
-            <li>
-              <h3 className={styles.personName}>Isaac Simon</h3>
-              <p className={styles.personCaption}>Founder</p>
-            </li>
-          </ul>
-        </Container>
-      </section>
-
-      <section className={styles.chapter} aria-labelledby="about-path">
-        <Container size="content">
-          <h2 className={styles.sectionTitle} id="about-path">
-            Our Path Forward
+          <h2 className={styles.sectionTitle} id="about-house">
+            What we publish
           </h2>
           <p className={styles.copy}>
-            Jewish Original Media started as a response: to loss, to longing, to
-            the silence we felt in the spaces we loved.
+            Jewish Original publishes a reviewed History archive, a daily Jewish
+            Today page, original essays, and The Two Tall Jews Show, hosted by
+            Meyer Grunberg and Isaac Simon.
           </p>
           <p className={styles.copy}>
-            We don’t ask what’s going viral. We ask what’s worth remembering in
-            100 years.
-          </p>
-          <p className={styles.copy}>
-            Each piece of content is stitched with kavod (honor), with chutzpah
-            (courage), and with a fierce love of our people.
-          </p>
-          <p className={styles.copy}>
-            We believe Jewish creativity is not just heritage. It’s a living
-            engine of renewal. That’s our path forward.
-          </p>
-        </Container>
-      </section>
-
-      <section
-        className={`${styles.chapter} ${styles.chapterDrive}`}
-        aria-labelledby="about-drive"
-      >
-        <Container size="content">
-          <h2 className={styles.sectionTitle} id="about-drive">
-            What Drives Us
-          </h2>
-          <p className={styles.copy}>
-            We’re two friends who couldn’t stay quiet. What began as
-            conversations on Jewish meaning — across coffees, comment sections,
-            and Shabbat tables — became a home for the Jewish story in real
-            time.
-          </p>
-          <p className={styles.copy}>
-            This isn’t a brand. It’s a movement of memory. We don’t just write
-            headlines. We listen to whispers of history, translate the poetry of
-            our people, and beam it back into the scrolls of your feed.
-          </p>
-          <p className={styles.copy}>
-            We’re not in this for clicks. We’re in it for legacy.
+            History is the foundation. Education transmits it. Identity is the
+            product. Connection is the outcome.
           </p>
         </Container>
       </section>
@@ -121,11 +73,10 @@ export default function AboutPage() {
             Sources, corrections, and tools
           </h2>
           <p className={styles.copy}>
-            History is reviewed from the Jewish Original archive and published
-            only after editorial checks. News is a following desk: allowlisted
-            publishers keep the headlines, and Jewish Original adds short
-            context with a link back to the source. We do not republish
-            publisher article bodies or images.
+            History is published only after editorial review. News is a
+            following desk: allowlisted publishers keep the headlines, and
+            Jewish Original adds short context with a link back to the source.
+            We do not republish publisher article bodies or images.
           </p>
           <p className={styles.copy}>
             Jewish Original uses automation and AI-assisted tools for selected
@@ -139,7 +90,7 @@ export default function AboutPage() {
           </p>
           <p className={styles.copy}>
             Sponsorship supports Jewish Original Media. It does not determine
-            editorial judgment.
+            editorial judgment. Jewish Original Media is a for-profit business.
           </p>
         </Container>
       </section>

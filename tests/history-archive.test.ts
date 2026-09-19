@@ -252,7 +252,14 @@ test("derives public facets only from published entries that actually have them"
   );
   assert.deepEqual(facets.people, []);
   assert.deepEqual(facets.organizations, []);
-  assert.equal(historyCardLocation(dachau), "Dachau concentration camp");
+  assert.equal(historyCardLocation(dachau), undefined);
+  assert.equal(
+    historyCardLocation({
+      ...dachau,
+      eventLocation: "Dachau concentration camp",
+    }),
+    "Dachau concentration camp",
+  );
   assert.equal(historyCardRegion(dachau), "Europe");
 });
 

@@ -306,8 +306,15 @@ export function collectPublishedFacets(
   };
 }
 
+export function historyEventLocation(
+  entry: Pick<HistoryEntrySummary, "eventLocation">,
+) {
+  const location = entry.eventLocation?.trim();
+  return location || undefined;
+}
+
 export function historyCardLocation(entry: HistoryEntrySummary) {
-  return entry.places[0]?.name;
+  return historyEventLocation(entry);
 }
 
 export function historyCardRegion(entry: HistoryEntrySummary) {
