@@ -1,22 +1,31 @@
 # History Archive and Discovery
 
 Status: V1 public discovery interface on `feature/integration-homepage`.
-Only public Sanity History documents with `workflowStatus == "ready"` are
-eligible. Drafts and other workflow states stay unpublished. This page is the
-public home of **On This Day in Jewish History** and the broader Jewish
-Original historical archive.
+Coordinate counts and unique-story scope through
+`docs/HISTORY_V1_COMPLETION_LEDGER.md`. The workbook has 332 source rows and
+**298 unique usable stories**. That is the V1 public archive after editorial
+review. It is not 332 public stories, and it is not a permanent nine-story
+subset.
+
+Current live Sanity publications remain **9**. Public queries still require a
+published document with `workflowStatus == "ready"`. Drafts stay out of
+search, filters, counts, related payloads, and Today matching. Discovery,
+pagination, and Today matching are built and verified for the complete
+eligible unique set. The homepage stays curated. This page is the public home
+of **On This Day in Jewish History** and the broader Jewish Original
+historical archive.
 
 ## Information architecture
 
 Public routes in this milestone:
 
-| Route                                                                      | Purpose                            | Indexed                  |
-| -------------------------------------------------------------------------- | ---------------------------------- | ------------------------ |
-| `/history`                                                                 | Archive landing and discovery home | Yes                      |
-| `/history/[slug]`                                                          | Reviewed History article           | Yes, when published      |
-| `/history?month=&day=`                                                     | Civil-date browse                  | No; canonical `/history` |
-| `/history?q=&topic=&place=&sort=&page=`                                    | Search, filter, sort, pagination   | No; canonical `/history` |
-| Legacy `era` / `region` / `person` / `organization` query links            | Backward-compatible taxonomy view  | No; canonical `/history` |
+| Route                                                           | Purpose                            | Indexed                  |
+| --------------------------------------------------------------- | ---------------------------------- | ------------------------ |
+| `/history`                                                      | Archive landing and discovery home | Yes                      |
+| `/history/[slug]`                                               | Reviewed History article           | Yes, when published      |
+| `/history?month=&day=`                                          | Civil-date browse                  | No; canonical `/history` |
+| `/history?q=&topic=&place=&sort=&page=`                         | Search, filter, sort, pagination   | No; canonical `/history` |
+| Legacy `era` / `region` / `person` / `organization` query links | Backward-compatible taxonomy view  | No; canonical `/history` |
 
 No `/history/topic/[slug]`, `/history/era/[slug]`, or `/history/place/[slug]`
 routes yet. Query parameters are enough while the public collection is small.
@@ -27,7 +36,9 @@ Sitemap includes `/history` and published article slugs only.
 
 ## Progressive disclosure
 
-The landing is designed for a small collection and for hundreds later.
+The landing is designed for the complete unique archive, including the
+current nine publications and the remaining reviewed stories as they are
+released.
 
 - The hero gives search priority and offers a direct link to today’s civil
   month/day.
@@ -35,11 +46,14 @@ The landing is designed for a small collection and for hundreds later.
   before pagination.
 - Search covers titles, excerpts, people, places, topics, eras, regions, and
   organizations already present on public summaries.
-- Topic and place are the visible V1 facets. Their options are derived only
-  from eligible public entries.
+- Topic, place, and region appear only when two or more distinct published
+  options exist, or when that filter is already active. Empty or single-value
+  controls are not presented as useful. Geographic regions stay separate from
+  specific places.
 - Date, topic, place, sort, and page state live in the URL. Native GET
   navigation preserves browser Back and works without client JavaScript.
-- Six results appear per page. Empty states never substitute unrelated stories.
+- Twelve results appear per page so a larger unique archive stays readable.
+  Empty states never substitute unrelated stories.
 
 ## Today in Jewish History
 
@@ -58,11 +72,18 @@ A public match requires all of the following:
 - `historicalDate.calendarSystem == "gregorian"`
 - start month and day equal the requested civil month and day
 
+Until editorial review confirms a civil date, unpublished drafts retain
+`calendarSystem: other` and must not match Today or date browse. After review
+and publication, every unique eligible Gregorian day-precision story is part
+of public matching. Recurring observances without a verified civil date stay
+out of fixed-date matching.
+
 “Today” is the civil Gregorian date in `America/New_York`, the same V1
 definition used by Jewish Today. History does not compute Hebrew dates,
 parashah, holidays, sunset, or location.
 
-When no story matches today, the archive does not invent one.
+When no story matches today, that empty state is valid. Jewish Today links to
+the archive instead of inventing a substitute.
 
 ## Browse by date
 
@@ -73,15 +94,18 @@ dates such as February 30 return an honest empty state.
 Date browse uses the same Gregorian day-precision rules as Today in Jewish
 History. Recurring observances are excluded from fixed-date matching.
 
-Year browsing is deferred until the published collection is large enough to
-make a year axis meaningful.
+Year browsing is deferred. Month/day browse and Today matching already
+operate over the complete eligible unique set.
 
 ## Taxonomy discovery
 
-Facets are collected from published History summaries, not from the full
-Sanity taxonomy catalog. The initial interface exposes Topic and Place inside
-the secondary **Filters** control. Legacy taxonomy query parameters continue
-to resolve so old links do not break.
+Facets and counts are collected from eligible published History summaries,
+not from duplicate source rows or unpublished drafts. Published records with
+missing topic or place metadata remain discoverable in unfiltered results and
+search. Topic, Place, and Region appear only when those published facets are
+useful. Legacy taxonomy query parameters continue to resolve so old links do
+not break. The same controls cover the complete unique archive as reviewed
+records are published.
 
 ## Cards and images
 
@@ -91,17 +115,23 @@ to resolve so old links do not break.
 - `archive` for lists and date/taxonomy results
 - `related` for the approved article template
 
-Cards show date, title, excerpt, topics, and a place when present. A 16:9
-image appears only when `primaryImage` is rights-cleared. No-image cards are
-typographic. There is no generic photograph and no empty image well.
+Cards show date, title, excerpt, topics, a specific place when present, and a
+separate geographic region when present. A region is never used as a place
+fallback. Dates with `calendarSystem: other` display as under review unless
+an editor supplied `displayText`. A 16:9 image appears only when
+`primaryImage` is rights-cleared. No-image cards are typographic. There is no
+generic photograph and no empty image well.
 
 ## Search and sort
 
 No Algolia or other paid search is needed for V1. Server-side in-memory search
 operates on the complete published summary query, then combines exact facet
 and Gregorian date filters. Historical newest/oldest sort uses
-`historicalDate.start`. **Recently added** uses Sanity `_createdAt` and is
-labeled separately so ingest time is never confused with historical time.
+`historicalDate.start`. **Recently updated** uses Sanity `_updatedAt`, falling
+back to `_createdAt` only when no update exists, so bulk import time is not
+presented as a new publication. It is never confused with historical time. Year-only, Julian, and recurring records remain in unfiltered results with
+honest labels. Only verified Gregorian day-precision records match Today or
+date browse.
 
 ## Motion
 

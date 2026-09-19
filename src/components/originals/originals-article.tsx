@@ -4,6 +4,7 @@ import Link from "next/link";
 import { HistoryCitations } from "@/components/history/history-citations";
 import { OriginalsBody } from "@/components/originals/originals-body";
 import { Container } from "@/components/ui/container";
+import { hasPublishedRelatedHistoryEntry } from "@/content/history/archive";
 import type { OriginalArticle } from "@/content/originals/types";
 import {
   formatOriginalDate,
@@ -21,7 +22,9 @@ export function OriginalsArticleView({
   preview: boolean;
 }) {
   const sample = isSampleOriginal(article.slug);
-  const relatedHistory = article.relatedHistory.filter((item) => item.entry);
+  const relatedHistory = article.relatedHistory.filter((item) =>
+    hasPublishedRelatedHistoryEntry(item.entry),
+  );
   const relatedPodcasts = article.relatedPodcastEpisodes.filter(
     (item) => item.episode?.showSlug && item.episode.slug,
   );

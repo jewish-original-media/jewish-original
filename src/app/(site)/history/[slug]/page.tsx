@@ -15,6 +15,7 @@ import { HistoryPreviewBanner } from "@/components/history/history-preview-banne
 import { HistoryReferenceList } from "@/components/history/history-reference-list";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
+import { hasPublishedRelatedHistoryEntry } from "@/content/history/archive";
 import {
   getHistoryEntry,
   getPublishedHistorySlugs,
@@ -75,8 +76,8 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
   );
   const shareUrl = historyEntryUrl(entry.slug);
   const shareText = `${entry.title} — Jewish Original`;
-  const relatedEntries = entry.relatedHistory.filter(
-    (relationship) => relationship.entry,
+  const relatedEntries = entry.relatedHistory.filter((relationship) =>
+    hasPublishedRelatedHistoryEntry(relationship.entry),
   );
   const placeLabel = entry.places[0]?.name;
 
@@ -253,7 +254,7 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
               />
               <HistoryReferenceList
                 filterType="region"
-                heading="Geography"
+                heading="Regions"
                 items={entry.geographicRegions}
               />
               <HistoryReferenceList

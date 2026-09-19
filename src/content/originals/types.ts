@@ -24,6 +24,7 @@ export type OriginalArticle = OriginalSummary & {
     relationType?: string;
     note?: string;
     entry?: {
+      _id?: string;
       title: string;
       slug: string;
       excerpt?: string;

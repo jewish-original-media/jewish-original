@@ -12,6 +12,7 @@ import { PodcastPreviewBanner } from "@/components/podcasts/podcast-preview-bann
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
+import { hasPublishedRelatedHistoryEntry } from "@/content/history/archive";
 import {
   getPodcastEpisode,
   getPublishedPodcastSlugs,
@@ -205,12 +206,14 @@ export default async function PodcastEpisodePage({ params }: EpisodePageProps) {
               </section>
             ) : null}
 
-            {episode.relatedHistory.some((item) => item.entry) ? (
+            {episode.relatedHistory.some((item) =>
+              hasPublishedRelatedHistoryEntry(item.entry),
+            ) ? (
               <section className="podcast-block">
                 <h2 className="podcast-section-title">Related History</h2>
                 <ul className="podcast-related-list">
                   {episode.relatedHistory.map((item) =>
-                    item.entry ? (
+                    hasPublishedRelatedHistoryEntry(item.entry) && item.entry ? (
                       <li key={item.entry.slug}>
                         <Link href={`/history/${item.entry.slug}`}>
                           {item.entry.title}

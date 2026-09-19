@@ -635,9 +635,9 @@ remain unchanged.
 History discovery operates over the complete public-ready summary query before
 pagination. Search covers only text already present on eligible summaries.
 Topic, Place, Gregorian month/day, historical oldest/newest, and Recently
-Added combine through GET parameters so links are durable and browser Back
-works without a client state store. Recently Added means Sanity `_createdAt`;
-it is never presented as the historical date.
+Updated combine through GET parameters so links are durable and browser Back
+works without a client state store. Recently Updated means Sanity
+`_updatedAt`, not import `_createdAt` and not the historical date.
 
 Jewish Today remains Eastern Time and Diaspora (`i=off`). Hebcal’s verified
 `leyning.torah` references produce Sefaria study links. Missing references
@@ -650,3 +650,44 @@ approved replacements exist. They retain their source records, show the exact
 sample notice, suppress founder bylines and Article author metadata, are
 `noindex`, and stay out of the sitemap. No Sanity write, Production change,
 DNS change, or default-branch change is involved.
+
+## ADR-044 — Public History uses reviewed publications only
+
+**Status:** Accepted, 2026-09-19
+
+The 332-row archive report is 9 published ready records and 323 drafts, not
+332 public stories. Public search, filters, counts, related History payloads,
+and Today matching use only published ready documents. Draft IDs stay out of
+those queries and payloads.
+
+Filter options are built from eligible published records. Published stories
+with missing topic or place metadata remain in unfiltered results. Topic,
+place, and region controls appear only when two or more published options
+exist, or when that filter is already selected. Geographic regions are not
+places.
+
+Only the 9 reviewed publications currently have verified Gregorian calendar
+status. Drafts retain `calendarSystem: other` and are not treated as verified
+anniversaries. Today may have no match; that empty state links to the archive.
+The discovery interface stays ready to expand as reviewed content is
+published. Exhibition and discovery design work is preserved. No Sanity write,
+Production change, DNS change, or default-branch change is involved.
+
+## ADR-045 — V1 History is the complete unique archive
+
+**Status:** Accepted, 2026-09-19
+
+V1 launch scope is every unique usable History story after editorial review:
+**298** unique stories from the 332-row workbook, per
+`docs/HISTORY_V1_COMPLETION_LEDGER.md`. Duplicate source rows are not public
+stories. The current nine publications are the live approved subset, not the
+finished archive.
+
+Public `/history` search, filters, sort, pagination, and Today matching are
+verified against that complete eligible unique set. They do not cap results
+at nine. Public GROQ still requires published + `ready`. Parsed draft dates
+are not live anniversaries until review confirms them.
+
+The homepage remains curated: one History lead and two supporting stories,
+preferring a verified On This Day match when one exists. Integration does not
+publish drafts, write to Sanity, or change Production, DNS, or `main`.

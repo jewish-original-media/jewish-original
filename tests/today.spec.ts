@@ -39,9 +39,12 @@ test("renders an ordinary weekday without empty sections", async ({
   ).toHaveCount(0);
   await expect(
     page.getByText(
-      "No published archive story is attached to this Gregorian anniversary yet.",
+      "No verified Gregorian anniversary is published for this date.",
     ),
   ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Explore this date in the archive" }),
+  ).toHaveAttribute("href", "/history?month=9&day=1");
   await expect(
     page.getByText(/civil gregorian|america\/new_york/i),
   ).toHaveCount(0);

@@ -355,6 +355,12 @@
   text-transform: uppercase;
 }
 
+.historyRegion {
+  margin: 0.2rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+}
+
 .supporting {
   display: grid;
   gap: 0;

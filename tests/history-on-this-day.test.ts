@@ -95,6 +95,37 @@ describe("Today in Jewish History matching", () => {
       ),
       false,
     );
+    assert.equal(
+      matchesOnThisDayHistory(
+        {
+          ...dachau,
+          _id: "drafts.historyEntry.parsed-draft",
+          historicalDate: {
+            precision: "day",
+            calendarSystem: "other",
+            start: { year: 1945, month: 4, day: 29 },
+          },
+        },
+        4,
+        29,
+      ),
+      false,
+    );
+    assert.equal(
+      matchesOnThisDayHistory(
+        {
+          ...dachau,
+          historicalDate: {
+            precision: "day",
+            calendarSystem: "other",
+            start: { year: 1945, month: 4, day: 29 },
+          },
+        },
+        4,
+        29,
+      ),
+      false,
+    );
   });
 });
 

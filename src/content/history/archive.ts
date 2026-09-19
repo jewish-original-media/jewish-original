@@ -21,6 +21,7 @@ export type HistoryArchiveSearch = {
   query?: string;
   topic?: string;
   place?: string;
+  region?: string;
   month?: number;
   day?: number;
   sort: HistoryArchiveSort;
@@ -31,7 +32,29 @@ export type HistoryArchiveSearch = {
 export type HistoryArchiveSort =
   "historical-newest" | "historical-oldest" | "added-newest";
 
-export const HISTORY_ARCHIVE_PAGE_SIZE = 6;
+export const HISTORY_ARCHIVE_PAGE_SIZE = 12;
+export const USEFUL_PUBLISHED_FACET_MIN = 2;
+
+export function isPublishedHistoryId(id?: string) {
+  return typeof id === "string" && id.length > 0 && !id.startsWith("drafts.");
+}
+
+export function selectPublishedHistoryEntries<T extends { _id: string }>(
+  entries: readonly T[],
+) {
+  return entries.filter((entry) => isPublishedHistoryId(entry._id));
+}
+
+export function isUsefulPublishedFacet(items: readonly HistoryReference[]) {
+  return items.length >= USEFUL_PUBLISHED_FACET_MIN;
+}
+
+export function hasPublishedRelatedHistoryEntry(
+  entry?: { _id?: string; slug?: string } | null,
+) {
+  if (!entry?.slug) return false;
+  return !entry._id || isPublishedHistoryId(entry._id);
+}
 
 function firstString(value: string | string[] | undefined): string | undefined {
   return typeof value === "string" ? value : undefined;
@@ -65,10 +88,13 @@ export function parseHistoryArchiveSearch(
       : "historical-newest";
   const topicValue = firstString(searchParams.topic);
   const placeValue = firstString(searchParams.place);
+  const regionValue = firstString(searchParams.region);
   const topic =
     topicValue && SLUG_PATTERN.test(topicValue) ? topicValue : undefined;
   const place =
     placeValue && SLUG_PATTERN.test(placeValue) ? placeValue : undefined;
+  const region =
+    regionValue && SLUG_PATTERN.test(regionValue) ? regionValue : undefined;
   let filter: HistoryFilter | undefined;
 
   for (const type of FILTER_TYPES) {
@@ -84,6 +110,7 @@ export function parseHistoryArchiveSearch(
     query,
     topic,
     place,
+    region,
     month,
     day: month ? day : undefined,
     sort,
@@ -93,6 +120,7 @@ export function parseHistoryArchiveSearch(
       query ||
       topic ||
       place ||
+      region ||
       month ||
       sort !== "historical-newest" ||
       page > 1,
@@ -105,6 +133,7 @@ export type HistoryArchiveHrefQuery = {
   query?: string;
   topic?: string;
   place?: string;
+  region?: string;
   month?: number;
   day?: number;
   sort?: HistoryArchiveSort;
@@ -116,6 +145,7 @@ export function historyArchiveHref(query: HistoryArchiveHrefQuery) {
   if (query.query) params.set("q", query.query);
   if (query.topic) params.set("topic", query.topic);
   if (query.place) params.set("place", query.place);
+  if (query.region) params.set("region", query.region);
   if (query.month) params.set("month", String(query.month));
   if (query.month && query.day) params.set("day", String(query.day));
   if (query.filter) params.set(query.filter.type, query.filter.slug);
@@ -149,8 +179,8 @@ function historicalTimestamp(entry: HistoryEntrySummary) {
   return start.year * 10_000 + (start.month ?? 0) * 100 + (start.day ?? 0);
 }
 
-function createdTimestamp(entry: HistoryEntrySummary) {
-  const timestamp = Date.parse(entry._createdAt ?? "");
+function updatedTimestamp(entry: HistoryEntrySummary) {
+  const timestamp = Date.parse(entry._updatedAt ?? entry._createdAt ?? "");
   return Number.isNaN(timestamp) ? Number.NEGATIVE_INFINITY : timestamp;
 }
 
@@ -202,6 +232,12 @@ export function filterAndSortHistoryArchive(
     ) {
       return false;
     }
+    if (
+      search.region &&
+      !entry.geographicRegions.some((item) => item.slug === search.region)
+    ) {
+      return false;
+    }
     if (search.month) {
       const date = entry.historicalDate;
       if (
@@ -219,7 +255,7 @@ export function filterAndSortHistoryArchive(
 
   return filtered.toSorted((left, right) => {
     if (search.sort === "added-newest") {
-      return createdTimestamp(right) - createdTimestamp(left);
+      return updatedTimestamp(right) - updatedTimestamp(left);
     }
     const direction = search.sort === "historical-oldest" ? 1 : -1;
     return (historicalTimestamp(left) - historicalTimestamp(right)) * direction;
@@ -271,7 +307,11 @@ export function collectPublishedFacets(
 }
 
 export function historyCardLocation(entry: HistoryEntrySummary) {
-  return entry.places[0]?.name || entry.geographicRegions[0]?.name;
+  return entry.places[0]?.name;
+}
+
+export function historyCardRegion(entry: HistoryEntrySummary) {
+  return entry.geographicRegions[0]?.name;
 }
 
 export const FILTER_LABELS: Record<HistoryFilterType, string> = {

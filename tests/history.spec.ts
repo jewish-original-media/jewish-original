@@ -150,13 +150,7 @@ test("searches the full archive, combines filters, sorts, and restores browser B
   page,
 }) => {
   await page.goto("/history");
-  const nextPage = page.getByRole("link", { name: "Next →" });
-  await expect(nextPage).toHaveAttribute("href", "/history?page=2");
-  await nextPage.click();
-  await expect(page).toHaveURL(/page=2/);
-  await expect(page.getByText("Page 2 of 2")).toBeVisible();
-  await page.goBack();
-  await expect(page).toHaveURL(/\/history$/);
+  await expect(page.getByRole("link", { name: "Next →" })).toHaveCount(0);
   const filterSummary = page.locator("summary").filter({ hasText: "Filters" });
   await filterSummary.focus();
   await expect(filterSummary).toBeFocused();

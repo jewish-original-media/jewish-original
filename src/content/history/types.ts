@@ -72,6 +72,7 @@ export type HistoryImage = {
 export type HistoryEntrySummary = {
   _id: string;
   _createdAt?: string;
+  _updatedAt?: string;
   title: string;
   slug: string;
   excerpt?: string;
@@ -113,7 +114,6 @@ export type HistoryEntry = HistoryEntrySummary & {
     openGraphDescription?: string;
   };
   workflowStatus?: string;
-  _createdAt?: string;
   _updatedAt: string;
 };
 

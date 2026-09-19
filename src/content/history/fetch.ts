@@ -7,6 +7,7 @@ import {
   getPublishedSanityClient,
 } from "@/lib/sanity/client";
 
+import { selectPublishedHistoryEntries } from "./archive";
 import {
   draftCandidateSlugQuery,
   historyEntryQuery,
@@ -49,11 +50,12 @@ export async function getHistoryIndex(
   options?: HistoryIndexOptions,
 ) {
   const client = preview ? getDraftSanityClient() : getPublishedSanityClient();
-  return client.fetch<HistoryEntrySummary[]>(
+  const entries = await client.fetch<HistoryEntrySummary[]>(
     historyIndexQuery,
     indexParams(preview, options),
     preview ? previewOptions : publishedOptions,
   );
+  return preview ? entries : selectPublishedHistoryEntries(entries);
 }
 
 export async function getOnThisDayHistory(
@@ -62,16 +64,17 @@ export async function getOnThisDayHistory(
   day: number,
 ) {
   const client = preview ? getDraftSanityClient() : getPublishedSanityClient();
-  return client.fetch<HistoryEntrySummary[]>(
+  const entries = await client.fetch<HistoryEntrySummary[]>(
     historyOnThisDayQuery,
     { preview, month, day },
     preview ? previewOptions : publishedOptions,
   );
+  return preview ? entries : selectPublishedHistoryEntries(entries);
 }
 
 export const getHistoryEntry = cache(async (slug: string, preview: boolean) => {
   const client = preview ? getDraftSanityClient() : getPublishedSanityClient();
-  return client.fetch<HistoryEntry | null>(
+  const entry = await client.fetch<HistoryEntry | null>(
     historyEntryQuery,
     { preview, slug },
     preview
@@ -83,6 +86,15 @@ export const getHistoryEntry = cache(async (slug: string, preview: boolean) => {
           },
         },
   );
+  if (!entry || preview) return entry;
+  return {
+    ...entry,
+    relatedHistory: entry.relatedHistory.filter(
+      (relationship) =>
+        relationship.entry &&
+        selectPublishedHistoryEntries([relationship.entry]).length > 0,
+    ),
+  };
 });
 
 export async function getPublishedHistorySlugs() {

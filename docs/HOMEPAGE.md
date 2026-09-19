@@ -44,7 +44,8 @@ Hourly revalidation matches Jewish Today (`revalidate = 3600`).
 2. **Jewish Today** — compact daily almanac from the same `JewishTodayDay`.
    Live.
 3. **History** — one lead plus two supporting archive stories, with
-   headlines taking priority over dates. Live.
+   headlines taking priority over dates. The module stays curated after the
+   complete unique archive is public. Live.
 4. **Originals** — one featured house essay plus quieter supporting titles
    in a two-column journal arrangement. Placeholder essays carry the same
    sample notice as the journal and do not display founder bylines.
@@ -80,9 +81,10 @@ Uses the canonical History system only:
 - `HomeHistoryFeature` as layout around canonical History data
 - optional `next/image` only when a rights-cleared `primaryImage` exists
 
-The first collection has no public imagery. Typography and dates carry the
-lead. Supporting stories are stronger archive pieces, not a third equal card
-column. Do not insert empty image boxes.
+`getHistoryIndex(false)` reads the complete published-ready archive. The
+homepage still shows only one lead and two supporting stories. The full
+unique set is discovered on `/history`. Typography and dates carry the lead
+while public imagery is thin. Do not insert empty image boxes.
 
 ## Podcasts
 

@@ -106,11 +106,16 @@ export const podcastEpisodeQuery = defineQuery(`*[
   "relatedHistory": coalesce(relatedHistory[]{
     relationType,
     note,
-    "entry": entry->{
-      title,
-      "slug": slug.current,
-      excerpt
-    }
+    "entry": select(
+      defined(entry) &&
+      !(entry->_id in path("drafts.**")) &&
+      entry->workflowStatus == "ready" => entry->{
+        _id,
+        title,
+        "slug": slug.current,
+        excerpt
+      }
+    )
   }, []),
   "relatedEpisodes": coalesce(relatedEpisodes[]{
     relationType,

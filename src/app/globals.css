@@ -884,9 +884,15 @@ svg {
   font-size: var(--text-sm);
 }
 
+.history-entry-card__region {
+  margin: var(--space-1) 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
 .history-archive-list {
   display: grid;
-  gap: var(--space-10);
+  gap: var(--space-8);
   margin-top: var(--space-8);
 }
 

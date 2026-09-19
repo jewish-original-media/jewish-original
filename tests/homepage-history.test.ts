@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
+import { eligibleHistoryEntriesAfterReview } from "../src/content/history/v1-eligible-archive";
 import type { HistoryEntrySummary } from "../src/content/history/types";
 import { composeHomeHistory } from "../src/features/homepage/history";
 
@@ -45,6 +46,12 @@ test("keeps only two supporting History items on the homepage", () => {
     composed.supporting.map((item) => item._id),
     ["a", "b"],
   );
+});
+
+test("stays curated after the complete unique archive is eligible", () => {
+  const composed = composeHomeHistory(eligibleHistoryEntriesAfterReview(), []);
+  assert.equal(composed.supporting.length, 2);
+  assert.ok(composed.lead);
 });
 
 test("falls back to archive order when no On This Day match exists", () => {

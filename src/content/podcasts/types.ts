@@ -68,6 +68,7 @@ export type PodcastEpisode = PodcastEpisodeSummary & {
     relationType?: string;
     note?: string;
     entry?: {
+      _id?: string;
       title: string;
       slug: string;
       excerpt?: string;

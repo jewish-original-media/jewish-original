@@ -62,7 +62,7 @@ export default async function HistoryIndexPage({
   ]);
   const search = parseHistoryArchiveSearch(resolvedSearchParams);
   const today = civilDateParts();
-  const publishedEntries = await getHistoryIndex(preview);
+  const publishedEntries = await getHistoryIndex(false);
   const facets = collectPublishedFacets(publishedEntries);
   const filteredEntries = filterAndSortHistoryArchive(publishedEntries, search);
   const page = paginateHistoryArchive(filteredEntries, search.page);
@@ -93,8 +93,9 @@ export default async function HistoryIndexPage({
             <p className="history-date-line">{formatCivilDateLabel(today)}</p>
             <h1 className="history-display">Explore Jewish history.</h1>
             <p className="history-lede">
-              Search reviewed public stories by person, place, topic, or date.
-              Every result comes from the published archive.
+              Search reviewed public stories by person, place, topic, or
+              verified Gregorian date. Every result comes from the published
+              archive. The collection grows as reviewed records are released.
             </p>
           </div>
           <aside className="history-archive-rail">

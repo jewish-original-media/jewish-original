@@ -42,6 +42,7 @@ const imageProjection = `"primaryImage": select(
 const summaryProjection = `{
   _id,
   _createdAt,
+  _updatedAt,
   title,
   "slug": slug.current,
   excerpt,
@@ -67,6 +68,12 @@ const filterExpression = `(
   ($filterType == "organization" && $filterSlug in organizations[]->slug.current)
 )`;
 
+const publishedRelatedEntry = `select(
+  defined(entry) &&
+  !(entry->_id in path("drafts.**")) &&
+  entry->workflowStatus == "ready" => entry->${summaryProjection}
+)`;
+
 const gregorianDayMatch = `(
   entryKind != "recurringObservance" &&
   historicalDate.precision == "day" &&
@@ -88,6 +95,7 @@ export const historyIndexQuery = defineQuery(`*[
   ${filterExpression} &&
   ${dateFilterExpression}
 ] | order(historicalDate.start.year desc, historicalDate.start.month desc, historicalDate.start.day desc) ${summaryProjection}`);
+// No result cap: public discovery reads the complete published-ready archive.
 
 export const historyOnThisDayQuery = defineQuery(`*[
   _type == "historyEntry" &&
@@ -130,7 +138,7 @@ export const historyEntryQuery = defineQuery(`*[
   "relatedHistory": coalesce(relatedHistory[]{
     relationType,
     note,
-    "entry": entry->${summaryProjection}
+    "entry": ${publishedRelatedEntry}
   }, []),
   seo,
   "workflowStatus": select($preview => workflowStatus),

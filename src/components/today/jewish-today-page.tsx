@@ -188,8 +188,7 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
               On This Day in Jewish history
             </h2>
             <p className={styles.historyEmpty}>
-              No published archive story is attached to this Gregorian
-              anniversary yet.
+              No verified Gregorian anniversary is published for this date.
             </p>
             <Link
               className={styles.archiveLink}

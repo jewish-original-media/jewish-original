@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { historyCardLocation } from "@/content/history/archive";
+import {
+  historyCardLocation,
+  historyCardRegion,
+} from "@/content/history/archive";
 import type { HistoryEntrySummary } from "@/content/history/types";
 import type { HomeHistoryPresentation } from "@/features/homepage/history";
 import { formatHistoricalDate } from "@/lib/history/format-date";
@@ -24,6 +27,7 @@ function historyDate(entry: HistoryEntrySummary) {
 
 function LeadHistory({ entry }: { entry: HistoryEntrySummary }) {
   const location = historyCardLocation(entry);
+  const region = historyCardRegion(entry);
   const topics = entry.topics.map((topic) => topic.name).join(" · ");
 
   return (
@@ -41,12 +45,14 @@ function LeadHistory({ entry }: { entry: HistoryEntrySummary }) {
       <p className={styles.historyMeta}>
         {[topics, location].filter(Boolean).join(" · ")}
       </p>
+      {region ? <p className={styles.historyRegion}>{region}</p> : null}
     </article>
   );
 }
 
 function SupportingHistory({ entry }: { entry: HistoryEntrySummary }) {
   const location = historyCardLocation(entry);
+  const region = historyCardRegion(entry);
 
   return (
     <article className={styles.supportingStory}>
@@ -70,6 +76,7 @@ function SupportingHistory({ entry }: { entry: HistoryEntrySummary }) {
         </p>
       ) : null}
       {location ? <p className={styles.historyMeta}>{location}</p> : null}
+      {region ? <p className={styles.historyRegion}>{region}</p> : null}
     </article>
   );
 }

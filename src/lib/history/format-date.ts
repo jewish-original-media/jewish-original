@@ -48,6 +48,12 @@ export function formatHistoricalDate(
   }
   if (date?.displayText) return date.displayText;
   if (!date || date.precision === "unknown") return "Date under review";
+  if (!date.calendarSystem || date.calendarSystem === "other") {
+    if (date.precision === "year" && date.start?.year !== undefined) {
+      return `${formatYear(date.start.year)} · calendar under review`;
+    }
+    return "Date under review";
+  }
 
   const start = formatPart(date.start, date.precision);
   const end =

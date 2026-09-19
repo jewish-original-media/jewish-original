@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { historyCardLocation } from "@/content/history/archive";
+import {
+  historyCardLocation,
+  historyCardRegion,
+} from "@/content/history/archive";
 import type { HistoryEntrySummary } from "@/content/history/types";
 import { formatHistoricalDate } from "@/lib/history/format-date";
 
@@ -22,6 +25,7 @@ export function HistoryEntryCard({
     entry.observanceRule,
   );
   const location = historyCardLocation(entry);
+  const region = historyCardRegion(entry);
   const TitleTag = headingLevel ?? (variant === "featured" ? "h2" : "h3");
   const titleClass =
     variant === "featured"
@@ -70,6 +74,7 @@ export function HistoryEntryCard({
         {location ? (
           <p className="history-entry-card__location">{location}</p>
         ) : null}
+        {region ? <p className="history-entry-card__region">{region}</p> : null}
       </div>
     </article>
   );

@@ -4,6 +4,7 @@ import { HistoryEntryCard } from "@/components/history/history-entry-card";
 import {
   FILTER_LABELS,
   historyArchiveHref,
+  isUsefulPublishedFacet,
   type HistoryArchiveHrefQuery,
   type HistoryArchiveSearch,
 } from "@/content/history/archive";
@@ -28,7 +29,8 @@ function activeQuery(search: HistoryArchiveSearch): HistoryArchiveHrefQuery {
   const legacyFilter =
     search.filter &&
     search.filter.type !== "topic" &&
-    search.filter.type !== "place"
+    search.filter.type !== "place" &&
+    search.filter.type !== "region"
       ? search.filter
       : undefined;
 
@@ -37,6 +39,7 @@ function activeQuery(search: HistoryArchiveSearch): HistoryArchiveHrefQuery {
     query: search.query,
     topic: search.topic,
     place: search.place,
+    region: search.region,
     month: search.month,
     day: search.day,
     sort: search.sort,
@@ -58,11 +61,19 @@ export function HistoryArchiveDiscovery({
   const current = activeQuery(search);
   const topicLabel = labelFor(facets.topics, search.topic);
   const placeLabel = labelFor(facets.places, search.place);
+  const regionLabel = labelFor(facets.regions, search.region);
+  const showTopic =
+    isUsefulPublishedFacet(facets.topics) || Boolean(search.topic);
+  const showPlace =
+    isUsefulPublishedFacet(facets.places) || Boolean(search.place);
+  const showRegion =
+    isUsefulPublishedFacet(facets.regions) || Boolean(search.region);
   const hasFilters = Boolean(
     search.filter ||
     search.query ||
     search.topic ||
     search.place ||
+    search.region ||
     search.month ||
     search.sort !== "historical-newest",
   );
@@ -86,8 +97,9 @@ export function HistoryArchiveDiscovery({
             </button>
           </div>
           <p className="history-discovery__search-help">
-            Searches titles, summaries, people, places, topics, eras, regions,
-            and organizations.
+            Searches reviewed public stories by title, summary, people, places,
+            topics, eras, regions, and organizations. Drafts stay out of these
+            results.
           </p>
         </div>
 
@@ -97,38 +109,59 @@ export function HistoryArchiveDiscovery({
             {hasFilters ? <span>Active</span> : null}
           </summary>
           <div className="history-discovery__filter-grid">
+            {showTopic ? (
+              <div className="history-discovery__field">
+                <label htmlFor="history-topic">Topic</label>
+                <select
+                  defaultValue={search.topic ?? ""}
+                  id="history-topic"
+                  name="topic"
+                >
+                  <option value="">All topics</option>
+                  {facets.topics.map((item) => (
+                    <option key={item.slug} value={item.slug}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
+            {showPlace ? (
+              <div className="history-discovery__field">
+                <label htmlFor="history-place">Place</label>
+                <select
+                  defaultValue={search.place ?? ""}
+                  id="history-place"
+                  name="place"
+                >
+                  <option value="">All places</option>
+                  {facets.places.map((item) => (
+                    <option key={item.slug} value={item.slug}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
+            {showRegion ? (
+              <div className="history-discovery__field">
+                <label htmlFor="history-region">Region</label>
+                <select
+                  defaultValue={search.region ?? ""}
+                  id="history-region"
+                  name="region"
+                >
+                  <option value="">All regions</option>
+                  {facets.regions.map((item) => (
+                    <option key={item.slug} value={item.slug}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
             <div className="history-discovery__field">
-              <label htmlFor="history-topic">Topic</label>
-              <select
-                defaultValue={search.topic ?? ""}
-                id="history-topic"
-                name="topic"
-              >
-                <option value="">All topics</option>
-                {facets.topics.map((item) => (
-                  <option key={item.slug} value={item.slug}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="history-discovery__field">
-              <label htmlFor="history-place">Place</label>
-              <select
-                defaultValue={search.place ?? ""}
-                id="history-place"
-                name="place"
-              >
-                <option value="">All places</option>
-                {facets.places.map((item) => (
-                  <option key={item.slug} value={item.slug}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="history-discovery__field">
-              <label htmlFor="history-month">Month</label>
+              <label htmlFor="history-month">Gregorian month</label>
               <select
                 defaultValue={search.month ? String(search.month) : ""}
                 id="history-month"
@@ -143,7 +176,7 @@ export function HistoryArchiveDiscovery({
               </select>
             </div>
             <div className="history-discovery__field">
-              <label htmlFor="history-day">Day</label>
+              <label htmlFor="history-day">Gregorian day</label>
               <select
                 defaultValue={search.day ? String(search.day) : ""}
                 id="history-day"
@@ -166,10 +199,13 @@ export function HistoryArchiveDiscovery({
                 <option value="historical-oldest">
                   Historical date: oldest
                 </option>
-                <option value="added-newest">Recently added</option>
+                <option value="added-newest">Recently updated</option>
               </select>
             </div>
           </div>
+          <p className="history-discovery__search-help">
+            Date browse matches verified Gregorian anniversaries only.
+          </p>
           <div className="history-discovery__filter-actions">
             <button className="button button--secondary" type="submit">
               Apply filters
@@ -188,7 +224,7 @@ export function HistoryArchiveDiscovery({
         </div>
         <p className="history-discovery__sort-note">
           {search.sort === "added-newest"
-            ? "Sorted by date added to the archive"
+            ? "Sorted by last editorial update, not historical date or import time"
             : search.sort === "historical-oldest"
               ? "Sorted by historical date, oldest first"
               : "Sorted by historical date, newest first"}
@@ -234,6 +270,16 @@ export function HistoryArchiveDiscovery({
               <Link href={historyArchiveHref({ ...current, place: undefined })}>
                 Place: {placeLabel} <span aria-hidden="true">×</span>
                 <span className="sr-only">Remove place filter</span>
+              </Link>
+            </li>
+          ) : null}
+          {search.region ? (
+            <li>
+              <Link
+                href={historyArchiveHref({ ...current, region: undefined })}
+              >
+                Region: {regionLabel} <span aria-hidden="true">×</span>
+                <span className="sr-only">Remove region filter</span>
               </Link>
             </li>
           ) : null}

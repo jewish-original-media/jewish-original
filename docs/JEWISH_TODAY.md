@@ -124,6 +124,12 @@ A match requires all of:
 - `historicalDate.calendarSystem == "gregorian"`
 - `historicalDate.start.month` and `.day` equal today’s civil month/day
 
+Drafts and records with `calendarSystem: other` do not match, even if a month
+and day were parsed from the source row. After editorial review, every unique
+eligible Gregorian day-precision story is part of matching. No match is still
+a valid state; Today links to the History archive for that civil date. The
+homepage History module stays curated and does not list the full archive.
+
 Related History is not queried, so unpublished related documents cannot leak.
 Cards use History’s `HistoryEntryCard`, including a rights-cleared image only
 when History supplies one. Dachau remains a no-image article.
