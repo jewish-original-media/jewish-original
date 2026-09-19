@@ -139,12 +139,13 @@ test("serves Support without checkout or tax claims", async ({ page }) => {
     page.getByText("Jewish Original Media is a for-profit business.").first(),
   ).toBeVisible();
 
-  await page
-    .getByRole("link", { name: /give once/i })
-    .first()
-    .focus();
-  await page.keyboard.press("Enter");
-  await expect(page.locator("#give-once")).toBeInViewport();
+  const giveOncePath = page
+    .getByRole("navigation", { name: "Support paths" })
+    .getByRole("link", { name: /give once/i });
+  await giveOncePath.focus();
+  await expect(giveOncePath).toBeFocused();
+  await giveOncePath.click();
+  await expect(page).toHaveURL(/#give-once$/);
   await page
     .getByRole("link", { name: "Open a one-time support draft" })
     .focus();

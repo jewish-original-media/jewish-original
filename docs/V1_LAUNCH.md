@@ -26,9 +26,10 @@ and three publishers exist.
 and editorial independence. News cards are not labeled “AI”.
 
 `/support` remains mailto inquiry drafts until approved payment links exist.
-Monthly $18 / $36 / $72 stay unconfirmed. Sponsorship deliverables stay
-unpromised where the founder plan and the revenue-prep package differ. No
-tax deductibility claims.
+Monthly $18 / $36 / $72 stay proposed pending founder confirmation. Receipt
+of the Support package is not final copy, pricing, or commercial-deliverable
+approval. Sponsorship deliverables stay unpromised where the founder plan and
+the revenue-prep package differ. No tax deductibility claims.
 
 `/privacy` describes cookieless Vercel Web Analytics and Speed Insights. It
 is still not a binding legal policy.

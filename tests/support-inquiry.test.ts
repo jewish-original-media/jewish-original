@@ -1,7 +1,16 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { supportInquiryMailto } from "../src/lib/support/inquiry";
+import {
+  SUPPORT_MONTHLY_AMOUNTS,
+  SUPPORT_MONTHLY_STATUS,
+  supportInquiryMailto,
+} from "../src/lib/support/inquiry";
+
+test("keeps monthly amounts proposed until the founder confirms them", () => {
+  assert.equal(SUPPORT_MONTHLY_STATUS, "proposed");
+  assert.deepEqual([...SUPPORT_MONTHLY_AMOUNTS], [18, 36, 72]);
+});
 
 test("encodes inquiry mailtos without claiming a send", () => {
   const href = supportInquiryMailto("day-in-jewish-history");

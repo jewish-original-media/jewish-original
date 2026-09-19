@@ -1,5 +1,8 @@
 import { siteConfig } from "@/lib/site";
 
+/** Proposed pending founder confirmation. Not approved pricing. */
+export const SUPPORT_MONTHLY_STATUS = "proposed" as const;
+
 export const SUPPORT_MONTHLY_AMOUNTS = [18, 36, 72] as const;
 
 export const SUPPORT_MONTHLY_OFFERS = {

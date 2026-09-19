@@ -162,8 +162,8 @@ export default function SupportPage() {
           </h2>
           <p className={styles.copy}>
             Monthly support helps us plan research, editing, and publishing as
-            ongoing work. There are no membership perks attached. These amounts
-            are the current public options. We confirm the amount before any
+            ongoing work. There are no membership perks attached. The amounts
+            below are shown for conversation. We confirm the amount before any
             payment.
           </p>
           <p

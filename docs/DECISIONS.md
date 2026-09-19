@@ -720,9 +720,10 @@ about 30 seconds, a History day that includes blog and social, and exclusive
 monthly recognition.
 
 `/support` does not adopt either version as a public promise. Featured
-prices stay $360 / $180 / $36. Monthly $18 / $36 / $72 remain the current
-public options and are confirmed before payment. Custom month, article, and
-major-project rates stay off the catalog. Every action opens an email draft.
-Availability and deliverables are confirmed before payment is requested.
-No Stripe products, test Payment Links, or demonstration checkout ship on
-the public page.
+prices stay $360 / $180 / $36. Monthly $18 / $36 / $72 stay recorded as
+proposed pending founder confirmation. They are not approved copy, pricing,
+or commercial-deliverable decisions. Custom month, article, and major-project
+rates stay off the catalog. Every action opens an email draft. Availability
+and deliverables are confirmed before payment is requested. No Stripe
+products, test Payment Links, or demonstration checkout ship on the public
+page.

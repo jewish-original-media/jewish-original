@@ -79,7 +79,6 @@ export function HistorySearchCombobox({
         aria-controls={listId}
         aria-expanded={showList}
         autoComplete="off"
-        defaultValue={search.query}
         id="history-search"
         maxLength={80}
         name="q"
@@ -116,6 +115,7 @@ export function HistorySearchCombobox({
         placeholder="Search people, places, topics, or stories"
         role="combobox"
         type="search"
+        value={value}
       />
       <ul hidden={!showList} id={listId} role="listbox">
         {suggestions.map((suggestion, index) => (
@@ -129,7 +129,7 @@ export function HistorySearchCombobox({
               href={suggestionHref(suggestion, search)}
               onMouseDown={(event) => event.preventDefault()}
             >
-              <span>{suggestion.name}</span>
+              <span>{suggestion.name}</span>{" "}
               <span>{HISTORY_SUGGESTION_LABELS[suggestion.kind]}</span>
             </a>
           </li>
