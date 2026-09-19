@@ -4,7 +4,7 @@ This file is **not** the launch plan.
 
 Authoritative document:
 
-[`docs/launch-readiness/V1.md`](../launch-readiness/V1.md)
+[../launch-readiness/V1.md](../launch-readiness/V1.md)
 
 The 2026-09-04 text lived in commit `9793879` on
 `research/v1-launch-readiness`. It predates the founder’s full-archive
