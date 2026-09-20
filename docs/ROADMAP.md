@@ -78,14 +78,15 @@ Exit: the homepage has trustworthy daily value with graceful failure behavior.
   desk) is on Integration Preview. First public essays adapt founder About
   copy. Do not invent additional Originals.
 
-## Next milestone — Final visual review, then Production cutover
+## Next milestone — Complete unique History, then Production cutover
 
-Content-depth (Originals + News maturity review) is on Integration Preview.
-See `docs/ORIGINALS.md`, `docs/V1_LAUNCH.md`, and `docs/SOURCE_OF_TRUTH.md`.
+Authoritative plan: `docs/launch-readiness/V1.md`. Visual Preview approval
+does not authorize cutover. Public launch still requires every unique,
+usable History story edited, verified, and publicly available after
+approval.
 
 Do not expand History from Integration. Do not attach `jewishoriginal.com`
-until the founder-approved Production checklist is run after the final
-visual pass.
+until that content bar and a known-good Integration commit are ready.
 
 ## Milestone 4 — Curation and distribution
 

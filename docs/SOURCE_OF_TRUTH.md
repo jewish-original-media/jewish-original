@@ -8,7 +8,7 @@ This map says where a fact lives. It does not replace the linked documents.
 | Architecture                      | `docs/ARCHITECTURE.md`                                                       |
 | Design                            | `docs/DESIGN_SYSTEM.md`                                                      |
 | Content model                     | `docs/CONTENT_MODEL.md`                                                      |
-| Launch readiness                  | `docs/V1_LAUNCH.md`                                                          |
+| Launch readiness                  | `docs/launch-readiness/V1.md` (`docs/V1_LAUNCH.md` is a pointer)              |
 | History source files              | Canonical workbook + checksums in History docs                               |
 | History editorial / public record | Sanity `development`                                                         |
 | News / Event public state         | Sanity `development`                                                         |

@@ -1,16 +1,26 @@
+import Link from "next/link";
+
 import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import { Container } from "@/components/ui/container";
 import type { CuratedNewsCard } from "@/content/news/types";
-import { formatNewsTime, newsDeskLabel } from "@/lib/news/display";
+import {
+  NEWS_INDEX_EMPTY,
+  NEWS_INDEX_UNAVAILABLE,
+  formatNewsTime,
+  newsDeskLabel,
+  newsIndexState,
+} from "@/lib/news/display";
 
 import styles from "@/app/news.module.css";
 
 type NewsIndexProps = {
   items: CuratedNewsCard[];
+  unavailable?: boolean;
 };
 
-export function NewsIndex({ items }: NewsIndexProps) {
+export function NewsIndex({ items, unavailable = false }: NewsIndexProps) {
   const [lead, ...rest] = items;
+  const state = newsIndexState(items.length, unavailable);
 
   return (
     <div className={styles.page}>
@@ -26,12 +36,19 @@ export function NewsIndex({ items }: NewsIndexProps) {
       </section>
       <section className="section">
         <Container>
-          {!lead ? (
+          {state === "unavailable" ? (
             <p className={styles.empty}>
-              No published News items yet. This desk stays empty until
-              allowlisted sources pass the automation gates.
+              {NEWS_INDEX_UNAVAILABLE}{" "}
+              <Link href="/today">Open Today</Link>
             </p>
-          ) : (
+          ) : state === "empty" ? (
+            <p className={styles.empty}>
+              {NEWS_INDEX_EMPTY}{" "}
+              <Link href="/today">Open Today</Link>
+              {" · "}
+              <Link href="/history">Browse the archive</Link>
+            </p>
+          ) : lead ? (
             <ol className={styles.list}>
               <li className={`${styles.item} ${styles.lead}`}>
                 <NewsItemLink item={lead} headingLevel="h2" />
@@ -42,7 +59,7 @@ export function NewsIndex({ items }: NewsIndexProps) {
                 </li>
               ))}
             </ol>
-          )}
+          ) : null}
         </Container>
       </section>
     </div>

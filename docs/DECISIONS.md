@@ -727,3 +727,17 @@ rates stay off the catalog. Every action opens an email draft. Availability
 and deliverables are confirmed before payment is requested. No Stripe
 products, test Payment Links, or demonstration checkout ship on the public
 page.
+
+## ADR-048 — Launch readiness lives in `docs/launch-readiness/V1.md`
+
+**Status:** Accepted, 2026-09-19
+
+`docs/launch-readiness/V1.md` at `eebb7c2` is the launch plan.
+`docs/V1_LAUNCH.md` is a pointer. Visual Preview approval does not authorize
+Production cutover. V1 still requires every unique, usable History story
+edited, verified, and publicly available after approval.
+
+Homepage News uses a 7-day `sourcePublishedAt` freshness window and needs
+three items. Primary nav uses a separate five-item / three-publisher rule
+on the 14-day `/news` set. Do not backdate items, widen those windows, or
+enable ingest writes to force the homepage band.

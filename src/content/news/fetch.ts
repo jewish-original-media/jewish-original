@@ -29,6 +29,16 @@ export async function getPublishedNewsIndex() {
   );
 }
 
+export async function loadPublishedNewsIndex(): Promise<
+  { ok: true; items: CuratedNewsCard[] } | { ok: false }
+> {
+  try {
+    return { ok: true, items: await getPublishedNewsIndex() };
+  } catch {
+    return { ok: false };
+  }
+}
+
 export async function getHomepageNews() {
   const items = await getPublishedSanityClient().fetch<CuratedNewsCard[]>(
     newsHomeQuery,

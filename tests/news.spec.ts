@@ -8,9 +8,11 @@ test("serves /news as a text-first outward-linking desk", async ({ page }) => {
   await expect(
     page.getByRole("heading", { level: 1, name: "What we’re following" }),
   ).toBeVisible();
-  if (await page.getByText(/no published news items yet/i).count()) {
+  if (await page.getByText(/not following a current story/i).count()) {
     await page.reload();
   }
+  await expect(page.getByText(/not following a current story/i)).toHaveCount(0);
+  await expect(page.getByText(/couldn't load the news desk/i)).toHaveCount(0);
   await expect(page.getByText(/no published news items yet/i)).toHaveCount(0);
   const sourceLinks = page.getByRole("link", { name: /view source/i });
   await expect(sourceLinks).toHaveCount(4);

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { NewsIndex } from "@/components/news/news-index";
 import { JsonLd } from "@/components/seo/json-ld";
-import { getPublishedNewsIndex } from "@/content/news/fetch";
+import { loadPublishedNewsIndex } from "@/content/news/fetch";
 import {
   breadcrumbJsonLd,
   buildPageMetadata,
@@ -19,7 +19,7 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default async function NewsPage() {
-  const items = await getPublishedNewsIndex().catch(() => []);
+  const result = await loadPublishedNewsIndex();
   return (
     <>
       <JsonLd data={newsCollectionJsonLd()} />
@@ -29,7 +29,10 @@ export default async function NewsPage() {
           { name: "News", path: "/news" },
         ])}
       />
-      <NewsIndex items={items} />
+      <NewsIndex
+        items={result.ok ? result.items : []}
+        unavailable={!result.ok}
+      />
     </>
   );
 }
