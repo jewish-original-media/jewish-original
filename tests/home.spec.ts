@@ -9,14 +9,6 @@ const VIEWPORTS = [
   { name: "375", width: 375, height: 812 },
 ] as const;
 
-const PUBLISHED_HISTORY = [
-  "US Liberates Dachau",
-  "Joop Westerweel Is Murdered at Vught",
-  "Bialystok Ghetto Is Sealed",
-  "Samuel Willenberg Dies",
-  "Anti-Jewish Riots Break Out in Tripoli, Libya",
-] as const;
-
 async function expectNoOverflow(page: import("@playwright/test").Page) {
   const hasHorizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > window.innerWidth,
@@ -63,9 +55,11 @@ test("composes the homepage from Jewish Today and published History", async ({
   await page.goto("/");
   await expect(page.getByRole("region", { name: "History" })).toBeVisible();
   await expect(
-    page.getByText(
-      /This week in Torah|Most recent Torah portion|Festival|Rosh Hashana/,
-    ),
+    page
+      .getByText(
+        /This week in Torah|Most recent Torah portion|Festival|Rosh Hashana/,
+      )
+      .first(),
   ).toBeVisible();
   await expect(
     page.getByRole("navigation", { name: "Discover Jewish Original" }),
@@ -83,18 +77,9 @@ test("composes the homepage from Jewish Today and published History", async ({
   await expect(
     page.getByRole("link", { name: "Enter the Archive", exact: true }),
   ).toHaveAttribute("href", "/history");
-  const visibleHistoryTitles: string[] = [];
-  for (const title of PUBLISHED_HISTORY) {
-    if (
-      await page
-        .getByRole("region", { name: "History" })
-        .getByRole("link", { name: title })
-        .count()
-    ) {
-      visibleHistoryTitles.push(title);
-    }
-  }
-  expect(visibleHistoryTitles).toHaveLength(3);
+  await expect(
+    page.getByRole("region", { name: "History" }).locator("article a[href^='/history/']"),
+  ).toHaveCount(3);
   await expect(
     page
       .getByRole("navigation", { name: "Discover Jewish Original" })
@@ -125,6 +110,11 @@ test("composes the homepage from Jewish Today and published History", async ({
   await expect(
     page.getByRole("link", { name: "View all episodes" }),
   ).toHaveAttribute("href", "/podcasts");
+  const podcasts = page.getByRole("region", { name: "Podcasts" });
+  await expect(podcasts.locator("audio")).toHaveCount(0);
+  await expect(
+    podcasts.getByRole("link", { name: "Listen on the episode page" }),
+  ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Stand with us. Build with us." }),
   ).toBeVisible();

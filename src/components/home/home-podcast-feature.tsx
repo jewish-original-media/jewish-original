@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { MuseumFigure } from "@/components/media/museum-figure";
-import { EpisodeRow } from "@/components/podcasts/episode-row";
+import { EpisodeCard } from "@/components/podcasts/episode-card";
 import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
 import type { PodcastShow } from "@/content/podcasts/types";
 import type { HomePodcastPresentation } from "@/features/homepage/podcasts";
@@ -107,7 +107,17 @@ export function HomePodcastFeature({
               <>
                 <p className={styles.latestLabel}>Latest episode</p>
                 <div className={styles.podcastLead}>
-                  <EpisodeRow episode={podcasts.lead} />
+                  <EpisodeCard episode={podcasts.lead} />
+                  <p className={styles.podcastLeadListen}>
+                    <Link
+                      href={podcastEpisodePath(
+                        podcasts.lead.showSlug,
+                        podcasts.lead.slug,
+                      )}
+                    >
+                      Listen on the episode page
+                    </Link>
+                  </p>
                 </div>
               </>
             ) : null}

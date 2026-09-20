@@ -560,6 +560,17 @@
   color: var(--color-sand);
 }
 
+.podcastLeadListen {
+  margin: var(--space-4) 0 0;
+}
+
+.podcastLeadListen a {
+  color: var(--color-sand);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-underline-offset: 0.22em;
+}
+
 .episodeRail {
   display: grid;
   gap: 0;
