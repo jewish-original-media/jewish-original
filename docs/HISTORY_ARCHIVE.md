@@ -7,13 +7,13 @@ Coordinate counts and unique-story scope through
 review. It is not 332 public stories, and it is not a permanent nine-story
 subset.
 
-Current live Sanity publications remain **9**. Public queries still require a
-published document with `workflowStatus == "ready"`. Drafts stay out of
-search, filters, counts, related payloads, and Today matching. Discovery,
-pagination, and Today matching are built and verified for the complete
-eligible unique set. The homepage stays curated. This page is the public home
-of **On This Day in Jewish History** and the broader Jewish Original
-historical archive.
+Current live Sanity publications are **48** (the approved first packet).
+Public queries still require a published document with
+`workflowStatus == "ready"`. Drafts stay out of search, filters, counts,
+related payloads, and Today matching. Discovery, pagination, and Today
+matching are built and verified for the complete eligible unique set. The
+homepage stays curated. This page is the public home of **On This Day in
+Jewish History** and the broader Jewish Original historical archive.
 
 ## Information architecture
 
@@ -34,11 +34,16 @@ reviewed stories.
 
 Sitemap includes `/history` and published article slugs only.
 
+Keyword search, autocomplete, filters, sort, and pagination are on
+Integration Preview. Production `jewish-original.vercel.app` is still the
+older History-only milestone (`milestone-1-sanity-history` @ `3539211`)
+and does not include this discovery interface.
+
 ## Progressive disclosure
 
 The landing is designed for the complete unique archive, including the
-current nine publications and the remaining reviewed stories as they are
-released.
+current 48 published stories and the remaining reviewed stories as they
+are released.
 
 - The hero gives search priority and offers a direct link to today’s civil
   month/day.

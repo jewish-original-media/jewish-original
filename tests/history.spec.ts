@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 import { readJsonLd } from "./helpers/json-ld";
 
-test("publishes the five reviewed History articles on the public archive", async ({
+test("publishes the reviewed History archive with search and four pages", async ({
   page,
 }) => {
   const response = await page.goto("/history");
@@ -12,28 +12,19 @@ test("publishes the five reviewed History articles on the public archive", async
     page.getByRole("heading", { name: /explore jewish history/i }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "US Liberates Dachau" }),
-  ).toHaveCount(1);
-  await expect(
-    page.getByRole("link", { name: "Joop Westerweel Is Murdered at Vught" }),
-  ).toHaveCount(1);
-  await expect(
-    page.getByRole("link", { name: "Bialystok Ghetto Is Sealed" }),
-  ).toHaveCount(1);
-  await expect(
-    page.getByRole("link", { name: "Samuel Willenberg Dies" }),
-  ).toHaveCount(1);
-  await expect(
-    page.getByRole("link", {
-      name: "Anti-Jewish Riots Break Out in Tripoli, Libya",
-    }),
-  ).toHaveCount(1);
+    page.getByRole("heading", { name: "48 stories" }),
+  ).toBeVisible();
   await expect(
     page.getByRole("combobox", { name: "Search the public archive" }),
   ).toBeVisible();
+  await expect(page.getByText("Page 1 of 4")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Next →" })).toHaveAttribute(
+    "href",
+    "/history?page=2",
+  );
   await expect(
-    page.getByRole("heading", { name: /^\d+ stories$/ }),
-  ).toBeVisible();
+    page.locator("article a[href^='/history/']"),
+  ).toHaveCount(12);
   await expect(page.locator(".history-hero-lion")).toHaveCount(1);
   await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
   await expect(page.getByText("Theodore Herzl")).toHaveCount(0);
@@ -47,6 +38,13 @@ test("publishes the five reviewed History articles on the public archive", async
     "href",
     "https://jewishoriginal.com/history",
   );
+
+  await page.getByRole("link", { name: "Next →" }).click();
+  await expect(page).toHaveURL(/page=2/);
+  await expect(page.getByText("Page 2 of 4")).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "US Liberates Dachau" }),
+  ).toBeVisible();
 });
 
 test("browses published history by civil date without fabricating a match", async ({
@@ -140,7 +138,7 @@ test("filters the archive by published taxonomy and keeps empty people hidden", 
     /noindex/,
   );
 
-  await page.goto("/history?person=theodor-herzl");
+  await page.goto("/history?person=isaak-rulf");
   await expect(
     page.getByText("No reviewed stories match these filters."),
   ).toBeVisible();
@@ -150,7 +148,7 @@ test("searches the full archive, combines filters, sorts, and restores browser B
   page,
 }) => {
   await page.goto("/history");
-  await expect(page.getByRole("link", { name: "Next →" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Next →" })).toBeVisible();
   const filterSummary = page.locator("summary").filter({ hasText: "Filters" });
   await filterSummary.focus();
   await expect(filterSummary).toBeFocused();
@@ -310,9 +308,9 @@ test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Dachau"
   await expect(page.getByText(/significant majority/i)).toHaveCount(0);
   await expect(page.getByText(/flags/i)).toHaveCount(0);
 
-  const sitemap = await page.goto("/sitemap.xml");
-  expect(sitemap?.status()).toBe(200);
-  const sitemapXml = (await page.content()) || "";
+  const sitemap = await page.request.get("/sitemap.xml");
+  expect(sitemap.status()).toBe(200);
+  const sitemapXml = await sitemap.text();
   expect(sitemapXml).toContain(
     "https://jewishoriginal.com/history/us-liberates-dachau",
   );
@@ -329,6 +327,15 @@ test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Dachau"
     "https://jewishoriginal.com/history/anti-jewish-riots-tripoli",
   );
   expect(sitemapXml).not.toContain("theodore-herzl-birthday");
+  expect(sitemapXml).not.toContain("/originals/our-path-forward");
+  expect(sitemapXml).not.toContain("/originals/what-drives-us");
+  expect(
+    new Set(
+      [...sitemapXml.matchAll(/<loc>(https:\/\/jewishoriginal\.com\/history\/[a-z0-9-]+)<\/loc>/g)].map(
+        (match) => match[1],
+      ),
+    ).size,
+  ).toBe(48);
 });
 
 test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Westerweel", async ({
