@@ -741,3 +741,14 @@ Homepage News uses a 7-day `sourcePublishedAt` freshness window and needs
 three items. Primary nav uses a separate five-item / three-publisher rule
 on the 14-day `/news` set. Do not backdate items, widen those windows, or
 enable ingest writes to force the homepage band.
+
+## ADR-049 — Homepage News prefers publisher and desk mix
+
+**Status:** Accepted, 2026-09-21
+
+`selectHomepageNews` still ranks by freshness and still caps a publisher at
+two items. When the eligible 7-day pool can support it, the homepage prefers
+three distinct publishers and more than one desk instead of taking a second
+item from the newest publisher. If fewer publishers or desks exist, it fills
+from the remaining eligible items. Showing the band still requires only three
+fresh items. The primary-nav five-item / three-publisher gate is unchanged.

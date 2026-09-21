@@ -47,7 +47,7 @@ These are different gates.
 
 | Surface | Show when |
 | --- | --- |
-| Homepage “What We’re Following” | At least **3** items whose `sourcePublishedAt` is within **7 days**, after publisher diversity (prefer 3, cap 5, at most 2 per publisher). Hide at 0–2. Never render an empty News band. |
+| Homepage “What We’re Following” | At least **3** items whose `sourcePublishedAt` is within **7 days**, after deterministic publisher and desk diversity (prefer 3 distinct publishers and mixed desks when the pool allows; prefer 3 items, cap 5, at most 2 per publisher). Hide at 0–2 even if fewer than three publishers are available. Never render an empty News band. |
 | `/news` | Published, unexpired items whose `sourcePublishedAt` is within **14 days**. Successful empty is not a fetch failure. |
 | Primary nav | At least **5** current `/news` items and **3** publishers. Footer News stays on. |
 

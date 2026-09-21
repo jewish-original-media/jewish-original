@@ -120,6 +120,126 @@ describe("source diversity and isolation", () => {
     assert.equal(selected.length, 3);
   });
 
+  it("prefers three publishers and mixed desks over a second item from one publisher", () => {
+    const selected = selectHomepageNews(
+      [
+        {
+          publisher: "JTA",
+          desk: "jewish-world",
+          publishedAt: "2026-09-20T16:00:00.000Z",
+        },
+        {
+          publisher: "JTA",
+          desk: "israel",
+          publishedAt: "2026-09-20T15:00:00.000Z",
+        },
+        {
+          publisher: "Forward",
+          desk: "culture",
+          publishedAt: "2026-09-19T12:00:00.000Z",
+        },
+        {
+          publisher: "Biblical Archaeology Society",
+          desk: "heritage",
+          publishedAt: "2026-09-18T12:00:00.000Z",
+        },
+      ],
+      { limit: 3, maxPerPublisher: 2 },
+    );
+
+    assert.equal(selected.length, 3);
+    assert.deepEqual(
+      selected.map((item) => item.publisher).sort(),
+      ["Biblical Archaeology Society", "Forward", "JTA"],
+    );
+    assert.deepEqual(
+      selected.map((item) => item.desk).sort(),
+      ["culture", "heritage", "jewish-world"],
+    );
+    assert.equal(selected.filter((item) => item.publisher === "JTA").length, 1);
+  });
+
+  it("falls back when fewer publishers or desks are available", () => {
+    const twoPublishers = selectHomepageNews(
+      [
+        {
+          publisher: "JTA",
+          desk: "jewish-world",
+          publishedAt: "2026-09-20T16:00:00.000Z",
+        },
+        {
+          publisher: "JTA",
+          desk: "culture",
+          publishedAt: "2026-09-20T15:00:00.000Z",
+        },
+        {
+          publisher: "Jerusalem Post",
+          desk: "heritage",
+          publishedAt: "2026-09-19T12:00:00.000Z",
+        },
+      ],
+      { limit: 3, maxPerPublisher: 2 },
+    );
+    assert.equal(twoPublishers.length, 3);
+    assert.equal(
+      new Set(twoPublishers.map((item) => item.publisher)).size,
+      2,
+    );
+    assert.deepEqual(
+      twoPublishers.map((item) => item.desk).sort(),
+      ["culture", "heritage", "jewish-world"],
+    );
+
+    const oneDesk = selectHomepageNews(
+      [
+        {
+          publisher: "JTA",
+          desk: "jewish-world",
+          publishedAt: "2026-09-20T16:00:00.000Z",
+        },
+        {
+          publisher: "Forward",
+          desk: "jewish-world",
+          publishedAt: "2026-09-20T15:00:00.000Z",
+        },
+        {
+          publisher: "Jerusalem Post",
+          desk: "jewish-world",
+          publishedAt: "2026-09-19T12:00:00.000Z",
+        },
+      ],
+      { limit: 3, maxPerPublisher: 2 },
+    );
+    assert.equal(oneDesk.length, 3);
+    assert.equal(new Set(oneDesk.map((item) => item.publisher)).size, 3);
+  });
+
+  it("ranks equal timestamps deterministically", () => {
+    const pool = [
+      {
+        publisher: "Forward",
+        desk: "culture",
+        publishedAt: "2026-09-20T12:00:00.000Z",
+      },
+      {
+        publisher: "JTA",
+        desk: "jewish-world",
+        publishedAt: "2026-09-20T12:00:00.000Z",
+      },
+      {
+        publisher: "Biblical Archaeology Society",
+        desk: "heritage",
+        publishedAt: "2026-09-20T12:00:00.000Z",
+      },
+    ];
+    const first = selectHomepageNews(pool, { limit: 3 });
+    const second = selectHomepageNews([...pool].reverse(), { limit: 3 });
+    assert.deepEqual(
+      first.map((item) => item.publisher),
+      second.map((item) => item.publisher),
+    );
+  });
+
   it("keeps one source failure from aborting the run", () => {
     const failed = emptySourceStats("jns");
     failed.failures = 1;
