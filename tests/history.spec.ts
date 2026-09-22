@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 import { readJsonLd } from "./helpers/json-ld";
 
-test("publishes the reviewed History archive with search and four pages", async ({
+test("publishes the reviewed History archive with search and eight pages", async ({
   page,
 }) => {
   const response = await page.goto("/history");
@@ -12,12 +12,12 @@ test("publishes the reviewed History archive with search and four pages", async 
     page.getByRole("heading", { name: /explore jewish history/i }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "48 stories" }),
+    page.getByRole("heading", { name: "95 stories" }),
   ).toBeVisible();
   await expect(
     page.getByRole("combobox", { name: "Search the public archive" }),
   ).toBeVisible();
-  await expect(page.getByText("Page 1 of 4")).toBeVisible();
+  await expect(page.getByText("Page 1 of 8")).toBeVisible();
   await expect(page.getByRole("link", { name: "Next →" })).toHaveAttribute(
     "href",
     "/history?page=2",
@@ -41,10 +41,101 @@ test("publishes the reviewed History archive with search and four pages", async 
 
   await page.getByRole("link", { name: "Next →" }).click();
   await expect(page).toHaveURL(/page=2/);
-  await expect(page.getByText("Page 2 of 4")).toBeVisible();
+  await expect(page.getByText("Page 2 of 8")).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "US Liberates Dachau" }),
+    page.locator("article a[href^='/history/']"),
+  ).toHaveCount(12);
+
+  await page.goto("/history?page=8");
+  await expect(page.getByText("Page 8 of 8")).toBeVisible();
+  await expect(
+    page.locator("article a[href^='/history/']"),
+  ).toHaveCount(11);
+
+  await page.goto("/history?q=Berdichev");
+  await expect(page.getByRole("heading", { name: "1 story" })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Abba Berdichev Is Executed" }),
   ).toBeVisible();
+});
+
+test("oldest-first without a filter is not the Holocaust Korczak result", async ({
+  page,
+}) => {
+  await page.goto("/history?sort=historical-oldest");
+  await expect(page).toHaveURL("/history?sort=historical-oldest");
+  const unfiltered = page.locator("article a[href^='/history/']");
+  await expect(unfiltered.first()).not.toHaveText("Janusz Korczak Is Born");
+  await expect(
+    page.getByRole("link", { name: "Alhambra Decree Takes Effect" }),
+  ).toBeVisible();
+
+  await page.goto("/history?topic=holocaust&sort=historical-oldest");
+  await expect(page).toHaveURL(
+    "/history?topic=holocaust&sort=historical-oldest",
+  );
+  await expect(
+    page.locator("article a[href^='/history/']").first(),
+  ).toHaveText("Janusz Korczak Is Born");
+});
+
+test("uncertain and non-Gregorian records stay out of their candidate date browses", async ({
+  page,
+}) => {
+  const cases = [
+    {
+      path: "/history?month=2&day=19",
+      excluded: "Samuel Pallache Dies",
+      included: "Samuel Willenberg Dies",
+    },
+    {
+      path: "/history?month=6&day=9",
+      excluded: "The Yuvali Rescues 66 Vietnamese Refugees",
+    },
+    {
+      path: "/history?month=6&day=10",
+      excluded: "The Yuvali Rescues 66 Vietnamese Refugees",
+    },
+    {
+      path: "/history?month=11&day=9",
+      excluded: "Jewish Refugees Begin Reaching Shanghai after Kristallnacht",
+    },
+    {
+      path: "/history?month=4&day=4",
+      excluded: "Yom HaZikaron",
+    },
+    {
+      path: "/history?month=1&day=25",
+      excluded: "Philip II Authorizes the Inquisition in the Indies",
+      included: "Israel Holds Its First Knesset Election",
+    },
+    {
+      path: "/history?month=10&day=19",
+      excluded: "Second Kishinev Pogrom Begins",
+    },
+    {
+      path: "/history?month=11&day=1",
+      excluded: "Second Kishinev Pogrom Begins",
+    },
+    {
+      path: "/history?month=4&day=8",
+      excluded: "Shearith Israel Consecrates the Mill Street Synagogue",
+    },
+    {
+      path: "/history?month=10&day=1",
+      excluded: "German Police Begin Arresting Danish Jews",
+    },
+  ] as const;
+
+  for (const { path, excluded, included } of cases) {
+    await page.goto(path);
+    await expect(
+      page.getByRole("link", { name: excluded }),
+    ).toHaveCount(0);
+    if (included) {
+      await expect(page.getByRole("link", { name: included })).toBeVisible();
+    }
+  }
 });
 
 test("browses published history by civil date without fabricating a match", async ({
@@ -335,7 +426,7 @@ test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Dachau"
         (match) => match[1],
       ),
     ).size,
-  ).toBe(48);
+  ).toBe(95);
 });
 
 test("exposes canonical, Open Graph, JSON-LD, citations, and sitemap for Westerweel", async ({

@@ -7,7 +7,9 @@ Coordinate counts and unique-story scope through
 review. It is not 332 public stories, and it is not a permanent nine-story
 subset.
 
-Current live Sanity publications are **48** (the approved first packet).
+Current live Sanity publications are **95** (the first packet plus the
+approved r2 set). The sitemap revalidates hourly with that published-ready
+set so newly released slugs are not frozen at deploy time.
 Public queries still require a published document with
 `workflowStatus == "ready"`. Drafts stay out of search, filters, counts,
 related payloads, and Today matching. Discovery, pagination, and Today
@@ -136,11 +138,19 @@ and Gregorian date filters. Lightweight autocomplete suggests up to six
 published topics, people, places, or regions. Selecting a suggestion applies
 that filter. Enter still submits the keyword search. The GET form works
 without JavaScript. Historical newest/oldest sort uses
-`historicalDate.start`. **Recently updated** uses Sanity `_updatedAt`, falling
-back to `_createdAt` only when no update exists, so bulk import time is not
-presented as a new publication. It is never confused with historical time. Year-only, Julian, and recurring records remain in unfiltered results with
-honest labels. Only verified Gregorian day-precision records match Today or
-date browse.
+`historicalDate.start`. Recurring stories without a start year stay in the
+unfiltered list and are not given a civil year; they sort before dated
+stories. In the 48-story packet, unfiltered oldest-first therefore starts
+with Yom HaAtzmaut and Yom HaZikaron, then the Alhambra Decree (1492).
+`Janusz Korczak Is Born` (1878) is first only on
+`/history?topic=holocaust&sort=historical-oldest`. **Recently updated** uses
+Sanity `_updatedAt`, falling back to `_createdAt` only when no update
+exists, so bulk import time is not presented as a new publication. It is
+never confused with historical time. Year-only, Julian, and recurring
+records remain in unfiltered results with honest labels. Only verified
+Gregorian day-precision records match Today or date browse. Uncertain,
+Julian, recurring, and partial records are also checked at their own
+candidate month/day values, not only on an unrelated empty day.
 
 ## Motion
 
