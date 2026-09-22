@@ -82,7 +82,11 @@ test("oldest-first without a filter is not the Holocaust Korczak result", async 
 test("uncertain and non-Gregorian records stay out of their candidate date browses", async ({
   page,
 }) => {
-  const cases = [
+  const cases: Array<{
+    path: string;
+    excluded: string;
+    included?: string;
+  }> = [
     {
       path: "/history?month=2&day=19",
       excluded: "Samuel Pallache Dies",
@@ -125,15 +129,17 @@ test("uncertain and non-Gregorian records stay out of their candidate date brows
       path: "/history?month=10&day=1",
       excluded: "German Police Begin Arresting Danish Jews",
     },
-  ] as const;
+  ];
 
-  for (const { path, excluded, included } of cases) {
-    await page.goto(path);
+  for (const item of cases) {
+    await page.goto(item.path);
     await expect(
-      page.getByRole("link", { name: excluded }),
+      page.getByRole("link", { name: item.excluded }),
     ).toHaveCount(0);
-    if (included) {
-      await expect(page.getByRole("link", { name: included })).toBeVisible();
+    if ("included" in item && item.included) {
+      await expect(
+        page.getByRole("link", { name: item.included }),
+      ).toBeVisible();
     }
   }
 });
