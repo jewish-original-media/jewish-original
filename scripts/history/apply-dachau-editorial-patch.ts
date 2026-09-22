@@ -2,7 +2,8 @@ import { getCliClient } from "sanity/cli";
 
 const HISTORY_DRAFT_ID =
   "drafts.historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
-const HISTORY_PUBLISHED_ID = "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
+const HISTORY_PUBLISHED_ID =
+  "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
 const SOURCE_BODY_CHECKSUM =
   "6cfe3c730a10af5e1a85fdcd736a407980488b6242a3498171186c92e15a2d00";
 const EXPECTED_SOURCE_BODY =
@@ -73,7 +74,9 @@ function editorialParagraph(text: string, index: number) {
 
 function bodyText(blocks: { children?: { text?: string }[] }[]) {
   return blocks
-    .map((block) => (block.children || []).map((child) => child.text || "").join(""))
+    .map((block) =>
+      (block.children || []).map((child) => child.text || "").join(""),
+    )
     .join("\n\n");
 }
 
@@ -112,7 +115,9 @@ async function main() {
     throw new Error(`Missing unpublished draft ${HISTORY_DRAFT_ID}.`);
   }
   if (before.provenance?.sourceBody !== EXPECTED_SOURCE_BODY) {
-    throw new Error("Immutable source body does not match the imported original.");
+    throw new Error(
+      "Immutable source body does not match the imported original.",
+    );
   }
   if (before.provenance?.sourceBodyChecksum !== SOURCE_BODY_CHECKSUM) {
     throw new Error("Source body checksum changed; refusing to patch.");
@@ -123,7 +128,9 @@ async function main() {
     { id: HISTORY_PUBLISHED_ID },
   );
   if (publishedHistory) {
-    throw new Error("Dachau history entry is already published; refusing to patch.");
+    throw new Error(
+      "Dachau history entry is already published; refusing to patch.",
+    );
   }
 
   const entities: Record<string, unknown>[] = [
@@ -332,7 +339,9 @@ async function main() {
       after.historicalDate?.calendarSystem !== "gregorian" ||
       publishedAfter !== 0)
   ) {
-    throw new Error(`Patch verification failed: ${JSON.stringify(verification)}`);
+    throw new Error(
+      `Patch verification failed: ${JSON.stringify(verification)}`,
+    );
   }
 
   process.stdout.write(`${JSON.stringify(verification, null, 2)}\n`);

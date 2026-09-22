@@ -19,21 +19,21 @@ was performed. Published History count is 5.
 
 ## Fact review
 
-| Claim | Class | Notes |
-| --- | --- | --- |
-| Riots began 5 November 1945 and lasted three days | **VERIFIED** | Yad Vashem; contemporaneous JTA |
-| British military administration governed Libya | **VERIFIED** | Yad Vashem: Tripoli liberated 23 January 1943; racial laws repealed; conditions did not greatly improve |
-| 120 Jews murdered | **VERIFIED (institutional)** | Yad Vashem, “The Jews of Libya” |
-| 121 murdered | **LIKELY / same event** | Yad Vashem Shoah Resource Center PDF |
-| More than 140 murdered | **CONFLICTING** | Stored workbook figure; later secondary summaries. Not used in the public body |
-| 74 slain | **CONFLICTING (early count)** | *New York Times*, 8 November 1945, from incomplete first reports |
-| Hundreds wounded; synagogues destroyed; homes and businesses looted | **VERIFIED** | Yad Vashem |
-| Nine synagogues / 35 Torah scrolls | **NEEDS SOURCE** | Not on the Yad Vashem pages used. Dropped |
-| 30,387 Jews in Libya on the eve of WWII; Tripoli ~25% Jewish in 1941 | **VERIFIED** | Yad Vashem, citing Roumani |
-| Italian colony 1911; Race Protection Laws 1938, enforced from 1940 | **VERIFIED** | Yad Vashem. Kept out of the short public body |
-| British instigated the riots | **QUESTIONABLE** | Stored claim. Institutional sources describe occupation and later violence, not British instigation. Dropped |
-| Jews ethnically cleansed shortly thereafter | **MISLEADING** | Community remained; 1948 and 1967 attacks; mass emigration later. Public body says the 1945 riots did not empty Libya |
-| Last Jew Rina Debach, 2003 | **NEEDS SOURCE** | Yad Vashem: no Jews left by 2004. Name omitted |
+| Claim                                                                | Class                         | Notes                                                                                                                 |
+| -------------------------------------------------------------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Riots began 5 November 1945 and lasted three days                    | **VERIFIED**                  | Yad Vashem; contemporaneous JTA                                                                                       |
+| British military administration governed Libya                       | **VERIFIED**                  | Yad Vashem: Tripoli liberated 23 January 1943; racial laws repealed; conditions did not greatly improve               |
+| 120 Jews murdered                                                    | **VERIFIED (institutional)**  | Yad Vashem, “The Jews of Libya”                                                                                       |
+| 121 murdered                                                         | **LIKELY / same event**       | Yad Vashem Shoah Resource Center PDF                                                                                  |
+| More than 140 murdered                                               | **CONFLICTING**               | Stored workbook figure; later secondary summaries. Not used in the public body                                        |
+| 74 slain                                                             | **CONFLICTING (early count)** | _New York Times_, 8 November 1945, from incomplete first reports                                                      |
+| Hundreds wounded; synagogues destroyed; homes and businesses looted  | **VERIFIED**                  | Yad Vashem                                                                                                            |
+| Nine synagogues / 35 Torah scrolls                                   | **NEEDS SOURCE**              | Not on the Yad Vashem pages used. Dropped                                                                             |
+| 30,387 Jews in Libya on the eve of WWII; Tripoli ~25% Jewish in 1941 | **VERIFIED**                  | Yad Vashem, citing Roumani                                                                                            |
+| Italian colony 1911; Race Protection Laws 1938, enforced from 1940   | **VERIFIED**                  | Yad Vashem. Kept out of the short public body                                                                         |
+| British instigated the riots                                         | **QUESTIONABLE**              | Stored claim. Institutional sources describe occupation and later violence, not British instigation. Dropped          |
+| Jews ethnically cleansed shortly thereafter                          | **MISLEADING**                | Community remained; 1948 and 1967 attacks; mass emigration later. Public body says the 1945 riots did not empty Libya |
+| Last Jew Rina Debach, 2003                                           | **NEEDS SOURCE**              | Yad Vashem: no Jews left by 2004. Name omitted                                                                        |
 
 This is a distinct MENA communal-violence story, not a Holocaust ghetto
 article and not a wartime camp-liberation article. WWII / Holocaust /
@@ -51,7 +51,7 @@ Europe and “British” were not mapped as geography.
 **Further reading, not attached**
 
 - USHMM Maghreb / North Africa labor-camp pages (wartime background only; they do not cover this riot)
-- *New York Times* 8 November 1945 early count (74)
+- _New York Times_ 8 November 1945 early count (74)
 
 **Legacy / unreviewed**
 

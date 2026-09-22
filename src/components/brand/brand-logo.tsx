@@ -1,34 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import styles from "./brand-logo.module.css";
+
 type BrandLogoProps = {
   priority?: boolean;
-  placement?: "header" | "footer";
 };
 
-export function BrandLogo({
-  priority = false,
-  placement = "header",
-}: BrandLogoProps) {
-  const sizeClass =
-    placement === "header"
-      ? "w-[4.75rem] sm:w-[5.5rem]"
-      : "w-[12rem] sm:w-[14rem]";
-
+export function BrandLogo({ priority = false }: BrandLogoProps) {
   return (
     <Link
-      className="inline-flex shrink-0"
-      href="/"
       aria-label="Jewish Original Media — home"
+      className={styles.plaque}
+      data-brand-plaque="true"
+      href="/"
     >
       <Image
-        className={`h-auto ${sizeClass}`}
+        alt="Jewish Original Media"
+        className={styles.mark}
+        height={831}
+        priority={priority}
+        sizes="88px"
         src="/brand/jom-primary-white-gold.jpg"
         width={1024}
-        height={831}
-        alt="Jewish Original Media"
-        priority={priority}
-        sizes={placement === "header" ? "88px" : "224px"}
       />
     </Link>
   );

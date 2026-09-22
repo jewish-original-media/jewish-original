@@ -1,6 +1,7 @@
 export const HISTORY_CIVIL_TIMEZONE = "America/New_York";
 
 export type HistoryDateCandidate = {
+  _id?: string | null;
   entryKind?: string | null;
   workflowStatus?: string | null;
   published?: boolean;
@@ -21,6 +22,7 @@ export function matchesOnThisDayHistory(
   month: number,
   day: number,
 ): boolean {
+  if (entry._id?.startsWith("drafts.")) return false;
   if (entry.published === false) return false;
   if (entry.workflowStatus === "duplicateCandidate") return false;
   if (entry.workflowStatus && entry.workflowStatus !== "ready") return false;

@@ -26,14 +26,14 @@ export function HistoryCitations({
           return (
             <li className="history-sources__item" key={citation._key}>
               <cite className="not-italic">{label}</cite>
-              {citation.author ? ` — ${citation.author}` : null}
+              {citation.author ? ` · ${citation.author}` : null}
+              {citation.publication && citation.publication !== label
+                ? ` · ${citation.publication}`
+                : null}
               {citation.publicationDate
                 ? ` (${citation.publicationDate})`
                 : null}
               {citation.locator ? `, ${citation.locator}` : null}
-              {citation.bibliographicDetail
-                ? `. ${citation.bibliographicDetail}`
-                : null}
               {citation.url ? (
                 <>
                   {" "}
@@ -45,6 +45,11 @@ export function HistoryCitations({
                     View source
                   </a>
                 </>
+              ) : null}
+              {preview && citation.bibliographicDetail ? (
+                <p className="history-sources__note">
+                  Editorial note: {citation.bibliographicDetail}
+                </p>
               ) : null}
               {preview && citation.verificationStatus !== "verified" ? (
                 <span className="text-focus ml-2 text-xs font-semibold uppercase">

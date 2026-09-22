@@ -10,10 +10,13 @@ try {
     process.env[name] = value.replace(/^["']|["']$/g, "");
   }
 } catch {
-  // Draft preview tests skip when local secrets are absent.
+  // Published History and draft preview tests skip or degrade when local
+  // Sanity identifiers or secrets are absent.
 }
 
 const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
+const baseURL = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3020";
+const port = new URL(baseURL).port || "3020";
 
 export default defineConfig({
   testDir: "./tests",
@@ -23,18 +26,24 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: "list",
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000",
+    baseURL,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     launchOptions: executablePath ? { executablePath } : { channel: "chrome" },
   },
   webServer: {
-    // Production start avoids next dev file-watchers (EMFILE) and matches
-    // the published CSS/font output used for History visual QA.
-    command: "npm run start",
-    url: "http://localhost:3000",
+    command: `npm run dev -- --port ${port}`,
+    url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    env: {
+      ...Object.fromEntries(
+        Object.entries(process.env).filter(
+          (entry): entry is [string, string] => typeof entry[1] === "string",
+        ),
+      ),
+      JEWISH_TODAY_ALLOW_PREVIEWS: "1",
+    },
   },
   projects: [
     {

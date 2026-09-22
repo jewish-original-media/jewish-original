@@ -25,6 +25,8 @@ const imageProjection = `"primaryImage": select(
   defined(primaryImage.alt) => {
     alt,
     caption,
+    visualKind,
+    creator,
     creditLine,
     rightsStatus,
     sourcePageUrl,
@@ -39,6 +41,8 @@ const imageProjection = `"primaryImage": select(
 
 const summaryProjection = `{
   _id,
+  _createdAt,
+  _updatedAt,
   title,
   "slug": slug.current,
   excerpt,
@@ -51,6 +55,7 @@ const summaryProjection = `{
   "eras": coalesce(eras[]->${referenceProjection}, []),
   "organizations": coalesce(organizations[]->${referenceProjection}, []),
   "geographicRegions": coalesce(geographicRegions[]->${referenceProjection}, []),
+  eventLocation,
   ${imageProjection}
 }`;
 
@@ -62,6 +67,12 @@ const filterExpression = `(
   ($filterType == "region" && $filterSlug in geographicRegions[]->slug.current) ||
   ($filterType == "person" && $filterSlug in people[]->slug.current) ||
   ($filterType == "organization" && $filterSlug in organizations[]->slug.current)
+)`;
+
+const publishedRelatedEntry = `select(
+  defined(entry) &&
+  !(entry->_id in path("drafts.**")) &&
+  entry->workflowStatus == "ready" => entry->${summaryProjection}
 )`;
 
 const gregorianDayMatch = `(
@@ -85,6 +96,7 @@ export const historyIndexQuery = defineQuery(`*[
   ${filterExpression} &&
   ${dateFilterExpression}
 ] | order(historicalDate.start.year desc, historicalDate.start.month desc, historicalDate.start.day desc) ${summaryProjection}`);
+// No result cap: public discovery reads the complete published-ready archive.
 
 export const historyOnThisDayQuery = defineQuery(`*[
   _type == "historyEntry" &&
@@ -127,10 +139,11 @@ export const historyEntryQuery = defineQuery(`*[
   "relatedHistory": coalesce(relatedHistory[]{
     relationType,
     note,
-    "entry": entry->${summaryProjection}
+    "entry": ${publishedRelatedEntry}
   }, []),
   seo,
   "workflowStatus": select($preview => workflowStatus),
+  _createdAt,
   _updatedAt
 }`);
 

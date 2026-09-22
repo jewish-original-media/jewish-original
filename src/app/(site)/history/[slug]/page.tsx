@@ -16,16 +16,21 @@ import { HistoryReferenceList } from "@/components/history/history-reference-lis
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import {
+  hasPublishedRelatedHistoryEntry,
+  historyEventLocation,
+} from "@/content/history/archive";
+import {
   getHistoryEntry,
   getPublishedHistorySlugs,
 } from "@/content/history/fetch";
 import { formatContentWarningList } from "@/lib/history/content-warnings";
 import { formatHistoricalDate } from "@/lib/history/format-date";
+import { JsonLd } from "@/components/seo/json-ld";
 import {
+  buildHistoryBreadcrumbJsonLd,
   buildHistoryJsonLd,
   buildHistoryMetadata,
   historyEntryUrl,
-  serializeJsonLd,
 } from "@/lib/seo/history";
 
 type HistoryPageProps = {
@@ -74,10 +79,10 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
   );
   const shareUrl = historyEntryUrl(entry.slug);
   const shareText = `${entry.title} — Jewish Original`;
-  const relatedEntries = entry.relatedHistory.filter(
-    (relationship) => relationship.entry,
+  const relatedEntries = entry.relatedHistory.filter((relationship) =>
+    hasPublishedRelatedHistoryEntry(relationship.entry),
   );
-  const placeLabel = entry.places[0]?.name;
+  const eventLocation = historyEventLocation(entry);
 
   return (
     <>
@@ -85,12 +90,15 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
         <HistoryPreviewBanner workflowStatus={entry.workflowStatus} />
       ) : null}
       {!preview ? (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: serializeJsonLd(buildHistoryJsonLd(entry)),
-          }}
-          type="application/ld+json"
-        />
+        <>
+          <JsonLd data={buildHistoryJsonLd(entry)} />
+          <JsonLd
+            data={buildHistoryBreadcrumbJsonLd({
+              title: entry.title,
+              slug: entry.slug,
+            })}
+          />
+        </>
       ) : null}
 
       <article>
@@ -116,19 +124,24 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
 
               <p className="history-date-line">
                 {displayDate}
-                {placeLabel ? ` · ${placeLabel}` : null}
+                {eventLocation ? ` · ${eventLocation}` : null}
               </p>
               <h1 className="history-display">{entry.title}</h1>
               {entry.excerpt ? (
-                <p className="history-lede">{entry.excerpt}</p>
+                <>
+                  <p className="eyebrow history-context-label">
+                    Historical context
+                  </p>
+                  <p className="history-lede">{entry.excerpt}</p>
+                </>
               ) : null}
             </div>
 
             <div className="history-archive-rail">
-              <p className="eyebrow">From the archive</p>
+              <p className="eyebrow">Exhibition</p>
               <p className="history-archive-rail__text">
-                Preserved in the Jewish Original archive and connected through
-                people, place, and time.
+                Date and sources stay with the record. Related places appear
+                beside the story.
               </p>
             </div>
           </Container>
@@ -220,8 +233,7 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
                 </h2>
                 <p className="history-support__text">
                   If this history matters to you, you can{" "}
-                  <Link href="/support">support Jewish Original</Link> as the
-                  archive is prepared with care.
+                  <Link href="/support">support Jewish Original</Link>.
                 </p>
               </section>
             </div>
@@ -244,7 +256,7 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
               />
               <HistoryReferenceList
                 filterType="region"
-                heading="Geography"
+                heading="Regions"
                 items={entry.geographicRegions}
               />
               <HistoryReferenceList

@@ -17,6 +17,17 @@ export function getPublishedSanityClient() {
   return baseClient;
 }
 
+export function getPublishedSanityApiClient() {
+  return createClient({
+    ...sanityEnv,
+    perspective: "published",
+    requestTagPrefix: "jewish-original",
+    stega: false,
+    token: process.env.SANITY_API_READ_TOKEN,
+    useCdn: false,
+  });
+}
+
 export function getDraftSanityClient() {
   const token = process.env.SANITY_API_READ_TOKEN;
   if (!token) {

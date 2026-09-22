@@ -46,7 +46,11 @@ describe("Today in Jewish History matching", () => {
 
   it("excludes drafts, duplicates, incomplete dates, and Hebrew-calendar events", () => {
     assert.equal(
-      matchesOnThisDayHistory({ ...dachau, workflowStatus: "needsReview" }, 4, 29),
+      matchesOnThisDayHistory(
+        { ...dachau, workflowStatus: "needsReview" },
+        4,
+        29,
+      ),
       false,
     );
     assert.equal(
@@ -84,6 +88,37 @@ describe("Today in Jewish History matching", () => {
             precision: "day",
             calendarSystem: "hebrew",
             start: { month: 4, day: 29 },
+          },
+        },
+        4,
+        29,
+      ),
+      false,
+    );
+    assert.equal(
+      matchesOnThisDayHistory(
+        {
+          ...dachau,
+          _id: "drafts.historyEntry.parsed-draft",
+          historicalDate: {
+            precision: "day",
+            calendarSystem: "other",
+            start: { year: 1945, month: 4, day: 29 },
+          },
+        },
+        4,
+        29,
+      ),
+      false,
+    );
+    assert.equal(
+      matchesOnThisDayHistory(
+        {
+          ...dachau,
+          historicalDate: {
+            precision: "day",
+            calendarSystem: "other",
+            start: { year: 1945, month: 4, day: 29 },
           },
         },
         4,

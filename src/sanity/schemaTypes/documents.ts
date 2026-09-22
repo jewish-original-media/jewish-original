@@ -751,6 +751,15 @@ export const historyEntry = defineType({
       of: [defineArrayMember({ type: "relatedHistoryItem" })],
     }),
     defineField({
+      name: "relatedPodcastEpisodes",
+      title: "Related podcast episodes",
+      type: "array",
+      group: "related",
+      of: [defineArrayMember({ type: "relatedPodcastItem" })],
+      description:
+        "Editor-approved relationships only. Suggestions stay in review notes until accepted.",
+    }),
+    defineField({
       name: "seo",
       title: "Search and social",
       type: "seo",

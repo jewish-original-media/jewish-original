@@ -69,8 +69,12 @@ async function main() {
       fullPage: true,
     });
 
-    await page.goto(`${baseURL}/history?topic=holocaust`, { waitUntil: "load" });
-    await expect(page.getByRole("heading", { name: "Holocaust" })).toBeVisible();
+    await page.goto(`${baseURL}/history?topic=holocaust`, {
+      waitUntil: "load",
+    });
+    await expect(
+      page.getByRole("heading", { name: "Holocaust" }),
+    ).toBeVisible();
     await page.screenshot({
       path: resolve(outputDirectory, "history-archive-topic.png"),
       fullPage: true,

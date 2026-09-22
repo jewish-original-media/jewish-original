@@ -387,6 +387,23 @@ export const editorialImage = defineType({
       description: "Describe the image’s content and purpose.",
     }),
     defineField({ name: "caption", title: "Caption", type: "text", rows: 2 }),
+    defineField({
+      name: "visualKind",
+      title: "Visual kind",
+      type: "string",
+      initialValue: "photograph",
+      options: {
+        list: [
+          { title: "Photograph", value: "photograph" },
+          { title: "Illustration", value: "illustration" },
+          { title: "Artifact", value: "artifact" },
+          { title: "Map", value: "map" },
+          { title: "Manuscript", value: "manuscript" },
+        ],
+      },
+      description:
+        "Illustrations and artifacts must be labeled as such. They never masquerade as documentary photographs.",
+    }),
     defineField({ name: "creator", title: "Creator", type: "string" }),
     defineField({
       name: "creditLine",

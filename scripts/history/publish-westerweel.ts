@@ -18,8 +18,7 @@ const HISTORY_DRAFT_ID =
   "drafts.historyEntry.jom-513f6a739543db8be9034576144811f9";
 const HISTORY_PUBLISHED_ID =
   "historyEntry.jom-513f6a739543db8be9034576144811f9";
-const DACHAU_PUBLISHED_ID =
-  "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
+const DACHAU_PUBLISHED_ID = "historyEntry.jom-ab8c4bd07d8ae253cd22238945c379dc";
 const EXPECTED_SLUG = "joop-westerweel-murdered";
 const EXPECTED_TITLE = "Joop Westerweel Is Murdered at Vught";
 const SOURCE_BODY_CHECKSUM =
@@ -176,7 +175,9 @@ async function main() {
     );
   }
   if (publishedBefore.joopPublished) {
-    throw new Error("Joop is already published in an unexpected collection state.");
+    throw new Error(
+      "Joop is already published in an unexpected collection state.",
+    );
   }
 
   if (!apply) {
@@ -266,14 +267,18 @@ async function main() {
   if (!after.dachauPublished) {
     throw new Error("Dachau disappeared during Joop publication.");
   }
-  if (after.published?.provenance?.sourceBodyChecksum !== SOURCE_BODY_CHECKSUM) {
+  if (
+    after.published?.provenance?.sourceBodyChecksum !== SOURCE_BODY_CHECKSUM
+  ) {
     throw new Error("Published document source checksum changed.");
   }
   if (after.published?.workflowStatus !== "ready") {
     throw new Error("Published Joop is not workflow ready.");
   }
 
-  process.stdout.write(`${JSON.stringify({ apply: true, ...after }, null, 2)}\n`);
+  process.stdout.write(
+    `${JSON.stringify({ apply: true, ...after }, null, 2)}\n`,
+  );
 }
 
 main().catch((error: unknown) => {

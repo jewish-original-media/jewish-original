@@ -19,8 +19,10 @@ and structured-data controls.
 
 **Media asset**
 
-Asset, alt text, caption, credit, creator, source URL, rights holder, license,
-usage restrictions, focal point, and rights-review status.
+Asset, alt text, caption, visual kind (photograph, illustration, artifact, map,
+manuscript), credit, creator, source URL, rights holder, license, usage
+restrictions, focal point, and rights-review status. Illustrations must be
+labeled as illustrations and never presented as documentary photographs.
 
 **Source citation**
 
@@ -47,28 +49,48 @@ conversion. Year and century are derived from the reviewed date rather than
 stored as drifting free-text values. See `docs/HISTORY_MODEL.md` for the
 production field model and `docs/HISTORY_ARCHIVE_AUDIT.md` for source evidence.
 
+### Podcast show
+
+Title, slug, tagline, description, host person references, rights-aware
+artwork, platform URLs, SEO, workflow, and source-feed provenance. The
+first show is The Two Tall Jews Show. See `docs/PODCAST_MODEL.md`.
+
 ### Podcast episode
 
-Title, slug, show, episode and season numbers, guest references, release date,
-YouTube and audio identifiers, description, transcript with timestamps and
-speaker labels, topics, related history, media, SEO, and publication data.
+Title, slug, show reference, season and episode numbers, publication date,
+excerpt, original description, official RSS audio, optional verified YouTube,
+Spotify, and Apple episode URLs, primary-media rule, duration, guest and
+host person references, optional chapters, reviewed summary, raw and
+reviewed transcript, topics, people, places, related history, related
+episodes, sources, featured image, SEO, workflow, and import provenance.
+
+Guest names from a source feed may be stored as read-only strings until an
+editor links `person` documents. Do not invent guests, transcripts, or
+History relationships.
 
 ### Article
 
-Title, slug, author references, editorial desk/category, excerpt, body, sources,
-featured media, topics, related content, SEO, and publication data.
+Title, slug, author person references, excerpt, body, sources, featured media
+with rights, topics, related History or Podcast references, SEO, and
+publication / workflow. This is the future Originals document. Do not add a
+`blogPost` or `newsletterPost` type. See `docs/ORIGINALS.md`. The public
+homepage hides Originals until a published article exists.
 
 ### Curated news item
 
-Publisher reference, original headline, canonical source URL, publication date,
-editorial summary, category/topics, legally usable media reference, selection
-note, expiration date, and status. The source article is linked, not copied.
+Outward-linking record, not a republished article. Publisher / source
+reference, original headline, canonical HTTPS URL, source publication
+datetime, JOM-written context, one of four desks (Jewish World, Israel,
+Culture, Heritage), topics, provenance, status, expiration, ingest
+metadata, and internal confidence fields. Do not store RSS descriptions or
+publisher images. See `docs/NEWS_EVENTS.md`.
 
 ### Event
 
-Name, organizer reference, event mode, venue, structured address, coordinates,
-timezone, start/end, recurrence information, external URL, description, source,
-media, geographic reach, review status, and expiration.
+Title, organizer, canonical URL, source UID, start/end, the event’s own IANA
+timezone, attendance mode, venue/city/region/country, online URL, short JOM
+context, topics, provenance, status, expiration, and ingest metadata. Do not
+apply Jewish Today timezone rules. Do not store official blurbs as public copy.
 
 ### Culture item
 
@@ -99,6 +121,19 @@ These do not belong in the editorial CMS:
 
 Payment card data is never stored. Payment state is reconciled from signed
 provider webhooks with idempotency.
+
+## Calculated daily context
+
+Jewish Today is not a CMS document. One civil day is assembled at request time
+from Hebcal calendar data plus published History entries whose reviewed
+Gregorian month/day match. Do not persist generated calendar days. Recurring
+observances remain `historyEntry.entryKind = recurringObservance` and are not
+on-this-day History matches through History `getOnThisDayHistory`. See
+`docs/JEWISH_TODAY.md`. The homepage composes that calculated day plus
+published History cards, published Originals when they exist, the News desk
+when volume qualifies, the published Podcast show and latest episode, and a
+Support invitation. Events stay hidden until published documents earn the
+slot. It does not become a CMS document. See `docs/HOMEPAGE.md`.
 
 ## Relationships and IDs
 

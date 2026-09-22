@@ -1,0 +1,28 @@
+{
+  "range": { "start": "2026-02-02", "end": "2026-02-07" },
+  "items": [
+    {
+      "title": "15th of Sh’vat",
+      "date": "2026-02-02",
+      "hdate": "15 Sh'vat 5786",
+      "category": "hebdate",
+      "hebrew": "ט״ו שבט",
+      "heDateParts": { "y": "תשפ״ו", "m": "שבט", "d": "ט״ו" }
+    },
+    {
+      "title": "Tu BiShvat",
+      "date": "2026-02-02",
+      "hdate": "15 Sh'vat 5786",
+      "category": "holiday",
+      "subcat": "minor",
+      "hebrew": "ט״ו בשבט",
+      "memo": "New Year for Trees."
+    },
+    {
+      "title": "Parashat Yitro",
+      "date": "2026-02-07",
+      "category": "parashat",
+      "hebrew": "פרשת יתרו"
+    }
+  ]
+}
