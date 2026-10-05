@@ -211,7 +211,9 @@ test("filters the archive by published taxonomy and keeps empty people hidden", 
   const filteredArticles = page.locator("main article");
   await expect(filteredArticles).toHaveCount(12);
   for (const article of await filteredArticles.all()) {
-    await expect(article.locator('a[href="/topics/holocaust"]')).toBeVisible();
+    await expect(
+      article.locator('a[href="/history?topic=holocaust"]'),
+    ).toBeVisible();
   }
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
@@ -528,12 +530,15 @@ test("opens an authenticated draft preview without publishing other drafts", asy
   await expect(
     page.getByRole("heading", { name: "US Liberates Dachau" }),
   ).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Topics" })).toBeVisible();
-  await expect(page.getByText("World War II").first()).toBeVisible();
+  const metadata = page.locator(".history-metadata");
+  await expect(metadata.getByRole("heading", { name: "Topics" })).toBeVisible();
   await expect(
-    page.getByText(/dachau concentration camp/i).first(),
+    metadata.getByRole("link", { name: "World War II" }),
   ).toBeVisible();
-  await expect(page.getByText("Tegernsee").first()).toBeVisible();
+  await expect(
+    metadata.getByRole("link", { name: /dachau concentration camp/i }),
+  ).toBeVisible();
+  await expect(metadata.getByRole("link", { name: "Tegernsee" })).toBeVisible();
   await expect(
     page.getByText(/liberated approximately 32,000 prisoners/i),
   ).toBeVisible();

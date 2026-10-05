@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { archiveEntityHref } from "@/content/archive/search";
+import { historyArchiveHref } from "@/content/history/archive";
 import type { HistoryFilter, HistoryReference } from "@/content/history/types";
 
 export function HistoryReferenceList({
@@ -23,7 +23,9 @@ export function HistoryReferenceList({
             {filterType ? (
               <Link
                 className="history-reference-link"
-                href={archiveEntityHref(filterType, item.slug)}
+                href={historyArchiveHref({
+                  filter: { type: filterType, slug: item.slug },
+                })}
               >
                 {item.name}
               </Link>
