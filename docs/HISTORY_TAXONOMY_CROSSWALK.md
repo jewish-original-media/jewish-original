@@ -75,6 +75,24 @@ includes a story tagged only United States, and a story tagged with both is
 counted once. That raises the North America browse count from 21 direct tags
 to 34 stories.
 
+## People, places, organizations, and eras
+
+These stay one document per real subject. A story is linked to a document
+that already exists when the published title names that subject. The World
+War II era, whose reviewed bounds are 1939–1945, is linked only when the
+story already carries the World War II topic and its year falls inside those
+bounds.
+
+On 2026-10-05, published titles that name a person as the subject of a birth,
+death, killing, execution, or hanging were given a person document when one
+did not already exist. The document stores that published name and nothing
+further: no biography and no second date. The same rule created four
+organizations named by founding titles: Magen David Adom, Haganah, Mossad,
+and Palmach. `Eichmann` is an alias of Adolf Eichmann, not a second person.
+
+New places were not created from passing mentions. A city or camp is added
+only when its preferred name is reviewed once, then reused.
+
 ## Evidence boundary
 
 The canonical XLSX contains 332 candidate records: 208 `Form` records and 124
