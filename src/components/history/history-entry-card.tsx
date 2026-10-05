@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { archiveEntityHref } from "@/content/archive/search";
 import {
+  historyArchiveHref,
   historyCardLocation,
   historyCardRegion,
 } from "@/content/history/archive";
@@ -93,8 +93,12 @@ export function HistoryEntryCard({
         <p className="history-entry-card__topics">
           {entry.topics.map((topic, index) => (
             <span key={topic.slug}>
-              {index ? " · " : ""}
-              <Link href={archiveEntityHref("topic", topic.slug)}>
+              {index > 0 ? <span aria-hidden="true"> · </span> : null}
+              <Link
+                href={historyArchiveHref({
+                  filter: { type: "topic", slug: topic.slug },
+                })}
+              >
                 {topic.name}
               </Link>
             </span>

@@ -261,6 +261,46 @@ test("derives public facets only from published entries that actually have them"
     "Dachau concentration camp",
   );
   assert.equal(historyCardRegion(dachau), "Europe");
+  assert.deepEqual(
+    facets.topics.map((item) => item.count),
+    [1, 1, 1],
+  );
+});
+
+test("counts a child region once under its parent", () => {
+  const unitedStates = {
+    ...dachau,
+    _id: "historyEntry.us",
+    slug: "a-united-states-story",
+    topics: [],
+    places: [],
+    eras: [],
+    geographicRegions: [
+      {
+        name: "United States",
+        slug: "united-states",
+        parent: { name: "North America", slug: "north-america" },
+      },
+    ],
+  };
+  const both = {
+    ...unitedStates,
+    _id: "historyEntry.both",
+    slug: "tagged-with-both",
+    geographicRegions: [
+      ...unitedStates.geographicRegions,
+      { name: "North America", slug: "north-america" },
+    ],
+  };
+  const facets = collectPublishedFacets([dachau, unitedStates, both]);
+  assert.deepEqual(
+    facets.regions.map((item) => [item.slug, item.count]),
+    [
+      ["north-america", 2],
+      ["united-states", 2],
+      ["europe", 1],
+    ],
+  );
 });
 
 test("keeps published records with missing metadata in unfiltered results", () => {

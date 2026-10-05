@@ -184,11 +184,21 @@ function updatedTimestamp(entry: HistoryEntrySummary) {
   return Number.isNaN(timestamp) ? Number.NEGATIVE_INFINITY : timestamp;
 }
 
+function matchesRegion(entry: HistoryEntrySummary, regionSlug: string) {
+  return entry.geographicRegions.some(
+    (item) =>
+      item.slug === regionSlug || item.parent?.slug === regionSlug,
+  );
+}
+
 function matchesLegacyFilter(
   entry: HistoryEntrySummary,
   filter?: HistoryFilter,
 ) {
   if (!filter) return true;
+  if (filter.type === "region") {
+    return matchesRegion(entry, filter.slug);
+  }
   const references =
     filter.type === "topic"
       ? entry.topics
@@ -196,11 +206,9 @@ function matchesLegacyFilter(
         ? entry.eras
         : filter.type === "place"
           ? entry.places
-          : filter.type === "region"
-            ? entry.geographicRegions
-            : filter.type === "person"
-              ? entry.people
-              : entry.organizations;
+          : filter.type === "person"
+            ? entry.people
+            : entry.organizations;
   return references.some((item) => item.slug === filter.slug);
 }
 
@@ -232,10 +240,7 @@ export function filterAndSortHistoryArchive(
     ) {
       return false;
     }
-    if (
-      search.region &&
-      !entry.geographicRegions.some((item) => item.slug === search.region)
-    ) {
+    if (search.region && !matchesRegion(entry, search.region)) {
       return false;
     }
     if (search.month) {
@@ -278,29 +283,61 @@ export function paginateHistoryArchive(
   };
 }
 
-function uniqueReferences(items: HistoryReference[]) {
-  const bySlug = new Map<string, HistoryReference>();
-  for (const item of items) {
-    if (!item.slug || !item.name) continue;
-    bySlug.set(item.slug, item);
+function rememberReference(
+  bySlug: Map<string, HistoryReference>,
+  item: HistoryReference,
+) {
+  if (!item.slug || !item.name) return;
+  const existing = bySlug.get(item.slug);
+  if (existing) {
+    existing.count = (existing.count || 0) + 1;
+    return;
   }
-  return [...bySlug.values()].sort((left, right) =>
-    left.name.localeCompare(right.name),
+  bySlug.set(item.slug, { name: item.name, slug: item.slug, count: 1 });
+}
+
+function sortReferences(items: HistoryReference[]) {
+  return items.sort(
+    (left, right) =>
+      (right.count || 0) - (left.count || 0) ||
+      left.name.localeCompare(right.name),
   );
+}
+
+function countedReferences(items: HistoryReference[]) {
+  const bySlug = new Map<string, HistoryReference>();
+  for (const item of items) rememberReference(bySlug, item);
+  return sortReferences([...bySlug.values()]);
+}
+
+function countedRegions(entries: HistoryEntrySummary[]) {
+  const bySlug = new Map<string, HistoryReference>();
+  for (const entry of entries) {
+    const seen = new Set<string>();
+    for (const region of entry.geographicRegions) {
+      const chain = region.parent?.slug && region.parent.name
+        ? [region, region.parent]
+        : [region];
+      for (const item of chain) {
+        if (!item.slug || seen.has(item.slug)) continue;
+        seen.add(item.slug);
+        rememberReference(bySlug, item);
+      }
+    }
+  }
+  return sortReferences([...bySlug.values()]);
 }
 
 export function collectPublishedFacets(
   entries: HistoryEntrySummary[],
 ): HistoryArchiveFacets {
   return {
-    topics: uniqueReferences(entries.flatMap((entry) => entry.topics)),
-    eras: uniqueReferences(entries.flatMap((entry) => entry.eras)),
-    places: uniqueReferences(entries.flatMap((entry) => entry.places)),
-    regions: uniqueReferences(
-      entries.flatMap((entry) => entry.geographicRegions),
-    ),
-    people: uniqueReferences(entries.flatMap((entry) => entry.people)),
-    organizations: uniqueReferences(
+    topics: countedReferences(entries.flatMap((entry) => entry.topics)),
+    eras: countedReferences(entries.flatMap((entry) => entry.eras)),
+    places: countedReferences(entries.flatMap((entry) => entry.places)),
+    regions: countedRegions(entries),
+    people: countedReferences(entries.flatMap((entry) => entry.people)),
+    organizations: countedReferences(
       entries.flatMap((entry) => entry.organizations),
     ),
   };

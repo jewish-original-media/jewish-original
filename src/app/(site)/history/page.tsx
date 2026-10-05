@@ -101,8 +101,12 @@ export default async function HistoryIndexPage({
           <aside className="history-archive-rail">
             <p className="eyebrow">On this day</p>
             <p className="history-archive-rail__text">
-              Browse a month and day to find Gregorian anniversaries in the
-              archive.
+              {publishedEntries.length === 1
+                ? "The collection begins with one published story. More will appear here as they are reviewed and approved."
+                : `${publishedEntries.length} reviewed stories, opened by topic, place, and date.`}
+            </p>
+            <p className="history-archive-rail__note">
+              Historical dates use the civil Gregorian calendar in Eastern Time.
             </p>
             <Link
               className="editorial-link"

@@ -13,10 +13,10 @@ const groups: {
   heading: string;
 }[] = [
   { key: "topics", type: "topic", heading: "Topics" },
-  { key: "eras", type: "era", heading: "Eras" },
-  { key: "places", type: "place", heading: "Places" },
   { key: "regions", type: "region", heading: "Regions" },
+  { key: "places", type: "place", heading: "Places" },
   { key: "people", type: "person", heading: "People" },
+  { key: "eras", type: "era", heading: "Eras" },
   { key: "organizations", type: "organization", heading: "Organizations" },
 ];
 
@@ -41,6 +41,9 @@ function TaxonomyGroup({
               href={historyArchiveHref({ filter: { type, slug: item.slug } })}
             >
               {item.name}
+              {item.count ? (
+                <span className="history-taxonomy-count">{item.count}</span>
+              ) : null}
             </Link>
           </li>
         ))}
