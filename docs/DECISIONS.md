@@ -796,3 +796,24 @@ gates. Their homepage and desk links are tracked outbound links, and
 `/explore?view=current` explains that these records are current pathways rather
 than permanent JOM archive articles. No CMS write, new provider, or ingest
 activation is part of this pass.
+
+## ADR-052 — Immersive discovery remains evidence-led
+
+**Status:** Accepted, 2026-10-05
+
+Eligible desktop navigation now exposes the same gated destinations as the
+native mobile menu. Scoped editorial rooms share a server-rendered archive
+trail, and clean `/explore` offers entry paths ranked from real resolved facet
+counts. These devices are wayfinding: generic cross-room links do not assert a
+relationship, and entity filters require an existing CMS reference.
+
+News and Events keep their distinct publication gates and outbound semantics
+while receiving different art direction: News is a night current desk; Events
+is a warm calendar room. The homepage Living Archive invitation enters the
+generic Explore index and does not imply mappings from local-review objects to
+CMS entities.
+
+JFC remains a rights-research source only. No catalog image, video, still,
+excerpt, embed, or derivative may ship until the exact item has a documented
+license or written permission and an approved credit. Collection contacts and
+candidate rights holders live in `docs/ASSET_INVENTORY.md`.

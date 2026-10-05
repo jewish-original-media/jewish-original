@@ -57,7 +57,9 @@ consistent Eastern Time day to both the homepage and header.
    provenance-verified collection objects. Each object exposes title, place,
    date, community context, visible credit, and its authoritative source
    record. The initial local-review set comes from the Library of Congress and
-   does not claim to represent the full Jewish diaspora.
+   does not claim to represent the full Jewish diaspora. A generic invitation
+   enters `/explore`; individual objects continue to link only to their
+   authoritative catalog records because no CMS relationship has been reviewed.
 4. **History** — one lead plus two supporting archive stories in a spacious
    gallery room. Rights-cleared CMS media preserves caption and credit.
    Entries without media receive a clearly non-photographic navy archival
@@ -93,6 +95,8 @@ media and is not a substitute for relational CMS content.
   appearance, filenames, or surrounding collection material.
 - A community object is one documented moment, not a visual proxy for an
   entire people.
+- The moving continuum names only communities and places documented by the
+  displayed objects. It does not add atmospheric geography.
 - The collection remains a local editorial review set until explicitly
   approved for deployment.
 

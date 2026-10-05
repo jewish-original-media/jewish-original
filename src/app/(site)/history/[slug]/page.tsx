@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { ArchiveTrail } from "@/components/explore/archive-trail";
 import { HistoryBody } from "@/components/history/history-body";
 import { HistoryCitations } from "@/components/history/history-citations";
 import { HistoryEntryCard } from "@/components/history/history-entry-card";
@@ -146,6 +147,7 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
             </div>
           </Container>
         </header>
+        <ArchiveTrail current="history" />
 
         {entry.primaryImage ? (
           <HistoryFeaturedMedia image={entry.primaryImage} />

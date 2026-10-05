@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import Link from "next/link";
 
+import { ArchiveTrail } from "@/components/explore/archive-trail";
 import { HistoryArchiveDiscovery } from "@/components/history/history-archive-discovery";
 import { HistoryHeroWatermark } from "@/components/history/history-hero-watermark";
 import { HistoryPreviewBanner } from "@/components/history/history-preview-banner";
@@ -109,9 +110,14 @@ export default async function HistoryIndexPage({
             >
               Explore {formatCivilDateLabel(today).replace(/^\w+,\s/, "")}
             </Link>
+            <span aria-hidden="true"> · </span>
+            <Link className="editorial-link" href="/explore">
+              Search every format
+            </Link>
           </aside>
         </Container>
       </header>
+      <ArchiveTrail current="history" />
 
       <Section className="history-archive-results" spacing="compact">
         <Container>

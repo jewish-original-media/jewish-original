@@ -200,6 +200,17 @@ News and Events desks. It must remain visually subordinate to the durable
 Living Archive and must not make outbound records look like permanent JOM
 articles.
 
+An archive trail may sit between a room hero and its content. It is a
+typographic, server-rendered wayfinding rail—not a recommendation engine. Today,
+History, Living Archive, and Current are generic destinations; entity-filtered
+paths appear only when a resolved CMS reference supplies the slug. The rail
+must remain useful without motion and preserve 44px targets on mobile.
+
+On the clean Living Archive index, “Begin with a thread” may surface a small
+set of entry paths ranked from actual resolved facet counts. These links use
+the normal durable query contract; they disappear on filtered, searched, and
+Current views so the active state remains clear.
+
 The homepage is a sequence of editorial scenes rather than a stack of equal
 content bands. Full-viewport photography, sparse overlay type, large pauses,
 and distinct Today, History, Originals, News, Listening, Events, About, and
@@ -232,6 +243,9 @@ Diaspora representation is editorial, not decorative:
 - Keep provenance visible and link to the authoritative source record.
 - Historical photographs may sit beside current JOM work, but their captions
   must make the time boundary unmistakable.
+- An external film catalog is not a free visual texture library. JFC or other
+  audiovisual material requires item-level written permission or a documented
+  license before any still, excerpt, embed, or derivative treatment appears.
 
 ## Motif language
 
@@ -290,8 +304,10 @@ rather than an unrelated stock image or blank frame.
 The sticky night header centers the approved unaltered logo plaque, presents
 the current Gregorian and Hebrew dates where space allows, and keeps Listen
 and Support close at hand. A native `details` disclosure opens the full
-numbered menu without client JavaScript. Originals and News remain gated;
-Events is permanent.
+numbered menu without client JavaScript. At desktop widths, a second restrained
+row exposes the same eligible destinations while Listen and Support remain
+quick actions. Originals and News remain gated; Events is permanent. The
+desktop row does not create a second ungated navigation contract.
 
 The footer closes with “Keep the story moving,” a Support invitation, and
 Explore / Connect link groups. Both header and footer use square edges,
@@ -308,8 +324,10 @@ recorded in `ASSET_INVENTORY.md`. Do not substitute stock.
 ## News and Events
 
 News is a tight newswire: hairline rules, publisher labels, time, headline,
-short JOM context, outbound arrow. No card grid. No publisher images.
+short JOM context, outbound arrow, and a night editorial header. No card grid.
+No publisher images.
 
 Events is a museum calendar: the date is the graphic object. Title,
-organizer, place or Online, and the event’s own timezone follow. Do not make
-the two desks visually identical. Do not invent icons for either.
+organizer, place or Online, and the event’s own timezone follow on a warm,
+faintly ruled calendar field. Do not make the two desks visually identical. Do
+not invent icons for either.

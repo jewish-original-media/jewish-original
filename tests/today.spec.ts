@@ -17,6 +17,9 @@ test("renders an ordinary weekday without empty sections", async ({
   ).toBeVisible();
   await expect(page.getByText("Tuesday, September 1, 2026")).toBeVisible();
   await expect(page.getByText("19 Elul 5786")).toBeVisible();
+  await expect(
+    page.getByRole("navigation", { name: "Continue exploring" }),
+  ).toBeVisible();
   await expect(page.getByText("This week in Torah")).toBeVisible();
   await expect(page.getByText("Most recent Torah portion")).toHaveCount(0);
   await expect(page.getByText("Eastern Time")).toBeVisible();
@@ -168,6 +171,12 @@ test("retrieves the published Dachau History entry on April 29", async ({
   ).toBeVisible();
   await page.goto("/today?date=2026-04-29");
   await expect(page.getByText("April 29, 1945", { exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Browse every date" }),
+  ).toHaveAttribute("href", "/history");
+  await expect(
+    page.getByRole("link", { name: "Follow every archive thread" }),
+  ).toHaveAttribute("href", "/explore");
   await expect(
     page.getByText(/american troops liberated the dachau concentration camp/i),
   ).toBeVisible();

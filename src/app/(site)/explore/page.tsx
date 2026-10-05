@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { ArchiveDiscovery } from "@/components/explore/archive-discovery";
+import { ArchiveTrail } from "@/components/explore/archive-trail";
 import styles from "@/components/explore/explore.module.css";
 import { JsonLd } from "@/components/seo/json-ld";
 import {
@@ -93,6 +94,9 @@ export default async function ExplorePage({ searchParams }: ExplorePageProps) {
           </p>
         </div>
       </header>
+      <ArchiveTrail
+        current={search.view === "current" ? "current" : "explore"}
+      />
       <div className={styles.content}>
         <ArchiveDiscovery
           allRecords={allRecords}

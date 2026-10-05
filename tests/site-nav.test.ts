@@ -8,8 +8,15 @@ import {
 } from "../src/lib/site";
 
 test("primary nav adds Originals only when the journal is live", () => {
+  const baseline = resolvePrimaryNavigation();
+  assert.ok(
+    baseline.every(
+      (item) => typeof item.href === "string" && typeof item.label === "string",
+    ),
+    "desktop and mobile navigation must share the resolved gated items",
+  );
   assert.deepEqual(
-    resolvePrimaryNavigation().map((item) => item.href),
+    baseline.map((item) => item.href),
     [
       "/today",
       "/explore",

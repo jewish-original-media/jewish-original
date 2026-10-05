@@ -18,6 +18,10 @@ export function SiteHeader({
   today?: SiteHeaderToday;
   navigation?: readonly SiteNavItem[];
 }) {
+  const desktopNavigation = navigation.filter(
+    (item) => item.href !== "/podcasts" && item.href !== "/support",
+  );
+
   return (
     <header className={styles.header}>
       <Container className={styles.bar}>
@@ -82,6 +86,19 @@ export function SiteHeader({
           </details>
         </div>
       </Container>
+      <nav className={styles.primaryNav} aria-label="Primary">
+        <Container>
+          <ul className={styles.primaryNavList}>
+            {desktopNavigation.map((item) => (
+              <li key={item.href}>
+                <Link className={styles.navLink} href={item.href}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </nav>
     </header>
   );
 }

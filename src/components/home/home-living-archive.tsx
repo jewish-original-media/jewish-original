@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { LIVING_ARCHIVE_OBJECTS } from "@/content/media/living-archive";
 
@@ -27,6 +28,15 @@ export function HomeLivingArchive() {
             arguments, melodies, and memory. These are not decorative fragments.
             They are documented lives.
           </p>
+          <div className={styles.livingArchiveInvitation}>
+            <p>
+              Three sourced objects open onto hundreds of histories, voices,
+              people, and places.
+            </p>
+            <Link href="/explore">
+              Enter the connected archive <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
         </header>
 
         <div className={styles.archiveCollage}>
@@ -74,9 +84,7 @@ export function HomeLivingArchive() {
           <span aria-hidden="true">↗</span>
           <span>Yemenite Jewish life</span>
           <span aria-hidden="true">↗</span>
-          <span>Jerusalem</span>
-          <span aria-hidden="true">↗</span>
-          <span>Wherever Jewish life is carried</span>
+          <span>Three records, many threads</span>
         </p>
       </div>
     </section>

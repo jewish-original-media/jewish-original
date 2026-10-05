@@ -139,6 +139,86 @@
   font-weight: 700;
 }
 
+.entryPaths {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(2rem, 7vw, 7rem);
+  margin-bottom: clamp(3rem, 7vw, 6rem);
+  padding: clamp(2rem, 5vw, 4rem) 0;
+  border-block: 1px solid var(--color-rule);
+}
+
+.entryPathsIntroduction {
+  align-self: start;
+}
+
+.entryPathsEyebrow {
+  margin: 0 0 var(--space-5);
+  color: var(--color-olive);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.entryPaths h2 {
+  max-width: 12ch;
+  margin: 0;
+  color: var(--color-navy);
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.entryPaths ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entryPaths li {
+  border-top: 1px solid var(--color-rule);
+}
+
+.entryPaths li:first-child {
+  border-top: 0;
+}
+
+.entryPaths a {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  min-height: 4.25rem;
+  align-items: center;
+  gap: var(--space-4);
+  padding-block: 0.75rem;
+  color: var(--color-navy);
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  text-decoration: none;
+}
+
+.entryPaths a > span:first-child,
+.entryPaths a > span:last-child {
+  color: var(--color-muted);
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.entryPaths small {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--color-muted);
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .searchPanel {
   padding: clamp(1.25rem, 3vw, 2.5rem);
   border: 1px solid var(--color-rule);
@@ -436,11 +516,29 @@
   padding-block: clamp(2.5rem, 6vw, 6rem);
 }
 
+.entityPaths {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-8);
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-rule);
+}
+
 .entityBack {
   display: inline-block;
-  margin-bottom: var(--space-8);
   color: var(--color-navy);
   font-weight: 700;
+}
+
+.entityFilterLink {
+  color: var(--color-navy);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-underline-offset: 0.24em;
 }
 
 @media (max-width: 62rem) {
@@ -475,6 +573,10 @@
 
   .currentIntroduction div {
     grid-column: 1;
+  }
+
+  .entryPaths {
+    grid-template-columns: 1fr;
   }
 
   .resultsHeading {

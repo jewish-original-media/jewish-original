@@ -19,8 +19,17 @@
 
 .primaryNav {
   display: none;
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.primaryNavList {
+  display: flex;
   align-items: center;
-  gap: clamp(1.25rem, 2.2vw, 2rem);
+  justify-content: center;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .navLink,
@@ -264,16 +273,15 @@
 
 @media (min-width: 64rem) {
   .primaryNav {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.9rem;
+    display: block;
   }
 
   .navLink {
     letter-spacing: 0.12em;
   }
 
-  .mobile {
+  .mobile,
+  .menu {
     display: none;
   }
 
@@ -294,8 +302,8 @@
 }
 
 @media (min-width: 80rem) {
-  .primaryNav {
-    gap: clamp(1.25rem, 2.2vw, 2rem);
+  .primaryNavList {
+    gap: clamp(1.25rem, 3vw, 3rem);
   }
 
   .navLink {

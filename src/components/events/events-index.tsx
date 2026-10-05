@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
+import { ArchiveTrail } from "@/components/explore/archive-trail";
 import { Container } from "@/components/ui/container";
 import type { PublicEventCard } from "@/content/events/types";
 import { eventDateParts, eventPlaceLabel } from "@/lib/events/display";
@@ -29,6 +30,7 @@ export function EventsIndex({ items }: EventsIndexProps) {
           </p>
         </Container>
       </section>
+      <ArchiveTrail current="events" />
       <section className="section">
         <Container>
           {items.length === 0 ? (

@@ -147,6 +147,39 @@ credits remain visible, and source records open from the figure.
 Do not hotlink Wikimedia thumbnails. Do not attach History featured media until
 a founder-approved Sanity write uses a verified high-resolution file.
 
+### Israel Film Archive / Jerusalem Cinematheque research
+
+Reviewed 2026-10-05:
+
+- [Archive FAQ](https://jfc.org.il/en/faqs/)
+- [Legal information](https://jfc.org.il/en/legal-infomation/)
+
+The Israel Film Archive is a discovery and licensing lead, not a public-domain
+media source. Its FAQ says that it does not own copyright to all catalog
+content, downloads are prohibited, and clip/excerpt reuse must be cleared with
+the named rights holder or `archive@jfc.org.il`. The legal terms reserve rights
+in video, images, text, and illustrations; fair use is purpose- and
+context-dependent, and ordinary copying, distribution, modification, or
+linking to content requires prior written permission. Some licenses may be
+paid. Attribution alone does not authorize JOM publication.
+
+Collection-level candidates for a future rights request:
+
+| Collection                                                                                              | Editorial relevance                                                                         | Rights holder / permission path                                                                 | Intended JOM treatment                                                                                                 | Status                                           |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| [Israel Film Service Collection](https://jfc.org.il/en/compilation/the-israel-film-service-collection/) | Documented Israeli society, culture, arts, immigration, and public life                     | Israel Film Service; `ShiloG@most.gov.il` is listed for copyrighted-material enquiries          | A short, captioned, click-to-load excerpt or licensed still inside a sourced History/Explore feature                   | Permission required; no asset selected or copied |
+| [WIZO Historical Film Collection](https://jfc.org.il/en/compilation/wizos-historical-film-collection/)  | Women’s history, education, immigration, welfare, and community institutions, 1936–1985     | WIZO Israel and, in part, the Steven Spielberg Jewish Film Archive; `Wizo_Archive@wizo.org`     | A licensed still or brief excerpt attached to a specifically reviewed story, never general atmosphere                  | Permission required; no asset selected or copied |
+| Broader JFC catalog research                                                                            | Potential primary audiovisual evidence for specific people, places, institutions, or events | The rights holder named on the relevant collection, or `archive@jfc.org.il` when none is listed | Candidate research only until title, timecode, territory, term, platform, and commercial reuse are approved in writing | Hold                                             |
+
+No JFC file, poster frame, thumbnail, stream, embed, or individual-work deep
+link is added in this pass. A future clearance record must preserve the exact
+work and clip, creator, rights holder, permission correspondence, credit line,
+territory, term, platforms, edit/crop permission, commercial status, and any
+fee. Only then may a local optimized derivative or approved embed enter the
+public asset ledger. Any future video UI must be poster-led, click-to-load,
+captioned, keyboard operable, reduced-motion-safe, and excluded from the
+homepage LCP path.
+
 ## Photography
 
 Founder-uploaded photographs now in the Cursor asset pack (2026-09-09):

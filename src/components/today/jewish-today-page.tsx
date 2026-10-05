@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { ArchiveTrail } from "@/components/explore/archive-trail";
 import { HistoryEntryCard } from "@/components/history/history-entry-card";
 import { Container } from "@/components/ui/container";
 import type { JewishTodayDay } from "@/features/jewish-today";
@@ -102,6 +103,7 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
             ) : null}
           </Container>
         </section>
+        <ArchiveTrail current="today" />
 
         {showCalendar ? (
           <section className={styles.section} aria-labelledby="jewish-calendar">
@@ -276,15 +278,22 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
                 : "No published anniversary today"}
             </h2>
             {showHistory ? (
-              <div className={styles.historyList}>
-                {day.onThisDay.map((entry) => (
-                  <HistoryEntryCard
-                    entry={entry}
-                    key={entry._id}
-                    variant="archive"
-                  />
-                ))}
-              </div>
+              <>
+                <div className={styles.historyList}>
+                  {day.onThisDay.map((entry) => (
+                    <HistoryEntryCard
+                      entry={entry}
+                      key={entry._id}
+                      variant="archive"
+                    />
+                  ))}
+                </div>
+                <p className={styles.archivePaths}>
+                  <Link href="/history">Browse every date</Link>
+                  <span aria-hidden="true"> · </span>
+                  <Link href="/explore">Follow every archive thread</Link>
+                </p>
+              </>
             ) : (
               <>
                 <p className={styles.historyEmpty}>

@@ -5,6 +5,7 @@ import {
   getArchiveSuggestions,
 } from "@/content/archive/search";
 import type {
+  ArchiveFacetType,
   ArchiveFacets,
   ArchivePage,
   ArchiveRecord,
@@ -22,6 +23,18 @@ const FACET_SELECTS = [
   ["era", "Era"],
   ["organization", "Organization"],
 ] as const;
+
+const FACET_RECORD_KEYS: Record<
+  ArchiveFacetType,
+  "topics" | "people" | "places" | "regions" | "eras" | "organizations"
+> = {
+  topic: "topics",
+  person: "people",
+  place: "places",
+  region: "regions",
+  era: "eras",
+  organization: "organizations",
+};
 
 function archiveKindOptions(view: ArchiveSearchState["view"]) {
   return view === "current"
@@ -60,6 +73,23 @@ export function ArchiveDiscovery({
   search: ArchiveSearchState;
 }) {
   const suggestions = getArchiveSuggestions(allRecords, search.q);
+  const entryPaths = FACET_SELECTS.flatMap(([type, label]) =>
+    facets[type].map((facet) => ({
+      ...facet,
+      count: allRecords.filter((record) =>
+        record[FACET_RECORD_KEYS[type]].some(
+          (recordFacet) => recordFacet.slug === facet.slug,
+        ),
+      ).length,
+      href: archiveSearchHref({}, { [type]: facet.slug }),
+      type: label,
+    })),
+  )
+    .sort(
+      (left, right) =>
+        right.count - left.count || left.name.localeCompare(right.name),
+    )
+    .slice(0, 6);
   const firstResult = page.total ? (page.page - 1) * 12 + 1 : 0;
   const lastResult = Math.min(page.page * 12, page.total);
   const activeFilters = [
@@ -131,6 +161,40 @@ export function ArchiveDiscovery({
             <Link href="/events">Open the Events calendar</Link>
           </div>
         </aside>
+      ) : null}
+
+      {search.view === "archive" &&
+      !search.isBrowsing &&
+      entryPaths.length > 0 ? (
+        <section
+          aria-labelledby="archive-entry-paths"
+          className={styles.entryPaths}
+        >
+          <div className={styles.entryPathsIntroduction}>
+            <p className={styles.entryPathsEyebrow}>Begin with a thread</p>
+            <h2 id="archive-entry-paths">
+              A person. A place. An idea. See where it leads.
+            </h2>
+          </div>
+          <ol>
+            {entryPaths.map((path, index) => (
+              <li key={`${path.type}-${path.slug}`}>
+                <Link href={path.href}>
+                  <span aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span>
+                    <small>{path.type}</small>
+                    {path.name}
+                  </span>
+                  <span aria-label={`${path.count} connected records`}>
+                    {path.count}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </section>
       ) : null}
 
       <form action="/explore" className={styles.searchPanel} method="get">

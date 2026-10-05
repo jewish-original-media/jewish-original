@@ -1715,11 +1715,61 @@
   line-height: 1.65;
 }
 
+.livingArchiveInvitation {
+  display: grid;
+  gap: 1rem;
+  max-width: 29rem;
+  margin-top: 2rem;
+  padding: 1.25rem 0 0 1.25rem;
+  border-top: 1px solid rgb(238 224 203 / 0.12);
+  border-left: 0.25rem solid var(--color-gold);
+}
+
+.livingArchiveInvitation p {
+  margin: 0;
+  color: rgb(255 255 255 / 0.58);
+  font-size: 0.78rem;
+  letter-spacing: 0.055em;
+  line-height: 1.65;
+}
+
+.livingArchiveInvitation a {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 44px;
+  align-items: center;
+  gap: 1.25rem;
+  border-bottom: 1px solid var(--color-gold);
+  color: var(--archive-paper);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
 .archiveCollage {
+  position: relative;
   display: grid;
   align-content: start;
   gap: clamp(6rem, 14vw, 15rem);
   padding-top: 18svh;
+}
+
+.archiveCollage::before {
+  position: absolute;
+  top: 10svh;
+  bottom: 4rem;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(
+    transparent,
+    rgb(210 144 70 / 0.45) 12%,
+    rgb(224 229 235 / 0.22) 82%,
+    transparent
+  );
+  content: "";
+  pointer-events: none;
 }
 
 .archiveObject {
@@ -1904,6 +1954,17 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .livingArchiveInvitation a {
+    transition:
+      color 180ms var(--ease-standard),
+      gap 180ms var(--ease-standard);
+  }
+
+  .livingArchiveInvitation a:hover {
+    gap: 1.65rem;
+    color: var(--color-gold);
+  }
+
   .archiveContinuum {
     animation: archive-current 36s linear infinite alternate;
   }
@@ -1948,6 +2009,10 @@
   .archiveCollage {
     padding-top: 4rem;
   }
+
+  .archiveCollage::before {
+    top: 1rem;
+  }
 }
 
 @media (max-width: 47.98rem) {
@@ -1976,6 +2041,10 @@
   .archiveCollage {
     gap: 5rem;
     padding-top: 2rem;
+  }
+
+  .archiveCollage::before {
+    left: 1rem;
   }
 
   .archiveObject,

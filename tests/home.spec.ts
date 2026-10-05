@@ -108,15 +108,25 @@ test("composes the homepage from Jewish Today and published History", async ({
       .getByRole("navigation", { name: "Discover Jewish Original" })
       .getByRole("link", { name: /events/i }),
   ).toHaveCount(0);
-  const menuToggle = page.locator("summary").filter({ hasText: "Menu" });
-  await menuToggle.click();
-  await expect(page.getByRole("navigation", { name: "Mobile" })).toBeVisible();
-  await expect(
-    page
-      .getByRole("navigation", { name: "Mobile" })
-      .getByRole("link", { name: "Events" }),
-  ).toHaveAttribute("href", "/events");
-  await menuToggle.click();
+  if (testInfo.project.name === "mobile") {
+    const menuToggle = page.locator("summary").filter({ hasText: "Menu" });
+    await menuToggle.click();
+    await expect(
+      page.getByRole("navigation", { name: "Mobile" }),
+    ).toBeVisible();
+    await expect(
+      page
+        .getByRole("navigation", { name: "Mobile" })
+        .getByRole("link", { name: "Events" }),
+    ).toHaveAttribute("href", "/events");
+    await menuToggle.click();
+  } else {
+    await expect(
+      page
+        .getByRole("navigation", { name: "Primary" })
+        .getByRole("link", { name: "Events" }),
+    ).toHaveAttribute("href", "/events");
+  }
   await expect(
     page.getByRole("img", {
       name: "A man wearing tefillin reads from a Hebrew book",

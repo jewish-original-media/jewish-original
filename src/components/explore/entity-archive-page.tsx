@@ -7,6 +7,7 @@ import { getArchiveEntity } from "@/content/archive/entities";
 import { getDurableArchiveRecords } from "@/content/archive/fetch";
 import {
   archiveEntityHref,
+  archiveSearchHref,
   isArchiveEntityIndexable,
   recordsForArchiveEntity,
 } from "@/content/archive/search";
@@ -15,6 +16,7 @@ import { breadcrumbJsonLd, buildPageMetadata } from "@/lib/seo/site";
 import { siteConfig } from "@/lib/site";
 
 import { ArchiveGrid } from "./archive-discovery";
+import { ArchiveTrail } from "./archive-trail";
 import styles from "./explore.module.css";
 
 const FACET_LABELS: Record<ArchiveFacetType, string> = {
@@ -126,10 +128,19 @@ export async function EntityArchivePage({
           </p>
         </div>
       </header>
+      <ArchiveTrail current="explore" />
       <div className={styles.entityContent}>
-        <Link className={styles.entityBack} href="/explore">
-          ← Explore the full archive
-        </Link>
+        <div className={styles.entityPaths}>
+          <Link className={styles.entityBack} href="/explore">
+            ← Explore the full archive
+          </Link>
+          <Link
+            className={styles.entityFilterLink}
+            href={archiveSearchHref({}, { [type]: slug })}
+          >
+            Open this collection in Explore →
+          </Link>
+        </div>
         <ArchiveGrid records={data.records} />
       </div>
     </>

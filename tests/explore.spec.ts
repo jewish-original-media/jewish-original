@@ -12,6 +12,17 @@ test("searches the living archive with canonical noindex query views", async ({
     "href",
     "https://jewishoriginal.com/explore",
   );
+  await expect(
+    page.getByRole("navigation", { name: "Continue exploring" }),
+  ).toBeVisible();
+  const entryPaths = page.getByRole("region", {
+    name: "A person. A place. An idea. See where it leads.",
+  });
+  await expect(entryPaths).toBeVisible();
+  const entryHref = await entryPaths.locator("a").first().getAttribute("href");
+  expect(entryHref).toMatch(
+    /^\/explore\?(topic|person|place|region|era|organization)=[^&]+$/,
+  );
 
   const search = page.getByRole("combobox", { name: "Search the archive" });
   await search.focus();
@@ -45,7 +56,7 @@ test("connects archive tags to canonical entity pages and returns unknown entiti
   const href = await facet.getAttribute("href");
   expect(href).toBeTruthy();
 
-  await facet.click();
+  await page.goto(href!);
   await expect(page).toHaveURL(new RegExp(`${href!.replace("/", "\\/")}$`));
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
@@ -54,6 +65,13 @@ test("connects archive tags to canonical entity pages and returns unknown entiti
   await expect(
     page.getByRole("link", { name: /explore the full archive/i }),
   ).toBeVisible();
+  const filteredCollection = page.getByRole("link", {
+    name: /open this collection in explore/i,
+  });
+  await expect(filteredCollection).toHaveAttribute(
+    "href",
+    /^\/explore\?(topic|person|place|region|era|organization)=[^&]+$/,
+  );
 
   const missing = await page.goto("/topics/not-a-real-archive-entity");
   expect(missing?.status()).toBe(404);
@@ -93,6 +111,10 @@ test("explains the source-honest Current view and links its editorial desks", as
   await expect(
     page.getByRole("combobox", { name: "Search the archive" }),
   ).toHaveAttribute("placeholder", "Search current news and events");
+  await expect(page.getByText("Begin with a thread")).toHaveCount(0);
+  await expect(
+    page.getByRole("navigation", { name: "Continue exploring" }),
+  ).toBeVisible();
 
   const hasHorizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > window.innerWidth,

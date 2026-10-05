@@ -8,6 +8,14 @@ test("serves /news as a text-first outward-linking desk", async ({ page }) => {
   await expect(
     page.getByRole("heading", { level: 1, name: "What we’re following" }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("navigation", { name: "Continue exploring" }),
+  ).toBeVisible();
+  await expect(
+    page
+      .getByRole("navigation", { name: "Continue exploring" })
+      .getByRole("link", { name: "Current" }),
+  ).toHaveAttribute("href", "/explore?view=current");
   if (await page.getByText(/not following a current story/i).count()) {
     await page.reload();
   }
@@ -41,7 +49,7 @@ test("serves /news as a text-first outward-linking desk", async ({ page }) => {
   );
   expect(collection["@type"]).toBe("CollectionPage");
   const hrefs = await page
-    .locator("main ol a")
+    .locator('a[data-analytics-event="news_outbound"]')
     .evaluateAll((anchors) =>
       anchors.map((anchor) => (anchor as HTMLAnchorElement).href),
     );

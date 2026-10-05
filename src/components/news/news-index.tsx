@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
+import { ArchiveTrail } from "@/components/explore/archive-trail";
 import { Container } from "@/components/ui/container";
 import type { CuratedNewsCard } from "@/content/news/types";
 import {
@@ -39,6 +40,7 @@ export function NewsIndex({ items, unavailable = false }: NewsIndexProps) {
           </p>
         </Container>
       </section>
+      <ArchiveTrail current="news" />
       <section className="section">
         <Container>
           {state === "unavailable" ? (

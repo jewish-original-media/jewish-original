@@ -160,6 +160,20 @@ description and at least three durable published records. The projection never
 creates entity descriptions, infers relationships from keywords, or writes
 search state back to Sanity.
 
+Navigation may expose those same verified relationships as archive trails:
+detail record → referenced entity collection → filtered Explore view. Generic
+room links among Today, History, Living Archive, and Current do not assert a
+content relationship. They are wayfinding. Facet entry paths on clean
+`/explore` are derived from real resolved references and record counts, never
+from a hard-coded taxonomy or keyword co-occurrence.
+
+Externally hosted audiovisual archives are research and licensing sources, not
+automatic media providers. A catalog record or stream does not establish reuse
+rights. Before a still, poster frame, excerpt, or embed enters this projection,
+the media ledger must identify the exact work/clip, creator, rights holder,
+license or written permission, credit, usage restrictions, territory, term,
+platforms, commercial status, and allowed edits. See `docs/ASSET_INVENTORY.md`.
+
 ## Import requirements
 
 The history spreadsheet import will be staged, not published directly:
