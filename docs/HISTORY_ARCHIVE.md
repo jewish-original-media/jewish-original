@@ -7,10 +7,10 @@ Coordinate counts and unique-story scope through
 review. It is not 332 public stories, and it is not a permanent nine-story
 subset.
 
-Current live Sanity publications are **95** (the first packet plus the
-approved r2 set). The sitemap revalidates hourly with that published-ready
-set so newly released slugs are not frozen at deploy time.
-Public queries still require a published document with
+The live publication count is intentionally read from Sanity rather than
+recorded as a UI or test constant. The sitemap revalidates hourly with the
+published-ready set so newly released slugs are not frozen at deploy time.
+Public queries require a published document with
 `workflowStatus == "ready"`. Drafts stay out of search, filters, counts,
 related payloads, and Today matching. Discovery, pagination, and Today
 matching are built and verified for the complete eligible unique set. The
@@ -21,20 +21,20 @@ Jewish History** and the broader Jewish Original historical archive.
 
 Public routes in this milestone:
 
-| Route                                                           | Purpose                            | Indexed                  |
-| --------------------------------------------------------------- | ---------------------------------- | ------------------------ |
-| `/history`                                                      | Archive landing and discovery home | Yes                      |
-| `/history/[slug]`                                               | Reviewed History article           | Yes, when published      |
-| `/history?month=&day=`                                          | Civil-date browse                  | No; canonical `/history` |
-| `/history?q=&topic=&place=&sort=&page=`                         | Search, filter, sort, pagination   | No; canonical `/history` |
-| Legacy `era` / `region` / `person` / `organization` query links | Backward-compatible taxonomy view  | No; canonical `/history` |
+| Route                                                           | Purpose                                  | Indexed                                       |
+| --------------------------------------------------------------- | ---------------------------------------- | --------------------------------------------- |
+| `/history`                                                      | History-specific discovery home          | Yes                                           |
+| `/history/[slug]`                                               | Reviewed History article                 | Yes, when published                           |
+| `/history?month=&day=`                                          | Civil-date browse                        | No; canonical `/history`                      |
+| `/history?q=&topic=&place=&sort=&page=`                         | Search, filter, sort, pagination         | No; canonical `/history`                      |
+| Legacy `era` / `region` / `person` / `organization` query links | Backward-compatible History taxonomy     | No; canonical `/history`                      |
+| `/explore`                                                      | Cross-content durable archive            | Yes                                           |
+| `/topics/[slug]` and other entity routes                        | Reverse-linked cross-content collections | Only with a description and 3 durable records |
 
-No `/history/topic/[slug]`, `/history/era/[slug]`, or `/history/place/[slug]`
-routes yet. Query parameters are enough while the public collection is small.
-Dedicated taxonomy URLs can be added when a facet has a meaningful body of
-reviewed stories.
-
-Sitemap includes `/history` and published article slugs only.
+The sitemap includes `/history`, `/explore`, published article slugs, and only
+entity pages that meet the shared quality gate. Existing `/history?...`
+taxonomy URLs remain valid discovery links even though new metadata links use
+the canonical entity routes.
 
 Keyword search, autocomplete, filters, sort, and pagination are on
 Integration Preview. Production `jewish-original.vercel.app` is still the
@@ -43,9 +43,8 @@ and does not include this discovery interface.
 
 ## Progressive disclosure
 
-The landing is designed for the complete unique archive, including the
-current 48 published stories and the remaining reviewed stories as they
-are released.
+The landing is designed for the complete unique archive, including the current
+published-ready set and remaining reviewed stories as they are released.
 
 - The hero gives search priority and offers a direct link to today’s civil
   month/day.

@@ -12,6 +12,7 @@ import { isYouTubeId, parseYouTubeId } from "@/lib/podcasts/youtube";
 import {
   draftPodcastCandidateQuery,
   draftPodcastShowCandidateQuery,
+  podcastArchiveEpisodeIndexQuery,
   podcastEpisodeIndexQuery,
   podcastEpisodeQuery,
   podcastEpisodeSlugsQuery,
@@ -19,6 +20,7 @@ import {
   podcastShowSlugsQuery,
 } from "./queries";
 import type {
+  PodcastArchiveEpisode,
   PodcastEpisode,
   PodcastEpisodeSummary,
   PodcastShow,
@@ -74,6 +76,15 @@ export async function getPodcastEpisodes(showSlug: string, preview: boolean) {
   return client.fetch<PodcastEpisodeSummary[]>(
     podcastEpisodeIndexQuery,
     { preview, showSlug },
+    preview ? previewOptions : publishedOptions,
+  );
+}
+
+export async function getPodcastArchiveEpisodes(preview: boolean) {
+  const client = preview ? getDraftSanityClient() : getPublishedSanityClient();
+  return client.fetch<PodcastArchiveEpisode[]>(
+    podcastArchiveEpisodeIndexQuery,
+    { preview },
     preview ? previewOptions : publishedOptions,
   );
 }

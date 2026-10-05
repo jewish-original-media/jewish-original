@@ -10,12 +10,21 @@ import {
 test("primary nav adds Originals only when the journal is live", () => {
   assert.deepEqual(
     resolvePrimaryNavigation().map((item) => item.href),
-    ["/today", "/history", "/podcasts", "/events", "/about", "/support"],
+    [
+      "/today",
+      "/explore",
+      "/history",
+      "/podcasts",
+      "/events",
+      "/about",
+      "/support",
+    ],
   );
   assert.deepEqual(
     resolvePrimaryNavigation({ originalsLive: true }).map((item) => item.href),
     [
       "/today",
+      "/explore",
       "/history",
       "/originals",
       "/podcasts",
@@ -44,6 +53,7 @@ test("News enters primary nav only at five items and three publishers", () => {
     }).map((item) => item.label),
     [
       "Today",
+      "Explore",
       "History",
       "Originals",
       "Podcasts",
@@ -64,6 +74,7 @@ test("footer Explore adds Originals when the journal is live and keeps News", ()
   assert.deepEqual(
     explore.map((item) => item.href),
     [
+      "/explore",
       "/today",
       "/history",
       "/originals",

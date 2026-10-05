@@ -12,8 +12,9 @@
 - **Authentication:** Sanity identity for editors; choose member authentication
   only when member accounts are approved
 - **Media:** Sanity Assets for editorial media; no second media service now
-- **Search:** Sanity queries initially; PostgreSQL full-text/`pg_trgm` when unified
-  cross-content search requires it; a hosted search engine only after measured need
+- **Search:** cached Sanity summary queries normalized into a server-side
+  cross-content index; PostgreSQL full-text/`pg_trgm` or a hosted search engine
+  only after measured relevance or latency need
 - **Analytics:** Vercel Web Analytics and Speed Insights on the public site;
   cookieless; no advertising pixels or cookie banner
 - **Monitoring:** framework and hosting diagnostics first; add Sentry only after a
@@ -46,11 +47,10 @@ Current service gates:
   datasets, 10,000 documents, 250,000 API requests/month, 1 million API CDN
   requests/month, 100 GB assets, and 100 GB bandwidth. Use one development
   dataset initially and reserve the second for production. One of two datasets
-  is now in use. The development dataset holds the History corpus and
-  unpublished Podcast pilot drafts. Five reviewed History entries are
-  published. Remaining imported History records stay drafts. One
-  podcastShow and four podcastEpisode documents remain unpublished.
-  Public podcast pages stay empty until founder-approved publication.
+  is now in use. The development dataset holds the History, Originals, Podcast,
+  News, and Events corpus. Public reads are determined by each content type's
+  publication, workflow, freshness, and rights gates rather than a hard-coded
+  inventory count.
   The Free plan exposes Administrator and Viewer roles but not an Editor role,
   so it is suitable for the founder-only development milestone, not a
   least-privilege editorial team. Upgrade when a
@@ -72,9 +72,10 @@ Current service gates:
 - **Sentry — not needed.** Use local errors and Vercel runtime/build diagnostics
   first. Add dedicated monitoring when release volume or unresolved production
   failures require alerting, traces, and issue ownership.
-- **Hosted search — not needed.** Sanity queries cover the initial history
-  corpus. Add search infrastructure only after measured relevance or latency
-  limits.
+- **Hosted search — not needed.** `/explore` parallel-fetches eligible summary
+  projections and performs server-side search, filtering, sorting, and
+  pagination. Add search infrastructure only after measured relevance or
+  latency limits.
 
 Pricing and quotas must be rechecked against official service documentation at
 the moment of provisioning; they are decision thresholds, not contractual
@@ -142,11 +143,14 @@ consistent.
 
 - Canonical metadata through the Next.js metadata API
 - Generated `robots.txt`, XML sitemaps, Open Graph images, and schema.org JSON-LD
-- Stable routes such as `/`, `/today`, `/history`, `/history/[slug]`,
-  `/podcasts`, `/podcasts/[showSlug]`, and `/podcasts/[showSlug]/[slug]`
+- Stable routes such as `/`, `/today`, `/explore`, `/history`,
+  `/history/[slug]`, `/podcasts`, `/podcasts/[showSlug]`, and
+  `/podcasts/[showSlug]/[slug]`
 - History owns Gregorian On This Day matching; Jewish Today owns Hebcal
-- Archive filters stay on `/history` query parameters until taxonomy routes
-  have a meaningful published body
+- Existing History filters remain backward compatible. Canonical entity routes
+  live at `/topics`, `/people`, `/places`, `/regions`, `/eras`, and
+  `/organizations`; only described entities with at least three durable
+  records are indexable and included in the sitemap.
 - Unpublished Podcast drafts never enter the sitemap or public catalog
 - Responsive `next/image`, self-hosted fonts, minimal client JavaScript
 - Internal links driven by structured relationships, not brittle keyword matching
@@ -189,3 +193,18 @@ editorial items to fill empty slots.
 Loading and unexpected homepage errors live in `src/app/(site)/(home)/` so
 they do not wrap `/today` or `/history`. Expected Jewish Today failures stay
 inside `getJewishToday()` and degrade without raw errors.
+
+## Living Archive discovery
+
+`/explore` is the site-wide discovery layer. `src/content/archive` normalizes
+published-ready History, Originals, and Podcast episodes into durable archive
+records. Fresh News and upcoming Events use the same card contract but remain
+in a separate Current view with outbound links. Search stays server-rendered
+and GET-addressable; no full index is shipped to the browser.
+
+The clean `/explore` URL is indexable. Search, filter, sort, Current, and
+pagination variants are `noindex, follow` and canonicalize to `/explore`.
+Entity pages reverse-filter durable records through Sanity-managed references.
+Unknown entities 404; thin entities remain public but `noindex`. Collection and
+breadcrumb JSON-LD are capped to the rendered page rather than serializing the
+entire archive.

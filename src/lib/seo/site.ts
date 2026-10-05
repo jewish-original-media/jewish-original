@@ -101,6 +101,7 @@ export function publicStaticSitemapPaths(options?: {
   const paths = [
     "/",
     "/today",
+    "/explore",
     "/history",
     "/podcasts",
     "/originals",

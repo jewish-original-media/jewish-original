@@ -8,6 +8,7 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://jewishoriginal.com",
   navigation: [
     { label: "Today", href: "/today" },
+    { label: "Explore", href: "/explore" },
     { label: "History", href: "/history" },
     { label: "Podcasts", href: "/podcasts" },
     { label: "Events", href: "/events" },
@@ -15,6 +16,7 @@ export const siteConfig = {
     { label: "Support", href: "/support", emphasis: true },
   ],
   footerExplore: [
+    { label: "Explore", href: "/explore" },
     { label: "Today", href: "/today" },
     { label: "History", href: "/history" },
     { label: "Podcasts", href: "/podcasts" },
@@ -38,6 +40,7 @@ export function resolvePrimaryNavigation(input?: {
 }): SiteNavItem[] {
   return [
     { label: "Today", href: "/today" },
+    { label: "Explore", href: "/explore" },
     { label: "History", href: "/history" },
     input?.originalsLive ? { label: "Originals", href: "/originals" } : null,
     { label: "Podcasts", href: "/podcasts" },
@@ -52,6 +55,7 @@ export function resolveFooterExplore(input?: {
   originalsLive?: boolean;
 }): SiteNavItem[] {
   return [
+    { label: "Explore", href: "/explore" },
     { label: "Today", href: "/today" },
     { label: "History", href: "/history" },
     input?.originalsLive ? { label: "Originals", href: "/originals" } : null,

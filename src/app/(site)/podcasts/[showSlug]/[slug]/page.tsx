@@ -12,6 +12,7 @@ import { PodcastPreviewBanner } from "@/components/podcasts/podcast-preview-bann
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
+import { archiveEntityHref } from "@/content/archive/search";
 import { hasPublishedRelatedHistoryEntry } from "@/content/history/archive";
 import {
   getPodcastEpisode,
@@ -200,7 +201,41 @@ export default async function PodcastEpisodePage({ params }: EpisodePageProps) {
                 <h2 className="podcast-section-title">Topics</h2>
                 <ul className="podcast-reference-list">
                   {episode.topics.map((topic) => (
-                    <li key={topic.slug}>{topic.name}</li>
+                    <li key={topic.slug}>
+                      <Link href={archiveEntityHref("topic", topic.slug)}>
+                        {topic.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
+
+            {episode.people.length || episode.hosts.length ? (
+              <section className="podcast-block">
+                <h2 className="podcast-section-title">People</h2>
+                <ul className="podcast-reference-list">
+                  {[...episode.hosts, ...episode.people].map((person) => (
+                    <li key={person.slug}>
+                      <Link href={archiveEntityHref("person", person.slug)}>
+                        {person.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
+
+            {episode.places.length ? (
+              <section className="podcast-block">
+                <h2 className="podcast-section-title">Places</h2>
+                <ul className="podcast-reference-list">
+                  {episode.places.map((place) => (
+                    <li key={place.slug}>
+                      <Link href={archiveEntityHref("place", place.slug)}>
+                        {place.name}
+                      </Link>
+                    </li>
                   ))}
                 </ul>
               </section>
@@ -213,7 +248,8 @@ export default async function PodcastEpisodePage({ params }: EpisodePageProps) {
                 <h2 className="podcast-section-title">Related History</h2>
                 <ul className="podcast-related-list">
                   {episode.relatedHistory.map((item) =>
-                    hasPublishedRelatedHistoryEntry(item.entry) && item.entry ? (
+                    hasPublishedRelatedHistoryEntry(item.entry) &&
+                    item.entry ? (
                       <li key={item.entry.slug}>
                         <Link href={`/history/${item.entry.slug}`}>
                           {item.entry.title}

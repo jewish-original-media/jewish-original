@@ -53,6 +53,13 @@ export type PodcastEpisodeSummary = {
   primaryMedia?: "auto" | "youtube" | "audio";
 };
 
+export type PodcastArchiveEpisode = PodcastEpisodeSummary & {
+  topics: PodcastReference[];
+  people: PodcastReference[];
+  places: PodcastReference[];
+  hosts: PodcastReference[];
+};
+
 export type PodcastEpisode = PodcastEpisodeSummary & {
   description?: string;
   audioUrl?: string;

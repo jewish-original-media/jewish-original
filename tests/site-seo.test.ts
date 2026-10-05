@@ -15,6 +15,7 @@ test("lists only launch-ready static sitemap paths", () => {
   assert.deepEqual(paths, [
     "/",
     "/today",
+    "/explore",
     "/history",
     "/podcasts",
     "/originals",

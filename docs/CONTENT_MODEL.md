@@ -144,6 +144,22 @@ necessary. A reference resolver validates targets and handles archived content.
 Related content can be curated manually, suggested automatically, or derived
 from shared entities. The API must preserve which method produced the relation.
 
+## Living Archive projection
+
+The Living Archive is a read model, not a CMS document type. Published-ready
+History, Originals, and Podcast episodes are normalized at request time into a
+shared record with title, excerpt, canonical route, date, rights-cleared image,
+content kind, and resolved entity references. News and Events use a separate
+Current projection and retain their freshness gates and outbound canonical
+links.
+
+Topics, people, places, geographic regions, historical eras, and organizations
+remain Sanity-managed reference documents. Their slugs provide canonical public
+paths. An entity page may be indexed only when the entity has an editorial CMS
+description and at least three durable published records. The projection never
+creates entity descriptions, infers relationships from keywords, or writes
+search state back to Sanity.
+
 ## Import requirements
 
 The history spreadsheet import will be staged, not published directly:

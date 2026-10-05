@@ -86,6 +86,19 @@ export const podcastEpisodeIndexQuery = defineQuery(`*[
   select($preview => ${previewVisibility}, ${publicVisibility})
 ] | order(publishedAt desc) ${episodeSummaryProjection}`);
 
+export const podcastArchiveEpisodeIndexQuery = defineQuery(`*[
+  _type == "podcastEpisode" &&
+  defined(slug.current) &&
+  defined(coalesce(show->slug.current, showSlug)) &&
+  select($preview => ${previewVisibility}, ${publicVisibility})
+] | order(publishedAt desc) {
+  ${episodeSummaryProjection.slice(1, -1)},
+  "topics": coalesce(topics[]->${referenceProjection}, []),
+  "people": coalesce(people[]->${referenceProjection}, []),
+  "places": coalesce(places[]->${referenceProjection}, []),
+  "hosts": coalesce(hosts[]->${referenceProjection}, show->hosts[]->${referenceProjection}, [])
+}`);
+
 export const podcastEpisodeQuery = defineQuery(`*[
   _type == "podcastEpisode" &&
   slug.current == $slug &&

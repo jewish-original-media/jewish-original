@@ -752,3 +752,26 @@ three distinct publishers and more than one desk instead of taking a second
 item from the newest publisher. If fewer publishers or desks exist, it fills
 from the remaining eligible items. Showing the band still requires only three
 fresh items. The primary-nav five-item / three-publisher gate is unchanged.
+
+## ADR-050 — `/explore` is the canonical interconnected archive
+
+**Status:** Accepted, 2026-10-05
+
+V1 exposes a first-class `/explore` destination. Durable results combine
+published-ready History, Originals, and Podcast episodes through a normalized,
+server-side read model. News and Events remain a separate Current view because
+they are time-bound outbound records, not permanent archive articles. The
+implementation adds no search service, browser index, dependency, CMS writes,
+or inferred editorial relationships.
+
+Resolved Sanity references link to canonical `/topics`, `/people`, `/places`,
+`/regions`, `/eras`, and `/organizations` pages. Unknown entities return 404.
+Entity pages are public and canonical, but become indexable and enter the
+sitemap only when a CMS description exists and at least three durable
+published records refer to the entity. Existing `/history?...` filters remain
+backward compatible.
+
+Only clean `/explore` is indexable. Query, filter, sort, Current, and pagination
+states are `noindex, follow` with canonical `/explore`. News and Event outbound
+URLs never enter the sitemap. This quality gate favors useful, editorially
+described collections over thin taxonomy pages.

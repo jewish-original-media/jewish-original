@@ -1,5 +1,12 @@
 import type { MetadataRoute } from "next";
 
+import { getArchiveEntities } from "@/content/archive/entities";
+import { getDurableArchiveRecords } from "@/content/archive/fetch";
+import {
+  archiveEntityHref,
+  isArchiveEntityIndexable,
+  recordsForArchiveEntity,
+} from "@/content/archive/search";
 import { getPublishedHistorySlugs } from "@/content/history/fetch";
 import { getPublishedOriginalSlugs } from "@/content/originals/fetch";
 import {
@@ -13,13 +20,29 @@ import { siteConfig } from "@/lib/site";
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [historySlugs, podcastShows, podcastEpisodes, originalSlugs] =
-    await Promise.all([
-      getPublishedHistorySlugs().catch(() => []),
-      getPublishedPodcastShowSlugs().catch(() => []),
-      getPublishedPodcastSlugs().catch(() => []),
-      getPublishedOriginalSlugs().catch(() => []),
-    ]);
+  const [
+    historySlugs,
+    podcastShows,
+    podcastEpisodes,
+    originalSlugs,
+    archiveEntities,
+    archiveRecords,
+  ] = await Promise.all([
+    getPublishedHistorySlugs().catch(() => []),
+    getPublishedPodcastShowSlugs().catch(() => []),
+    getPublishedPodcastSlugs().catch(() => []),
+    getPublishedOriginalSlugs().catch(() => []),
+    getArchiveEntities().catch(() => []),
+    getDurableArchiveRecords().catch(() => []),
+  ]);
+
+  const indexableEntities = archiveEntities.filter((entity) =>
+    isArchiveEntityIndexable(
+      entity.description,
+      recordsForArchiveEntity(archiveRecords, entity.facetType, entity.slug)
+        .length,
+    ),
+  );
 
   return [
     ...publicStaticSitemapPaths().map((path) => ({
@@ -69,5 +92,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "monthly" as const,
         priority: 0.7,
       })),
+    ...indexableEntities.map((entity) => ({
+      url: `${siteConfig.url}${archiveEntityHref(
+        entity.facetType,
+        entity.slug,
+      )}`,
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    })),
   ];
 }

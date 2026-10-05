@@ -5,6 +5,7 @@ import {
   historyCardLocation,
   historyCardRegion,
 } from "@/content/history/archive";
+import { archiveEntityHref } from "@/content/archive/search";
 import type { HistoryEntrySummary } from "@/content/history/types";
 import type { HomeHistoryPresentation } from "@/features/homepage/history";
 import { formatHistoricalDate } from "@/lib/history/format-date";
@@ -28,7 +29,6 @@ function historyDate(entry: HistoryEntrySummary) {
 function LeadHistory({ entry }: { entry: HistoryEntrySummary }) {
   const location = historyCardLocation(entry);
   const region = historyCardRegion(entry);
-  const topics = entry.topics.map((topic) => topic.name).join(" · ");
 
   return (
     <article className={styles.historyLead}>
@@ -49,9 +49,33 @@ function LeadHistory({ entry }: { entry: HistoryEntrySummary }) {
         </p>
       ) : null}
       <p className={styles.historyMeta}>
-        {[topics, location].filter(Boolean).join(" · ")}
+        {entry.topics.map((topic, index) => (
+          <span key={topic.slug}>
+            {index ? " · " : ""}
+            <Link href={archiveEntityHref("topic", topic.slug)}>
+              {topic.name}
+            </Link>
+          </span>
+        ))}
+        {entry.topics.length && location ? " · " : null}
+        {location}
       </p>
-      {region ? <p className={styles.historyRegion}>{region}</p> : null}
+      {region ? (
+        <p className={styles.historyRegion}>
+          {entry.geographicRegions[0] ? (
+            <Link
+              href={archiveEntityHref(
+                "region",
+                entry.geographicRegions[0].slug,
+              )}
+            >
+              {region}
+            </Link>
+          ) : (
+            region
+          )}
+        </p>
+      ) : null}
     </article>
   );
 }
@@ -78,7 +102,22 @@ function SupportingHistory({ entry }: { entry: HistoryEntrySummary }) {
         </p>
       ) : null}
       {location ? <p className={styles.historyMeta}>{location}</p> : null}
-      {region ? <p className={styles.historyRegion}>{region}</p> : null}
+      {region ? (
+        <p className={styles.historyRegion}>
+          {entry.geographicRegions[0] ? (
+            <Link
+              href={archiveEntityHref(
+                "region",
+                entry.geographicRegions[0].slug,
+              )}
+            >
+              {region}
+            </Link>
+          ) : (
+            region
+          )}
+        </p>
+      ) : null}
     </article>
   );
 }

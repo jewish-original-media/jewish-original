@@ -4,6 +4,7 @@ import Link from "next/link";
 import { HistoryCitations } from "@/components/history/history-citations";
 import { OriginalsBody } from "@/components/originals/originals-body";
 import { Container } from "@/components/ui/container";
+import { archiveEntityHref } from "@/content/archive/search";
 import { hasPublishedRelatedHistoryEntry } from "@/content/history/archive";
 import type { OriginalArticle } from "@/content/originals/types";
 import {
@@ -62,6 +63,29 @@ export function OriginalsArticleView({
               </time>
             ) : null}
           </p>
+          {article.authors.length || article.topics.length ? (
+            <p className={styles.articleMeta}>
+              {article.authors.map((author, index) => (
+                <span key={`author-${author.slug}`}>
+                  {index ? ", " : ""}
+                  <Link href={archiveEntityHref("person", author.slug)}>
+                    {author.name}
+                  </Link>
+                </span>
+              ))}
+              {article.authors.length && article.topics.length ? (
+                <span aria-hidden="true"> · </span>
+              ) : null}
+              {article.topics.map((topic, index) => (
+                <span key={`topic-${topic.slug}`}>
+                  {index ? ", " : ""}
+                  <Link href={archiveEntityHref("topic", topic.slug)}>
+                    {topic.name}
+                  </Link>
+                </span>
+              ))}
+            </p>
+          ) : null}
         </Container>
       </header>
 
