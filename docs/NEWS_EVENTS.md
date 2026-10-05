@@ -1,14 +1,12 @@
 # News and Events
 
-Status: four outward-linking News items remain published in Sanity
-`development`. They aged past the homepage 7-day freshness window on
-2026-09-17, and are past the 14-day `/news` index window as of 2026-10-05.
-For founder visual review, the homepage News band may show the latest
-published outbound cards (cap 5) with their real source dates, including cards
-past `expiresAt`. This is temporary. Restore `getHomepageNews` and the 7-day /
-3-item homepage gate before launch. `/news` still uses the 14-day index window. News stays out of
-primary nav because the desk is below five current items and three publishers.
-Footer includes News. No Events qualified. Ingest writes and cron stay off.
+Status: the public desk is a 30-day archive. Homepage and `/news` show
+published cards whose `sourcePublishedAt` is within the last 30 days, newest
+first. The homepage still caps that band at five cards. Cards older than 30
+days are deleted from Sanity when news ingest writes are enabled. News stays
+out of primary nav until the desk has five current items and three publishers.
+Footer includes News. No Events qualified. Ingest writes and cron stay off
+until those credentials are turned on.
 
 ## Operating rule
 
@@ -18,10 +16,13 @@ republish publisher bodies or RSS excerpts, and it does not store publisher
 images.
 
 Public News card: publisher, original headline, source datetime, JOM context,
-optional desk, outbound URL. The homepage wire may also show the source
-article’s featured image. That image stays on the publisher’s server. The page
-reads the article’s Open Graph image URL and the browser requests the file
-from there. Do not download it into `public/`, Sanity, or the image optimizer.
+optional desk, outbound URL, and the source article’s featured image. That
+image stays on the publisher’s server. The page reads the article’s Open Graph
+image URL and the browser requests the file from there. The same thumbnail
+appears on the homepage wire, `/news`, Today’s current panel, and Current
+discovery. The lead story uses a larger frame. The rows under it use a square
+thumbnail. Current discovery uses the card’s 4:3 frame. Do not download it
+into `public/`, Sanity, or the image optimizer.
 
 Public Event card: title, organizer, date object, place or Online, time in the
 event’s own timezone, JOM context, outbound URL.
@@ -68,15 +69,13 @@ These are different gates.
 
 | Surface                             | Show when                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Homepage “What We’re Following”     | Temporary visual review: latest still-published outbound cards, cap 5, real dates, even after the 7-day window. Restore before launch: at least **3** items whose `sourcePublishedAt` is within **7 days**, after deterministic publisher and desk diversity (prefer 3 distinct publishers and mixed desks when the pool allows; prefer 3 items, cap 5, at most 2 per publisher). Hide at 0–2 even if fewer than three publishers are available. Never render an empty News band. |
-| `/news`                             | Published, unexpired items whose `sourcePublishedAt` is within **14 days**. Successful empty is not a fetch failure.                                                                                                                                                                                                                                                                                                                                                              |
+| Homepage “What We’re Following”     | Published cards whose `sourcePublishedAt` is within **30 days**, newest first, after publisher and desk diversity. Cap **5**, at most 2 per publisher. Hide the band when that pool is empty. |
+| `/news`                             | Published items whose `sourcePublishedAt` is within **30 days**. Successful empty is not a fetch failure. Items older than 30 days are removed from the dataset when ingest writes run. |
 | Today submenu / daily ribbon News   | At least **5** current `/news` items and **3** publishers. Footer News stays on.                                                                                                                                                                                                                                                                                                                                                                                                  |
 | Today submenu / daily ribbon Events | At least **2** upcoming events from **2** organizers and **2** geography buckets. The Events sitemap route and footer Events link use the same eligibility decision.                                                                                                                                                                                                                                                                                                              |
 
-Do not backdate `sourcePublishedAt`, extend the `/news` or navigation windows,
-or publish filler to force the submenu or ribbon. The homepage review read is
-the only exception: it may show published cards after `expiresAt`, with the
-publisher’s original date, and it must be removed before launch.
+Do not backdate `sourcePublishedAt` or publish filler to force the submenu
+or ribbon. The public cutoff is 30 days from the publisher’s datetime.
 
 ## Writes
 
@@ -92,8 +91,9 @@ ingest writes from Integration to refill the desk.
 Required `curatedNewsItem` fields: `publisherName`, `originalHeadline`,
 `sourceUrl` (https), `sourcePublishedAt` (the publisher’s datetime, not
 today’s save time), `jomContext` (40–320 characters, no generic closer),
-`desk`, `status: published`. Set `expiresAt` 14 days after
-`sourcePublishedAt` unless Heritage needs the longer ingest window.
+`desk`, `status: published`. Set `expiresAt` 30 days after `sourcePublishedAt`. The public query uses
+the publication date, and the ingest purge deletes the document after that
+same 30 days.
 
 Use only allowlisted publishers and their hosts. Do not invent headlines,
 dates, or context facts absent from the source.

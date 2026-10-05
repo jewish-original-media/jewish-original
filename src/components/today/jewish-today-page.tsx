@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
+import { SourcePreviewImage } from "@/components/home/source-preview-image";
 import { ArchiveTrail } from "@/components/explore/archive-trail";
 import { HistoryEntryCard } from "@/components/history/history-entry-card";
 import { Container } from "@/components/ui/container";
@@ -81,38 +82,59 @@ function CurrentPanels({
   return (
     <section
       aria-labelledby="today-current"
-      className={`${styles.panel} ${styles.currentPanel}`}
+      className={`${styles.historySection} ${styles.panel} ${styles.currentPanel}`}
     >
-      <p className="eyebrow">The Jewish present</p>
-      <h2 className={styles.sectionTitle} id="today-current">
-        Current
-      </h2>
+      <div className={styles.currentIntro}>
+        <div>
+          <p className="eyebrow">The Jewish present</p>
+          <h2 className={styles.sectionTitle} id="today-current">
+            What we’re following
+          </h2>
+        </div>
+        {showNews ? (
+          <Link className={styles.currentDesk} href="/news">
+            Full desk
+          </Link>
+        ) : null}
+      </div>
       <div className={styles.currentGrid}>
         {showNews ? (
-          <div className={styles.currentColumn}>
-            <div className={styles.currentHeading}>
-              <h3>What we’re following</h3>
-              <Link href="/news">Full desk</Link>
-            </div>
-            <ol className={styles.currentList}>
-              {news.slice(0, 3).map((item) => (
-                <li key={item.id}>
-                  <TrackedAnchor
-                    event="news_outbound"
-                    href={item.sourceUrl}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
+          <ol className={styles.currentList}>
+            {news.slice(0, 3).map((item, index) => (
+              <li key={item.id}>
+                <TrackedAnchor
+                  className={[
+                    index === 0 ? styles.currentLead : "",
+                    item.sourceImageUrl ? styles.currentWithImage : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  event="news_outbound"
+                  href={item.sourceUrl}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {item.sourceImageUrl ? (
+                    <SourcePreviewImage
+                      className={styles.currentThumb}
+                      fallbackClassName={styles.currentThumbFallback}
+                      src={item.sourceImageUrl}
+                    />
+                  ) : null}
+                  <span className={styles.currentCopy}>
                     <span className={styles.currentMeta}>
                       {item.publisher} · {newsDeskLabel(item.desk)} ·{" "}
                       {formatNewsTime(item.sourcePublishedAt)}
                     </span>
                     <strong>{item.headline}</strong>
-                  </TrackedAnchor>
-                </li>
-              ))}
-            </ol>
-          </div>
+                    <span className={styles.currentContext}>
+                      {item.jomContext}
+                    </span>
+                  </span>
+                </TrackedAnchor>
+              </li>
+            ))}
+          </ol>
         ) : null}
         {showEvents ? (
           <div className={styles.currentColumn}>

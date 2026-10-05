@@ -7,6 +7,7 @@ import { runNewsIngest } from "@/features/ingest/news/pipeline";
 import {
   loadNewsExistingIndex,
   persistNewsRun,
+  purgeNewsOutsideArchive,
 } from "@/features/ingest/persist";
 import { selectFirstNewsBatch } from "@/features/ingest/select";
 import {
@@ -69,14 +70,17 @@ export async function GET(request: Request) {
   });
 
   let persisted = 0;
+  let purged = 0;
   if (write) {
+    const client = createIngestWriteClient();
     const persistedRun = await persistNewsRun({
-      client: createIngestWriteClient(),
+      client,
       run: result.run,
       decisions: result.decisions,
       firstPublish: (existing?.items.length ?? 0) === 0,
     });
     persisted = persistedRun.published.length;
+    purged = await purgeNewsOutsideArchive(client);
   }
 
   return Response.json({
@@ -89,6 +93,7 @@ export async function GET(request: Request) {
     exceptions: result.run.exceptions,
     autoPublished: result.run.autoPublished,
     persisted,
+    purged,
     aiCalls: result.run.aiCalls,
     estimatedUsd: result.run.estimatedUsd,
     sources: result.run.sources,

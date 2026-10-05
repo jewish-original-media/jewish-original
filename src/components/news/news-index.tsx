@@ -2,8 +2,12 @@ import Link from "next/link";
 
 import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import { ArchiveTrail } from "@/components/explore/archive-trail";
+import { HistoryHeroWatermark } from "@/components/history/history-hero-watermark";
+import { SourcePreviewImage } from "@/components/home/source-preview-image";
 import { Container } from "@/components/ui/container";
+import { Section } from "@/components/ui/section";
 import type { CuratedNewsCard } from "@/content/news/types";
+import { civilDateParts, formatCivilDateLabel } from "@/lib/history/on-this-day";
 import {
   NEWS_INDEX_EMPTY,
   NEWS_INDEX_UNAVAILABLE,
@@ -20,28 +24,49 @@ type NewsIndexProps = {
 };
 
 export function NewsIndex({ items, unavailable = false }: NewsIndexProps) {
-  const [lead, ...rest] = items;
   const state = newsIndexState(items.length, unavailable);
+  const today = civilDateParts();
 
   return (
-    <div className={styles.page}>
-      <section className={styles.hero}>
-        <Container>
-          <p className="eyebrow">News</p>
-          <h1 className={styles.title}>What we’re following</h1>
-          <p className={styles.lede}>
-            Outward-linking Jewish current affairs. Headlines stay with their
-            publishers. Jewish Original adds only short context.
-          </p>
-          <p className={styles.path}>
-            <Link href="/explore?view=current">
-              See news and events together in Current →
+    <>
+      <header className="history-entry-header history-discovery-hero">
+        <HistoryHeroWatermark />
+        <Container className="history-entry-hero">
+          <div className="history-hero-copy">
+            <nav aria-label="Breadcrumb">
+              <ol className="history-breadcrumb">
+                <li>
+                  <Link href="/">Jewish Original</Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li aria-current="page">News</li>
+              </ol>
+            </nav>
+            <p className="history-date-line">{formatCivilDateLabel(today)}</p>
+            <h1 className="history-display">What we’re following</h1>
+            <p className="history-lede">
+              Outward-linking Jewish current affairs. Headlines stay with their
+              publishers. Jewish Original adds only short context.
+            </p>
+          </div>
+          <aside className="history-archive-rail">
+            <p className="eyebrow">The desk</p>
+            <p className="history-archive-rail__text">
+              {state === "ready"
+                ? `${items.length === 1 ? "One story" : `${items.length} stories`} from the last 30 days, newest first.`
+                : "The desk shows publisher headlines from the last 30 days."}
+            </p>
+            <p className="history-archive-rail__note">
+              Dates are Eastern Time. Stories older than 30 days leave the desk.
+            </p>
+            <Link className="editorial-link" href="/explore?view=current">
+              See news and events together in Current
             </Link>
-          </p>
+          </aside>
         </Container>
-      </section>
+      </header>
       <ArchiveTrail current="news" />
-      <section className="section">
+      <Section className="history-archive-results" spacing="compact">
         <Container>
           {state === "unavailable" ? (
             <p className={styles.empty}>
@@ -53,49 +78,61 @@ export function NewsIndex({ items, unavailable = false }: NewsIndexProps) {
               {" · "}
               <Link href="/history">Browse the archive</Link>
             </p>
-          ) : lead ? (
+          ) : (
             <ol className={styles.list}>
-              <li className={`${styles.item} ${styles.lead}`}>
-                <NewsItemLink item={lead} headingLevel="h2" />
-              </li>
-              {rest.map((item) => (
+              {items.map((item, index) => (
                 <li key={item.id} className={styles.item}>
-                  <NewsItemLink item={item} headingLevel="h3" />
+                  <NewsItemLink item={item} lead={index === 0} />
                 </li>
               ))}
             </ol>
-          ) : null}
+          )}
         </Container>
-      </section>
-    </div>
+      </Section>
+    </>
   );
 }
 
 function NewsItemLink({
-  headingLevel: Heading,
   item,
+  lead = false,
 }: {
-  headingLevel: "h2" | "h3";
   item: CuratedNewsCard;
+  lead?: boolean;
 }) {
   return (
     <TrackedAnchor
-      className={styles.link}
+      className={[
+        styles.link,
+        lead ? styles.lead : "",
+        item.sourceImageUrl ? styles.withImage : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       event="news_outbound"
       href={item.sourceUrl}
       rel="noopener noreferrer"
       target="_blank"
     >
-      <p className={styles.meta}>
-        <span className={styles.publisher}>{item.publisher}</span>
-        <time dateTime={item.sourcePublishedAt}>
-          {formatNewsTime(item.sourcePublishedAt)}
-        </time>
-        <span>{newsDeskLabel(item.desk)}</span>
-      </p>
-      <Heading className={styles.headline}>{item.headline}</Heading>
-      <p className={styles.context}>{item.jomContext}</p>
-      <span className={styles.arrow}>View source at {item.publisher}</span>
+      {item.sourceImageUrl ? (
+        <SourcePreviewImage
+          className={styles.thumb}
+          fallbackClassName={styles.thumbFallback}
+          src={item.sourceImageUrl}
+        />
+      ) : null}
+      <span className={styles.copy}>
+        <p className={styles.meta}>
+          <span className={styles.publisher}>{item.publisher}</span>
+          <time dateTime={item.sourcePublishedAt}>
+            {formatNewsTime(item.sourcePublishedAt)}
+          </time>
+          <span>{newsDeskLabel(item.desk)}</span>
+        </p>
+        <h2 className={styles.headline}>{item.headline}</h2>
+        <p className={styles.context}>{item.jomContext}</p>
+        <span className={styles.arrow}>View source at {item.publisher}</span>
+      </span>
     </TrackedAnchor>
   );
 }

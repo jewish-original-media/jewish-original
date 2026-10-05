@@ -3,7 +3,7 @@ import { defineQuery } from "next-sanity";
 const publicNews = `
   !(_id in path("drafts.**")) &&
   status == "published" &&
-  (!defined(expiresAt) || expiresAt > now())
+  sourcePublishedAt > $since
 `;
 
 const newsProjection = `{
@@ -19,17 +19,10 @@ const newsProjection = `{
 
 export const newsIndexQuery = defineQuery(`
   *[_type == "curatedNewsItem" && ${publicNews}]
-    | order(sourcePublishedAt desc)[0...40] ${newsProjection}
+    | order(sourcePublishedAt desc)[0...80] ${newsProjection}
 `);
 
 export const newsHomeQuery = defineQuery(`
   *[_type == "curatedNewsItem" && ${publicNews}]
-    | order(sourcePublishedAt desc)[0...24] ${newsProjection}
-`);
-
-export const newsReviewQuery = defineQuery(`
-  *[_type == "curatedNewsItem" &&
-    !(_id in path("drafts.**")) &&
-    status == "published"]
-    | order(sourcePublishedAt desc)[0...12] ${newsProjection}
+    | order(sourcePublishedAt desc)[0...40] ${newsProjection}
 `);

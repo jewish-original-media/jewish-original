@@ -1,6 +1,6 @@
 import { getHomepageEvents } from "@/content/events/fetch";
 import { getHistoryIndex } from "@/content/history/fetch";
-import { getHomepageReviewNews } from "@/content/news/fetch";
+import { getHomepageNews } from "@/content/news/fetch";
 import { getHomepageOriginals } from "@/content/originals/fetch";
 import { getPublishedPodcastHome } from "@/content/podcasts/fetch";
 import { getJewishToday } from "@/features/jewish-today";
@@ -33,7 +33,7 @@ export async function getHomePageData(): Promise<HomePageData> {
       episodes: [],
     })),
     getHomepageOriginals().catch(() => []),
-    getHomepageReviewNews().catch(() => []),
+    getHomepageNews().catch(() => []),
     getHomepageEvents().catch(() => []),
   ]);
 

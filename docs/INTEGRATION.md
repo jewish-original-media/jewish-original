@@ -1,8 +1,9 @@
 # Integration branch
 
 Status: V1 public shell plus Originals journal, first live News, and
-launch-readiness infrastructure. Do not merge to the GitHub default branch.
-Do not deploy production. Do not attach jewishoriginal.com.
+launch-readiness infrastructure. Production is the GitHub default branch
+`milestone-1-sanity-history`, which now carries this integration work.
+Do not attach jewishoriginal.com.
 
 ## Branch and worktree
 
@@ -89,6 +90,7 @@ Integration server; CI always starts its own.
 ## Vercel
 
 Vercel Git integration is configured for
-`jewish-original-media/jewish-original` on the Jewish Original team. This
-branch should create a Preview Deployment only. Production and
-`jewishoriginal.com` must not be changed from this workstream.
+`jewish-original-media/jewish-original` on the Jewish Original team.
+Pushing `milestone-1-sanity-history` updates Production on
+`jewish-original.vercel.app`. `feature/integration-homepage` remains a
+Preview. Do not attach jewishoriginal.com from this workstream.

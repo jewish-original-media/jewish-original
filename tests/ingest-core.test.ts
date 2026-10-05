@@ -57,11 +57,11 @@ describe("freshness and expiration", () => {
     );
   });
 
-  it("recedes news after 14 days instead of deleting", () => {
+  it("keeps a news card for 30 days, then the archive drops it", () => {
     const published = new Date("2026-09-09T00:00:00.000Z");
     assert.equal(
       newsExpiresAt(published).toISOString(),
-      "2026-09-23T00:00:00.000Z",
+      "2026-10-09T00:00:00.000Z",
     );
   });
 

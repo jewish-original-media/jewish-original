@@ -892,21 +892,30 @@ destination in the About submenu, About page, homepage strip, footer,
 and Organization `sameAs`. It is not a header action beside Listen and
 Support. Do not invent follower counts or additional social accounts.
 
-Homepage News may temporarily show the latest still-published outbound cards
-for visual review. That exception does not lower the Today submenu or daily
-ribbon gates, and it does not backdate headlines. Restore the 7-day freshness
-gate before launch.
+The Today submenu and daily ribbon still require five current items and three
+publishers. See ADR-057 for the 30-day news archive.
 
 ## ADR-056 — Hotlinked news images, and the footer mark
 
 **Status:** Accepted, 2026-10-05
 
-Homepage news cards show the featured image declared by the original article.
-Jewish Original reads that image URL and lets the browser load the file from
-the publisher. The image is not saved in this repository, Sanity, or the Next
+News cards show the featured image declared by the original article on the
+homepage wire, `/news`, Today’s current panel, and Current discovery. Jewish
+Original reads that image URL and lets the browser load the file from the
+publisher. The image is not saved in this repository, Sanity, or the Next
 image cache. Article bodies and RSS excerpts stay unpublished.
 
 The footer identity line is “Am Yisrael Chai.” Desktop submenus close when the
 pointer leaves, including after a click has focused a link. History submenu
 destinations stay on the filtered archive: the index, this Gregorian date,
 `/explore`, and real topic, place, and era records.
+
+## ADR-057 — News is a 30-day desk, then it is deleted
+
+**Status:** Accepted, 2026-10-05
+
+The public news desk keeps published outbound cards for 30 days from
+`sourcePublishedAt`, newest first. The homepage band stays capped at five.
+When news ingest writes are enabled, the same run deletes `curatedNewsItem`
+documents older than 30 days so the dataset does not accumulate an archive.
+Do not backdate headlines. Do not store publisher bodies or images.

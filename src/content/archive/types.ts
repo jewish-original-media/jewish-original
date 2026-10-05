@@ -22,6 +22,8 @@ export type ArchiveImage = {
   width?: number;
   height?: number;
   lqip?: string;
+  /** Publisher-hosted preview. Render with a plain image, not the optimizer. */
+  external?: boolean;
 };
 
 export type ArchiveRecord = {

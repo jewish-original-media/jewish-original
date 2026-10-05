@@ -2,7 +2,10 @@ import "server-only";
 
 import { getPublishedEventsIndex } from "@/content/events/fetch";
 import { getHistoryIndex } from "@/content/history/fetch";
-import { getPublishedNewsIndex } from "@/content/news/fetch";
+import {
+  attachSourcePreviewImages,
+  getPublishedNewsIndex,
+} from "@/content/news/fetch";
 import { getPublishedOriginalsIndex } from "@/content/originals/fetch";
 import { getPodcastArchiveEpisodes } from "@/content/podcasts/fetch";
 
@@ -31,7 +34,7 @@ export async function getDurableArchiveRecords(): Promise<ArchiveRecord[]> {
 
 export async function getCurrentArchiveRecords(): Promise<ArchiveRecord[]> {
   const [news, events] = await Promise.all([
-    getPublishedNewsIndex(),
+    getPublishedNewsIndex().then(attachSourcePreviewImages),
     getPublishedEventsIndex(),
   ]);
 

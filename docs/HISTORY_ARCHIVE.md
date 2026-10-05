@@ -36,10 +36,10 @@ entity pages that meet the shared quality gate. Existing `/history?...`
 taxonomy URLs remain valid discovery links even though new metadata links use
 the canonical entity routes.
 
-Keyword search, autocomplete, filters, sort, and pagination are on
-Integration Preview. Production `jewish-original.vercel.app` is still the
-older History-only milestone (`milestone-1-sanity-history` @ `3539211`)
-and does not include this discovery interface.
+Keyword search, autocomplete, filters, sort, and pagination ship with
+Production on `jewish-original.vercel.app`. That host follows
+`milestone-1-sanity-history`, which now includes this discovery interface.
+jewishoriginal.com stays unattached.
 
 ## Progressive disclosure
 

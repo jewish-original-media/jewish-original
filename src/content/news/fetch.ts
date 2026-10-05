@@ -5,7 +5,7 @@ import { isWithinDays } from "@/features/ingest/freshness";
 import { selectHomepageNews } from "@/features/ingest/news/diversity";
 import { getPublishedSanityClient } from "@/lib/sanity/client";
 
-import { newsHomeQuery, newsIndexQuery, newsReviewQuery } from "./queries";
+import { newsHomeQuery, newsIndexQuery } from "./queries";
 import { resolveSourcePreviewImage } from "./source-preview";
 import type { CuratedNewsCard } from "./types";
 
@@ -16,10 +16,14 @@ const publishedOptions = {
   },
 };
 
+function newsSince(days: number, now = new Date()) {
+  return new Date(now.getTime() - days * 24 * 60 * 60 * 1000).toISOString();
+}
+
 export async function getPublishedNewsIndex() {
   const items = await getPublishedSanityClient().fetch<CuratedNewsCard[]>(
     newsIndexQuery,
-    {},
+    { since: newsSince(INGEST_WINDOWS.newsIndexDays) },
     publishedOptions,
   );
   return items.filter((item) =>
@@ -34,13 +38,16 @@ export async function loadPublishedNewsIndex(): Promise<
   { ok: true; items: CuratedNewsCard[] } | { ok: false }
 > {
   try {
-    return { ok: true, items: await getPublishedNewsIndex() };
+    return {
+      ok: true,
+      items: await attachSourcePreviewImages(await getPublishedNewsIndex()),
+    };
   } catch {
     return { ok: false };
   }
 }
 
-async function withSourcePreviewImages(items: CuratedNewsCard[]) {
+export async function attachSourcePreviewImages(items: CuratedNewsCard[]) {
   const images = await Promise.all(
     items.map((item) => resolveSourcePreviewImage(item.sourceUrl)),
   );
@@ -54,10 +61,10 @@ async function withSourcePreviewImages(items: CuratedNewsCard[]) {
 export async function getHomepageNews() {
   const items = await getPublishedSanityClient().fetch<CuratedNewsCard[]>(
     newsHomeQuery,
-    {},
+    { since: newsSince(INGEST_WINDOWS.homepageNewsDays) },
     publishedOptions,
   );
-  return withSourcePreviewImages(
+  return attachSourcePreviewImages(
     selectHomepageNews(
       items.filter((item) =>
         isWithinDays(
@@ -65,24 +72,7 @@ export async function getHomepageNews() {
           INGEST_WINDOWS.homepageNewsDays,
         ),
       ),
-      { limit: INGEST_CAPS.homepageNewsPrefer },
+      { limit: INGEST_CAPS.homepageNews },
     ),
-  );
-}
-
-/**
- * Founder visual review only. Shows the latest published outbound cards with
- * their real dates, including cards past the public expiry window. Restore
- * `getHomepageNews` before launch. `/news`, the Today submenu, and the daily
- * ribbon keep their existing gates.
- */
-export async function getHomepageReviewNews() {
-  const items = await getPublishedSanityClient().fetch<CuratedNewsCard[]>(
-    newsReviewQuery,
-    {},
-    publishedOptions,
-  );
-  return withSourcePreviewImages(
-    selectHomepageNews(items, { limit: INGEST_CAPS.homepageNews }),
   );
 }

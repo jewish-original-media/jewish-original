@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { SourcePreviewImage } from "@/components/home/source-preview-image";
 import { archiveEntityHref } from "@/content/archive/search";
 import type {
   ArchiveFacet,
@@ -66,14 +67,22 @@ export function ArchiveCard({ record }: { record: ArchiveRecord }) {
           href={record.href}
           tabIndex={-1}
         >
-          <Image
-            alt=""
-            blurDataURL={record.image.lqip}
-            fill
-            placeholder={record.image.lqip ? "blur" : "empty"}
-            sizes="(max-width: 44rem) 100vw, (max-width: 72rem) 50vw, 30vw"
-            src={record.image.url}
-          />
+          {record.image.external ? (
+            <SourcePreviewImage
+              className={styles.cardRemote}
+              fallbackClassName={styles.cardRemoteFallback}
+              src={record.image.url}
+            />
+          ) : (
+            <Image
+              alt=""
+              blurDataURL={record.image.lqip}
+              fill
+              placeholder={record.image.lqip ? "blur" : "empty"}
+              sizes="(max-width: 44rem) 100vw, (max-width: 72rem) 50vw, 30vw"
+              src={record.image.url}
+            />
+          )}
         </Link>
       ) : (
         <div aria-hidden="true" className={styles.cardTexture}>

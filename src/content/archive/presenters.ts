@@ -169,6 +169,9 @@ export function presentNewsRecord(item: CuratedNewsCard): ArchiveRecord {
     excerpt: item.jomContext,
     publishedAt: item.sourcePublishedAt,
     eyebrow: item.publisher,
+    image: item.sourceImageUrl
+      ? { url: item.sourceImageUrl, alt: "", external: true }
+      : undefined,
     topics: [],
     people: [],
     places: [],

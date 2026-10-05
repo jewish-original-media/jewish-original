@@ -38,7 +38,11 @@ test("serves /news as a text-first outward-linking desk", async ({ page }) => {
   await expect(page.getByText(/according to reports/i)).toHaveCount(0);
   await expect(page.getByText(/highlights the intersection/i)).toHaveCount(0);
   await expect(page.locator('a[href^="/news/"]')).toHaveCount(0);
-  await expect(page.locator("main img")).toHaveCount(0);
+  const images = page.locator("main img");
+  expect(await images.count()).toBeGreaterThan(0);
+  for (const image of await images.all()) {
+    await expect(image).toHaveAttribute("alt", "");
+  }
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://jewishoriginal.com/news",
@@ -62,7 +66,11 @@ test("serves /news as a text-first outward-linking desk", async ({ page }) => {
         href.startsWith("https://www.jta.org/") ||
         href.startsWith("https://www.jpost.com/") ||
         href.startsWith("https://biblicalarchaeology.org/") ||
-        href.startsWith("https://www.biblicalarchaeology.org/"),
+        href.startsWith("https://www.biblicalarchaeology.org/") ||
+        href.startsWith("https://forward.com/") ||
+        href.startsWith("https://www.forward.com/") ||
+        href.startsWith("https://jns.org/") ||
+        href.startsWith("https://www.jns.org/"),
     ),
   ).toBe(true);
 });

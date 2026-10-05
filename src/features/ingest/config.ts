@@ -35,9 +35,9 @@ export const INGEST_THRESHOLDS = {
 export const INGEST_WINDOWS = {
   newsFreshHours: 36,
   heritageFreshHours: 24 * 7,
-  homepageNewsDays: 7,
-  newsIndexDays: 14,
-  newsExpiresDays: 14,
+  homepageNewsDays: 30,
+  newsIndexDays: 30,
+  newsExpiresDays: 30,
   receiptDays: 30,
   exceptionDays: 14,
   eventHorizonDays: 90,

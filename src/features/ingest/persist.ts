@@ -1,5 +1,7 @@
 import type { SanityClient } from "@sanity/client";
 
+import { INGEST_WINDOWS } from "./config";
+
 import {
   buildApprovedSourceDocuments,
   buildCuratedNewsDocument,
@@ -132,6 +134,28 @@ async function commitDocuments(
     transaction.createOrReplace(document);
   }
   await transaction.commit({ visibility: "async" });
+}
+
+export async function purgeNewsOutsideArchive(
+  client: SanityClient,
+  now = new Date(),
+) {
+  const cutoff = new Date(
+    now.getTime() - INGEST_WINDOWS.newsExpiresDays * 24 * 60 * 60 * 1000,
+  ).toISOString();
+  const ids = await client.fetch<string[]>(
+    `*[_type == "curatedNewsItem" && defined(sourcePublishedAt) && sourcePublishedAt < $cutoff]._id`,
+    { cutoff },
+  );
+  for (let index = 0; index < ids.length; index += 50) {
+    const transaction = client.transaction();
+    for (const id of ids.slice(index, index + 50)) {
+      transaction.delete(id);
+      transaction.delete(`drafts.${id}`);
+    }
+    await transaction.commit({ visibility: "async" });
+  }
+  return ids.length;
 }
 
 export async function persistNewsRun(options: PersistNewsOptions) {

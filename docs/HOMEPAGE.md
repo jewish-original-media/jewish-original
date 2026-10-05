@@ -61,10 +61,9 @@ consistent Eastern Time day to both the homepage and header.
    and a path into `/today` follow. The civil date and “Eastern Time” stay in
    the header and daily ribbon, so this band does not repeat them.
 3. **What We’re Following** — outbound News desk, placed as the first full
-   editorial band when published cards exist. For founder visual review, the
-   homepage may show the latest still-published cards after the 7-day window,
-   with their real dates, capped at five. Restore the 7-day / 3-item gate
-   before launch. Nav and ribbon gates stay at five items and three publishers.
+   editorial band when published cards from the last 30 days exist. The band
+   shows up to five of those cards, newest first, with their real dates. Nav
+   and ribbon gates stay at five items and three publishers.
 4. **Living Archive** — a layered passage of locally stored,
    provenance-verified collection objects. Each object exposes title, place,
    date, community context, visible credit, and its authoritative source
