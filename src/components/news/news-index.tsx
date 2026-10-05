@@ -116,8 +116,8 @@ function NewsItemLink({
     >
       {item.sourceImageUrl ? (
         <SourcePreviewImage
-          className={styles.thumb}
-          fallbackClassName={styles.thumbFallback}
+          className={styles.thumb ?? ""}
+          fallbackClassName={styles.thumbFallback ?? ""}
           src={item.sourceImageUrl}
         />
       ) : null}

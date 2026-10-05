@@ -116,8 +116,8 @@ function CurrentPanels({
                 >
                   {item.sourceImageUrl ? (
                     <SourcePreviewImage
-                      className={styles.currentThumb}
-                      fallbackClassName={styles.currentThumbFallback}
+                      className={styles.currentThumb ?? ""}
+                      fallbackClassName={styles.currentThumbFallback ?? ""}
                       src={item.sourceImageUrl}
                     />
                   ) : null}

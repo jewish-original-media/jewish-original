@@ -69,8 +69,8 @@ export function ArchiveCard({ record }: { record: ArchiveRecord }) {
         >
           {record.image.external ? (
             <SourcePreviewImage
-              className={styles.cardRemote}
-              fallbackClassName={styles.cardRemoteFallback}
+              className={styles.cardRemote ?? ""}
+              fallbackClassName={styles.cardRemoteFallback ?? ""}
               src={record.image.url}
             />
           ) : (
