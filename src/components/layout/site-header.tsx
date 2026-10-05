@@ -21,21 +21,31 @@ export function SiteHeader({
   return (
     <header className={styles.header}>
       <Container className={styles.bar}>
-        <BrandLogo priority />
+        <div className={styles.headerDate}>
+          {today ? (
+            <>
+              <span>{today.gregorianLabel}</span>
+              {today.hebrewDate ? <span>{today.hebrewDate}</span> : null}
+            </>
+          ) : (
+            <span>The living Jewish story</span>
+          )}
+        </div>
 
-        <nav className={styles.primaryNav} aria-label="Primary">
-          {navigation.map((item) => (
-            <Link
-              key={item.href}
-              className={`${styles.navLink} ${"emphasis" in item && item.emphasis ? styles.support : ""}`.trim()}
-              href={item.href}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <div className={styles.headerLogo}>
+          <BrandLogo priority />
+        </div>
 
-        <div className={styles.mobile}>
+        <div className={styles.headerActions}>
+          <Link className={styles.quickLink} href="/podcasts">
+            Listen
+          </Link>
+          <Link
+            className={`${styles.quickLink} ${styles.support}`}
+            href="/support"
+          >
+            Support
+          </Link>
           <details className={styles.menu}>
             <summary className={styles.menuToggle}>
               <span>Menu</span>
@@ -48,14 +58,22 @@ export function SiteHeader({
                   {today.gregorianLabel}
                 </p>
               ) : null}
+              <p className={styles.menuIntroduction}>
+                The Jewish past is not behind us. It moves through what we
+                learn, make, question, and carry forward.
+              </p>
               <ul className={styles.menuList}>
-                {navigation.map((item) => (
+                {navigation.map((item, index) => (
                   <li key={item.href}>
                     <Link
                       className={`${styles.menuLink} ${"emphasis" in item && item.emphasis ? styles.support : ""}`.trim()}
                       href={item.href}
                     >
-                      {item.label}
+                      <span aria-hidden="true">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span>{item.label}</span>
+                      <span aria-hidden="true">↗</span>
                     </Link>
                   </li>
                 ))}

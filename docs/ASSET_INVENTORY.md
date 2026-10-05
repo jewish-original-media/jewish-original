@@ -124,6 +124,26 @@ page, license, and a non-thumbnail local or Sanity asset. **D/E** stay private.
 | `meyer-isaac-steps.webp`  | `/about`                         | Jewish Original Media | Class A | Jewish Original Media |
 | `morning-tefillin.webp`   | Homepage masthead, `/support`    | Jewish Original Media | Class A | Jewish Original Media |
 
+### Living Archive review collection
+
+Three Library of Congress objects are stored locally for the Living Archive
+homepage preview. They are verified Class C records with source pages,
+reproduction numbers, collection-level rights guidance, and local
+non-thumbnail derivatives. They are approved for local editorial review, not
+deployed publication or attachment to Sanity.
+
+| Local filename                          | Object / community                       | Record and reproduction number                                                        | Rights advisory                         | Required credit                                                                              |
+| --------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `new-york-rosh-hashanah-1905-1915.jpg`  | Jewish New Year, New York, c. 1905–1915  | [LOC 91482962](https://www.loc.gov/pictures/item/91482962/), `LC-USZ62-104973`        | No known restrictions on publication    | Library of Congress, Bain Collection                                                         |
+| `samarkand-jewish-school-1905-1915.jpg` | Jewish schoolchildren, Samarkand         | [LOC 2018680203](https://www.loc.gov/pictures/item/2018680203/), `LC-DIG-prok-02294`  | No known restrictions; see LOC guidance | Prokudin-Gorskii photograph collection, Library of Congress, Prints and Photographs Division |
+| `yemenite-passover-family-1939.jpg`     | Yemenite Jewish family at Passover, 1939 | [LOC 2019709133](https://www.loc.gov/pictures/item/2019709133/), `LC-DIG-matpc-18363` | No known restrictions; see LOC guidance | G. Eric and Edith Matson Photograph Collection, Library of Congress                          |
+
+The authoritative typed manifest is
+`src/content/media/living-archive.ts`. It preserves catalog wording where
+possible and explicitly records uncertainty. These objects may not be
+presented as comprehensive representations of their communities. Captions and
+credits remain visible, and source records open from the figure.
+
 Do not hotlink Wikimedia thumbnails. Do not attach History featured media until
 a founder-approved Sanity write uses a verified high-resolution file.
 

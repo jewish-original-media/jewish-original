@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { HomeEditorialMedia } from "@/components/home/home-editorial-media";
 import type { OriginalSummary } from "@/content/originals/types";
 import {
   formatOriginalDate,
@@ -23,31 +24,55 @@ export function HomeOriginals({ items }: { items: OriginalSummary[] }) {
       aria-label="Originals"
     >
       <div className={styles.bandInner}>
-        <p className={styles.sectionLabel}>Originals</p>
-        <article className={styles.originalLead}>
-          <p className={styles.originalMeta}>
-            {leadIsSample ? "Editorial sample" : "Jewish Original"}
-            {lead.publishedAt
-              ? ` · ${formatOriginalDate(lead.publishedAt)}`
-              : ""}
+        <header className={styles.originalsHeader}>
+          <p className={styles.sectionLabel}>Originals</p>
+          <p className={styles.originalsDek}>
+            Essays, ideas, and original Jewish voices.
           </p>
-          <h2 className={styles.originalTitle}>
-            <Link href={`/originals/${lead.slug}`}>{lead.title}</Link>
-          </h2>
-          {lead.excerpt ? (
-            <p className={styles.originalExcerpt}>
-              {firstSentence(lead.excerpt, 120)}
+        </header>
+        <article className={styles.originalLead}>
+          <HomeEditorialMedia
+            context="originals"
+            href={`/originals/${lead.slug}`}
+            image={lead.featuredMedia}
+            title={lead.title}
+            variant="feature"
+          />
+          <div className={styles.originalLeadCopy}>
+            <p className={styles.originalMeta}>
+              {leadIsSample ? "Editorial sample" : "Jewish Original"}
+              {lead.publishedAt
+                ? ` · ${formatOriginalDate(lead.publishedAt)}`
+                : ""}
             </p>
-          ) : null}
-          {leadIsSample ? (
-            <p className={styles.originalSample}>{SAMPLE_ORIGINAL_NOTICE}</p>
-          ) : null}
+            <h2 className={styles.originalTitle}>
+              <Link href={`/originals/${lead.slug}`}>{lead.title}</Link>
+            </h2>
+            {lead.excerpt ? (
+              <p className={styles.originalExcerpt}>
+                {firstSentence(lead.excerpt, 120)}
+              </p>
+            ) : null}
+            {leadIsSample ? (
+              <p className={styles.originalSample}>{SAMPLE_ORIGINAL_NOTICE}</p>
+            ) : null}
+          </div>
         </article>
         {rest.length ? (
           <ol className={styles.originalRail}>
             {rest.slice(0, 2).map((item) => (
               <li key={item._id}>
-                <Link href={`/originals/${item.slug}`}>
+                <HomeEditorialMedia
+                  context="originals"
+                  href={`/originals/${item.slug}`}
+                  image={item.featuredMedia}
+                  title={item.title}
+                  variant="supporting"
+                />
+                <Link
+                  className={styles.originalRailLink}
+                  href={`/originals/${item.slug}`}
+                >
                   <span className={styles.originalMeta}>
                     {isSampleOriginal(item.slug)
                       ? "Editorial sample"

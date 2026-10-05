@@ -4,6 +4,7 @@ import Link from "next/link";
 import { HomeEvents } from "@/components/home/home-events";
 import { HomeHistoryFeature } from "@/components/home/home-history-feature";
 import { HomeJewishToday } from "@/components/home/home-jewish-today";
+import { HomeLivingArchive } from "@/components/home/home-living-archive";
 import { HomeNews } from "@/components/home/home-news";
 import { HomeOriginals } from "@/components/home/home-originals";
 import { HomePodcastFeature } from "@/components/home/home-podcast-feature";
@@ -37,19 +38,45 @@ export function HomePageView({ data }: HomePageViewProps) {
   const showEvents = shouldShowHomepageEvents(data.events);
   const chapters = [
     { href: "/today", label: "Today" },
+    { href: "#living-archive", label: "Living archive" },
     { href: "/history", label: "History" },
     ...(data.originals.length > 0
       ? [{ href: "/originals", label: "Originals" }]
       : []),
-    { href: "/podcasts", label: "Conversations" },
+    { href: "/podcasts", label: "Listen" },
+    ...(showNews ? [{ href: "/news", label: "News" }] : []),
+    { href: "/events", label: "Events" },
+    { href: "/about", label: "About" },
   ];
 
   return (
-    <div className={`${styles.page} ${styles.exhibition}`}>
+    <div
+      className={`${styles.page} ${styles.immersive} ${styles.livingArchive}`}
+    >
       <section className={styles.masthead} aria-labelledby="home-masthead">
+        <figure className={styles.heroFigure} data-home-hero>
+          <div className={styles.heroImage}>
+            <Image
+              alt={HERO_PHOTO.alt}
+              fill
+              preload
+              sizes="100vw"
+              src={HERO_PHOTO.src}
+            />
+          </div>
+          <div className={styles.heroVeil} aria-hidden="true" />
+          <figcaption className={styles.heroCaption}>
+            <span>Tradition, lived.</span>
+            <span>{HERO_PHOTO.credit}</span>
+          </figcaption>
+        </figure>
+
         <div className={`${styles.bandInner} ${styles.mastheadGrid}`}>
           <div className={styles.mastheadCopy}>
-            <p className={styles.wordmark}>Jewish Original Media</p>
+            <div className={styles.mastheadIdentity}>
+              <p className={styles.wordmark}>Jewish Original Media</p>
+              <p className={styles.liveEdition}>The living Jewish story</p>
+            </div>
             <h1 className={styles.display} id="home-masthead">
               Remember,
               <br />
@@ -76,21 +103,6 @@ export function HomePageView({ data }: HomePageViewProps) {
               ) : null}
             </p>
           </div>
-          <figure className={styles.heroFigure}>
-            <div className={styles.heroImage}>
-              <Image
-                alt={HERO_PHOTO.alt}
-                fill
-                priority
-                sizes="(max-width: 47.98rem) 90vw, 42vw"
-                src={HERO_PHOTO.src}
-              />
-            </div>
-            <figcaption className={styles.heroCaption}>
-              <span>Tradition, lived.</span>
-              <span>{HERO_PHOTO.credit}</span>
-            </figcaption>
-          </figure>
         </div>
         <nav
           className={`${styles.bandInner} ${styles.chapterNav}`}
@@ -109,6 +121,8 @@ export function HomePageView({ data }: HomePageViewProps) {
 
       <HomeJewishToday day={data.jewishToday} />
 
+      <HomeLivingArchive />
+
       <HomeHistoryFeature
         history={history}
         unavailable={data.history.status === "unavailable"}
@@ -124,16 +138,40 @@ export function HomePageView({ data }: HomePageViewProps) {
       {showEvents ? <HomeEvents items={data.events} /> : null}
 
       <section
+        className={`${styles.band} ${styles.aboutScene}`}
+        aria-labelledby="home-about"
+      >
+        <div className={styles.bandInner}>
+          <p className={styles.sectionLabel}>About Jewish Original</p>
+          <div className={styles.aboutGrid}>
+            <h2 className={styles.aboutTitle} id="home-about">
+              History is the foundation. Identity is the work.
+            </h2>
+            <div className={styles.aboutCopy}>
+              <p>
+                We connect the Jewish past to the Jewish present—so memory can
+                become knowledge, culture, and a stronger shared future.
+              </p>
+              <Link className={styles.scenePath} href="/about">
+                Our story <span aria-hidden="true">↗</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
         className={`${styles.band} ${styles.support}`}
         aria-labelledby="home-support"
       >
         <div className={styles.bandInner}>
           <p className={styles.sectionLabel}>Support</p>
           <h2 className={styles.supportTitle} id="home-support">
-            Stand with us. Build with us.
+            Help build what Jewish media can become.
           </h2>
           <p className={styles.supportCopy}>
-            Help keep Jewish history, culture, and original work in public view.
+            Keep Jewish history, culture, education, and original voices in
+            public view.
           </p>
           <ButtonLink className={styles.supportAction} href="/support">
             Support Jewish Original

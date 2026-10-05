@@ -56,10 +56,8 @@ Usage:
 
 Public type scale:
 
-- Display: `clamp(3rem, 8.4vw, 8.75rem)` — homepage masthead default;
-  exhibition homepage tightens to `clamp(3.5rem, 6.4vw, 6.4rem)` desktop and
-  `clamp(3.2rem, 12vw, 5.3rem)` mobile so the tefillin portrait can sit beside
-  the opening line
+- Display: `clamp(4.4rem, 10.5vw, 10.5rem)` on the immersive homepage
+  masthead, with a mobile range of `clamp(3.5rem, 18vw, 6.1rem)`
 - Section display: `clamp(2.35rem, 5vw, 6.25rem)`
 - Feature headline: `clamp(2rem, 3.8vw, 4.75rem)`
 - Article / card headline: `1.35rem` to `2.25rem`
@@ -159,6 +157,11 @@ not recolor or outline the mark. Do not place it on sand or white.
 - Animate opacity and transforms; avoid layout thrashing
 - Respect `prefers-reduced-motion` and never hide essential information behind motion
 
+The Living Archive may use slow image drift, a moving geographic continuum,
+and CSS view-timeline reveals as progressive enhancement. Motion never controls
+reading order, triggers audio/video, or replaces navigation. Unsupported and
+reduced-motion environments receive the complete static composition.
+
 ## Responsive behavior
 
 - Mobile is composed independently, not a compressed desktop layout.
@@ -184,6 +187,13 @@ One visual system. Different rooms:
 
 Do not make every page visually identical.
 
+The homepage is a sequence of editorial scenes rather than a stack of equal
+content bands. Full-viewport photography, sparse overlay type, large pauses,
+and distinct Today, History, Originals, News, Listening, Events, About, and
+Support rooms establish chapter pacing. Each scene retains semantic headings,
+source data, and visibility gates; cinematic scale never turns absent content
+into fabricated inventory.
+
 ## Jerusalem material
 
 Atmosphere comes from limestone-warm paper, archival rules, brass-gold dates,
@@ -192,6 +202,23 @@ should be felt, not noticed. Metal appears as hairline rules and engraved
 details, not chrome gradients. Do not use Western Wall heroes, flag fields,
 skyline silhouettes, or Stars of David as wallpaper. Jewish Today may name
 Eastern Time; it must not imply Jerusalem time.
+
+## Living Archive material
+
+The homepage may layer verified archive objects as imperfect paper artifacts:
+slight rotation, visible borders, restrained tape marks, catalog numbers, and
+museum captions. This “wabi-sabi” quality comes from age, repair, printing, and
+human handling—not fake distress applied to logos or invented antiquity.
+
+Diaspora representation is editorial, not decorative:
+
+- Name the documented community, location, date, archive, and rights status.
+- Preserve uncertainty instead of inferring identity from appearance.
+- Never use one person or object as a stand-in for an entire community.
+- Prefer a small, well-sourced collection over token geographic coverage.
+- Keep provenance visible and link to the authoritative source record.
+- Historical photographs may sit beside current JOM work, but their captions
+  must make the time boundary unmistakable.
 
 ## Motif language
 
@@ -207,7 +234,12 @@ Decorative assets must be authentic or absent:
 - typography, Hebrew, stone / paper / brass, and simple rules or circles
 
 Do not invent icon families. Do not reuse the OTD lion on the homepage
-masthead, About, or other global JOM surfaces. Empty space is intentional.
+masthead, About, Originals, or other global JOM surfaces. The homepage History
+room may use the same approved lion/star masks as a non-photographic archival
+index plate when a story has no rights-cleared image. Originals without media
+use a separate JOM monogram-and-star graphic plate. Both treatments must
+remain visibly graphic, carry no image caption, and never imply that they
+depict a subject or event. Empty space is intentional.
 
 ## Logo placement
 
@@ -234,6 +266,23 @@ labeled as illustrations. No empty image wells. See
 Approved public photographs use different crops at mobile, tablet, and
 desktop through `object-position` and aspect ratio. Faces and hands stay
 legible. Do not reuse one pair photograph on About and Podcast.
+
+The homepage has one eager LCP photograph in the masthead. All story images
+below it remain lazy by default. Rights-cleared History images preserve their
+caption and credit; absent media uses the documented archival index plate
+rather than an unrelated stock image or blank frame.
+
+## Shared chrome
+
+The sticky night header centers the approved unaltered logo plaque, presents
+the current Gregorian and Hebrew dates where space allows, and keeps Listen
+and Support close at hand. A native `details` disclosure opens the full
+numbered menu without client JavaScript. Originals and News remain gated;
+Events is permanent.
+
+The footer closes with “Keep the story moving,” a Support invitation, and
+Explore / Connect link groups. Both header and footer use square edges,
+hairline rules, accessible focus states, and reduced-motion-safe transitions.
 
 ## Asset handling
 

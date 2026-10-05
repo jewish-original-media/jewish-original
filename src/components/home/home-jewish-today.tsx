@@ -26,7 +26,12 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
       aria-labelledby="home-today"
     >
       <div className={styles.bandInner}>
-        <p className={`${styles.sectionLabel} eyebrow`}>Jewish Today</p>
+        <header className={styles.todayHeader}>
+          <p className={`${styles.sectionLabel} eyebrow`}>Jewish Today</p>
+          <p className={styles.todayIntroduction}>
+            The Jewish calendar is not behind us. It is happening now.
+          </p>
+        </header>
         <div className={styles.todayObject}>
           <div className={styles.todayDate}>
             {hasHebrewObject ? (

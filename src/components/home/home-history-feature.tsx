@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 
+import { HomeEditorialMedia } from "@/components/home/home-editorial-media";
 import {
   historyCardLocation,
   historyCardRegion,
@@ -32,6 +32,12 @@ function LeadHistory({ entry }: { entry: HistoryEntrySummary }) {
 
   return (
     <article className={styles.historyLead}>
+      <HomeEditorialMedia
+        href={`/history/${entry.slug}`}
+        image={entry.primaryImage}
+        title={entry.title}
+        variant="lead"
+      />
       <p className={styles.historyCatalog}>Archive record</p>
       <p className={styles.historyDate}>{historyDate(entry)}</p>
       <h3 className={styles.historyTitle}>
@@ -56,16 +62,12 @@ function SupportingHistory({ entry }: { entry: HistoryEntrySummary }) {
 
   return (
     <article className={styles.supportingStory}>
-      {entry.primaryImage ? (
-        <div className={styles.supportingMedia}>
-          <Image
-            alt={entry.primaryImage.alt}
-            fill
-            sizes="(max-width: 64rem) 100vw, 22rem"
-            src={entry.primaryImage.asset.url}
-          />
-        </div>
-      ) : null}
+      <HomeEditorialMedia
+        href={`/history/${entry.slug}`}
+        image={entry.primaryImage}
+        title={entry.title}
+        variant="supporting"
+      />
       <p className={styles.supportingDate}>{historyDate(entry)}</p>
       <h3 className={styles.supportingTitle}>
         <Link href={`/history/${entry.slug}`}>{entry.title}</Link>
@@ -90,9 +92,19 @@ export function HomeHistoryFeature({
       className={`${styles.band} ${styles.history}`}
       aria-label="History"
     >
+      <span
+        aria-hidden="true"
+        className={styles.historyWatermark}
+        data-motif="history-lion"
+      />
       <div className={styles.bandInner}>
-        <p className={styles.sectionLabel}>History</p>
-        <h2 className={styles.historyHeading}>{history.title}</h2>
+        <header className={styles.historyHeader}>
+          <p className={styles.sectionLabel}>History</p>
+          <h2 className={styles.historyHeading}>{history.title}</h2>
+          <p className={styles.historyIntroduction}>
+            Jewish history is not a timeline. It is a living inheritance.
+          </p>
+        </header>
         {unavailable ? (
           <p className={styles.unavailableNote} role="status">
             The History archive is briefly unavailable.

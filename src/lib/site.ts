@@ -10,6 +10,7 @@ export const siteConfig = {
     { label: "Today", href: "/today" },
     { label: "History", href: "/history" },
     { label: "Podcasts", href: "/podcasts" },
+    { label: "Events", href: "/events" },
     { label: "About", href: "/about" },
     { label: "Support", href: "/support", emphasis: true },
   ],
@@ -18,6 +19,7 @@ export const siteConfig = {
     { label: "History", href: "/history" },
     { label: "Podcasts", href: "/podcasts" },
     { label: "News", href: "/news" },
+    { label: "Events", href: "/events" },
     { label: "About", href: "/about" },
     { label: "Support", href: "/support" },
   ],
@@ -40,6 +42,7 @@ export function resolvePrimaryNavigation(input?: {
     input?.originalsLive ? { label: "Originals", href: "/originals" } : null,
     { label: "Podcasts", href: "/podcasts" },
     input?.newsLive ? { label: "News", href: "/news" } : null,
+    { label: "Events", href: "/events" },
     { label: "About", href: "/about" },
     { label: "Support", href: "/support", emphasis: true },
   ].filter((item): item is SiteNavItem => item !== null);
@@ -54,6 +57,7 @@ export function resolveFooterExplore(input?: {
     input?.originalsLive ? { label: "Originals", href: "/originals" } : null,
     { label: "Podcasts", href: "/podcasts" },
     { label: "News", href: "/news" },
+    { label: "Events", href: "/events" },
     { label: "About", href: "/about" },
     { label: "Support", href: "/support" },
   ].filter((item): item is SiteNavItem => item !== null);

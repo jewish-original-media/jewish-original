@@ -14,16 +14,16 @@ export function SiteFooter({
     <footer className={styles.footer}>
       <Container className={styles.footerGrid}>
         <div className={styles.footerIdentity}>
-          <p className={styles.footerMark} aria-hidden="true">
-            Jewish
-            <br />
-            Original
-          </p>
-          <p className="sr-only">{siteConfig.name}</p>
+          <p className={styles.footerKicker}>Jewish Original Media</p>
+          <p className={styles.footerMark}>Keep the story moving.</p>
           <p className={styles.footerLede}>{siteConfig.description}</p>
-          <p className={styles.footerSignoff}>
-            For memory. For identity. For what comes next.
+          <p className={styles.footerContinuum}>
+            Past <span aria-hidden="true">↗</span> Present{" "}
+            <span aria-hidden="true">↗</span> What comes next
           </p>
+          <Link className={styles.footerSupport} href="/support">
+            Support the work <span aria-hidden="true">↗</span>
+          </Link>
         </div>
 
         <div className={styles.footerColumns}>
@@ -38,7 +38,7 @@ export function SiteFooter({
             </ul>
           </div>
           <div>
-            <p className={styles.footerLabel}>The house</p>
+            <p className={styles.footerLabel}>Connect</p>
             <ul className={styles.footerList}>
               <li>
                 <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
@@ -64,7 +64,7 @@ export function SiteFooter({
             © {new Date().getFullYear()} {siteConfig.legalName}. All rights
             reserved.
           </p>
-          <p>History first. Identity as the work.</p>
+          <p>For memory. For identity. For what comes next.</p>
         </Container>
       </div>
     </footer>

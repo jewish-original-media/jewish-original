@@ -29,7 +29,15 @@ test("composes the homepage from Jewish Today and published History", async ({
   ).toBeVisible();
   await expect(page.locator("[data-brand-plaque]")).toBeVisible();
   await expect(page.locator("main .history-hero-lion")).toHaveCount(0);
-  await expect(page.locator("[data-motif]")).toHaveCount(0);
+  await expect(page.locator("[data-home-hero]")).toBeVisible();
+  await expect(
+    page.locator(
+      "link[rel='preload'][as='image'][imagesrcset*='morning-tefillin']",
+    ),
+  ).toHaveCount(1);
+  await expect(
+    page.locator("link[rel='preload'][as='image'][imagesrcset*='/archive/']"),
+  ).toHaveCount(0);
   await expect(
     page.getByRole("contentinfo").getByRole("img", { name: /Jewish Original/ }),
   ).toHaveCount(0);
@@ -53,7 +61,38 @@ test("composes the homepage from Jewish Today and published History", async ({
   ).toBeVisible();
   await expect(page.getByText(/preparing today’s homepage/i)).toHaveCount(0);
   await page.goto("/");
-  await expect(page.getByRole("region", { name: "History" })).toBeVisible();
+  const livingArchive = page.locator("[data-home-living-archive]");
+  await expect(livingArchive).toBeVisible();
+  await expect(
+    livingArchive.getByRole("heading", {
+      name: "One people. Many places. Time carried forward.",
+    }),
+  ).toBeVisible();
+  await expect(livingArchive.locator("figure")).toHaveCount(3);
+  await expect(livingArchive.locator("img")).toHaveCount(3);
+  for (const image of await livingArchive.locator("img").all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate((element) => (element as HTMLImageElement).naturalWidth),
+      )
+      .toBeGreaterThan(0);
+  }
+  await expect(
+    livingArchive.getByRole("link", { name: /Library of Congress/ }),
+  ).toHaveCount(3);
+  const historyRegion = page.getByRole("region", {
+    name: "History",
+    exact: true,
+  });
+  await expect(historyRegion).toBeVisible();
+  await expect(historyRegion.locator("figure")).toHaveCount(3);
+  expect(
+    await historyRegion
+      .locator("figure")
+      .locator("img, [data-home-media-fallback]")
+      .count(),
+  ).toBe(3);
   await expect(
     page
       .getByText(
@@ -64,6 +103,20 @@ test("composes the homepage from Jewish Today and published History", async ({
   await expect(
     page.getByRole("navigation", { name: "Discover Jewish Original" }),
   ).toBeVisible();
+  await expect(
+    page
+      .getByRole("navigation", { name: "Discover Jewish Original" })
+      .getByRole("link", { name: /events/i }),
+  ).toHaveAttribute("href", "/events");
+  const menuToggle = page.locator("summary").filter({ hasText: "Menu" });
+  await menuToggle.click();
+  await expect(page.getByRole("navigation", { name: "Mobile" })).toBeVisible();
+  await expect(
+    page
+      .getByRole("navigation", { name: "Mobile" })
+      .getByRole("link", { name: "Events" }),
+  ).toHaveAttribute("href", "/events");
+  await menuToggle.click();
   await expect(
     page.getByRole("img", {
       name: "A man wearing tefillin reads from a Hebrew book",
@@ -77,9 +130,7 @@ test("composes the homepage from Jewish Today and published History", async ({
   await expect(
     page.getByRole("link", { name: "Enter the Archive", exact: true }),
   ).toHaveAttribute("href", "/history");
-  await expect(
-    page.getByRole("region", { name: "History" }).locator("article a[href^='/history/']"),
-  ).toHaveCount(3);
+  await expect(historyRegion.locator("article")).toHaveCount(3);
   await expect(
     page
       .getByRole("navigation", { name: "Discover Jewish Original" })
@@ -91,11 +142,14 @@ test("composes the homepage from Jewish Today and published History", async ({
     originals.getByRole("heading", { name: "Our Path Forward" }),
   ).toBeVisible();
   await expect(
-    originals.getByRole("link", { name: "What Drives Us" }),
+    originals.getByText("What Drives Us", { exact: true }),
   ).toBeVisible();
   await expect(
     originals.getByRole("link", { name: "The journal" }),
   ).toHaveAttribute("href", "/originals");
+  await expect(
+    originals.locator("img, [data-home-media-fallback]").first(),
+  ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "The Two Tall Jews Show" }),
   ).toBeVisible();
@@ -116,7 +170,14 @@ test("composes the homepage from Jewish Today and published History", async ({
     podcasts.getByRole("link", { name: "Listen on the episode page" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Stand with us. Build with us." }),
+    page.getByRole("heading", {
+      name: "History is the foundation. Identity is the work.",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: "Help build what Jewish media can become.",
+    }),
   ).toBeVisible();
   await expect(
     page.getByText("We don’t ask what’s going viral.", { exact: false }),
@@ -183,4 +244,32 @@ test("homepage rhythm holds at publication widths", async ({
     ).toBeVisible();
     await expectNoOverflow(page);
   }
+});
+
+test("reduced motion keeps the Living Archive visible and still", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const archive = page.locator("[data-home-living-archive]");
+  await expect(archive).toBeVisible();
+  await expect(archive.locator("[data-archive-position='1']")).toBeVisible();
+
+  const motion = await archive.evaluate((element) => {
+    const object = element.querySelector<HTMLElement>(
+      "[data-archive-position='1']",
+    );
+    const continuum = element.querySelector<HTMLElement>(
+      "[data-archive-continuum]",
+    );
+
+    return {
+      object: object ? getComputedStyle(object).animationName : null,
+      continuum: continuum ? getComputedStyle(continuum).animationName : null,
+    };
+  });
+
+  expect(motion).toEqual({ object: "none", continuum: "none" });
+  await expectNoOverflow(page);
 });
