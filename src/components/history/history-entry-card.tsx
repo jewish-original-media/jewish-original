@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { historyCardLocation } from "@/content/history/archive";
+import {
+  historyArchiveHref,
+  historyCardLocation,
+} from "@/content/history/archive";
 import type { HistoryEntrySummary } from "@/content/history/types";
 import { formatHistoricalDate } from "@/lib/history/format-date";
 
@@ -59,7 +62,18 @@ export function HistoryEntryCard({
         ) : null}
         {entry.topics.length ? (
           <p className="history-entry-card__topics">
-            {entry.topics.map((topic) => topic.name).join(" · ")}
+            {entry.topics.map((topic, index) => (
+              <span key={topic.slug}>
+                {index > 0 ? <span aria-hidden="true"> · </span> : null}
+                <Link
+                  href={historyArchiveHref({
+                    filter: { type: "topic", slug: topic.slug },
+                  })}
+                >
+                  {topic.name}
+                </Link>
+              </span>
+            ))}
           </p>
         ) : null}
         {location ? (

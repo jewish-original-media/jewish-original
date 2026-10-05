@@ -165,7 +165,7 @@ export default async function HistoryIndexPage({
             <p className="history-archive-rail__text">
               {publishedEntries.length === 1
                 ? "The collection begins with one published story. More will appear here as they are reviewed and approved."
-                : "Stories are preserved in their original voice and connected across people, place, and time."}
+                : `${publishedEntries.length} reviewed stories, opened by topic, place, and date.`}
             </p>
             <p className="history-archive-rail__note">
               Historical dates use the civil Gregorian calendar in Eastern
@@ -206,6 +206,22 @@ export default async function HistoryIndexPage({
         </Section>
       ) : null}
 
+      <Section className="history-archive-browse" spacing="compact">
+        <Container>
+          <div className="history-archive-browse__intro">
+            <p className="eyebrow">Browse the archive</p>
+            <h2 className="history-section-title">Find a story</h2>
+            <p className="history-archive-browse__lede">
+              Look up a civil date, or follow a topic or region. The number
+              beside a label is how many reviewed stories it opens. A parent
+              region includes the stories filed under its child region.
+            </p>
+          </div>
+          <HistoryDateBrowse day={search.day} month={search.month} />
+          <HistoryTaxonomyNav facets={facets} />
+        </Container>
+      </Section>
+
       {search.isBrowsing ? (
         <Section className="history-archive-results" spacing="compact">
           <Container>
@@ -225,6 +241,13 @@ export default async function HistoryIndexPage({
                     invalidDate,
                   })}
                 </h2>
+                {results.length ? (
+                  <p className="history-archive-results__count">
+                    {results.length === 1
+                      ? "1 reviewed story"
+                      : `${results.length} reviewed stories`}
+                  </p>
+                ) : null}
               </div>
               <Link className="history-archive-clear" href="/history">
                 Return to the archive
@@ -270,22 +293,6 @@ export default async function HistoryIndexPage({
           </Container>
         </Section>
       ) : null}
-
-      <Section className="history-archive-browse" spacing="compact">
-        <Container>
-          <div className="history-archive-browse__intro">
-            <p className="eyebrow">Browse the archive</p>
-            <h2 className="history-section-title">Look up a date</h2>
-            <p className="history-archive-browse__lede">
-              Choose a month and day to see reviewed historical events that
-              fall on that civil date. Recurring observances are kept on the
-              Jewish calendar, not this fixed-date list.
-            </p>
-          </div>
-          <HistoryDateBrowse day={search.day} month={search.month} />
-          <HistoryTaxonomyNav facets={facets} />
-        </Container>
-      </Section>
     </>
   );
 }

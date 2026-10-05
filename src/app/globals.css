@@ -772,6 +772,13 @@ svg {
   text-transform: uppercase;
 }
 
+.history-entry-card__topics a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-gold) 55%, var(--color-rule));
+  text-underline-offset: 0.28em;
+}
+
 .history-entry-card__location {
   margin: var(--space-2) 0 0;
   color: var(--color-charcoal);
@@ -791,6 +798,16 @@ svg {
   align-items: end;
   justify-content: space-between;
   margin-bottom: var(--space-8);
+}
+
+.history-archive-results__count {
+  margin: var(--space-3) 0 0;
+  color: var(--color-navy);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
 }
 
 .history-archive-clear {
@@ -905,6 +922,15 @@ svg {
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, var(--color-gold) 42%, var(--color-rule));
   text-underline-offset: 0.32em;
+}
+
+.history-taxonomy-count {
+  margin-inline-start: 0.4rem;
+  color: var(--color-navy);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  text-decoration: none;
 }
 
 .history-related-link {

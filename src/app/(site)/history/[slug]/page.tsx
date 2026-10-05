@@ -220,8 +220,7 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
                 </h2>
                 <p className="history-support__text">
                   If this history matters to you, you can{" "}
-                  <Link href="/support">support Jewish Original</Link> as the
-                  archive is prepared with care.
+                  <Link href="/support">support Jewish Original</Link>.
                 </p>
               </section>
             </div>

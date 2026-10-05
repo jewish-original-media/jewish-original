@@ -3,6 +3,11 @@ import type { PortableTextBlock } from "@/lib/history/source-body";
 export type HistoryReference = {
   name: string;
   slug: string;
+  count?: number;
+  parent?: {
+    name: string;
+    slug: string;
+  };
 };
 
 export type HistoricalDate = {

@@ -50,7 +50,14 @@ const summaryProjection = `{
   "places": coalesce(places[]->${referenceProjection}, []),
   "eras": coalesce(eras[]->${referenceProjection}, []),
   "organizations": coalesce(organizations[]->${referenceProjection}, []),
-  "geographicRegions": coalesce(geographicRegions[]->${referenceProjection}, []),
+  "geographicRegions": coalesce(geographicRegions[]->{
+    "name": name,
+    "slug": slug.current,
+    "parent": parent->{
+      "name": name,
+      "slug": slug.current
+    }
+  }, []),
   ${imageProjection}
 }`;
 
@@ -59,7 +66,10 @@ const filterExpression = `(
   ($filterType == "topic" && $filterSlug in topics[]->slug.current) ||
   ($filterType == "era" && $filterSlug in eras[]->slug.current) ||
   ($filterType == "place" && $filterSlug in places[]->slug.current) ||
-  ($filterType == "region" && $filterSlug in geographicRegions[]->slug.current) ||
+  ($filterType == "region" && (
+    $filterSlug in geographicRegions[]->slug.current ||
+    $filterSlug in geographicRegions[]->parent->slug.current
+  )) ||
   ($filterType == "person" && $filterSlug in people[]->slug.current) ||
   ($filterType == "organization" && $filterSlug in organizations[]->slug.current)
 )`;
@@ -84,7 +94,7 @@ export const historyIndexQuery = defineQuery(`*[
   select($preview => ${previewVisibility}, ${publicVisibility}) &&
   ${filterExpression} &&
   ${dateFilterExpression}
-] | order(historicalDate.start.year desc, historicalDate.start.month desc, historicalDate.start.day desc) ${summaryProjection}`);
+] | order(coalesce(historicalDate.start.year, 0) desc, coalesce(historicalDate.start.month, 0) desc, coalesce(historicalDate.start.day, 0) desc) ${summaryProjection}`);
 
 export const historyOnThisDayQuery = defineQuery(`*[
   _type == "historyEntry" &&

@@ -1,8 +1,79 @@
 # History Taxonomy Evidence and Proposed Crosswalk
 
-Status: founder-facing crosswalk, 2026-08-31. Safe mappings were applied only
-to the four public-experience test drafts. Mappings marked **review** remain
-unapplied.
+Status: closed public vocabulary, 2026-10-05. The published archive uses
+one document per concept. Source spellings that differ only by case,
+spacing, or abbreviation are aliases of that document. They are not new tags.
+
+## Closed vocabulary
+
+The workbook sheets (`Cover Page`, `Form`, `Content`, `Import`, and the
+other tabs) repeat the same idea under more than one label. Public History
+keeps a single document for each concept.
+
+Topics, and the only source spellings that alias them:
+
+- **Antisemitism**
+- **Ghettos**
+- **Holocaust**
+- **Inquisition**
+- **Israel** — not an alias of `Israeli` or `Israeli/Zionism`
+- **Jews in Entertainment** — alias `Jews in entertainment`
+- **Jews in Politics** — alias `Jews in politics`
+- **Jews in Sport** — alias `Jews in sport`
+- **Jews in STEM**
+- **Rabbinic Judaism**
+- **World War II** — alias `WWII`
+- **Zionism** — not an alias of `Israeli/Zionism`
+
+Geographic regions:
+
+- **Africa**, **Asia**, **Europe**, **North America**, **South America**
+- **Middle East**
+- **Israel**
+- **United States** — alias `USA`. Its parent region is North America.
+
+Content warnings are a separate list, not topics: Antisemitic violence,
+Genocide or mass death, Terrorism, Graphic violence, and Death. The source
+token `Terrorism` stays a warning. It does not become a topic.
+
+Do not create another topic or region for these source tokens: `European Jews`,
+`American Jews`, `Israeli`, `Israeli/Zionism`, `Wars`, `Antizionism`,
+`Resistance`, `Jewish Resistance`, `MENA`, `North Africa`, `Middle Ages`,
+`British`, `French`, or `Iberia`. They remain in provenance until a reviewed
+decision gives each one a single name. Do not invent a near-synonym, a
+plural, or a second capitalization of a name already in the list above.
+
+## Applied to the published archive
+
+On 2026-10-05 the closed vocabulary was applied to the 266 published stories.
+A story received a topic or region only when its provenance already contained
+that exact source token, or a case, spacing, or abbreviation alias of it.
+`Israeli/Zionism` was not split. No new topic or region document was created.
+Editorial tags already on a story were left in place.
+
+Published coverage after that pass:
+
+- Topics: Antisemitism 144, Holocaust 118, Israel 114, World War II 108,
+  Zionism 82, Jews in Politics 34, Jews in Entertainment 11, Inquisition 10,
+  Jews in STEM 8, Ghettos 4, Rabbinic Judaism 3, Jews in Sport 1.
+- Regions: Europe 176, Israel 124, Middle East 75, United States 30,
+  North America 21, Africa 16, South America 5, Asia 3.
+
+Three stories still have no public topic. `Germany Organizes the Killing of
+Disabled Children` keeps the workbook tokens `Holocaust`, `Antisemitism`, and
+`European Jews` in provenance only. `Havana Jews Found a Congregation` has
+`European Jews, American Jews`. `The Triangle Shirtwaist Factory Fire` has
+`American Jews`.
+
+Four stories still have no public region. `Green Ticket Roundup Arrests
+Foreign Jews in Paris` has only `French`. `First Zionist Congress Opens`,
+`Second Zionist Congress Opens`, and `San Remo Conference Ends` have no source
+region.
+
+United States is the child of North America. The public North America browse
+includes a story tagged only United States, and a story tagged with both is
+counted once. That raises the North America browse count from 21 direct tags
+to 34 stories.
 
 ## Evidence boundary
 
