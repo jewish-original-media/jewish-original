@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import { Container } from "@/components/ui/container";
@@ -75,11 +75,47 @@ function PrimaryNavItem({ item }: { item: SiteNavItem }) {
   );
 }
 
+function useStickyHeaderOffset() {
+  useLayoutEffect(() => {
+    const header = document.querySelector("header");
+    if (!(header instanceof HTMLElement)) return;
+
+    const apply = () => {
+      document.documentElement.style.setProperty(
+        "--sticky-header",
+        `${header.offsetHeight}px`,
+      );
+    };
+
+    const closeMenu = (event: Event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (!target.closest("header details a")) return;
+      requestAnimationFrame(() => {
+        header.querySelector("details")?.removeAttribute("open");
+      });
+    };
+
+    apply();
+    const observer = new ResizeObserver(apply);
+    observer.observe(header);
+    window.addEventListener("resize", apply);
+    header.addEventListener("click", closeMenu);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", apply);
+      header.removeEventListener("click", closeMenu);
+    };
+  }, []);
+}
+
 export function PrimaryNav({
   items,
 }: {
   items: readonly SiteNavItem[];
 }) {
+  useStickyHeaderOffset();
+
   return (
     <nav aria-label="Primary" className={styles.primaryNav}>
       <Container>

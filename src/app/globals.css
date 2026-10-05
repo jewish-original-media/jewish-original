@@ -106,7 +106,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-height) + 1rem);
+  scroll-padding-top: calc(var(--sticky-header, var(--header-height)) + 1rem);
   text-size-adjust: 100%;
 }
 

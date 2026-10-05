@@ -396,7 +396,7 @@
 
 .menu[open] .menuPanel {
   position: fixed;
-  inset: var(--header-height) 0 0;
+  inset: var(--sticky-header, 11.25rem) 0 0;
   z-index: 60;
   overflow: auto;
   display: grid;
@@ -540,6 +540,11 @@
   text-decoration: none;
 }
 
+.footerMail {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
 .footerList a:hover {
   color: var(--color-paper);
 }
@@ -614,8 +619,17 @@
   top: 0;
   z-index: 80;
   border-bottom-color: color-mix(in srgb, var(--color-gold) 42%, transparent);
+  background: transparent;
+}
+
+.header::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
   background: color-mix(in srgb, var(--color-night) 94%, transparent);
   backdrop-filter: blur(14px);
+  content: "";
+  pointer-events: none;
 }
 
 .bar {
@@ -691,7 +705,6 @@
 }
 
 .menu[open] .menuPanel {
-  inset: 4.5rem 0 0;
   grid-template-columns: minmax(0, 0.72fr) minmax(18rem, 1.28fr);
   align-content: start;
   gap: 2rem clamp(2rem, 8vw, 8rem);
@@ -897,14 +910,13 @@
 }
 
 .menu[open] .menuPanel {
-  background:
-    linear-gradient(rgb(238 224 203 / 0.9), rgb(238 224 203 / 0.96)),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent calc(12.5% - 1px),
-      rgb(46 52 96 / 0.12) 12.5%
-    );
+  background-color: var(--color-sand);
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent calc(12.5% - 1px),
+    rgb(46 52 96 / 0.08) 12.5%
+  );
 }
 
 .menuIntroduction::before {

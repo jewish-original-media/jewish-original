@@ -231,7 +231,7 @@
 }
 
 .supportTarget {
-  scroll-margin-top: calc(var(--header-height) + 1rem);
+  scroll-margin-top: calc(var(--sticky-header, var(--header-height)) + 1rem);
 }
 
 .monthlyBand {
