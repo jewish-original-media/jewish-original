@@ -292,6 +292,14 @@ test("serves the five published History articles and keeps other slugs unpublish
   await expect(
     page.getByRole("heading", { name: "US Liberates Dachau" }),
   ).toBeVisible();
+  await expect(page.getByText("Archive record", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Verified sources", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Archive threads", { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText("Archive index", { exact: true })).toBeVisible();
   await expect(
     page.getByRole("navigation", { name: "Continue exploring" }),
   ).toBeVisible();

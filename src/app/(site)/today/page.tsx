@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import { TrackPageOpen } from "@/components/analytics/track-page-open";
 import { JsonLd } from "@/components/seo/json-ld";
 import { JewishTodayPage } from "@/components/today/jewish-today-page";
+import { getHomepageEvents } from "@/content/events/fetch";
+import { getPreviousCalendarHistory } from "@/content/history/fetch";
+import { getHomepageNews } from "@/content/news/fetch";
 import { getJewishToday } from "@/features/jewish-today";
 import { isIsoDate } from "@/features/jewish-today/timezone";
 import { breadcrumbJsonLd } from "@/lib/seo/site";
@@ -78,6 +81,16 @@ export default async function TodayPage({ searchParams }: TodayPageProps) {
     date: requestedDate,
     forceCalendarUnavailable,
   });
+  const [, month = 1, dayOfMonth = 1] = day.gregorianDate
+    .split("-")
+    .map(Number);
+  const [previousHistory, news, events] = await Promise.all([
+    day.onThisDay.length
+      ? Promise.resolve([])
+      : getPreviousCalendarHistory(month, dayOfMonth).catch(() => []),
+    getHomepageNews().catch(() => []),
+    getHomepageEvents().catch(() => []),
+  ]);
 
   return (
     <>
@@ -88,7 +101,12 @@ export default async function TodayPage({ searchParams }: TodayPageProps) {
           { name: "Jewish Today", path: "/today" },
         ])}
       />
-      <JewishTodayPage day={day} />
+      <JewishTodayPage
+        day={day}
+        events={events}
+        news={news}
+        previousHistory={previousHistory}
+      />
     </>
   );
 }

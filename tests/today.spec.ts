@@ -18,6 +18,11 @@ test("renders an ordinary weekday without empty sections", async ({
   await expect(page.getByText("Tuesday, September 1, 2026")).toBeVisible();
   await expect(page.getByText("19 Elul 5786")).toBeVisible();
   await expect(
+    page.getByRole("img", {
+      name: /photographer carrying a camera steps through a weathered stone opening/i,
+    }),
+  ).toBeVisible();
+  await expect(
     page.getByRole("navigation", { name: "Continue exploring" }),
   ).toBeVisible();
   await expect(page.getByText("This week in Torah")).toBeVisible();
@@ -41,10 +46,16 @@ test("renders an ordinary weekday without empty sections", async ({
     page.getByRole("heading", { name: /today in jewish history/i }),
   ).toHaveCount(0);
   const historyHeading = page.getByRole("heading", {
-    name: /Published Gregorian anniversaries|No published anniversary today/,
+    name: /Published Gregorian anniversaries|Previous date in the archive|No published anniversary today/,
   });
   await expect(historyHeading).toBeVisible();
-  if (await page.getByText(/No verified Gregorian anniversary/).count()) {
+  if (await page.getByText(/not as an anniversary for today/i).count()) {
+    await expect(
+      page.locator("main article a[href^='/history/']").first(),
+    ).toBeVisible();
+  } else if (
+    await page.getByText(/No verified Gregorian anniversary/).count()
+  ) {
     await expect(
       page.getByRole("link", { name: "Browse the archive" }),
     ).toHaveAttribute("href", "/history");

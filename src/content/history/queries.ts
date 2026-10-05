@@ -107,6 +107,16 @@ export const historyOnThisDayQuery = defineQuery(`*[
   historicalDate.start.day == $day
 ] | order(historicalDate.start.year desc) ${summaryProjection}`);
 
+export const historyGregorianDatesQuery = defineQuery(`*[
+  _type == "historyEntry" &&
+  defined(slug.current) &&
+  ${publicVisibility} &&
+  ${gregorianDayMatch}
+]{
+  "month": historicalDate.start.month,
+  "day": historicalDate.start.day
+} | order(month asc, day asc)`);
+
 export const historySlugsQuery = defineQuery(`*[
   _type == "historyEntry" &&
   ${publicVisibility} &&

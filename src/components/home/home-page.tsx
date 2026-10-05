@@ -1,15 +1,14 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { HomeEvents } from "@/components/home/home-events";
 import { HomeHistoryFeature } from "@/components/home/home-history-feature";
 import { HomeJewishToday } from "@/components/home/home-jewish-today";
 import { HomeLivingArchive } from "@/components/home/home-living-archive";
+import { HomeMasthead } from "@/components/home/home-masthead";
 import { HomeNews } from "@/components/home/home-news";
 import { HomeOriginals } from "@/components/home/home-originals";
 import { HomePodcastFeature } from "@/components/home/home-podcast-feature";
 import { ButtonLink } from "@/components/ui/button-link";
-import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
 import {
   composeHomeHistory,
   composeHomePodcasts,
@@ -25,8 +24,6 @@ import styles from "@/app/home.module.css";
 type HomePageViewProps = {
   data: HomePageData;
 };
-
-const HERO_PHOTO = FOUNDER_PHOTOS.tefillin;
 
 export function HomePageView({ data }: HomePageViewProps) {
   const history = composeHomeHistory(
@@ -54,71 +51,11 @@ export function HomePageView({ data }: HomePageViewProps) {
     <div
       className={`${styles.page} ${styles.immersive} ${styles.livingArchive}`}
     >
-      <section className={styles.masthead} aria-labelledby="home-masthead">
-        <figure className={styles.heroFigure} data-home-hero>
-          <div className={styles.heroImage}>
-            <Image
-              alt={HERO_PHOTO.alt}
-              fill
-              preload
-              sizes="100vw"
-              src={HERO_PHOTO.src}
-            />
-          </div>
-          <div className={styles.heroVeil} aria-hidden="true" />
-          <figcaption className={styles.heroCaption}>
-            <span>Tradition, lived.</span>
-            <span>{HERO_PHOTO.credit}</span>
-          </figcaption>
-        </figure>
-
-        <div className={`${styles.bandInner} ${styles.mastheadGrid}`}>
-          <div className={styles.mastheadCopy}>
-            <div className={styles.mastheadIdentity}>
-              <p className={styles.wordmark}>Jewish Original Media</p>
-              <p className={styles.liveEdition}>The living Jewish story</p>
-            </div>
-            <h1 className={styles.display} id="home-masthead">
-              Remember,
-              <br />
-              rebuild,
-              <br />
-              and create.
-            </h1>
-            <p className={styles.lede}>
-              A modern home for Jewish history, culture, education, connection,
-              and identity.
-            </p>
-            <div className={styles.heroActions}>
-              <Link className={styles.primaryPath} href="/explore">
-                Explore the Living Archive <span aria-hidden="true">↗</span>
-              </Link>
-              <Link className={styles.secondaryPath} href="/today">
-                Discover Jewish Today <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-            <p className={styles.mastheadMeta}>
-              <span>{data.jewishToday.gregorianLabel}</span>
-              {data.jewishToday.hebrewDate ? (
-                <span>{data.jewishToday.hebrewDate}</span>
-              ) : null}
-            </p>
-          </div>
-        </div>
-        <nav
-          className={`${styles.bandInner} ${styles.chapterNav}`}
-          aria-label="Discover Jewish Original"
-          data-count={chapters.length}
-        >
-          {chapters.map((chapter, index) => (
-            <Link href={chapter.href} key={chapter.href}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              {chapter.label}
-              <span aria-hidden="true">↗</span>
-            </Link>
-          ))}
-        </nav>
-      </section>
+      <HomeMasthead
+        chapters={chapters}
+        gregorianLabel={data.jewishToday.gregorianLabel}
+        hebrewDate={data.jewishToday.hebrewDate}
+      />
 
       <HomeJewishToday day={data.jewishToday} />
 

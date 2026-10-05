@@ -24,12 +24,13 @@ test("composes the homepage from Jewish Today and published History", async ({
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: /remember, rebuild, and create/i,
+      name: /Jewish Original Media, history, culture, education/i,
     }),
   ).toBeVisible();
   await expect(page.locator("[data-brand-plaque]")).toBeVisible();
   await expect(page.locator("main .history-hero-lion")).toHaveCount(0);
   await expect(page.locator("[data-home-hero]")).toBeVisible();
+  await expect(page.locator("[data-hero-slide]")).toHaveCount(3);
   await expect(
     page.locator(
       "link[rel='preload'][as='image'][imagesrcset*='morning-tefillin']",
@@ -257,7 +258,7 @@ test("homepage rhythm holds at publication widths", async ({
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /remember, rebuild, and create/i,
+        name: /Jewish Original Media, history, culture, education/i,
       }),
     ).toBeVisible();
     await expectNoOverflow(page);
@@ -289,5 +290,16 @@ test("reduced motion keeps the Living Archive visible and still", async ({
   });
 
   expect(motion).toEqual({ object: "none", continuum: "none" });
+  const heroMotion = await page
+    .locator("[data-home-hero]")
+    .evaluate((element) => ({
+      slide: getComputedStyle(
+        element.querySelector<HTMLElement>("[data-hero-slide='1']")!,
+      ).animationName,
+      descriptor: getComputedStyle(
+        document.querySelector<HTMLElement>("[data-home-descriptors] > span")!,
+      ).animationName,
+    }));
+  expect(heroMotion).toEqual({ slide: "none", descriptor: "none" });
   await expectNoOverflow(page);
 });

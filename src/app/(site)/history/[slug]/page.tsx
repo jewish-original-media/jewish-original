@@ -84,6 +84,13 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
     hasPublishedRelatedHistoryEntry(relationship.entry),
   );
   const eventLocation = historyEventLocation(entry);
+  const referenceCount =
+    entry.topics.length +
+    entry.people.length +
+    entry.places.length +
+    entry.geographicRegions.length +
+    entry.eras.length +
+    entry.organizations.length;
 
   return (
     <>
@@ -139,11 +146,31 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
             </div>
 
             <div className="history-archive-rail">
-              <p className="eyebrow">Exhibition</p>
+              <p className="eyebrow">Archive record</p>
               <p className="history-archive-rail__text">
-                Date and sources stay with the record. Related places appear
-                beside the story.
+                Read the event, then follow its documented sources and archive
+                threads.
               </p>
+              <dl className="history-accession-list">
+                <div>
+                  <dt>Date</dt>
+                  <dd>{displayDate}</dd>
+                </div>
+                {eventLocation ? (
+                  <div>
+                    <dt>Place</dt>
+                    <dd>{eventLocation}</dd>
+                  </div>
+                ) : null}
+                <div>
+                  <dt>Verified sources</dt>
+                  <dd>{entry.citations.length}</dd>
+                </div>
+                <div>
+                  <dt>Archive threads</dt>
+                  <dd>{referenceCount}</dd>
+                </div>
+              </dl>
             </div>
           </Container>
         </header>
@@ -241,6 +268,13 @@ export default async function HistoryEntryPage({ params }: HistoryPageProps) {
             </div>
 
             <aside className="history-metadata">
+              <div className="history-metadata__introduction">
+                <p className="eyebrow">Archive index</p>
+                <p>
+                  Every visible thread below comes from a reviewed relationship
+                  on this record.
+                </p>
+              </div>
               <HistoryReferenceList
                 filterType="topic"
                 heading="Topics"

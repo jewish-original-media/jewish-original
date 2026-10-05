@@ -35,7 +35,7 @@ test("renders the responsive, accessible application shell", async ({
   await expect(
     page.getByRole("heading", {
       level: 1,
-      name: /remember, rebuild, and create/i,
+      name: /Jewish Original Media, history, culture, education/i,
     }),
   ).toBeVisible();
 

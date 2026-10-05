@@ -1,6 +1,7 @@
 export type PublicRightsClass = "A" | "B";
 
-export type FounderPhotoCrop = "street" | "steps" | "tefillin";
+export type FounderPhotoCrop =
+  "archive" | "gathering" | "overlook" | "steps" | "street" | "tefillin";
 
 export type PublicFounderPhoto = {
   id: string;
@@ -19,6 +20,54 @@ export type PublicFounderPhoto = {
 };
 
 export const FOUNDER_PHOTOS = {
+  archive: {
+    id: "archive-photographer",
+    src: "/media/founder/archive-photographer.webp",
+    width: 768,
+    height: 1024,
+    alt: "A photographer carrying a camera steps through a weathered stone opening",
+    kind: "Photograph",
+    title: "Looking through the layers",
+    placeDate: "Jewish Original field photography",
+    credit: "Jewish Original Media",
+    crop: "archive",
+    rightsClass: "A",
+    owner: "Jewish Original Media",
+    notes:
+      "Founder-cleared photograph. Used as the editorial image in the Jewish Today room.",
+  },
+  gathering: {
+    id: "community-gathering",
+    src: "/media/founder/community-gathering.webp",
+    width: 1024,
+    height: 605,
+    alt: "A large outdoor gathering seated across a grassy rise",
+    kind: "Photograph",
+    title: "Community, gathered",
+    placeDate: "Jewish Original field photography",
+    credit: "Jewish Original Media",
+    crop: "gathering",
+    rightsClass: "A",
+    owner: "Jewish Original Media",
+    notes:
+      "Founder-cleared photograph. Used as a secondary homepage masthead image.",
+  },
+  overlook: {
+    id: "founders-overlook",
+    src: "/media/founder/founders-overlook.webp",
+    width: 583,
+    height: 1024,
+    alt: "Two Jewish Original founders standing together at an urban overlook",
+    kind: "Photograph",
+    title: "Jewish Original, in the world",
+    placeDate: "Jewish Original field photography",
+    credit: "Jewish Original Media",
+    crop: "overlook",
+    rightsClass: "A",
+    owner: "Jewish Original Media",
+    notes:
+      "Founder-cleared photograph. Used as a secondary homepage masthead image.",
+  },
   street: {
     id: "meyer-isaac-street",
     src: "/media/founder/meyer-isaac-street.webp",

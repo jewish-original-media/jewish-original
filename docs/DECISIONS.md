@@ -817,3 +817,31 @@ JFC remains a rights-research source only. No catalog image, video, still,
 excerpt, embed, or derivative may ship until the exact item has a documented
 license or written permission and an approved credit. Collection contacts and
 candidate rights holders live in `docs/ASSET_INVENTORY.md`.
+
+## ADR-053 — Daily rooms are composed, motion is progressive, revenue follows launch
+
+**Status:** Accepted, 2026-10-05
+
+`/today` is a boxed daily editorial dashboard. Its date, observance, Torah,
+History, News, and Events remain separate source domains. Exact Gregorian
+anniversaries remain primary. When none exists, the page may show records from
+the nearest earlier reviewed Gregorian month/day only under “Previous date in
+the archive”; it must display the records’ real dates and deny that they are
+today’s anniversaries. News and Events reuse the existing homepage freshness
+and diversity gates.
+
+The homepage stays brand-first. It uses three founder-cleared still
+photographs rather than autoplay video or a content carousel. Morning tefillin
+is the sole eager image. Secondary frames and rotating descriptors are
+progressive decoration; reduced-motion and no-script reading preserve a
+complete “Jewish Original” identity statement.
+
+History detail pages use existing dates, references, citations, and
+rights-cleared primary media as museum labels. Counts may summarize those
+fields, but the interface does not derive facts from prose. No unrelated
+public-domain image may fill an empty media state.
+
+V2—not V1—owns expanded Support, payments, sponsorship, and advertising. Those
+features require approved terms and real providers, visible commercial labels,
+an editorial firewall, fixed layout space, accessible controls, and privacy
+rules that prohibit sensitive Jewish-identity targeting.

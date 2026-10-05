@@ -5,6 +5,7 @@ import { historyCardLocation } from "../src/content/history/archive";
 import type { HistoryEntrySummary } from "../src/content/history/types";
 import { formatHistoricalDate } from "../src/lib/history/format-date";
 import { matchesOnThisDayHistory } from "../src/lib/history/on-this-day";
+import { selectPreviousCalendarDate } from "../src/lib/history/previous-calendar-date";
 
 describe("Jewish Today uses canonical History matching", () => {
   const dachau = {
@@ -51,5 +52,24 @@ describe("Jewish Today uses canonical History matching", () => {
 
     assert.equal(historyCardLocation(entry), undefined);
     assert.equal("primaryImage" in entry, false);
+  });
+
+  it("selects the nearest earlier reviewed calendar date and wraps the year", () => {
+    const dates = [
+      { month: 1, day: 25 },
+      { month: 4, day: 29 },
+      { month: 9, day: 1 },
+      { month: 12, day: 20 },
+      { month: 12, day: 20 },
+    ];
+
+    assert.deepEqual(selectPreviousCalendarDate(dates, { month: 5, day: 1 }), {
+      month: 4,
+      day: 29,
+    });
+    assert.deepEqual(selectPreviousCalendarDate(dates, { month: 1, day: 1 }), {
+      month: 12,
+      day: 20,
+    });
   });
 });

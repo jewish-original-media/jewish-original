@@ -106,6 +106,9 @@ page, license, and a non-thumbnail local or Sanity asset. **D/E** stay private.
 | `/media/founder/meyer-isaac-street.webp`        | A        | Homepage Podcast + TTJS show page                                |
 | `/media/founder/meyer-isaac-steps.webp`         | A        | About                                                            |
 | `/media/founder/morning-tefillin.webp`          | A        | Homepage masthead + Support                                      |
+| `/media/founder/community-gathering.webp`       | A        | Secondary homepage masthead image                                |
+| `/media/founder/founders-overlook.webp`         | A        | Secondary homepage masthead image                                |
+| `/media/founder/archive-photographer.webp`      | A        | Jewish Today editorial image                                     |
 | Host photos cited in `docs/PODCAST_ARCHIVE.md`  | C        | Missing rights ledger                                            |
 | Israeli-flag photographs in the founder pack    | D        | Held. Flag fields.                                               |
 | Unsplash `photo-1697054821057`                  | E        | Held. Stock, not founder-owned.                                  |
@@ -118,11 +121,14 @@ page, license, and a non-thumbnail local or Sanity asset. **D/E** stay private.
 
 ### Public photography ledger
 
-| Filename                  | Usage                            | Owner                 | Rights  | Credit                |
-| ------------------------- | -------------------------------- | --------------------- | ------- | --------------------- |
-| `meyer-isaac-street.webp` | Homepage Podcast, TTJS show page | Jewish Original Media | Class A | Jewish Original Media |
-| `meyer-isaac-steps.webp`  | `/about`                         | Jewish Original Media | Class A | Jewish Original Media |
-| `morning-tefillin.webp`   | Homepage masthead, `/support`    | Jewish Original Media | Class A | Jewish Original Media |
+| Filename                    | Usage                            | Owner                 | Rights  | Credit                |
+| --------------------------- | -------------------------------- | --------------------- | ------- | --------------------- |
+| `meyer-isaac-street.webp`   | Homepage Podcast, TTJS show page | Jewish Original Media | Class A | Jewish Original Media |
+| `meyer-isaac-steps.webp`    | `/about`                         | Jewish Original Media | Class A | Jewish Original Media |
+| `morning-tefillin.webp`     | Homepage masthead, `/support`    | Jewish Original Media | Class A | Jewish Original Media |
+| `community-gathering.webp`  | Secondary homepage masthead      | Jewish Original Media | Class A | Jewish Original Media |
+| `founders-overlook.webp`    | Secondary homepage masthead      | Jewish Original Media | Class A | Jewish Original Media |
+| `archive-photographer.webp` | `/today` editorial image         | Jewish Original Media | Class A | Jewish Original Media |
 
 ### Living Archive review collection
 
@@ -189,6 +195,9 @@ Used (class A):
 - Meyer and Isaac at a Jerusalem street corner — 1024×1024, `/media/founder/meyer-isaac-street.webp`
 - Meyer and Isaac on Jerusalem limestone steps — 1024×1024, `/media/founder/meyer-isaac-steps.webp`
 - Morning tefillin / Hebrew book — 1024×1024, `/media/founder/morning-tefillin.webp`
+- Outdoor community gathering — 1024×605, `/media/founder/community-gathering.webp`
+- Two founders at an urban overlook — 583×1024, `/media/founder/founders-overlook.webp`
+- Photographer moving through a stone opening — 768×1024, `/media/founder/archive-photographer.webp`
 
 Held:
 
@@ -198,8 +207,15 @@ Held:
 - `ak2` portrait (not a public JOM founder page subject)
 - Three Wikimedia historical files until high-resolution, rights-cleared History attach is approved
 
-The used files are 1024px WebP derivatives, served through `next/image`. Original
-high-resolution masters are still needed for print and large crops.
+The used files are optimized WebP derivatives, served through `next/image`.
+Original high-resolution masters remain outside the public tree and are still
+needed for print and future large crops. The 2026-10-05 additions are
+founder-confirmed as owned or cleared for public web publication, responsive
+cropping, and Jewish Original Media credit.
+
+OTD lion and star assets may appear as restrained room marks only inside Today
+and History. They do not enter the global homepage masthead, may not be
+recolored on disk, and may not become repeating logo wallpaper.
 
 ## Non-brand graphical source
 

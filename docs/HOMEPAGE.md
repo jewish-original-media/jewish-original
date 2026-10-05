@@ -44,9 +44,13 @@ consistent Eastern Time day to both the homepage and header.
 
 ## Section order
 
-1. **Masthead** — a full-viewport class A morning-tefillin photograph carries
-   the stacked “Remember, rebuild, and create.” opening, live dates, primary
-   paths, and a numbered chapter strip. The primary path enters `/explore`.
+1. **Masthead** — a full-viewport, three-photograph class A sequence carries
+   the fixed “Jewish Original” identity, a restrained rotating descriptor
+   line, live dates, primary paths, and a numbered chapter strip. Morning
+   tefillin remains the server-rendered default and sole eager/LCP image; the
+   community and founder photographs load as secondary frames. Reduced-motion
+   environments receive the complete first frame and static accessible brand
+   sentence. The primary path enters `/explore`.
    The strip follows the rendered page order, includes Explore as a durable
    destination, and includes Originals, News, and Events only when their
    homepage scenes pass their existing publication gates. About remains

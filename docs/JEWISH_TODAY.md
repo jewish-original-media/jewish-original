@@ -48,11 +48,16 @@ A daily visit should answer, in this order:
 2. What is being observed today, and what does the calendar source say?
 3. Where are we in Torah this week?
 4. What happened on this Gregorian date in Jewish history?
+5. What reviewed News and Events connect the daily ritual to the Jewish
+   present?
 
 Do not invent observances, History matches, or Torah readings. The History
-section uses a quiet archive invitation when there is no exact Gregorian
-anniversary match. An ordinary weekday should still show the weekly portion
-when Hebcal provides one.
+section uses the nearest earlier reviewed Gregorian month/day when there is no
+exact match, labels it “Previous date in the archive,” shows the record’s real
+date, and explicitly says it is not today’s anniversary. An ordinary weekday
+should still show the weekly portion when Hebcal provides one. Current content
+uses the existing homepage freshness and diversity gates; a thin desk does not
+appear merely to fill space.
 
 ## Data contract
 
@@ -61,12 +66,13 @@ Calculated calendar days are not stored in Sanity.
 
 ### Full `/today` experience
 
-Uses `JewishTodayPage`. Shows the compact date hero, then only the sections
-that have real content: calendar observances, festival or weekly Torah
-readings, and published History matches. Gregorian and Hebrew dates are labeled
-as a two-part ledger. Provider memos appear only when Hebcal supplies them;
-they are not rewritten as JOM commentary. History uses `HistoryEntryCard`
-`variant="archive"`.
+Uses `JewishTodayPage`. A boxed asymmetric hero pairs the Gregorian/Hebrew
+ledger with founder-cleared editorial photography. The dashboard then shows
+only sections with real content: calendar observances, festival or weekly
+Torah readings, exact or clearly labeled previous-date History, and gated
+Current records. Provider memos appear only when Hebcal supplies them; they
+are not rewritten as JOM commentary. History uses `HistoryEntryCard`
+`variant="archive"`. OTD motifs remain restrained room marks.
 
 ### Compact homepage module
 
@@ -86,8 +92,10 @@ to `HomeJewishToday`. The module shows:
 - **On this day** only when a published History match exists
 - `Today →` into `/today`
 
-When `/today` has no published Gregorian anniversary, the page links to
-`/history` (“Browse the archive”) instead of a date-filtered empty result.
+When `/today` has no published Gregorian anniversary,
+`getPreviousCalendarHistory()` selects the nearest earlier reviewed
+month/day, wrapping to the latest represented month/day at the start of a new
+year. That block is archive discovery, not an On This Day claim.
 
 Do not fill empty states with placeholder copy. Do not call Hebcal or write a
 second on-this-day query from the homepage module. The homepage History
@@ -138,8 +146,9 @@ A match requires all of:
 Drafts and records with `calendarSystem: other` do not match, even if a month
 and day were parsed from the source row. After editorial review, every unique
 eligible Gregorian day-precision story is part of matching. No match is still
-a valid state; Today links to the History archive for that civil date. The
-homepage History module stays curated and does not list the full archive.
+a valid state; Today may show the source-honest previous-date block and links
+to the full History archive. The homepage History module stays curated and
+does not list the full archive.
 
 Related History is not queried, so unpublished related documents cannot leak.
 Cards use History’s `HistoryEntryCard`, including a rights-cleared image only

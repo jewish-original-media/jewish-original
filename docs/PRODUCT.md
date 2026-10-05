@@ -60,3 +60,21 @@ brochure, or social network.
 - A full newsroom or indiscriminate feed aggregation
 - Native applications before web product-market fit
 - Complex personalization or a paid membership product
+
+## V2 revenue milestone
+
+Revenue work begins only after V1 launch stability and real provider
+provisioning. The milestone includes:
+
+- a more complete Support journey with clear one-time and recurring paths
+- payment integration against approved products and terms
+- sponsor modules that are visibly labeled and structurally separate from
+  editorial copy
+- a limited article-page advertising inventory with fixed reserved dimensions,
+  no layout shift, and no targeting based on sensitive Jewish identity data
+- an editorial firewall covering sponsor approval, corrections, conflicts, and
+  the right to refuse placement
+- privacy, accessibility, performance, reporting, and removal requirements
+
+V1 may document those placements. It does not publish sponsor names, ad
+inventory promises, prices, payment links, or advertising SDKs.

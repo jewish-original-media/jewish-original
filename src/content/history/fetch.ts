@@ -6,12 +6,14 @@ import {
   getDraftSanityClient,
   getPublishedSanityClient,
 } from "@/lib/sanity/client";
+import { selectPreviousCalendarDate } from "@/lib/history/previous-calendar-date";
 
 import { selectPublishedHistoryEntries } from "./archive";
 import {
   draftCandidateSlugQuery,
   historyEntryQuery,
   historyFilterLabelQuery,
+  historyGregorianDatesQuery,
   historyIndexQuery,
   historyOnThisDayQuery,
   historySlugsQuery,
@@ -70,6 +72,16 @@ export async function getOnThisDayHistory(
     preview ? previewOptions : publishedOptions,
   );
   return preview ? entries : selectPublishedHistoryEntries(entries);
+}
+
+export async function getPreviousCalendarHistory(month: number, day: number) {
+  const dates = await getPublishedSanityClient().fetch<
+    { month: number; day: number }[]
+  >(historyGregorianDatesQuery, {}, publishedOptions);
+  const previous = selectPreviousCalendarDate(dates, { month, day });
+  if (!previous) return [];
+
+  return getOnThisDayHistory(false, previous.month, previous.day);
 }
 
 export const getHistoryEntry = cache(async (slug: string, preview: boolean) => {

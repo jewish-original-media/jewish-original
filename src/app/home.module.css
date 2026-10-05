@@ -2533,10 +2533,28 @@
   border: 0;
 }
 
+.heroSlide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.heroSlide:first-child {
+  opacity: 1;
+}
+
 .immersive .heroImage img {
   object-fit: cover;
   object-position: 42% 31%;
   filter: saturate(0.82) contrast(1.04);
+}
+
+.heroSlide[data-hero-slide="2"] img {
+  object-position: 50% 46%;
+}
+
+.heroSlide[data-hero-slide="3"] img {
+  object-position: 50% 34%;
 }
 
 .heroVeil {
@@ -2588,12 +2606,28 @@
 }
 
 .immersive .display {
+  display: grid;
   max-width: 9.5ch;
   color: var(--color-paper);
   font-size: clamp(4.25rem, 9.5vw, 9.5rem);
   letter-spacing: -0.065em;
   line-height: 0.83;
   text-wrap: balance;
+}
+
+.descriptorReel {
+  display: grid;
+  min-height: 0.84em;
+  color: var(--color-gold);
+}
+
+.descriptor {
+  grid-area: 1 / 1;
+  opacity: 0;
+}
+
+.descriptor:first-child {
+  opacity: 1;
 }
 
 .immersive .lede {
@@ -3113,8 +3147,25 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .immersive .heroImage img {
-    animation: immersive-hero-in 1100ms var(--ease-enter) both;
+  .heroSlide {
+    animation: immersive-hero-crossfade 30s ease-in-out infinite;
+  }
+
+  .heroSlide[data-hero-slide="2"] {
+    animation-delay: -20s;
+  }
+
+  .heroSlide[data-hero-slide="3"] {
+    animation-delay: -10s;
+  }
+
+  .immersive .heroFigure:hover .heroSlide,
+  .immersive .heroFigure:focus-within .heroSlide {
+    animation-play-state: paused;
+  }
+
+  .descriptor {
+    animation: immersive-descriptor 24s ease-in-out infinite;
   }
 
   .immersive .mastheadCopy {
@@ -3134,15 +3185,36 @@
   }
 }
 
-@keyframes immersive-hero-in {
-  from {
-    opacity: 0.6;
-    transform: scale(1.035);
-  }
-
-  to {
+@keyframes immersive-hero-crossfade {
+  0%,
+  28% {
     opacity: 1;
     transform: scale(1);
+  }
+
+  36%,
+  94% {
+    opacity: 0;
+    transform: scale(1.025);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes immersive-descriptor {
+  0%,
+  8% {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  10%,
+  100% {
+    opacity: 0;
+    translate: 0 0.15em;
   }
 }
 

@@ -193,7 +193,11 @@ The Daily ritual room uses a labeled Gregorian/Hebrew date ledger, then
 observance, Torah, and History in source order. Educational depth comes from
 provider memos, verified reading references, and clear source links—not
 decorative religious copy. Torah, Maftir, and Haftarah groups remain keyboard
-accessible and collapse when absent.
+accessible and collapse when absent. On wider screens, square-edged bordered
+rooms may balance those domains in an asymmetric grid. One founder-cleared
+editorial photograph and a restrained OTD mask ground the room; neither
+changes the source hierarchy. Gated News and Events may close the dashboard as
+the Jewish present.
 
 The Current index uses a quiet cool-field explainer and direct paths to the
 News and Events desks. It must remain visually subordinate to the durable
@@ -217,6 +221,19 @@ and distinct Today, History, Originals, News, Listening, Events, About, and
 Support rooms establish chapter pacing. Each scene retains semantic headings,
 source data, and visibility gates; cinematic scale never turns absent content
 into fabricated inventory.
+
+The lobby masthead may crossfade among three founder-cleared stills. Only the
+first image is eager and all motion disappears under reduced-motion. The fixed
+accessible identity is “Jewish Original”; rotating media/category words are
+visual emphasis, not separate announcements. Homepage video remains deferred
+until a licensed film, poster, captions, controls, and a non-video LCP path
+exist.
+
+History detail is an exhibition label followed by a reading room. Its
+accession rail may display the real date, reviewed place, verified citation
+count, and relational-thread count. The body stays a comfortable single
+column beside a relational index. Empty media remains intentional unless the
+exact record has cleared or public-domain media with an item-level ledger.
 
 ## Jerusalem material
 
