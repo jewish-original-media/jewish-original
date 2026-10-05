@@ -25,7 +25,10 @@ and is `noindex`. The canonical URL remains `/today`.
 failure state. It is honored only when `JEWISH_TODAY_ALLOW_PREVIEWS=1` and is
 ignored in ordinary production.
 
-Global navigation and footer were not changed in this milestone.
+Today is now the primary daily navigation gateway. Its submenu and the global
+daily ribbon connect the current Gregorian/Hebrew day, Jewish calendar, Torah,
+reviewed History, and eligible News and Events. News and Events retain their
+standalone routes and publication gates.
 
 ## V1 definition of “today”
 

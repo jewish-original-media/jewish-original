@@ -44,7 +44,9 @@ test("composes the homepage from Jewish Today and published History", async ({
   ).toHaveCount(0);
   await expect(
     page
-      .getByRole("region", { name: "Remember, rebuild, and create." })
+      .getByRole("region", {
+        name: /Jewish Original Media, history, culture, education/i,
+      })
       .getByText(
         /a modern home for jewish history, culture, education, connection, and identity/i,
       ),
@@ -55,7 +57,10 @@ test("composes the homepage from Jewish Today and published History", async ({
   await expect(
     page.getByRole("link", { name: "Today" }).first(),
   ).toHaveAttribute("href", "/today");
-  await page.getByRole("link", { name: "Discover Jewish Today" }).click();
+  await page
+    .getByRole("main")
+    .getByRole("link", { name: "Discover Jewish Today" })
+    .click();
   await expect(page).toHaveURL(/\/today$/);
   await expect(
     page.getByRole("heading", { level: 1, name: "Today" }),
@@ -96,6 +101,7 @@ test("composes the homepage from Jewish Today and published History", async ({
   ).toBe(3);
   await expect(
     page
+      .getByRole("main")
       .getByText(
         /This week in Torah|Most recent Torah portion|Festival|Rosh Hashana/,
       )
@@ -119,14 +125,14 @@ test("composes the homepage from Jewish Today and published History", async ({
       page
         .getByRole("navigation", { name: "Mobile" })
         .getByRole("link", { name: "Events" }),
-    ).toHaveAttribute("href", "/events");
+    ).toHaveCount(0);
     await menuToggle.click();
   } else {
     await expect(
       page
         .getByRole("navigation", { name: "Primary" })
         .getByRole("link", { name: "Events" }),
-    ).toHaveAttribute("href", "/events");
+    ).toHaveCount(0);
   }
   await expect(
     page.getByRole("img", {

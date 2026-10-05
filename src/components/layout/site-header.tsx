@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import { BrandLogo } from "@/components/brand/brand-logo";
 import { Container } from "@/components/ui/container";
 import { siteConfig, type SiteNavItem } from "@/lib/site";
@@ -11,12 +12,22 @@ export type SiteHeaderToday = {
   hebrewDate?: string;
 };
 
+export type SiteRibbonItem = {
+  eyebrow: string;
+  label: string;
+  href: string;
+  external?: boolean;
+  analyticsEvent?: string;
+};
+
 export function SiteHeader({
   today,
   navigation = siteConfig.navigation,
+  ribbon = [],
 }: {
   today?: SiteHeaderToday;
   navigation?: readonly SiteNavItem[];
+  ribbon?: readonly SiteRibbonItem[];
 }) {
   const desktopNavigation = navigation.filter(
     (item) => item.href !== "/podcasts" && item.href !== "/support",
@@ -79,6 +90,23 @@ export function SiteHeader({
                       <span>{item.label}</span>
                       <span aria-hidden="true">↗</span>
                     </Link>
+                    {item.children?.length ? (
+                      <ul
+                        aria-label={`${item.label} sections`}
+                        className={styles.menuChildren}
+                      >
+                        {item.children.map((child) => (
+                          <li key={child.href}>
+                            <Link href={child.href}>
+                              <span>{child.label}</span>
+                              {child.description ? (
+                                <small>{child.description}</small>
+                              ) : null}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
                   </li>
                 ))}
               </ul>
@@ -90,15 +118,68 @@ export function SiteHeader({
         <Container>
           <ul className={styles.primaryNavList}>
             {desktopNavigation.map((item) => (
-              <li key={item.href}>
+              <li className={styles.primaryNavItem} key={item.href}>
                 <Link className={styles.navLink} href={item.href}>
                   {item.label}
                 </Link>
+                {item.children?.length ? (
+                  <div className={styles.megaPanel}>
+                    <p className={styles.megaKicker}>Begin with Today</p>
+                    <p className={styles.megaIntroduction}>
+                      The Jewish day, the Jewish past, and what is happening
+                      now.
+                    </p>
+                    <ul>
+                      {item.children.map((child) => (
+                        <li key={child.href}>
+                          <Link href={child.href}>
+                            <span>{child.label}</span>
+                            {child.description ? (
+                              <small>{child.description}</small>
+                            ) : null}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
               </li>
             ))}
           </ul>
         </Container>
       </nav>
+      {ribbon.length ? (
+        <nav
+          className={styles.dailyRibbon}
+          aria-label="The day across Jewish Original"
+        >
+          <p className={styles.dailyRibbonLabel}>The day, connected</p>
+          <ol className={styles.dailyRibbonList}>
+            {ribbon.map((item) => (
+              <li key={`${item.eyebrow}-${item.href}`}>
+                {item.external ? (
+                  <TrackedAnchor
+                    event={item.analyticsEvent ?? "daily_ribbon_outbound"}
+                    href={item.href}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <span>{item.eyebrow}</span>
+                    <strong>{item.label}</strong>
+                    <span aria-hidden="true">↗</span>
+                  </TrackedAnchor>
+                ) : (
+                  <Link href={item.href}>
+                    <span>{item.eyebrow}</span>
+                    <strong>{item.label}</strong>
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      ) : null}
     </header>
   );
 }

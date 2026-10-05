@@ -14,18 +14,26 @@ test("public navigation and footer expose only live destinations", async ({
       ? page.getByRole("navigation", { name: "Mobile" })
       : page.getByRole("navigation", { name: "Primary" });
 
-  await expect(nav.getByRole("link", { name: "Today" })).toHaveAttribute(
-    "href",
-    "/today",
-  );
+  await expect(
+    nav.getByRole("link", { name: "Today", exact: true }),
+  ).toHaveAttribute("href", "/today");
   await expect(nav.getByRole("link", { name: "History" })).toBeVisible();
   await expect(nav.getByRole("link", { name: "Originals" })).toHaveAttribute(
     "href",
     "/originals",
   );
-  await expect(nav.getByRole("link", { name: "Podcasts" })).toBeVisible();
   await expect(nav.getByRole("link", { name: "About" })).toBeVisible();
-  await expect(nav.getByRole("link", { name: "Support" })).toBeVisible();
+  if (testInfo.project.name === "mobile") {
+    await expect(nav.getByRole("link", { name: "Podcasts" })).toBeVisible();
+    await expect(nav.getByRole("link", { name: "Support" })).toBeVisible();
+  } else {
+    await expect(
+      page.getByRole("banner").getByRole("link", { name: "Listen" }),
+    ).toHaveAttribute("href", "/podcasts");
+    await expect(
+      page.getByRole("banner").getByRole("link", { name: "Support" }),
+    ).toHaveAttribute("href", "/support");
+  }
   await expect(nav.getByRole("link", { name: "News" })).toHaveCount(0);
   await expect(nav.getByRole("link", { name: "Events" })).toHaveCount(0);
   await expect(

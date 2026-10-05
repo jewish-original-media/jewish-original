@@ -7,12 +7,14 @@ import {
   isArchiveEntityIndexable,
   recordsForArchiveEntity,
 } from "@/content/archive/search";
+import { getPublishedEventsIndex } from "@/content/events/fetch";
 import { getPublishedHistorySlugs } from "@/content/history/fetch";
 import { getPublishedOriginalSlugs } from "@/content/originals/fetch";
 import {
   getPublishedPodcastShowSlugs,
   getPublishedPodcastSlugs,
 } from "@/content/podcasts/fetch";
+import { eventsNavEligible } from "@/features/ingest/select";
 import { publicStaticSitemapPaths } from "@/lib/seo/site";
 import { isSampleOriginal } from "@/lib/originals/display";
 import { siteConfig } from "@/lib/site";
@@ -27,6 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     originalSlugs,
     archiveEntities,
     archiveRecords,
+    events,
   ] = await Promise.all([
     getPublishedHistorySlugs().catch(() => []),
     getPublishedPodcastShowSlugs().catch(() => []),
@@ -34,6 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getPublishedOriginalSlugs().catch(() => []),
     getArchiveEntities().catch(() => []),
     getDurableArchiveRecords().catch(() => []),
+    getPublishedEventsIndex().catch(() => []),
   ]);
 
   const indexableEntities = archiveEntities.filter((entity) =>
@@ -45,7 +49,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   return [
-    ...publicStaticSitemapPaths().map((path) => ({
+    ...publicStaticSitemapPaths({
+      includeEvents: eventsNavEligible(events),
+    }).map((path) => ({
       url: path === "/" ? siteConfig.url : `${siteConfig.url}${path}`,
       changeFrequency:
         path === "/" || path === "/today" || path === "/news"

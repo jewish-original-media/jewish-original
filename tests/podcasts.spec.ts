@@ -20,6 +20,9 @@ test("publishes the approved show and four pilot episodes", async ({
     }),
   ).toBeVisible();
   await expect(
+    page.getByRole("navigation", { name: "Continue exploring" }),
+  ).toHaveAttribute("data-room", "podcasts");
+  await expect(
     page.getByRole("heading", { name: "Podcasts are being prepared." }),
   ).toHaveCount(0);
   await expect(page.getByText("Private editorial preview")).toHaveCount(0);
@@ -179,7 +182,9 @@ test("plays published episode audio one at a time from the feed", async ({
   });
   await expect
     .poll(() =>
-      players.first().evaluate((element) => !(element as HTMLAudioElement).paused),
+      players
+        .first()
+        .evaluate((element) => !(element as HTMLAudioElement).paused),
     )
     .toBe(true);
 
@@ -189,12 +194,16 @@ test("plays published episode audio one at a time from the feed", async ({
   });
   await expect
     .poll(() =>
-      players.first().evaluate((element) => (element as HTMLAudioElement).paused),
+      players
+        .first()
+        .evaluate((element) => (element as HTMLAudioElement).paused),
     )
     .toBe(true);
   await expect
     .poll(() =>
-      players.nth(1).evaluate((element) => !(element as HTMLAudioElement).paused),
+      players
+        .nth(1)
+        .evaluate((element) => !(element as HTMLAudioElement).paused),
     )
     .toBe(true);
 
@@ -204,7 +213,9 @@ test("plays published episode audio one at a time from the feed", async ({
   });
   await expect
     .poll(() =>
-      players.nth(1).evaluate((element) => (element as HTMLAudioElement).currentTime),
+      players
+        .nth(1)
+        .evaluate((element) => (element as HTMLAudioElement).currentTime),
     )
     .toBeGreaterThan(10);
 });

@@ -30,7 +30,7 @@
   padding-block: 0.2em;
   color: var(--color-navy);
   font-family: var(--font-sans);
-  font-size: 0.72rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: var(--tracking-label);
   line-height: 1.35;
@@ -68,7 +68,7 @@
   margin: 0 0 var(--space-7);
   color: var(--color-navy);
   font-family: var(--font-sans);
-  font-size: 0.74rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -203,7 +203,7 @@
 .todayPlace {
   margin: var(--space-2) 0 0;
   color: var(--color-muted);
-  font-size: 0.72rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -318,7 +318,7 @@
 .historyCatalog {
   margin: 0;
   color: var(--color-navy);
-  font-size: 0.68rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -575,7 +575,7 @@
 .latestLabel {
   margin: 0 0 var(--space-4);
   color: var(--color-gold);
-  font-size: 0.72rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
@@ -632,7 +632,7 @@
 
 .episodeRailDate {
   color: var(--color-gold);
-  font-size: 0.72rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -654,7 +654,7 @@
 .originalMeta {
   margin: var(--space-5) 0 0;
   color: var(--color-navy);
-  font-size: 0.72rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -873,7 +873,7 @@
 .newsSource {
   margin-top: 0.35rem;
   color: var(--color-navy);
-  font-size: 0.72rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -939,7 +939,7 @@
 }
 
 .eventMonth {
-  font-size: 0.68rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.16em;
 }
@@ -1170,7 +1170,7 @@
 
 .exhibition .mastheadMeta {
   margin: 2rem 0 0;
-  font-size: 0.72rem;
+  font-size: var(--text-ui);
   letter-spacing: 0.06em;
   line-height: 1.6;
 }
@@ -1858,7 +1858,7 @@
   padding: 1.1rem 0.65rem 0;
   color: rgb(255 255 255 / 0.58);
   font-family: var(--font-sans);
-  font-size: 0.68rem;
+  font-size: var(--text-ui);
   letter-spacing: 0.06em;
   line-height: 1.45;
   text-transform: uppercase;
@@ -1903,7 +1903,7 @@
   margin: 0;
   color: rgb(255 255 255 / 0.5);
   font-family: var(--font-sans);
-  font-size: 0.68rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -2174,7 +2174,7 @@
   padding: 0.45rem 0.55rem;
   background: var(--color-night);
   color: var(--color-paper);
-  font-size: 0.63rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.16em;
 }
@@ -2224,7 +2224,7 @@
   padding: 0.8rem max(var(--gutter), calc((100vw - 80rem) / 2));
   background: var(--color-night);
   color: var(--color-sky);
-  font-size: 0.68rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -2342,7 +2342,7 @@
   position: relative;
   z-index: 1;
   align-self: start;
-  font-size: 0.62rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.18em;
 }
@@ -2511,7 +2511,7 @@
 
 .immersive .masthead {
   position: relative;
-  min-height: calc(100svh - 4.5rem);
+  min-height: calc(100svh - var(--header-height));
   display: grid;
   align-content: end;
   padding: 0;
@@ -2585,7 +2585,7 @@
   justify-items: end;
   padding: 0;
   color: rgb(255 255 255 / 0.72);
-  font-size: 0.62rem;
+  font-size: var(--text-ui);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -3232,7 +3232,7 @@
 
 @media (max-width: 63.98rem) {
   .immersive .masthead {
-    min-height: calc(100svh - 4.5rem);
+    min-height: calc(100svh - var(--header-height));
   }
 
   .immersive .display {
@@ -3288,7 +3288,7 @@
   }
 
   .immersive .masthead {
-    min-height: calc(100svh - 4.5rem);
+    min-height: calc(100svh - var(--header-height));
   }
 
   .immersive .heroImage img {

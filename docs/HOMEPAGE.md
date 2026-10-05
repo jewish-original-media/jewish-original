@@ -78,8 +78,9 @@ consistent Eastern Time day to both the homepage and header.
 7. **Podcasts** — a night listening room with the published show, latest
    `EpisodeCard`, supporting titles, and the founder-owned street photograph.
 8. **Events** — date-led calendar scene when publishable inventory passes the
-   existing visibility gate. `/events` remains available from shared
-   navigation even while the homepage scene is withheld.
+   existing visibility gate. `/events` remains a public standalone route, but
+   enters the Today submenu and daily ribbon only when the shared Events gate
+   passes.
 9. **About** — an institutional statement connecting history, identity, and
    the shared future.
 10. **Support** — a gold closing field and invitation into `/support`.
@@ -108,8 +109,8 @@ The separate manifesto band is removed so the founder line is not repeated
 beside the published _Our Path Forward_ essay.
 
 Upcoming Events stay hidden on the homepage until inventory earns the slot.
-The permanent navigation path does not imply inventory. Do not invent
-articles, headlines, or events.
+The Today submenu and daily ribbon use the same source-honest eligibility
+decision. Do not invent articles, headlines, or events.
 
 ## Jewish Today
 

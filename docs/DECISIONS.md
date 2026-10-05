@@ -845,3 +845,26 @@ V2—not V1—owns expanded Support, payments, sponsorship, and advertising. Tho
 features require approved terms and real providers, visible commercial labels,
 an editorial firewall, fixed layout space, accessible controls, and privacy
 rules that prohibit sensitive Jewish-identity targeting.
+
+## ADR-054 — Today is the daily gateway; the archive remains circular
+
+**Status:** Accepted, 2026-10-05
+
+The brand homepage remains the cinematic lobby, but Today is the primary
+daily navigation gateway. Its accessible submenu groups the Gregorian and
+Hebrew day, Jewish calendar, Torah, reviewed On This Day History, and eligible
+News and Events. News and Events keep standalone URLs and outbound semantics;
+they enter the submenu, daily ribbon, and Events sitemap only when their
+existing inventory gates pass.
+
+The global shell may expose a horizontally scrollable, server-rendered daily
+ribbon made only from data already fetched for the shell. It never autoplays,
+never invents a headline or observance, and omits unavailable items. Generic
+cross-room paths remain wayfinding rather than inferred editorial
+relationships.
+
+Meaningful interface text has a 13px minimum and body text targets 17–18px.
+Living editorial rooms may use flowing bands, capsules, circular markers, and
+restrained asymmetric corners. History remains the square, rule-led museum
+exception. These distinctions are responsive, keyboard-accessible, and static
+under reduced motion.

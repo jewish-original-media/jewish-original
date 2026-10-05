@@ -99,3 +99,9 @@ export function newsNavEligible(items: readonly { publisher: string }[]) {
   const publishers = new Set(items.map((item) => item.publisher));
   return items.length >= 5 && publishers.size >= 3;
 }
+
+export function eventsNavEligible(
+  items: readonly { organizer: string; geoBucket?: string }[],
+) {
+  return shouldShowHomepageEvents(items);
+}

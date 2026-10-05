@@ -22,11 +22,14 @@ test("renders an ordinary weekday without empty sections", async ({
       name: /photographer carrying a camera steps through a weathered stone opening/i,
     }),
   ).toBeVisible();
-  await expect(
-    page.getByRole("navigation", { name: "Continue exploring" }),
-  ).toBeVisible();
-  await expect(page.getByText("This week in Torah")).toBeVisible();
-  await expect(page.getByText("Most recent Torah portion")).toHaveCount(0);
+  const archiveTrail = page.getByRole("navigation", {
+    name: "Continue exploring",
+  });
+  await expect(archiveTrail).toBeVisible();
+  await expect(archiveTrail).toHaveAttribute("data-room", "today");
+  const main = page.getByRole("main");
+  await expect(main.getByText("This week in Torah")).toBeVisible();
+  await expect(main.getByText("Most recent Torah portion")).toHaveCount(0);
   await expect(page.getByText("Eastern Time")).toBeVisible();
   await expect(
     page.getByRole("heading", { name: /nitzavim.vayeilech/i }),
@@ -115,8 +118,9 @@ test("labels a prior portion when the coming Saturday is a festival", async ({
 }) => {
   await page.goto("/today?date=2026-09-09");
 
-  await expect(page.getByText("Most recent Torah portion")).toBeVisible();
-  await expect(page.getByText("This week in Torah")).toHaveCount(0);
+  const main = page.getByRole("main");
+  await expect(main.getByText("Most recent Torah portion")).toBeVisible();
+  await expect(main.getByText("This week in Torah")).toHaveCount(0);
   await expect(page.getByText("Festival").first()).toBeVisible();
   await expect(
     page.getByRole("heading", { name: /nitzavim.vayeilech/i }),
@@ -194,8 +198,7 @@ test("retrieves the published Dachau History entry on April 29", async ({
   await expect(page.getByText(/holocaust/i).first()).toBeVisible();
   await expect(
     page
-      .locator("article")
-      .filter({ hasText: "US Liberates Dachau" })
+      .getByRole("region", { name: "Published Gregorian anniversaries" })
       .locator("img"),
   ).toHaveCount(0);
   await expect(page.getByRole("link", { name: /related/i })).toHaveCount(0);

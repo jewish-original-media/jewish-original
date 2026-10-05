@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { newsNavEligible } from "../src/features/ingest/select";
+import {
+  eventsNavEligible,
+  newsNavEligible,
+} from "../src/features/ingest/select";
 import {
   resolveFooterExplore,
   resolvePrimaryNavigation,
@@ -17,15 +20,7 @@ test("primary nav adds Originals only when the journal is live", () => {
   );
   assert.deepEqual(
     baseline.map((item) => item.href),
-    [
-      "/today",
-      "/explore",
-      "/history",
-      "/podcasts",
-      "/events",
-      "/about",
-      "/support",
-    ],
+    ["/today", "/explore", "/history", "/podcasts", "/about", "/support"],
   );
   assert.deepEqual(
     resolvePrimaryNavigation({ originalsLive: true }).map((item) => item.href),
@@ -35,14 +30,13 @@ test("primary nav adds Originals only when the journal is live", () => {
       "/history",
       "/originals",
       "/podcasts",
-      "/events",
       "/about",
       "/support",
     ],
   );
 });
 
-test("News enters primary nav only at five items and three publishers", () => {
+test("News enters the Today submenu only at five items and three publishers", () => {
   assert.equal(newsNavEligible([{ publisher: "JTA" }]), false);
   assert.equal(
     newsNavEligible([
@@ -53,22 +47,39 @@ test("News enters primary nav only at five items and three publishers", () => {
     ]),
     false,
   );
-  assert.deepEqual(
-    resolvePrimaryNavigation({
-      originalsLive: true,
-      newsLive: true,
-    }).map((item) => item.label),
-    [
-      "Today",
-      "Explore",
-      "History",
-      "Originals",
-      "Podcasts",
-      "News",
-      "Events",
-      "About",
-      "Support",
-    ],
+  const navigation = resolvePrimaryNavigation({
+    originalsLive: true,
+    newsLive: true,
+  });
+  assert.equal(
+    navigation.some((item) => item.href === "/news"),
+    false,
+  );
+  assert.equal(
+    navigation
+      .find((item) => item.href === "/today")
+      ?.children?.some((item) => item.href === "/news"),
+    true,
+  );
+});
+
+test("Events uses the same diversity gate in the Today submenu", () => {
+  const thin = [
+    { organizer: "One", geoBucket: "New York" },
+    { organizer: "One", geoBucket: "New York" },
+  ];
+  const ready = [
+    { organizer: "One", geoBucket: "New York" },
+    { organizer: "Two", geoBucket: "Online" },
+  ];
+  assert.equal(eventsNavEligible(thin), false);
+  assert.equal(eventsNavEligible(ready), true);
+  const today = resolvePrimaryNavigation({ eventsLive: true }).find(
+    (item) => item.href === "/today",
+  );
+  assert.equal(
+    today?.children?.some((item) => item.href === "/events"),
+    true,
   );
 });
 
@@ -77,7 +88,14 @@ test("footer Explore adds Originals when the journal is live and keeps News", ()
     resolveFooterExplore().some((item) => item.href === "/originals"),
     false,
   );
-  const explore = resolveFooterExplore({ originalsLive: true });
+  assert.equal(
+    resolveFooterExplore().some((item) => item.href === "/events"),
+    false,
+  );
+  const explore = resolveFooterExplore({
+    originalsLive: true,
+    eventsLive: true,
+  });
   assert.deepEqual(
     explore.map((item) => item.href),
     [

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { ArchiveTrail } from "@/components/explore/archive-trail";
 import { Container } from "@/components/ui/container";
 import type { OriginalSummary } from "@/content/originals/types";
 import {
@@ -25,6 +26,7 @@ export function OriginalsIndex({ items }: { items: OriginalSummary[] }) {
           </p>
         </Container>
       </section>
+      <ArchiveTrail current="originals" />
       <section className={styles.list}>
         <Container>
           {!lead ? (

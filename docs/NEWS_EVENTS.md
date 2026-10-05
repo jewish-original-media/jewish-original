@@ -55,18 +55,19 @@ working fallback `openai/gpt-4o-mini` after nano 429s. Override with
 Deterministic filters run first. The model only classifies survivors. It cannot
 set publication status.
 
-## Homepage versus primary nav
+## Homepage versus shared chrome
 
 These are different gates.
 
-| Surface                         | Show when                                                                                                                                                                                                                                                                                                                                  |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Homepage “What We’re Following” | At least **3** items whose `sourcePublishedAt` is within **7 days**, after deterministic publisher and desk diversity (prefer 3 distinct publishers and mixed desks when the pool allows; prefer 3 items, cap 5, at most 2 per publisher). Hide at 0–2 even if fewer than three publishers are available. Never render an empty News band. |
-| `/news`                         | Published, unexpired items whose `sourcePublishedAt` is within **14 days**. Successful empty is not a fetch failure.                                                                                                                                                                                                                       |
-| Primary nav                     | At least **5** current `/news` items and **3** publishers. Footer News stays on.                                                                                                                                                                                                                                                           |
+| Surface                             | Show when                                                                                                                                                                                                                                                                                                                                  |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Homepage “What We’re Following”     | At least **3** items whose `sourcePublishedAt` is within **7 days**, after deterministic publisher and desk diversity (prefer 3 distinct publishers and mixed desks when the pool allows; prefer 3 items, cap 5, at most 2 per publisher). Hide at 0–2 even if fewer than three publishers are available. Never render an empty News band. |
+| `/news`                             | Published, unexpired items whose `sourcePublishedAt` is within **14 days**. Successful empty is not a fetch failure.                                                                                                                                                                                                                       |
+| Today submenu / daily ribbon News   | At least **5** current `/news` items and **3** publishers. Footer News stays on.                                                                                                                                                                                                                                                           |
+| Today submenu / daily ribbon Events | At least **2** upcoming events from **2** organizers and **2** geography buckets. The Events sitemap route and footer Events link use the same eligibility decision.                                                                                                                                                                       |
 
 Do not backdate `sourcePublishedAt`, extend the windows, disable the gates,
-or publish filler to force the homepage band.
+or publish filler to force the homepage, submenu, or ribbon.
 
 ## Writes
 

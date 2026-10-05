@@ -146,7 +146,7 @@ test("browses published history by civil date without fabricating a match", asyn
   await page.goto("/history");
   await page.getByText("Filters", { exact: true }).click();
   await page.getByLabel("Month").selectOption("4");
-  await page.getByLabel("Day").selectOption("29");
+  await page.getByLabel("Gregorian day", { exact: true }).selectOption("29");
   await page.getByRole("button", { name: /apply filters/i }).click();
 
   await expect(page).toHaveURL(/month=4/);

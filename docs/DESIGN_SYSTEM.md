@@ -63,6 +63,9 @@ Public type scale:
 - Article / card headline: `1.35rem` to `2.25rem`
 - Eyebrow: small sans, uppercase, tracked
 - Body: editorial serif, about 17–18px mobile and 18–20px desktop
+- Functional UI text: at least 13px for navigation, labels, metadata, filters,
+  captions, and controls; decorative counters may be 12px only when they carry
+  no unique meaning
 
 Very large type is reserved so smaller moments stay intimate.
 
@@ -142,7 +145,11 @@ not recolor or outline the mark. Do not place it on sand or white.
 
 ## Shape, depth, and borders
 
-- Prefer hairline rules and square edges over rounded rectangles
+- Living editorial rooms may use flowing bands, capsules, circular markers,
+  and restrained asymmetric radii to connect sections without becoming a
+  generic rounded-card interface
+- History remains the museum exception: prefer hairline rules, square edges,
+  accession labels, and framed reading compositions
 - Cards are reserved for comprehension, not default grouping
 - Shadows are low-opacity and reserved for elevated navigation or overlays
 - A light paper grain may sit on the canvas as CSS only
@@ -322,9 +329,17 @@ The sticky night header centers the approved unaltered logo plaque, presents
 the current Gregorian and Hebrew dates where space allows, and keeps Listen
 and Support close at hand. A native `details` disclosure opens the full
 numbered menu without client JavaScript. At desktop widths, a second restrained
-row exposes the same eligible destinations while Listen and Support remain
-quick actions. Originals and News remain gated; Events is permanent. The
-desktop row does not create a second ungated navigation contract.
+row makes Today the daily gateway while Listen and Support remain quick
+actions. Today groups the Jewish calendar, Torah, On This Day, and eligible
+News and Events without changing their standalone URLs. Originals, News, and
+Events remain inventory-gated. The desktop row does not create a second
+ungated navigation contract.
+
+A server-rendered daily ribbon sits below the navigation. It links only real
+data already available to the shell: the Gregorian and Hebrew day, an eligible
+observance or Torah portion, a reviewed historical anniversary, eligible News
+and Events, and Explore. Missing material is omitted. The ribbon scrolls
+horizontally without autoplay and remains complete under reduced motion.
 
 The footer closes with “Keep the story moving,” a Support invitation, and
 Explore / Connect link groups. Both header and footer use square edges,

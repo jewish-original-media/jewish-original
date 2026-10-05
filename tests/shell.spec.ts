@@ -32,6 +32,20 @@ test("renders the responsive, accessible application shell", async ({
   await expect(page.getByRole("banner")).toBeVisible();
   await expect(page.getByRole("main")).toBeVisible();
   await expect(page.getByRole("contentinfo")).toBeVisible();
+  const dailyRibbon = page.getByRole("navigation", {
+    name: "The day across Jewish Original",
+  });
+  await expect(dailyRibbon).toBeVisible();
+  await expect(dailyRibbon.getByRole("link").first()).toBeVisible();
+  const ribbonLabelSize = await dailyRibbon
+    .getByRole("link")
+    .first()
+    .locator("span")
+    .first()
+    .evaluate((element) =>
+      Number.parseFloat(getComputedStyle(element).fontSize),
+    );
+  expect(ribbonLabelSize).toBeGreaterThanOrEqual(13);
   await expect(
     page.getByRole("heading", {
       level: 1,
@@ -51,10 +65,18 @@ test("renders the responsive, accessible application shell", async ({
     await expect(
       page.getByRole("navigation", { name: "Mobile" }),
     ).toBeVisible();
+    await expect(
+      page
+        .getByRole("navigation", { name: "Mobile" })
+        .getByRole("link", { name: /Jewish calendar/ }),
+    ).toBeVisible();
     await menu.click();
   } else {
+    const primary = page.getByRole("navigation", { name: "Primary" });
+    await expect(primary).toBeVisible();
+    await primary.getByRole("link", { name: "Today", exact: true }).hover();
     await expect(
-      page.getByRole("navigation", { name: "Primary" }),
+      primary.getByRole("link", { name: /Jewish calendar/ }),
     ).toBeVisible();
   }
 

@@ -21,7 +21,7 @@ test("serves /events as a museum calendar without inventing programs", async ({
       page
         .getByRole("navigation", { name: "Primary" })
         .getByRole("link", { name: "Events" }),
-    ).toHaveAttribute("href", "/events");
+    ).toHaveCount(0);
   }
   await expect(
     page.getByText(/no upcoming events are published yet/i),

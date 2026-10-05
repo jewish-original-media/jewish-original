@@ -25,6 +25,10 @@ test("lists only launch-ready static sitemap paths", () => {
     "/privacy",
   ]);
   assert.equal(paths.includes("/events"), false);
+  assert.equal(
+    publicStaticSitemapPaths({ includeEvents: true }).includes("/events"),
+    true,
+  );
   assert.equal(paths.includes("/admin"), false);
 });
 

@@ -97,7 +97,7 @@
 }
 
 .month {
-  font-size: 0.72rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.16em;
 }
@@ -145,7 +145,7 @@
   display: inline-block;
   margin-top: var(--space-4);
   color: var(--color-navy);
-  font-size: 0.74rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;

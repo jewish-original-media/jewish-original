@@ -117,7 +117,7 @@
   align-items: baseline;
   gap: 0.55rem 1.35rem;
   color: var(--color-navy);
-  font-size: 0.72rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;

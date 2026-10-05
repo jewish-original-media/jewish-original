@@ -10,6 +10,9 @@ test("serves Originals as a house journal, not a blog index", async ({
   await expect(
     page.getByRole("heading", { level: 1, name: "Writing from the house." }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("navigation", { name: "Continue exploring" }),
+  ).toHaveAttribute("data-room", "originals");
   await expect(page.getByText(/no published originals yet/i)).toHaveCount(0);
   await expect(
     page.getByRole("heading", { name: "Our Path Forward" }),
@@ -82,9 +85,7 @@ test("keeps unpublished Original slugs off the public site", async ({
   expect(response?.status()).toBe(404);
 });
 
-test("keeps sample Original slugs out of the sitemap", async ({
-  page,
-}) => {
+test("keeps sample Original slugs out of the sitemap", async ({ page }) => {
   const sitemap = await page.goto("/sitemap.xml");
   expect(sitemap?.status()).toBe(200);
   const xml = (await page.content()) || "";

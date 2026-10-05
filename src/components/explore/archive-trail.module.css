@@ -5,9 +5,45 @@
   color: inherit;
 }
 
+.trail[data-room="today"] {
+  background: color-mix(in srgb, var(--color-sky) 82%, var(--color-paper));
+  color: var(--color-navy);
+}
+
+.trail[data-room="explore"] {
+  background: color-mix(in srgb, var(--color-sand) 48%, var(--color-canvas));
+  color: var(--color-navy);
+}
+
+.trail[data-room="history"] {
+  background: color-mix(in srgb, var(--color-sand) 64%, var(--color-paper));
+  color: var(--color-charcoal);
+}
+
+.trail[data-room="current"],
+.trail[data-room="news"] {
+  background: color-mix(in srgb, var(--color-night) 96%, var(--color-navy));
+  color: var(--color-paper);
+}
+
+.trail[data-room="events"] {
+  background: color-mix(in srgb, var(--color-gold) 18%, var(--color-sand));
+  color: var(--color-navy);
+}
+
+.trail[data-room="originals"] {
+  background: color-mix(in srgb, var(--color-sand) 34%, var(--color-paper));
+  color: var(--color-navy);
+}
+
+.trail[data-room="podcasts"] {
+  background: color-mix(in srgb, var(--color-navy) 92%, var(--color-night));
+  color: var(--color-paper);
+}
+
 .label {
   margin: 0 0 0.85rem;
-  font-size: 0.63rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.16em;
   opacity: 0.7;
@@ -33,6 +69,7 @@
   align-items: center;
   gap: 0.7rem;
   padding: 0.55rem 0.25rem;
+  border-radius: var(--radius-pill);
   color: inherit;
   font-family: var(--font-serif);
   font-size: clamp(0.96rem, 1.3vw, 1.12rem);
@@ -43,17 +80,28 @@
 .list a span {
   flex: 0 0 auto;
   font-family: var(--font-sans);
-  font-size: 0.58rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.1em;
   opacity: 0.58;
 }
 
 .list a[aria-current="page"] {
+  background: color-mix(in srgb, currentColor 8%, transparent);
   text-decoration: underline;
   text-decoration-color: var(--color-gold);
   text-decoration-thickness: 0.12rem;
   text-underline-offset: 0.32rem;
+}
+
+.trail[data-room="history"] .list a {
+  border-radius: 0;
+}
+
+.trail[data-room="current"] .list a[aria-current="page"],
+.trail[data-room="news"] .list a[aria-current="page"],
+.trail[data-room="podcasts"] .list a[aria-current="page"] {
+  background: rgb(255 255 255 / 0.08);
 }
 
 .list a:hover {

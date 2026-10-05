@@ -41,6 +41,7 @@
   align-self: center;
   padding: clamp(1.25rem, 4vw, 3rem);
   border: 1px solid color-mix(in srgb, var(--color-navy) 22%, transparent);
+  border-radius: 0 var(--radius-flow) var(--radius-flow) var(--radius-flow);
   background: color-mix(in srgb, var(--color-canvas) 91%, transparent);
 }
 
@@ -49,6 +50,7 @@
   min-height: clamp(22rem, 70vw, 34rem);
   margin: 0;
   overflow: hidden;
+  border-radius: var(--radius-flow) var(--radius-flow) 0 var(--radius-flow);
   background: var(--color-navy);
 }
 
@@ -75,7 +77,7 @@
   justify-content: space-between;
   gap: var(--space-4);
   color: var(--color-white);
-  font-size: 0.64rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -133,7 +135,7 @@
   margin: 0 0 var(--space-2);
   color: var(--color-olive);
   font-family: var(--font-sans);
-  font-size: 0.7rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
@@ -198,7 +200,12 @@
   border: 1px solid var(--color-rule);
 }
 
+.section {
+  border-radius: var(--radius-flow);
+}
+
 .historySection {
+  border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--color-sand) 45%, var(--color-canvas));
 }
 
@@ -286,6 +293,7 @@
 }
 
 .currentPanel {
+  border-radius: var(--radius-flow);
   background: var(--color-navy);
   color: var(--color-white);
 }
@@ -319,7 +327,7 @@
 
 .currentHeading a {
   color: var(--color-gold);
-  font-size: 0.68rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -354,7 +362,7 @@
 
 .currentMeta {
   color: color-mix(in srgb, var(--color-white) 72%, transparent);
-  font-size: 0.62rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;

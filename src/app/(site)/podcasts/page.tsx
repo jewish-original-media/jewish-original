@@ -3,6 +3,7 @@ import { draftMode } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
+import { ArchiveTrail } from "@/components/explore/archive-trail";
 import { EpisodeRow } from "@/components/podcasts/episode-row";
 import { PodcastPreviewBanner } from "@/components/podcasts/podcast-preview-banner";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -100,6 +101,7 @@ export default async function PodcastsPage() {
           ) : null}
         </Container>
       </section>
+      <ArchiveTrail current="podcasts" />
 
       <Section className="podcast-archive-section" spacing="compact">
         <Container>

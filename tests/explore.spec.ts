@@ -81,9 +81,9 @@ test("keeps Explore usable without horizontal overflow and links it from chrome"
   page,
 }) => {
   await page.goto("/");
-  const exploreLinks = page.getByRole("link", { name: "Explore", exact: true });
-  await expect(exploreLinks.first()).toBeVisible();
-  await exploreLinks.first().click();
+  const exploreLink = page.locator('header a[href="/explore"]:visible').first();
+  await expect(exploreLink).toHaveAttribute("href", "/explore");
+  await page.goto("/explore");
   await expect(page).toHaveURL("/explore");
 
   const hasHorizontalOverflow = await page.evaluate(

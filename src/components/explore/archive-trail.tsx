@@ -3,7 +3,14 @@ import Link from "next/link";
 import styles from "./archive-trail.module.css";
 
 export type ArchiveTrailRoom =
-  "today" | "explore" | "history" | "current" | "news" | "events";
+  | "today"
+  | "explore"
+  | "history"
+  | "current"
+  | "news"
+  | "events"
+  | "originals"
+  | "podcasts";
 
 const TRAILS: Record<
   ArchiveTrailRoom,
@@ -45,11 +52,27 @@ const TRAILS: Record<
     { href: "/news", label: "News", room: "news" },
     { href: "/explore", label: "Living archive", room: "explore" },
   ],
+  originals: [
+    { href: "/originals", label: "Originals", room: "originals" },
+    { href: "/explore", label: "Living archive", room: "explore" },
+    { href: "/today", label: "Today", room: "today" },
+    { href: "/history", label: "History", room: "history" },
+  ],
+  podcasts: [
+    { href: "/podcasts", label: "Podcasts", room: "podcasts" },
+    { href: "/explore", label: "Living archive", room: "explore" },
+    { href: "/today", label: "Today", room: "today" },
+    { href: "/history", label: "History", room: "history" },
+  ],
 };
 
 export function ArchiveTrail({ current }: { current: ArchiveTrailRoom }) {
   return (
-    <nav aria-label="Continue exploring" className={styles.trail}>
+    <nav
+      aria-label="Continue exploring"
+      className={styles.trail}
+      data-room={current}
+    >
       <p className={styles.label}>Continue through the archive</p>
       <ol className={styles.list}>
         {TRAILS[current].map((item, index) => (
