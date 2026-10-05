@@ -18,9 +18,9 @@ type HomeJewishTodayProps = {
 };
 
 export function HomeJewishToday({ day }: HomeJewishTodayProps) {
-  const highlights = calendarHighlights(day).slice(0, 3);
   const history = day.onThisDay[0];
   const hasHebrewObject = Boolean(day.hebrewDay && day.hebrewMonth);
+  const highlight = calendarHighlights(day)[0];
   const parashahTitle = formatParashahDisplayTitle(day.parashah?.title);
 
   return (
@@ -54,7 +54,7 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
               </>
             ) : (
               <h2 className={styles.hebrewMonth} id="home-today">
-                {day.hebrewDate ?? day.gregorianLabel}
+                {day.hebrewDate ?? "Jewish Today"}
               </h2>
             )}
             {day.hebrewDateHebrew ? (
@@ -65,9 +65,6 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
           </div>
 
           <div className={styles.todayContext}>
-            <p className={styles.civilDate}>{day.gregorianLabel}</p>
-            <p className={styles.todayPlace}>Eastern Time</p>
-
             {day.festivalShabbat ? (
               <div className={styles.todayFact}>
                 <p className={styles.sectionLabel}>Festival</p>
@@ -98,9 +95,7 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
                   </a>
                 ) : null}
               </div>
-            ) : null}
-
-            {parashahTitle && day.parashah ? (
+            ) : parashahTitle && day.parashah ? (
               <div className={styles.todayFact}>
                 <p className={styles.sectionLabel}>
                   {torahPortionLabel(day.parashah.readingKind)}
@@ -136,23 +131,15 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
                   </a>
                 ) : null}
               </div>
-            ) : null}
-
-            {highlights.length > 0 ? (
+            ) : highlight ? (
               <div className={styles.todayFact}>
                 <p className={styles.sectionLabel}>Today</p>
-                <ul className={styles.observanceList}>
-                  {highlights.map((item) => (
-                    <li key={item.title}>
-                      <span>{item.title}</span>
-                      {item.memo ? (
-                        <small className={styles.observanceMemo}>
-                          {item.memo}
-                        </small>
-                      ) : null}
-                    </li>
-                  ))}
-                </ul>
+                <p className={styles.parashah}>{highlight.title}</p>
+                {highlight.memo ? (
+                  <p className={styles.todayKnowledge}>
+                    {firstSentence(highlight.memo, 180)}
+                  </p>
+                ) : null}
               </div>
             ) : null}
 
@@ -172,7 +159,7 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
             ) : null}
             <p className={styles.todayPath}>
               <Link className="editorial-link" href="/today">
-                Today
+                Open Today
               </Link>
             </p>
           </div>

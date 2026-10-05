@@ -2,31 +2,46 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getHomepageEvents } from "@/content/events/fetch";
+import { getHistoryIndex } from "@/content/history/fetch";
 import { getPublishedNewsIndex } from "@/content/news/fetch";
 import { getPublishedOriginalsIndex } from "@/content/originals/fetch";
 import { eventsNavEligible, newsNavEligible } from "@/features/ingest/select";
 import { getJewishToday } from "@/features/jewish-today";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/site";
-import { resolveFooterExplore, resolvePrimaryNavigation } from "@/lib/site";
+import {
+  resolveFooterExplore,
+  resolvePrimaryNavigation,
+  selectHistoryMenuFacets,
+} from "@/lib/site";
 
 export default async function SiteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [today, originals, news, events] = await Promise.all([
+  const [today, originals, news, events, history] = await Promise.all([
     getJewishToday(),
     getPublishedOriginalsIndex().catch(() => []),
     getPublishedNewsIndex().catch(() => []),
     getHomepageEvents().catch(() => []),
+    getHistoryIndex(false).catch(() => []),
   ]);
   const originalsLive = originals.length > 0;
   const newsLive = newsNavEligible(news);
   const eventsLive = eventsNavEligible(events);
+  const onThisDay = /^(\d{4})-(\d{2})-(\d{2})$/.exec(today.gregorianDate);
   const navigation = resolvePrimaryNavigation({
     originalsLive,
     newsLive,
     eventsLive,
+    historyFacets: selectHistoryMenuFacets(history),
+    originalEssays: originals.map((essay) => ({
+      title: essay.title,
+      slug: essay.slug,
+    })),
+    onThisDayHref: onThisDay
+      ? `/history?month=${Number(onThisDay[2])}&day=${Number(onThisDay[3])}`
+      : undefined,
   });
   const explore = resolveFooterExplore({ originalsLive, eventsLive });
   const dailyRibbon = [

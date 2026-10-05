@@ -868,3 +868,45 @@ Living editorial rooms may use flowing bands, capsules, circular markers, and
 restrained asymmetric corners. History remains the square, rule-led museum
 exception. These distinctions are responsive, keyboard-accessible, and static
 under reduced motion.
+
+## ADR-055 — Explore stays secondary while History is the archive
+
+**Status:** Accepted, 2026-10-05
+
+`/explore` remains the interconnected archive: search, facets, entity rooms,
+and the source-honest Current view. It is not a primary navigation item while
+nearly all published inventory is On This Day History. History is the primary
+archive door. Its submenu links the index, this calendar date, archive search,
+and the busiest reviewed topics, places, and eras. Originals and About use the
+same panel pattern when they have real destinations. Explore stays reachable
+from that History submenu, the homepage secondary strip, the footer, trails,
+and entity pages.
+
+Promote Explore back to primary navigation when Originals, News, Podcasts, and
+entity rooms carry enough distinct inventory that Explore is no longer a
+second door into History.
+
+The On This Day in Jewish History Instagram account
+(`https://www.instagram.com/onthisdayinjewishistory/`) is a tracked outbound
+destination in the About submenu, About page, homepage strip, footer,
+and Organization `sameAs`. It is not a header action beside Listen and
+Support. Do not invent follower counts or additional social accounts.
+
+Homepage News may temporarily show the latest still-published outbound cards
+for visual review. That exception does not lower the Today submenu or daily
+ribbon gates, and it does not backdate headlines. Restore the 7-day freshness
+gate before launch.
+
+## ADR-056 — Hotlinked news images, and the footer mark
+
+**Status:** Accepted, 2026-10-05
+
+Homepage news cards show the featured image declared by the original article.
+Jewish Original reads that image URL and lets the browser load the file from
+the publisher. The image is not saved in this repository, Sanity, or the Next
+image cache. Article bodies and RSS excerpts stay unpublished.
+
+The footer identity line is “Am Yisrael Chai.” Desktop submenus close when the
+pointer leaves, including after a click has focused a link. History submenu
+destinations stay on the filtered archive: the index, this Gregorian date,
+`/explore`, and real topic, place, and era records.

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
 
 import styles from "@/app/home.module.css";
@@ -12,18 +13,31 @@ const HERO_PHOTOS = [
 ] as const;
 
 const DESCRIPTORS = [
-  "Media",
-  "History",
-  "Culture",
-  "Education",
-  "News",
-  "Events",
-  "Podcasts",
-  "Stories",
+  { text: "Media" },
+  { text: "History" },
+  { text: "Culture" },
+  { text: "Education" },
+  { text: "משפחה", lang: "he", dir: "rtl" },
+  { text: "News" },
+  { text: "Games" },
+  { text: "עם ישראל חי", lang: "he", dir: "rtl" },
+  { text: "Podcasts" },
+  { text: "Stories" },
 ] as const;
 
+const DESCRIPTOR_HOLD_SECONDS = 3;
+const DESCRIPTOR_CYCLE_SECONDS = DESCRIPTORS.length * DESCRIPTOR_HOLD_SECONDS;
+
+type HomeChapter = {
+  href: string;
+  label: string;
+  external?: boolean;
+  analyticsEvent?: string;
+  accessibleName?: string;
+};
+
 type HomeMastheadProps = {
-  chapters: Array<{ href: string; label: string }>;
+  chapters: HomeChapter[];
   gregorianLabel: string;
   hebrewDate?: string;
 };
@@ -68,7 +82,7 @@ export function HomeMasthead({
           </div>
           <h1 className="sr-only" id="home-masthead">
             Jewish Original Media, history, culture, education, news, events,
-            podcasts, and stories.
+            podcasts, games, and stories.
           </h1>
           <div aria-hidden="true" className={styles.display}>
             <span>Jewish Original</span>
@@ -76,12 +90,21 @@ export function HomeMasthead({
               {DESCRIPTORS.map((descriptor, index) => (
                 <span
                   className={styles.descriptor}
-                  key={descriptor}
+                  key={descriptor.text}
+                  lang={"lang" in descriptor ? descriptor.lang : undefined}
                   style={{
-                    animationDelay: index === 0 ? "0s" : `-${24 - index * 3}s`,
+                    animationDuration: `${DESCRIPTOR_CYCLE_SECONDS}s`,
+                    animationDelay:
+                      index === 0
+                        ? "0s"
+                        : `-${DESCRIPTOR_CYCLE_SECONDS - index * DESCRIPTOR_HOLD_SECONDS}s`,
                   }}
                 >
-                  {descriptor}
+                  {"dir" in descriptor ? (
+                    <bdi dir={descriptor.dir}>{descriptor.text}</bdi>
+                  ) : (
+                    descriptor.text
+                  )}
                 </span>
               ))}
             </span>
@@ -109,13 +132,34 @@ export function HomeMasthead({
         aria-label="Discover Jewish Original"
         data-count={chapters.length}
       >
-        {chapters.map((chapter, index) => (
-          <Link href={chapter.href} key={chapter.href}>
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            {chapter.label}
-            <span aria-hidden="true">↗</span>
-          </Link>
-        ))}
+        {chapters.map((chapter, index) => {
+          const content = (
+            <>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              {chapter.label}
+              <span aria-hidden="true">↗</span>
+            </>
+          );
+          if (chapter.external) {
+            return (
+              <TrackedAnchor
+                aria-label={chapter.accessibleName}
+                event={chapter.analyticsEvent ?? "chapter_outbound"}
+                href={chapter.href}
+                key={chapter.href}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {content}
+              </TrackedAnchor>
+            );
+          }
+          return (
+            <Link href={chapter.href} key={chapter.href}>
+              {content}
+            </Link>
+          );
+        })}
       </nav>
     </section>
   );

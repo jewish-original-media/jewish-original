@@ -12,13 +12,13 @@ export default function HomeLoading() {
               <p className={styles.wordmark}>Jewish Original Media</p>
               <p className={styles.liveEdition}>The living Jewish story</p>
             </div>
-            <h1 className={styles.display}>
-              Remember,
-              <br />
-              rebuild,
-              <br />
-              and create.
+            <h1 className="sr-only">
+              Jewish Original Media, history, culture, education, news, events,
+              podcasts, games, and stories.
             </h1>
+            <p aria-hidden="true" className={styles.display}>
+              Jewish Original
+            </p>
             <p className={styles.lede}>
               A modern home for Jewish history, culture, education, connection,
               and identity.

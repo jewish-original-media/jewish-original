@@ -153,14 +153,53 @@ test("composes the homepage from Jewish Today and published History", async ({
   await expect(
     page
       .getByRole("navigation", { name: "Discover Jewish Original" })
-      .getByRole("link", { name: /Explore/ }),
+      .getByRole("link", { name: "Search the archive" }),
   ).toHaveAttribute("href", "/explore");
-  await expect(historyRegion.locator("article")).toHaveCount(3);
   await expect(
     page
       .getByRole("navigation", { name: "Discover Jewish Original" })
-      .getByRole("link", { name: /originals/i }),
-  ).toHaveAttribute("href", "/originals");
+      .getByRole("link", { name: /^01\s+News/ }),
+  ).toHaveAttribute("href", "/news");
+  await expect(
+    page
+      .getByRole("navigation", { name: "Discover Jewish Original" })
+      .getByRole("link", { name: "Torah" }),
+  ).toHaveAttribute("href", "/today#weekly-torah");
+  await expect(
+    page
+      .getByRole("navigation", { name: "Discover Jewish Original" })
+      .getByRole("link", {
+        name: "On This Day in Jewish History on Instagram",
+      }),
+  ).toHaveAttribute(
+    "href",
+    "https://www.instagram.com/onthisdayinjewishistory/",
+  );
+  await expect(
+    page
+      .getByRole("navigation", { name: "Discover Jewish Original" })
+      .getByRole("link", { name: "Today", exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page
+      .getByRole("navigation", { name: "Discover Jewish Original" })
+      .getByRole("link", { name: "History", exact: true }),
+  ).toHaveCount(0);
+  await expect(page.locator("[data-home-descriptors] [lang='he']")).toHaveCount(
+    2,
+  );
+  const descriptorOffsets = await page
+    .locator("[data-home-descriptors] > span")
+    .evaluateAll((nodes) => {
+      const reel = nodes[0]?.parentElement?.getBoundingClientRect().left ?? 0;
+      return nodes.map((node) =>
+        Math.round(node.getBoundingClientRect().left - reel),
+      );
+    });
+  expect(descriptorOffsets.every((offset) => Math.abs(offset) <= 1)).toBe(
+    true,
+  );
+  await expect(historyRegion.locator("article")).toHaveCount(3);
   const originals = page.getByRole("region", { name: "Originals" });
   await expect(originals).toBeVisible();
   await expect(
@@ -211,11 +250,19 @@ test("composes the homepage from Jewish Today and published History", async ({
     name: "What we’re following",
   });
   if ((await following.count()) > 0) {
-    await expect(following.locator("li")).toHaveCount(3);
+    const itemCount = await following.locator("li").count();
+    expect(itemCount).toBeGreaterThan(0);
+    expect(itemCount).toBeLessThanOrEqual(5);
     await expect(
       following.getByRole("link", { name: "Full desk" }),
     ).toHaveAttribute("href", "/news");
     await expect(following.locator("a[href^='/news/']")).toHaveCount(0);
+    const thumbs = following.locator("img");
+    await expect(thumbs).toHaveCount(itemCount);
+    const sources = await thumbs.evaluateAll((images) =>
+      images.map((image) => image.getAttribute("src") ?? ""),
+    );
+    expect(sources.every((src) => src.startsWith("https://"))).toBe(true);
   } else {
     await expect(following).toHaveCount(0);
   }

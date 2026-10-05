@@ -2,19 +2,26 @@
 
 Status: four outward-linking News items remain published in Sanity
 `development`. They aged past the homepage 7-day freshness window on
-2026-09-17, so the homepage News desk is hidden. `/news` still lists them
-inside the 14-day index window. News stays out of primary nav because the
-desk is two publishers and below five current items. Footer includes News.
-No Events qualified. Ingest writes and cron stay off.
+2026-09-17, and are past the 14-day `/news` index window as of 2026-10-05.
+For founder visual review, the homepage News band may show the latest
+published outbound cards (cap 5) with their real source dates, including cards
+past `expiresAt`. This is temporary. Restore `getHomepageNews` and the 7-day /
+3-item homepage gate before launch. `/news` still uses the 14-day index window. News stays out of
+primary nav because the desk is below five current items and three publishers.
+Footer includes News. No Events qualified. Ingest writes and cron stay off.
 
 ## Operating rule
 
 Ordinary high-confidence items may auto-publish after gates once writes are
 explicitly enabled. Humans handle exceptions. Jewish Original does not
-republish publisher bodies, RSS excerpts, or publisher images.
+republish publisher bodies or RSS excerpts, and it does not store publisher
+images.
 
 Public News card: publisher, original headline, source datetime, JOM context,
-optional desk, outbound URL.
+optional desk, outbound URL. The homepage wire may also show the source
+article’s featured image. That image stays on the publisher’s server. The page
+reads the article’s Open Graph image URL and the browser requests the file
+from there. Do not download it into `public/`, Sanity, or the image optimizer.
 
 Public Event card: title, organizer, date object, place or Online, time in the
 event’s own timezone, JOM context, outbound URL.
@@ -59,15 +66,17 @@ set publication status.
 
 These are different gates.
 
-| Surface                             | Show when                                                                                                                                                                                                                                                                                                                                  |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Homepage “What We’re Following”     | At least **3** items whose `sourcePublishedAt` is within **7 days**, after deterministic publisher and desk diversity (prefer 3 distinct publishers and mixed desks when the pool allows; prefer 3 items, cap 5, at most 2 per publisher). Hide at 0–2 even if fewer than three publishers are available. Never render an empty News band. |
-| `/news`                             | Published, unexpired items whose `sourcePublishedAt` is within **14 days**. Successful empty is not a fetch failure.                                                                                                                                                                                                                       |
-| Today submenu / daily ribbon News   | At least **5** current `/news` items and **3** publishers. Footer News stays on.                                                                                                                                                                                                                                                           |
-| Today submenu / daily ribbon Events | At least **2** upcoming events from **2** organizers and **2** geography buckets. The Events sitemap route and footer Events link use the same eligibility decision.                                                                                                                                                                       |
+| Surface                             | Show when                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Homepage “What We’re Following”     | Temporary visual review: latest still-published outbound cards, cap 5, real dates, even after the 7-day window. Restore before launch: at least **3** items whose `sourcePublishedAt` is within **7 days**, after deterministic publisher and desk diversity (prefer 3 distinct publishers and mixed desks when the pool allows; prefer 3 items, cap 5, at most 2 per publisher). Hide at 0–2 even if fewer than three publishers are available. Never render an empty News band. |
+| `/news`                             | Published, unexpired items whose `sourcePublishedAt` is within **14 days**. Successful empty is not a fetch failure.                                                                                                                                                                                                                                                                                                                                                              |
+| Today submenu / daily ribbon News   | At least **5** current `/news` items and **3** publishers. Footer News stays on.                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Today submenu / daily ribbon Events | At least **2** upcoming events from **2** organizers and **2** geography buckets. The Events sitemap route and footer Events link use the same eligibility decision.                                                                                                                                                                                                                                                                                                              |
 
-Do not backdate `sourcePublishedAt`, extend the windows, disable the gates,
-or publish filler to force the homepage, submenu, or ribbon.
+Do not backdate `sourcePublishedAt`, extend the `/news` or navigation windows,
+or publish filler to force the submenu or ribbon. The homepage review read is
+the only exception: it may show published cards after `expiresAt`, with the
+publisher’s original date, and it must be removed before launch.
 
 ## Writes
 

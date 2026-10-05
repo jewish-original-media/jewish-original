@@ -37,6 +37,9 @@ test("builds Organization and WebSite JSON-LD without a search action", () => {
   const website = websiteJsonLd();
   assert.equal(organization["@type"], "Organization");
   assert.equal(organization.name, "Jewish Original Media");
+  assert.deepEqual(organization.sameAs, [
+    "https://www.instagram.com/onthisdayinjewishistory/",
+  ]);
   assert.equal(website["@type"], "WebSite");
   assert.equal("potentialAction" in website, false);
 });

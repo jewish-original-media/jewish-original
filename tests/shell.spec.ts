@@ -78,6 +78,15 @@ test("renders the responsive, accessible application shell", async ({
     await expect(
       primary.getByRole("link", { name: /Jewish calendar/ }),
     ).toBeVisible();
+    const history = primary.getByRole("link", { name: "History", exact: true });
+    await history.focus();
+    await history.hover();
+    const archiveSearch = primary.getByRole("link", {
+      name: "Search the archive",
+    });
+    await expect(archiveSearch).toBeVisible();
+    await page.mouse.move(720, 960);
+    await expect(archiveSearch).toBeHidden();
   }
 
   await page.screenshot({
@@ -114,4 +123,41 @@ test("serves generated discovery and crawler metadata", async ({ request }) => {
   expect(xml).toContain("/originals");
   expect(xml).not.toContain("/events");
   expect(xml).not.toContain("/admin");
+});
+
+test("history submenu links open the matching archive", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "desktop primary navigation");
+  await page.goto("/");
+  const primary = page.getByRole("navigation", { name: "Primary" });
+  const history = primary.getByRole("link", { name: "History", exact: true });
+  await history.hover();
+  const hrefs = await history
+    .locator("xpath=ancestor::li[1]")
+    .locator("a")
+    .evaluateAll((anchors) =>
+      anchors
+        .map((anchor) => anchor.getAttribute("href"))
+        .filter((href): href is string => Boolean(href)),
+    );
+
+  expect(hrefs).toContain("/history");
+  expect(hrefs).toContain("/explore");
+  expect(hrefs.some((href) => /^\/history\?month=\d+&day=\d+$/.test(href))).toBe(
+    true,
+  );
+  expect(hrefs.some((href) => href.startsWith("/history?topic="))).toBe(true);
+  expect(hrefs.some((href) => href.startsWith("/history?place="))).toBe(true);
+  expect(hrefs.some((href) => href.startsWith("/history?era="))).toBe(true);
+
+  for (const href of hrefs.filter((item) => item !== "/history")) {
+    const response = await page.goto(href);
+    expect(response?.ok(), href).toBe(true);
+    if (href.startsWith("/history?")) {
+      await expect(page.getByRole("heading", { name: /\d+ stories/ })).toBeVisible();
+      const chip = page.getByRole("list", { name: "Active filters" });
+      await expect(chip).toBeVisible();
+    }
+  }
 });

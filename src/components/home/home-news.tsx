@@ -7,6 +7,8 @@ import { formatNewsTime, newsDeskLabel } from "@/lib/news/display";
 
 import styles from "@/app/home.module.css";
 
+import { SourcePreviewImage } from "./source-preview-image";
+
 type HomeNewsProps = {
   items: CuratedNewsCard[];
 };
@@ -62,26 +64,41 @@ function NewsDeskLink({
 }) {
   return (
     <TrackedAnchor
-      className={lead ? styles.newsLeadLink : styles.newsLink}
+      className={
+        item.sourceImageUrl
+          ? `${lead ? styles.newsLeadLink : styles.newsLink} ${styles.newsWithImage}`
+          : lead
+            ? styles.newsLeadLink
+            : styles.newsLink
+      }
       event="news_outbound"
       href={item.sourceUrl}
       rel="noopener noreferrer"
       target="_blank"
     >
-      <span className={styles.newsMeta}>
-        <span className={styles.newsPublisher}>{item.publisher}</span>
-        <span>{newsDeskLabel(item.desk)}</span>
-        <time dateTime={item.sourcePublishedAt}>
-          {formatNewsTime(item.sourcePublishedAt)}
-        </time>
-      </span>
-      <span className={styles.newsHeadline}>{item.headline}</span>
-      {item.jomContext ? (
-        <span className={styles.newsContext}>
-          {firstSentence(item.jomContext, lead ? 180 : 120)}
-        </span>
+      {item.sourceImageUrl ? (
+        <SourcePreviewImage
+          className={styles.newsThumb ?? ""}
+          fallbackClassName={styles.newsThumbFallback ?? ""}
+          src={item.sourceImageUrl}
+        />
       ) : null}
-      <span className={styles.newsSource}>Read at {item.publisher}</span>
+      <span className={styles.newsCopy}>
+        <span className={styles.newsMeta}>
+          <span className={styles.newsPublisher}>{item.publisher}</span>
+          <span>{newsDeskLabel(item.desk)}</span>
+          <time dateTime={item.sourcePublishedAt}>
+            {formatNewsTime(item.sourcePublishedAt)}
+          </time>
+        </span>
+        <span className={styles.newsHeadline}>{item.headline}</span>
+        {item.jomContext ? (
+          <span className={styles.newsContext}>
+            {firstSentence(item.jomContext, lead ? 180 : 120)}
+          </span>
+        ) : null}
+        <span className={styles.newsSource}>Read at {item.publisher}</span>
+      </span>
     </TrackedAnchor>
   );
 }

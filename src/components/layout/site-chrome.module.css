@@ -69,23 +69,67 @@
   left: 50%;
   width: min(32rem, 86vw);
   padding: 1.5rem;
-  border: 1px solid color-mix(in srgb, var(--color-cerulean) 34%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-navy) 22%, transparent);
   border-radius: 0 0 var(--radius-flow) var(--radius-flow);
-  background:
-    radial-gradient(circle at 90% 10%, rgb(210 144 70 / 0.18), transparent 28%),
-    color-mix(in srgb, var(--color-sky) 94%, var(--color-paper));
+  background: color-mix(in srgb, var(--color-paper) 94%, white);
   box-shadow: var(--shadow-nav);
-  color: var(--color-navy);
+  color: var(--color-ink);
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  translate: -24% -0.5rem;
+  translate: -24% 0;
+  backdrop-filter: blur(18px);
 }
 
-.primaryNavItem:hover .megaPanel,
-.primaryNavItem:focus-within .megaPanel {
+.primaryNavItem:hover > .megaPanel,
+.primaryNavItem:has(> .navLink:focus-visible) > .megaPanel,
+.primaryNavItem > .megaPanel:focus-within {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
-  translate: -24% 0;
+}
+
+.primaryNavItem:nth-last-child(-n + 2) .megaPanel {
+  left: auto;
+  right: 0;
+  translate: 0 0;
+}
+
+.primaryNavItem[data-menu="today"] > .megaPanel {
+  border-color: color-mix(in srgb, var(--color-cerulean) 72%, white);
+  background: color-mix(in srgb, var(--color-paper) 90%, var(--color-sky));
+}
+
+.primaryNavItem[data-menu="today"] .megaKicker {
+  color: #3c5278;
+}
+
+.primaryNavItem[data-menu="history"] > .megaPanel {
+  border-color: color-mix(in srgb, var(--color-gold) 82%, #8a5a28);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--color-paper) 88%, var(--color-sand));
+}
+
+.primaryNavItem[data-menu="history"] .megaKicker {
+  color: #7a4e22;
+}
+
+.primaryNavItem[data-menu="originals"] > .megaPanel {
+  border-color: color-mix(in srgb, var(--color-olive) 55%, white);
+  background: color-mix(in srgb, var(--color-paper) 90%, #d7dcc4);
+}
+
+.primaryNavItem[data-menu="originals"] .megaKicker {
+  color: var(--color-olive);
+}
+
+.primaryNavItem[data-menu="about"] > .megaPanel {
+  border-color: color-mix(in srgb, var(--color-navy) 42%, white);
+  background: color-mix(in srgb, var(--color-paper) 92%, var(--color-sky));
+}
+
+.primaryNavItem[data-menu="about"] .megaKicker {
+  color: var(--color-navy);
 }
 
 .megaKicker,
@@ -131,14 +175,33 @@
   min-height: 4.25rem;
   align-content: center;
   padding: 0.75rem 0.9rem;
-  border-top: 1px solid color-mix(in srgb, var(--color-navy) 16%, transparent);
-  color: var(--color-navy);
+  border: 1px solid color-mix(in srgb, var(--color-navy) 12%, transparent);
+  border-top: 2px solid var(--color-gold);
+  background: color-mix(in srgb, white 78%, transparent);
+  color: var(--color-ink);
   text-decoration: none;
 }
 
-.megaPanel a:hover {
+.primaryNavItem[data-menu="today"] .megaPanel a {
+  border-top-color: var(--color-cerulean);
+}
+
+.primaryNavItem[data-menu="history"] .megaPanel a {
+  border-radius: 0;
   border-top-color: var(--color-gold);
-  background: rgb(255 255 255 / 0.34);
+}
+
+.primaryNavItem[data-menu="originals"] .megaPanel a {
+  border-top-color: var(--color-olive);
+}
+
+.primaryNavItem[data-menu="about"] .megaPanel a {
+  border-top-color: var(--color-navy);
+}
+
+.megaPanel a:hover,
+.megaPanel a:focus-visible {
+  background: white;
 }
 
 .megaPanel a span {
@@ -150,7 +213,7 @@
 .megaPanel a small,
 .menuChildren small {
   margin-top: 0.15rem;
-  color: var(--color-muted);
+  color: var(--color-charcoal);
   font-size: var(--text-ui);
   line-height: 1.35;
 }
@@ -168,10 +231,30 @@
   display: grid;
   min-height: 3.5rem;
   align-content: center;
-  color: var(--color-navy);
+  padding: 0.65rem 0.75rem;
+  border-top: 2px solid var(--color-gold);
+  background: color-mix(in srgb, var(--color-paper) 84%, transparent);
+  color: var(--color-ink);
   font-size: var(--text-sm);
   font-weight: 700;
   text-decoration: none;
+}
+
+.menuList > li[data-menu="today"] .menuChildren a {
+  border-top-color: var(--color-cerulean);
+}
+
+.menuList > li[data-menu="history"] .menuChildren a {
+  border-radius: 0;
+  border-top-color: var(--color-gold);
+}
+
+.menuList > li[data-menu="originals"] .menuChildren a {
+  border-top-color: var(--color-olive);
+}
+
+.menuList > li[data-menu="about"] .menuChildren a {
+  border-top-color: var(--color-navy);
 }
 
 .dailyRibbon {
@@ -586,6 +669,15 @@
 
 .quickLink:hover {
   color: var(--color-gold);
+}
+
+.quickLink.support {
+  color: var(--color-gold);
+  box-shadow: inset 0 -2px 0 var(--color-gold);
+}
+
+.quickLink.support:hover {
+  color: var(--color-sand);
 }
 
 .menu {

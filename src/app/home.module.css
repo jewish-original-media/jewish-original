@@ -812,6 +812,70 @@
   padding-block: 0.35rem 1.5rem;
 }
 
+.newsWithImage {
+  align-items: start;
+  column-gap: 0.95rem;
+}
+
+.newsLink.newsWithImage {
+  grid-template-columns: 4.75rem minmax(0, 1fr);
+  grid-template-areas: "image copy";
+}
+
+.newsLeadLink.newsWithImage {
+  grid-template-columns: minmax(0, 1.15fr) minmax(9rem, 0.85fr);
+  grid-template-areas: "copy image";
+  column-gap: 1.75rem;
+}
+
+.newsCopy {
+  display: grid;
+  grid-area: copy;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.newsLeadLink .newsCopy {
+  gap: 0.7rem;
+}
+
+.newsThumb,
+.newsThumbFallback {
+  display: block;
+  grid-area: image;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--color-sand);
+}
+
+.newsLink .newsThumb,
+.newsLink .newsThumbFallback {
+  aspect-ratio: 1;
+}
+
+.newsThumbFallback {
+  background:
+    linear-gradient(var(--color-gold), var(--color-gold)) center / 100% 1px
+      no-repeat,
+    var(--color-sand);
+}
+
+@media (max-width: 47.98rem) {
+  .newsLeadLink.newsWithImage {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "image"
+      "copy";
+  }
+
+  .newsLeadLink .newsThumb,
+  .newsLeadLink .newsThumbFallback {
+    aspect-ratio: 16 / 9;
+    max-height: 14rem;
+  }
+}
+
 .newsLink:hover .newsHeadline,
 .newsLeadLink:hover .newsHeadline,
 .newsLink:focus-visible .newsHeadline,
@@ -1647,7 +1711,7 @@
 }
 
 .livingArchive .chapterNav a {
-  flex-basis: 11.5rem;
+  flex: 0 1 auto;
 }
 
 .livingArchiveScene {
@@ -2617,13 +2681,28 @@
 
 .descriptorReel {
   display: grid;
+  justify-items: start;
   min-height: 0.84em;
   color: var(--color-gold);
 }
 
 .descriptor {
   grid-area: 1 / 1;
+  justify-self: start;
+  width: max-content;
+  max-width: 100%;
   opacity: 0;
+}
+
+.descriptor[lang="he"] {
+  direction: ltr;
+  max-width: none;
+  font-size: 0.56em;
+  letter-spacing: 0;
+  line-height: 0.95;
+  text-align: left;
+  text-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .descriptor:first-child {
@@ -2664,31 +2743,28 @@
   max-width: none;
   margin: 0;
   display: flex;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: visible;
   border-top: 1px solid rgb(255 255 255 / 0.25);
   background: rgb(10 14 38 / 0.62);
-  scrollbar-width: none;
-}
-
-.immersive .chapterNav::-webkit-scrollbar {
-  display: none;
 }
 
 .immersive .chapterNav a {
-  flex: 1 0 10rem;
+  flex: 0 1 auto;
   min-height: 4.5rem;
-  padding: 0.85rem 1.25rem;
+  padding: 0.85rem 1.35rem;
   border-right-color: rgb(255 255 255 / 0.18);
   color: var(--color-paper);
   font-family: var(--font-sans);
-  font-size: 0.76rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .immersive .chapterNav a:first-child {
-  padding-left: max(var(--gutter), calc((100vw - 88rem) / 2));
+  padding-left: 1.35rem;
 }
 
 .immersive .chapterNav a span:first-child {
@@ -2700,10 +2776,9 @@
 }
 
 .immersive .today {
-  min-height: 92svh;
-  display: grid;
-  align-items: center;
-  padding-block: clamp(5rem, 10vw, 9rem);
+  min-height: 0;
+  display: block;
+  padding-block: clamp(2.75rem, 6vw, 4.5rem);
   background:
     linear-gradient(120deg, rgb(255 255 255 / 0.14), transparent 48%),
     var(--color-sky);
@@ -2711,10 +2786,10 @@
 
 .todayHeader {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.75fr);
-  gap: 2rem;
-  align-items: start;
-  margin-bottom: clamp(3rem, 8vw, 7rem);
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.7fr);
+  gap: 1.25rem 2rem;
+  align-items: end;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 .todayIntroduction {
@@ -2728,9 +2803,9 @@
 }
 
 .immersive .todayObject {
-  grid-template-columns: minmax(0, 1.1fr) minmax(22rem, 0.9fr);
-  gap: clamp(3rem, 9vw, 9rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 0.85fr) minmax(18rem, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
 }
 
 .immersive .todayDate,
@@ -2745,9 +2820,9 @@
 
 .immersive .hebrewNumeral {
   margin-top: 0;
-  font-size: clamp(9rem, 23vw, 22rem);
-  letter-spacing: -0.09em;
-  line-height: 0.7;
+  font-size: clamp(4.75rem, 10vw, 8rem);
+  letter-spacing: -0.06em;
+  line-height: 0.85;
 }
 
 .immersive .hebrewMonth {
@@ -3165,7 +3240,7 @@
   }
 
   .descriptor {
-    animation: immersive-descriptor 24s ease-in-out infinite;
+    animation: immersive-descriptor 30s ease-in-out infinite;
   }
 
   .immersive .mastheadCopy {
@@ -3206,12 +3281,12 @@
 
 @keyframes immersive-descriptor {
   0%,
-  8% {
+  7% {
     opacity: 1;
     translate: 0 0;
   }
 
-  10%,
+  9%,
   100% {
     opacity: 0;
     translate: 0 0.15em;
@@ -3331,6 +3406,8 @@
 
   .immersive .chapterNav {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     grid-template-columns: none;
   }
 
@@ -3340,7 +3417,7 @@
   }
 
   .immersive .chapterNav a:first-child {
-    padding-left: 1.25rem;
+    padding-left: 1.1rem;
   }
 
   .todayHeader,
@@ -3359,7 +3436,7 @@
   }
 
   .immersive .hebrewNumeral {
-    font-size: clamp(8rem, 44vw, 12rem);
+    font-size: clamp(4.25rem, 20vw, 6.5rem);
   }
 
   .immersive .historyHeader .sectionLabel {

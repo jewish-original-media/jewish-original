@@ -3,9 +3,10 @@ import type { Metadata } from "next";
 import { MuseumFigure } from "@/components/media/museum-figure";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/ui/container";
+import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
 import { breadcrumbJsonLd, buildPageMetadata } from "@/lib/seo/site";
-import { siteConfig } from "@/lib/site";
+import { siteConfig, siteSocial } from "@/lib/site";
 
 import styles from "@/app/editorial.module.css";
 
@@ -62,6 +63,16 @@ export default function AboutPage() {
           <p className={styles.copy}>
             History is the foundation. Education transmits it. Identity is the
             product. Connection is the outcome.
+          </p>
+          <p className={styles.copy}>
+            <TrackedAnchor
+              event={siteSocial[0].analyticsEvent}
+              href={siteSocial[0].href}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {siteSocial[0].account} on Instagram
+            </TrackedAnchor>
           </p>
         </Container>
       </section>

@@ -1,7 +1,8 @@
 import Link from "next/link";
 
+import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import { Container } from "@/components/ui/container";
-import { siteConfig, type SiteNavItem } from "@/lib/site";
+import { siteConfig, siteSocial, type SiteNavItem } from "@/lib/site";
 
 import styles from "./site-chrome.module.css";
 
@@ -15,7 +16,7 @@ export function SiteFooter({
       <Container className={styles.footerGrid}>
         <div className={styles.footerIdentity}>
           <p className={styles.footerKicker}>Jewish Original Media</p>
-          <p className={styles.footerMark}>Keep the story moving.</p>
+          <p className={styles.footerMark}>Am Yisrael Chai</p>
           <p className={styles.footerLede}>{siteConfig.description}</p>
           <p className={styles.footerContinuum}>
             Past <span aria-hidden="true">↗</span> Present{" "}
@@ -40,6 +41,17 @@ export function SiteFooter({
           <div>
             <p className={styles.footerLabel}>Connect</p>
             <ul className={styles.footerList}>
+              <li>
+                <TrackedAnchor
+                  event={siteSocial[0].analyticsEvent}
+                  href={siteSocial[0].href}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Instagram
+                  <span className="sr-only">, {siteSocial[0].account}</span>
+                </TrackedAnchor>
+              </li>
               <li>
                 <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
               </li>

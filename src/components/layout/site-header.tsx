@@ -5,6 +5,8 @@ import { BrandLogo } from "@/components/brand/brand-logo";
 import { Container } from "@/components/ui/container";
 import { siteConfig, type SiteNavItem } from "@/lib/site";
 
+import { menuTone } from "./menu-tone";
+import { NavigationChild, PrimaryNav } from "./primary-nav";
 import styles from "./site-chrome.module.css";
 
 export type SiteHeaderToday = {
@@ -79,7 +81,7 @@ export function SiteHeader({
               </p>
               <ul className={styles.menuList}>
                 {navigation.map((item, index) => (
-                  <li key={item.href}>
+                  <li data-menu={menuTone(item.href)} key={item.href}>
                     <Link
                       className={`${styles.menuLink} ${"emphasis" in item && item.emphasis ? styles.support : ""}`.trim()}
                       href={item.href}
@@ -96,13 +98,8 @@ export function SiteHeader({
                         className={styles.menuChildren}
                       >
                         {item.children.map((child) => (
-                          <li key={child.href}>
-                            <Link href={child.href}>
-                              <span>{child.label}</span>
-                              {child.description ? (
-                                <small>{child.description}</small>
-                              ) : null}
-                            </Link>
+                          <li key={`${child.href}-${child.label}`}>
+                            <NavigationChild child={child} />
                           </li>
                         ))}
                       </ul>
@@ -114,40 +111,7 @@ export function SiteHeader({
           </details>
         </div>
       </Container>
-      <nav className={styles.primaryNav} aria-label="Primary">
-        <Container>
-          <ul className={styles.primaryNavList}>
-            {desktopNavigation.map((item) => (
-              <li className={styles.primaryNavItem} key={item.href}>
-                <Link className={styles.navLink} href={item.href}>
-                  {item.label}
-                </Link>
-                {item.children?.length ? (
-                  <div className={styles.megaPanel}>
-                    <p className={styles.megaKicker}>Begin with Today</p>
-                    <p className={styles.megaIntroduction}>
-                      The Jewish day, the Jewish past, and what is happening
-                      now.
-                    </p>
-                    <ul>
-                      {item.children.map((child) => (
-                        <li key={child.href}>
-                          <Link href={child.href}>
-                            <span>{child.label}</span>
-                            {child.description ? (
-                              <small>{child.description}</small>
-                            ) : null}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </nav>
+      <PrimaryNav items={desktopNavigation} />
       {ribbon.length ? (
         <nav
           className={styles.dailyRibbon}

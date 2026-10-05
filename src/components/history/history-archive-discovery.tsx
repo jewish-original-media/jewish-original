@@ -233,7 +233,17 @@ export function HistoryArchiveDiscovery({
               <Link
                 href={historyArchiveHref({ ...current, filter: undefined })}
               >
-                {FILTER_LABELS[search.filter.type]}: {search.filter.slug}{" "}
+                {FILTER_LABELS[search.filter.type]}:{" "}
+                {labelFor(
+                  search.filter.type === "era"
+                    ? facets.eras
+                    : search.filter.type === "person"
+                      ? facets.people
+                      : search.filter.type === "region"
+                        ? facets.regions
+                        : facets.organizations,
+                  search.filter.slug,
+                )}{" "}
                 <span aria-hidden="true">×</span>
                 <span className="sr-only">
                   Remove {FILTER_LABELS[search.filter.type].toLowerCase()}{" "}

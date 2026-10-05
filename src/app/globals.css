@@ -887,6 +887,12 @@ svg {
   padding-top: var(--space-6);
 }
 
+.history-entry-card--archive,
+.history-entry-card--related {
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  align-items: start;
+}
+
 .history-entry-card--featured {
   border-top: 0;
   padding-top: var(--space-6);
@@ -909,6 +915,33 @@ svg {
   max-width: 22rem;
   margin-bottom: var(--space-4);
   background: var(--color-sand);
+}
+
+.history-entry-card--archive .history-entry-card__media,
+.history-entry-card--related .history-entry-card__media {
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: none;
+  margin-bottom: 0;
+}
+
+.history-index-plate {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: color-mix(in srgb, var(--color-sand) 82%, var(--color-canvas));
+}
+
+.history-index-plate .history-archive-mark {
+  width: 2.15rem;
+  height: 2.15rem;
+}
+
+.history-index-plate .history-gold-rule {
+  width: 1.1rem;
 }
 
 .history-entry-card--featured .history-entry-card__media {
@@ -1373,8 +1406,9 @@ svg {
 @media (min-width: 48rem) {
   .history-entry-card--archive,
   .history-entry-card--related {
-    grid-template-columns: 9rem minmax(0, 1fr);
-    gap: var(--space-8);
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-6);
   }
 
   .history-taxonomy-nav {

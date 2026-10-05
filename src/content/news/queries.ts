@@ -26,3 +26,10 @@ export const newsHomeQuery = defineQuery(`
   *[_type == "curatedNewsItem" && ${publicNews}]
     | order(sourcePublishedAt desc)[0...24] ${newsProjection}
 `);
+
+export const newsReviewQuery = defineQuery(`
+  *[_type == "curatedNewsItem" &&
+    !(_id in path("drafts.**")) &&
+    status == "published"]
+    | order(sourcePublishedAt desc)[0...12] ${newsProjection}
+`);

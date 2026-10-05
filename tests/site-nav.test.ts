@@ -8,9 +8,11 @@ import {
 import {
   resolveFooterExplore,
   resolvePrimaryNavigation,
+  selectHistoryMenuFacets,
+  siteSocial,
 } from "../src/lib/site";
 
-test("primary nav adds Originals only when the journal is live", () => {
+test("primary nav keeps Explore secondary and adds Originals only when live", () => {
   const baseline = resolvePrimaryNavigation();
   assert.ok(
     baseline.every(
@@ -20,19 +22,79 @@ test("primary nav adds Originals only when the journal is live", () => {
   );
   assert.deepEqual(
     baseline.map((item) => item.href),
-    ["/today", "/explore", "/history", "/podcasts", "/about", "/support"],
+    ["/today", "/history", "/podcasts", "/about", "/support"],
+  );
+  assert.equal(
+    baseline.some((item) => item.href === "/explore"),
+    false,
+  );
+  assert.equal(
+    baseline
+      .find((item) => item.href === "/history")
+      ?.children?.some(
+        (child) =>
+          child.href === "/explore" && child.label === "Search the archive",
+      ),
+    true,
+  );
+  assert.equal(
+    baseline
+      .find((item) => item.href === "/about")
+      ?.children?.some(
+        (child) => child.href === siteSocial[0].href && child.external,
+      ),
+    true,
+  );
+  assert.equal(
+    baseline.find((item) => item.href === "/support")?.emphasis,
+    true,
   );
   assert.deepEqual(
     resolvePrimaryNavigation({ originalsLive: true }).map((item) => item.href),
+    ["/today", "/history", "/originals", "/podcasts", "/about", "/support"],
+  );
+});
+
+test("History submenu uses the busiest real topics, places, and eras", () => {
+  const facets = selectHistoryMenuFacets(
     [
-      "/today",
-      "/explore",
-      "/history",
-      "/originals",
-      "/podcasts",
-      "/about",
-      "/support",
-    ],
+      {
+        topics: [
+          { name: "Zionism", slug: "zionism" },
+          { name: "Zionism", slug: "zionism" },
+        ],
+        places: [{ name: "Jerusalem", slug: "jerusalem" }],
+        eras: [{ name: "Antiquity", slug: "antiquity" }],
+      },
+      {
+        topics: [{ name: "Zionism", slug: "zionism" }],
+        places: [
+          { name: "Jerusalem", slug: "jerusalem" },
+          { name: "Warsaw", slug: "warsaw" },
+        ],
+        eras: [{ name: "Antiquity", slug: "antiquity" }],
+      },
+    ].flatMap((entry) => [entry, entry]),
+  );
+  assert.ok(facets.length <= 6);
+  assert.equal(facets[0]?.slug, "zionism");
+  assert.ok(facets.some((facet) => facet.type === "place"));
+  assert.ok(facets.some((facet) => facet.type === "era"));
+  const history = resolvePrimaryNavigation({
+    historyFacets: facets,
+    onThisDayHref: "/history?month=10&day=5",
+    originalEssays: [{ title: "Our Path Forward", slug: "our-path-forward" }],
+    originalsLive: true,
+  }).find((item) => item.href === "/history");
+  assert.equal(
+    history?.children?.some(
+      (child) => child.href === "/history?month=10&day=5",
+    ),
+    true,
+  );
+  assert.equal(
+    history?.children?.some((child) => child.href === "/history?topic=zionism"),
+    true,
   );
 });
 

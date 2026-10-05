@@ -46,35 +46,41 @@ consistent Eastern Time day to both the homepage and header.
 
 1. **Masthead** — a full-viewport, three-photograph class A sequence carries
    the fixed “Jewish Original” identity, a restrained rotating descriptor
-   line, live dates, primary paths, and a numbered chapter strip. Morning
-   tefillin remains the server-rendered default and sole eager/LCP image; the
-   community and founder photographs load as secondary frames. Reduced-motion
-   environments receive the complete first frame and static accessible brand
-   sentence. The primary path enters `/explore`.
-   The strip follows the rendered page order, includes Explore as a durable
-   destination, and includes Originals, News, and Events only when their
-   homepage scenes pass their existing publication gates. About remains
-   discoverable. The OTD lion is not used in this global JOM surface.
-2. **Jewish Today** — a near-full-screen daily scene from the shared
-   `JewishTodayDay`, introduced as a living calendar.
-3. **Living Archive** — a layered passage of locally stored,
+   line, live dates, primary paths, and a centered secondary chapter strip.
+   Descriptors are Media, History, Culture, Education, משפחה, News, Games,
+   עם ישראל חי, Podcasts, and Stories. Hebrew phrases stay in Hebrew script.
+   Morning tefillin remains the server-rendered default and sole eager/LCP
+   image; the community and founder photographs load as secondary frames.
+   Reduced-motion environments receive the complete first frame and static
+   accessible brand sentence. The primary path enters `/explore`.
+   The strip is secondary wayfinding only: News, Torah, Instagram, Support,
+   and Search the archive. It does not repeat Today, History, Originals,
+   Listen, or About. The OTD lion is not used in this global JOM surface.
+2. **Jewish Today** — a compact knowledge strip. The Hebrew numeral remains
+   the graphic mark. One Torah reading or observance, one On This Day entry,
+   and a path into `/today` follow. The civil date and “Eastern Time” stay in
+   the header and daily ribbon, so this band does not repeat them.
+3. **What We’re Following** — outbound News desk, placed as the first full
+   editorial band when published cards exist. For founder visual review, the
+   homepage may show the latest still-published cards after the 7-day window,
+   with their real dates, capped at five. Restore the 7-day / 3-item gate
+   before launch. Nav and ribbon gates stay at five items and three publishers.
+4. **Living Archive** — a layered passage of locally stored,
    provenance-verified collection objects. Each object exposes title, place,
    date, community context, visible credit, and its authoritative source
    record. The initial local-review set comes from the Library of Congress and
    does not claim to represent the full Jewish diaspora. A generic invitation
    enters `/explore`; individual objects continue to link only to their
    authoritative catalog records because no CMS relationship has been reviewed.
-4. **History** — one lead plus two supporting archive stories in a spacious
+5. **History** — one lead plus two supporting archive stories in a spacious
    gallery room. Rights-cleared CMS media preserves caption and credit.
    Entries without media receive a clearly non-photographic navy archival
    index plate using the OTD lion and Magen David as masks; the plate is
    interface art, not evidence from the event.
-5. **Originals** — one image-forward featured house essay plus supporting
+6. **Originals** — one image-forward featured house essay plus supporting
    stories. Rights-cleared editorial media is used when supplied. Otherwise,
    the surface renders a branded JOM monogram plate, never unrelated
    photography.
-6. **What We’re Following** — outbound News desk. Live at three published
-   items. Not a card grid of publisher stories.
 7. **Podcasts** — a night listening room with the published show, latest
    `EpisodeCard`, supporting titles, and the founder-owned street photograph.
 8. **Events** — date-led calendar scene when publishable inventory passes the
@@ -115,10 +121,11 @@ decision. Do not invent articles, headlines, or events.
 ## Jewish Today
 
 Uses `getJewishToday()` and `HomeJewishToday`. Calendar logic stays in Hebcal.
-On-this-day matches stay in History `getOnThisDayHistory`. The Hebrew date is
-the visual object. Torah uses Hebcal labels: **This week in Torah**, **Most
+On-this-day matches stay in History `getOnThisDayHistory`. The Hebrew date is the visual mark on the homepage strip, not a second civil
+ledger. Torah uses Hebcal labels: **This week in Torah**, **Most
 recent Torah portion**, or a separate **Festival** line when the coming
-Saturday is yom tov. The module names Eastern Time. It does not imply
+Saturday is yom tov. The homepage shows one of those, then one On This Day
+entry. The full Today page still names Eastern Time. It does not imply
 Jerusalem time. Observance and History blocks appear only when they have data.
 When Hebcal supplies them, a concise provider memo, factual book context, and
 one verified Sefaria reading path add educational depth. They are not
@@ -133,6 +140,10 @@ Uses the canonical History system only:
 - `HomeHistoryFeature` as layout around canonical History data
 - `next/image` only when a rights-cleared `primaryImage` exists
 - `HomeEditorialMedia` for shared real-image and archival-index treatments
+
+`/history` gives every archive and related card a thumbnail: the rights-cleared
+image, or a square gold-rule and Magen David index plate. The plate is
+interface art, not evidence from the event.
 
 `getHistoryIndex(false)` reads the complete published-ready archive. The
 homepage still shows only one lead and two supporting stories. The full
@@ -153,7 +164,8 @@ autoplay media.
 See `docs/ORIGINALS.md` and `docs/NEWS_EVENTS.md`.
 
 - Originals: magazine feature plus quiet secondary stories
-- News: tighter newswire density, rules, source + JOM context
+- News: tighter newswire density, rules, source + JOM context, and the
+  original article’s featured image hotlinked from the publisher
 - Events: date as the visual object; homepage scene stays hidden while
   inventory is thin, but `/events` is permanently discoverable
 - Both scenes point to `/explore?view=current`; that view clearly identifies

@@ -9,4 +9,5 @@ export type CuratedNewsCard = {
   jomContext: string;
   desk: NewsDesk;
   topics: string[];
+  sourceImageUrl?: string;
 };

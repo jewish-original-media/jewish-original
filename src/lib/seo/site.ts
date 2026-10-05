@@ -15,6 +15,7 @@ export function organizationJsonLd() {
     url: siteConfig.url,
     email: siteConfig.email,
     description: siteConfig.description,
+    sameAs: siteConfig.social.map((profile) => profile.href),
   };
 }
 

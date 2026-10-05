@@ -14,10 +14,8 @@ import {
   composeHomePodcasts,
   type HomePageData,
 } from "@/features/homepage";
-import {
-  shouldShowHomepageEvents,
-  shouldShowHomepageNews,
-} from "@/features/ingest/select";
+import { shouldShowHomepageEvents } from "@/features/ingest/select";
+import { siteSocial } from "@/lib/site";
 
 import styles from "@/app/home.module.css";
 
@@ -31,20 +29,21 @@ export function HomePageView({ data }: HomePageViewProps) {
     data.jewishToday.onThisDay,
   );
   const podcasts = composeHomePodcasts(data.podcasts.episodes);
-  const showNews = shouldShowHomepageNews(data.news.length);
+  const showNews = data.news.length > 0;
   const showEvents = shouldShowHomepageEvents(data.events);
+  const instagram = siteSocial[0];
   const chapters = [
-    { href: "/today", label: "Today" },
-    { href: "#living-archive", label: "Living archive" },
-    { href: "/history", label: "History" },
-    { href: "/explore", label: "Explore" },
-    ...(data.originals.length > 0
-      ? [{ href: "/originals", label: "Originals" }]
-      : []),
-    ...(showNews ? [{ href: "/news", label: "News" }] : []),
-    { href: "/podcasts", label: "Listen" },
-    ...(showEvents ? [{ href: "/events", label: "Events" }] : []),
-    { href: "/about", label: "About" },
+    { href: "/news", label: "News" },
+    { href: "/today#weekly-torah", label: "Torah" },
+    {
+      href: instagram.href,
+      label: "Instagram",
+      external: true,
+      analyticsEvent: instagram.analyticsEvent,
+      accessibleName: `${instagram.account} on Instagram`,
+    },
+    { href: "/support", label: "Support" },
+    { href: "/explore", label: "Search the archive" },
   ];
 
   return (
@@ -59,6 +58,8 @@ export function HomePageView({ data }: HomePageViewProps) {
 
       <HomeJewishToday day={data.jewishToday} />
 
+      {showNews ? <HomeNews items={data.news} /> : null}
+
       <HomeLivingArchive />
 
       <HomeHistoryFeature
@@ -67,7 +68,6 @@ export function HomePageView({ data }: HomePageViewProps) {
       />
 
       {data.originals.length ? <HomeOriginals items={data.originals} /> : null}
-      {showNews ? <HomeNews items={data.news} /> : null}
       <HomePodcastFeature
         podcasts={podcasts}
         show={data.podcasts.show}

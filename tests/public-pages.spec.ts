@@ -17,7 +17,9 @@ test("public navigation and footer expose only live destinations", async ({
   await expect(
     nav.getByRole("link", { name: "Today", exact: true }),
   ).toHaveAttribute("href", "/today");
-  await expect(nav.getByRole("link", { name: "History" })).toBeVisible();
+  await expect(
+    nav.getByRole("link", { name: "History", exact: true }),
+  ).toBeVisible();
   await expect(nav.getByRole("link", { name: "Originals" })).toHaveAttribute(
     "href",
     "/originals",
@@ -25,13 +27,17 @@ test("public navigation and footer expose only live destinations", async ({
   await expect(nav.getByRole("link", { name: "About" })).toBeVisible();
   if (testInfo.project.name === "mobile") {
     await expect(nav.getByRole("link", { name: "Podcasts" })).toBeVisible();
-    await expect(nav.getByRole("link", { name: "Support" })).toBeVisible();
+    await expect(
+      nav.getByRole("link", { name: "Support", exact: true }),
+    ).toBeVisible();
   } else {
     await expect(
       page.getByRole("banner").getByRole("link", { name: "Listen" }),
     ).toHaveAttribute("href", "/podcasts");
     await expect(
-      page.getByRole("banner").getByRole("link", { name: "Support" }),
+      page
+        .getByRole("banner")
+        .getByRole("link", { name: "Support", exact: true }),
     ).toHaveAttribute("href", "/support");
   }
   await expect(nav.getByRole("link", { name: "News" })).toHaveCount(0);
@@ -45,6 +51,33 @@ test("public navigation and footer expose only live destinations", async ({
   await expect(
     page.getByRole("contentinfo").getByRole("link", { name: "Events" }),
   ).toHaveCount(0);
+  await expect(
+    page.getByRole("contentinfo").getByRole("link", { name: /Instagram/ }),
+  ).toHaveAttribute(
+    "href",
+    "https://www.instagram.com/onthisdayinjewishistory/",
+  );
+  await expect(
+    page.getByRole("contentinfo").getByRole("link", { name: "Explore" }),
+  ).toHaveAttribute("href", "/explore");
+  if (testInfo.project.name !== "mobile") {
+    await expect(
+      page.getByRole("navigation", { name: "Primary" }).getByRole("link", {
+        name: "Explore",
+        exact: true,
+      }),
+    ).toHaveCount(0);
+    await expect(
+      page.getByRole("banner").getByRole("link", {
+        name: "Instagram , On This Day in Jewish History",
+        exact: true,
+      }),
+    ).toHaveCount(0);
+  }
+  await expect(
+    page.getByRole("contentinfo").getByText("Am Yisrael Chai"),
+  ).toBeVisible();
+  await expect(page.getByText("Keep the story moving.")).toHaveCount(0);
 
   await expect(
     page.getByRole("link", { name: "Search Jewish Original Media" }),
@@ -89,6 +122,14 @@ test("serves About from founder-provided copy", async ({ page }) => {
   await expect(
     page.getByText(/uses automation and AI-assisted tools/i),
   ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: "On This Day in Jewish History on Instagram",
+    }),
+  ).toHaveAttribute(
+    "href",
+    "https://www.instagram.com/onthisdayinjewishistory/",
+  );
   await expect(page.getByText("Private editorial preview")).toHaveCount(0);
 });
 

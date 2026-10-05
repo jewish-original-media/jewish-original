@@ -30,7 +30,7 @@ test("publishes the reviewed History archive with search and pagination", async 
   );
   await expect(page.locator("article a[href^='/history/']")).toHaveCount(12);
   await expect(page.locator(".history-hero-lion")).toHaveCount(1);
-  await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
+  await expect(page.locator(".history-entry-card__media")).toHaveCount(12);
   await expect(page.getByText("Theodore Herzl")).toHaveCount(0);
   await expect(page.getByText("Isaak Rülf")).toHaveCount(0);
   await expect(page.getByText("Rehavam")).toHaveCount(0);
@@ -575,7 +575,11 @@ test("serves the published Batch 2 articles with founder-final copy and metadata
   await expect(page.getByText(/liberated the bialystok ghetto/i)).toHaveCount(
     0,
   );
-  await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
+  await expect(page.locator(".history-entry-card--related")).toHaveCount(
+    await page
+      .locator(".history-entry-card--related .history-entry-card__media")
+      .count(),
+  );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://jewishoriginal.com/history/bialystok-ghetto-established",
@@ -715,7 +719,9 @@ test("opens the published Joop Westerweel article without a preview banner", asy
   await expect(
     page.getByRole("link", { name: "US Liberates Dachau" }),
   ).toBeVisible();
-  await expect(page.locator(".history-entry-card__media")).toHaveCount(0);
+  await expect(
+    page.locator(".history-entry-card--related .history-entry-card__media"),
+  ).toHaveCount(await page.locator(".history-entry-card--related").count());
   await expect(
     page.getByRole("link", { name: "support Jewish Original" }),
   ).toBeVisible();

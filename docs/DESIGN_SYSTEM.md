@@ -321,7 +321,9 @@ legible. Do not reuse one pair photograph on About and Podcast.
 The homepage has one eager LCP photograph in the masthead. All story images
 below it remain lazy by default. Rights-cleared History images preserve their
 caption and credit; absent media uses the documented archival index plate
-rather than an unrelated stock image or blank frame.
+rather than an unrelated stock image or blank frame. History index and related
+cards use the same rule: a cleared photograph, or a square gold-rule and
+Magen David plate.
 
 ## Shared chrome
 
@@ -331,9 +333,20 @@ and Support close at hand. A native `details` disclosure opens the full
 numbered menu without client JavaScript. At desktop widths, a second restrained
 row makes Today the daily gateway while Listen and Support remain quick
 actions. Today groups the Jewish calendar, Torah, On This Day, and eligible
-News and Events without changing their standalone URLs. Originals, News, and
-Events remain inventory-gated. The desktop row does not create a second
-ungated navigation contract.
+News and Events without changing their standalone URLs. History, live
+Originals, and About open the same kind of panel. History offers the archive,
+this calendar date, archive search, and the busiest reviewed topics, places,
+and eras. Originals offers the journal and up to three essays. About offers
+the story, Support, and Instagram. Explore stays public, but it is a secondary
+archive path while most published inventory is On This Day History. News and
+Events remain inventory-gated in primary navigation. Support is the gold
+header action. Listen and Support are the only header quick actions.
+Instagram stays a tracked outbound path in the About submenu, About page,
+homepage strip, and the first footer Connect link. Desktop panels close when
+the pointer leaves. Each primary room keeps its own paper tint — cerulean for
+Today, sand and gold for History, olive for Originals, navy for About — solid
+enough that the type stays readable over the hero. The desktop row does not
+create a second ungated navigation contract.
 
 A server-rendered daily ribbon sits below the navigation. It links only real
 data already available to the shell: the Gregorian and Hebrew day, an eligible
@@ -341,7 +354,7 @@ observance or Torah portion, a reviewed historical anniversary, eligible News
 and Events, and Explore. Missing material is omitted. The ribbon scrolls
 horizontally without autoplay and remains complete under reduced motion.
 
-The footer closes with “Keep the story moving,” a Support invitation, and
+The footer closes with “Am Yisrael Chai,” a Support invitation, and
 Explore / Connect link groups. Both header and footer use square edges,
 hairline rules, accessible focus states, and reduced-motion-safe transitions.
 
@@ -357,7 +370,8 @@ recorded in `ASSET_INVENTORY.md`. Do not substitute stock.
 
 News is a tight newswire: hairline rules, publisher labels, time, headline,
 short JOM context, outbound arrow, and a night editorial header. No card grid.
-No publisher images.
+The homepage wire may show a hotlinked thumbnail from the original article.
+That file is not a Jewish Original asset and is not stored here.
 
 Events is a museum calendar: the date is the graphic object. Title,
 organizer, place or Online, and the event’s own timezone follow on a warm,
