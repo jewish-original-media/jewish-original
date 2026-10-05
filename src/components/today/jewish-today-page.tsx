@@ -6,8 +6,11 @@ import type { JewishTodayDay } from "@/features/jewish-today";
 import { formatGregorianLabel } from "@/features/jewish-today/timezone";
 import {
   calendarHighlights,
+  firstSentence,
   formatParashahDisplayTitle,
+  hebcalSourceLabel,
   sefariaPassageHref,
+  torahReadingContext,
   torahPortionLabel,
 } from "@/lib/jewish-today/display";
 
@@ -16,6 +19,36 @@ import styles from "@/app/today/today.module.css";
 type JewishTodayPageProps = {
   day: JewishTodayDay;
 };
+
+function ReadingGroup({
+  label,
+  readings,
+}: {
+  label: string;
+  readings: string[];
+}) {
+  if (!readings.length) return null;
+
+  return (
+    <div className={styles.readingGroup}>
+      <p className={styles.readingLabel}>{label}</p>
+      <ul className={styles.studyLinks}>
+        {readings.map((reading) => (
+          <li key={`${label}-${reading}`}>
+            <a
+              href={sefariaPassageHref(reading)}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {reading}
+              <span className="sr-only"> on Sefaria (opens in a new tab)</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export function JewishTodayPage({ day }: JewishTodayPageProps) {
   const calendarReady = day.calendarStatus === "ready";
@@ -33,22 +66,28 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
           <Container size="content">
             <p className={`eyebrow ${styles.kicker}`}>Jewish Today</p>
             <h1 className={styles.todayTitle}>Today</h1>
-            <div className={styles.datePair}>
-              <p className={styles.gregorian}>{day.gregorianLabel}</p>
+            <div className={styles.dateLedger}>
+              <div className={styles.dateLedgerItem}>
+                <p className={styles.dateLabel}>Gregorian day</p>
+                <p className={styles.gregorian}>{day.gregorianLabel}</p>
+              </div>
               {day.hebrewDateHebrew || day.hebrewDate ? (
-                <p className={styles.hebrewPair}>
-                  {day.hebrewDateHebrew ? (
-                    <span lang="he" dir="rtl">
-                      {day.hebrewDateHebrew}
-                    </span>
-                  ) : null}
-                  {day.hebrewDate ? (
-                    <span>
-                      {day.hebrewDate}
-                      {day.isShabbat ? " · Shabbat" : ""}
-                    </span>
-                  ) : null}
-                </p>
+                <div className={styles.dateLedgerItem}>
+                  <p className={styles.dateLabel}>Hebrew day</p>
+                  <p className={styles.hebrewPair}>
+                    {day.hebrewDateHebrew ? (
+                      <span lang="he" dir="rtl">
+                        {day.hebrewDateHebrew}
+                      </span>
+                    ) : null}
+                    {day.hebrewDate ? (
+                      <span>
+                        {day.hebrewDate}
+                        {day.isShabbat ? " · Shabbat" : ""}
+                      </span>
+                    ) : null}
+                  </p>
+                </div>
               ) : null}
             </div>
             <p className={styles.note}>
@@ -76,6 +115,16 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
               {highlights.length === 1 && highlights[0]?.memo ? (
                 <p className={styles.sectionLede}>{highlights[0].memo}</p>
               ) : null}
+              {highlights.length === 1 && highlights[0]?.sourceHref ? (
+                <a
+                  className={styles.sourceLink}
+                  href={highlights[0].sourceHref}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {hebcalSourceLabel(highlights[0].title)}
+                </a>
+              ) : null}
               {highlights.length > 1 ? (
                 <ul className={styles.list}>
                   {highlights.map((item) => (
@@ -83,6 +132,16 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
                       <p className={styles.listItemTitle}>{item.title}</p>
                       {item.memo ? (
                         <p className={styles.meta}>{item.memo}</p>
+                      ) : null}
+                      {item.sourceHref ? (
+                        <a
+                          className={styles.sourceLink}
+                          href={item.sourceHref}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {hebcalSourceLabel(item.title)}
+                        </a>
                       ) : null}
                     </li>
                   ))}
@@ -110,20 +169,39 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
               <p className={styles.meta}>
                 {`Read ${formatGregorianLabel(day.festivalShabbat.observedOn)}`}
               </p>
-              {day.festivalShabbat.torahReadings.length ? (
-                <ul className={styles.studyLinks}>
-                  {day.festivalShabbat.torahReadings.map((reading) => (
-                    <li key={reading}>
-                      <a
-                        href={sefariaPassageHref(reading)}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        Study {reading} on Sefaria
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+              {firstSentence(day.festivalShabbat.memo) ? (
+                <p className={styles.sectionLede}>
+                  {firstSentence(day.festivalShabbat.memo)}
+                </p>
+              ) : null}
+              {torahReadingContext(day.festivalShabbat.torahReadings) ? (
+                <p className={styles.knowledgeNote}>
+                  {torahReadingContext(day.festivalShabbat.torahReadings)}
+                </p>
+              ) : null}
+              <div className={styles.readingGrid}>
+                <ReadingGroup
+                  label="Torah"
+                  readings={day.festivalShabbat.torahReadings}
+                />
+                <ReadingGroup
+                  label="Maftir"
+                  readings={day.festivalShabbat.maftirReadings}
+                />
+                <ReadingGroup
+                  label="Haftarah"
+                  readings={day.festivalShabbat.haftarahReadings}
+                />
+              </div>
+              {day.festivalShabbat.sourceHref ? (
+                <a
+                  className={styles.sourceLink}
+                  href={day.festivalShabbat.sourceHref}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {hebcalSourceLabel(day.festivalShabbat.title)}
+                </a>
               ) : null}
             </Container>
           </section>
@@ -148,20 +226,39 @@ export function JewishTodayPage({ day }: JewishTodayPageProps) {
                   ? "Read this Shabbat"
                   : `Read ${formatGregorianLabel(day.parashah.observedOn)}`}
               </p>
-              {day.parashah.torahReadings.length ? (
-                <ul className={styles.studyLinks}>
-                  {day.parashah.torahReadings.map((reading) => (
-                    <li key={reading}>
-                      <a
-                        href={sefariaPassageHref(reading)}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        Study {reading} on Sefaria
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+              {firstSentence(day.parashah.memo) ? (
+                <p className={styles.sectionLede}>
+                  {firstSentence(day.parashah.memo)}
+                </p>
+              ) : null}
+              {torahReadingContext(day.parashah.torahReadings) ? (
+                <p className={styles.knowledgeNote}>
+                  {torahReadingContext(day.parashah.torahReadings)}
+                </p>
+              ) : null}
+              <div className={styles.readingGrid}>
+                <ReadingGroup
+                  label="Torah"
+                  readings={day.parashah.torahReadings}
+                />
+                <ReadingGroup
+                  label="Maftir"
+                  readings={day.parashah.maftirReadings}
+                />
+                <ReadingGroup
+                  label="Haftarah"
+                  readings={day.parashah.haftarahReadings}
+                />
+              </div>
+              {day.parashah.sourceHref ? (
+                <a
+                  className={styles.sourceLink}
+                  href={day.parashah.sourceHref}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {hebcalSourceLabel(day.parashah.title)}
+                </a>
               ) : null}
             </Container>
           </section>

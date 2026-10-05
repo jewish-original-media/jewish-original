@@ -41,6 +41,13 @@ describe("Hebcal day mapping", () => {
     assert.equal(day.parashah?.observedOn, "2026-09-05");
     assert.equal(day.parashah?.readingKind, "thisWeek");
     assert.deepEqual(day.parashah?.torahReadings, ["Deuteronomy 29:9-31:30"]);
+    assert.deepEqual(day.parashah?.maftirReadings, ["Deuteronomy 31:28-30"]);
+    assert.deepEqual(day.parashah?.haftarahReadings, ["Isaiah 61:10-63:9"]);
+    assert.equal(
+      day.parashah?.sourceHref,
+      "https://www.hebcal.com/sedrot/nitzavim-vayeilech-20260905",
+    );
+    assert.equal(day.parashah?.memo, "Fixture note for source-field mapping.");
     assert.equal(day.festivalShabbat, undefined);
     assert.deepEqual(day.holidays, []);
     assert.equal(day.onThisDay.length, 0);

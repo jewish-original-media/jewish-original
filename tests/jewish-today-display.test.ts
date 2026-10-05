@@ -5,7 +5,9 @@ import {
   calendarHighlights,
   firstSentence,
   formatParashahDisplayTitle,
+  readingBookNames,
   sefariaPassageHref,
+  torahReadingContext,
   torahPortionLabel,
 } from "../src/lib/jewish-today/display";
 
@@ -49,5 +51,15 @@ describe("Jewish Today display helpers", () => {
       sefariaPassageHref("Deuteronomy 29:9-31:30"),
       "https://www.sefaria.org/Deuteronomy_29.9-31.30?lang=bi",
     );
+  });
+
+  it("describes only the verified books named by reading references", () => {
+    const readings = ["Deuteronomy 29:9-31:30", "Isaiah 61:10-63:9"];
+    assert.deepEqual(readingBookNames(readings), ["Deuteronomy", "Isaiah"]);
+    assert.equal(
+      torahReadingContext(readings),
+      "The appointed Torah reading is drawn from Deuteronomy and Isaiah. The chapter-and-verse links below open the source text with Hebrew and English.",
+    );
+    assert.equal(torahReadingContext([]), undefined);
   });
 });

@@ -40,12 +40,13 @@ export function HomePageView({ data }: HomePageViewProps) {
     { href: "/today", label: "Today" },
     { href: "#living-archive", label: "Living archive" },
     { href: "/history", label: "History" },
+    { href: "/explore", label: "Explore" },
     ...(data.originals.length > 0
       ? [{ href: "/originals", label: "Originals" }]
       : []),
-    { href: "/podcasts", label: "Listen" },
     ...(showNews ? [{ href: "/news", label: "News" }] : []),
-    { href: "/events", label: "Events" },
+    { href: "/podcasts", label: "Listen" },
+    ...(showEvents ? [{ href: "/events", label: "Events" }] : []),
     { href: "/about", label: "About" },
   ];
 
@@ -89,8 +90,8 @@ export function HomePageView({ data }: HomePageViewProps) {
               and identity.
             </p>
             <div className={styles.heroActions}>
-              <Link className={styles.primaryPath} href="/history">
-                Enter the Archive <span aria-hidden="true">↗</span>
+              <Link className={styles.primaryPath} href="/explore">
+                Explore the Living Archive <span aria-hidden="true">↗</span>
               </Link>
               <Link className={styles.secondaryPath} href="/today">
                 Discover Jewish Today <span aria-hidden="true">→</span>

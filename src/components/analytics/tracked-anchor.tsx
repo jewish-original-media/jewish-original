@@ -17,5 +17,5 @@ export function TrackedAnchor({
     onClick?.(click);
   }
 
-  return <a {...props} onClick={handleClick} />;
+  return <a {...props} data-analytics-event={event} onClick={handleClick} />;
 }

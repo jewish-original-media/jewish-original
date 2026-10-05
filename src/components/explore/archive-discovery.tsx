@@ -119,6 +119,20 @@ export function ArchiveDiscovery({
         </Link>
       </nav>
 
+      {search.view === "current" ? (
+        <aside className={styles.currentIntroduction}>
+          <p className={styles.currentEyebrow}>The Jewish present</p>
+          <p>
+            Current keeps fresh reporting and upcoming programs together without
+            turning outbound records into permanent archive articles.
+          </p>
+          <div>
+            <Link href="/news">Open the News desk</Link>
+            <Link href="/events">Open the Events calendar</Link>
+          </div>
+        </aside>
+      ) : null}
+
       <form action="/explore" className={styles.searchPanel} method="get">
         {search.view === "current" ? (
           <input name="view" type="hidden" value="current" />

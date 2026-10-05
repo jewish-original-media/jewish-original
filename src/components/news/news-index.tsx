@@ -32,19 +32,22 @@ export function NewsIndex({ items, unavailable = false }: NewsIndexProps) {
             Outward-linking Jewish current affairs. Headlines stay with their
             publishers. Jewish Original adds only short context.
           </p>
+          <p className={styles.path}>
+            <Link href="/explore?view=current">
+              See news and events together in Current →
+            </Link>
+          </p>
         </Container>
       </section>
       <section className="section">
         <Container>
           {state === "unavailable" ? (
             <p className={styles.empty}>
-              {NEWS_INDEX_UNAVAILABLE}{" "}
-              <Link href="/today">Open Today</Link>
+              {NEWS_INDEX_UNAVAILABLE} <Link href="/today">Open Today</Link>
             </p>
           ) : state === "empty" ? (
             <p className={styles.empty}>
-              {NEWS_INDEX_EMPTY}{" "}
-              <Link href="/today">Open Today</Link>
+              {NEWS_INDEX_EMPTY} <Link href="/today">Open Today</Link>
               {" · "}
               <Link href="/history">Browse the archive</Link>
             </p>

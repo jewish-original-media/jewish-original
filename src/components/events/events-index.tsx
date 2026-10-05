@@ -1,3 +1,6 @@
+import Link from "next/link";
+
+import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import { Container } from "@/components/ui/container";
 import type { PublicEventCard } from "@/content/events/types";
 import { eventDateParts, eventPlaceLabel } from "@/lib/events/display";
@@ -18,6 +21,11 @@ export function EventsIndex({ items }: EventsIndexProps) {
           <p className={styles.lede}>
             A museum calendar of official Jewish programs. Times stay in each
             event’s own timezone.
+          </p>
+          <p className={styles.path}>
+            <Link href="/explore?view=current">
+              See events and news together in Current →
+            </Link>
           </p>
         </Container>
       </section>
@@ -48,14 +56,15 @@ export function EventsIndex({ items }: EventsIndexProps) {
                       {item.jomContext ? (
                         <p className={styles.context}>{item.jomContext}</p>
                       ) : null}
-                      <a
+                      <TrackedAnchor
                         className={styles.link}
+                        event="event_outbound"
                         href={item.eventUrl}
                         rel="noopener noreferrer"
                         target="_blank"
                       >
                         View event ↗
-                      </a>
+                      </TrackedAnchor>
                     </div>
                   </li>
                 );

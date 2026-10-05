@@ -9,6 +9,7 @@ export type JewishTodayNamedEvent = {
   title: string;
   titleHebrew?: string;
   memo?: string;
+  sourceHref?: string;
 };
 
 export type JewishTodayHoliday = JewishTodayNamedEvent & {
@@ -22,11 +23,15 @@ export type JewishTodayParashah = JewishTodayNamedEvent & {
   observedOn: string;
   readingKind: TorahReadingKind;
   torahReadings: string[];
+  maftirReadings: string[];
+  haftarahReadings: string[];
 };
 
 export type JewishTodayFestivalShabbat = JewishTodayNamedEvent & {
   observedOn: string;
   torahReadings: string[];
+  maftirReadings: string[];
+  haftarahReadings: string[];
 };
 
 export type JewishTodayOmer = {

@@ -16,4 +16,16 @@ test("serves /events as a museum calendar without inventing programs", async ({
   await expect(
     page.getByText(/no upcoming events are published yet/i),
   ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: /see events and news together in current/i,
+    }),
+  ).toHaveAttribute("href", "/explore?view=current");
+
+  const outboundEvents = page.locator(
+    'a[data-analytics-event="event_outbound"]',
+  );
+  for (const eventLink of await outboundEvents.all()) {
+    await expect(eventLink).toHaveAttribute("target", "_blank");
+  }
 });

@@ -241,6 +241,26 @@
   font-size: 0.82rem;
 }
 
+.todayKnowledge {
+  max-width: 32rem;
+  margin: var(--space-4) 0 0;
+  color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.todayStudyLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-top: var(--space-3);
+  color: var(--color-navy);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-underline-offset: 0.24em;
+}
+
 .observanceList {
   display: grid;
   gap: var(--space-2);
@@ -250,8 +270,18 @@
 }
 
 .observanceList li {
+  display: grid;
+  gap: var(--space-1);
   color: var(--color-muted);
   font-size: 0.95rem;
+}
+
+.observanceMemo {
+  max-width: 30rem;
+  color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  font-size: 0.84rem;
+  line-height: 1.5;
 }
 
 .todayPath {
@@ -739,6 +769,15 @@
   line-height: 0.95;
 }
 
+.newsIntroduction,
+.eventsIntroduction {
+  max-width: 34rem;
+  margin: calc(var(--space-8) * -1) 0 var(--space-10);
+  color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  line-height: 1.65;
+}
+
 .newsList,
 .eventList {
   margin: 0;
@@ -847,6 +886,10 @@
   margin: var(--space-8) 0 0;
 }
 
+.eventPaths {
+  margin: var(--space-8) 0 0;
+}
+
 .newsDeskLink {
   color: var(--color-navy);
   font-size: 0.78rem;
@@ -873,6 +916,10 @@
   font-weight: 400;
   letter-spacing: -0.04em;
   line-height: 0.95;
+}
+
+.eventsIntroduction {
+  margin-top: calc(var(--space-6) * -1);
 }
 
 .eventItem {
@@ -2797,6 +2844,7 @@
 
 .immersive .news .sectionLabel,
 .immersive .newsTitle,
+.immersive .newsIntroduction,
 .immersive .newsDesk {
   grid-column: 1;
 }
@@ -2807,9 +2855,13 @@
   font-size: clamp(3.25rem, 6vw, 6rem);
 }
 
+.immersive .newsIntroduction {
+  margin: 0;
+}
+
 .immersive .newsList {
   grid-column: 2;
-  grid-row: 1 / span 4;
+  grid-row: 1 / span 5;
 }
 
 .immersive .newsLeadLink .newsHeadline {
@@ -2871,6 +2923,11 @@
   margin-bottom: clamp(3rem, 6vw, 6rem);
   font-size: clamp(3.5rem, 7vw, 7rem);
   line-height: 0.9;
+}
+
+.immersive .eventsIntroduction {
+  max-width: 42rem;
+  margin: calc(var(--space-8) * -1) 0 var(--space-10);
 }
 
 .immersive .eventItem {
@@ -3191,6 +3248,7 @@
 
   .immersive .news .sectionLabel,
   .immersive .newsTitle,
+  .immersive .newsIntroduction,
   .immersive .newsDesk,
   .immersive .newsList {
     grid-column: 1;

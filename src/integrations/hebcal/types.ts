@@ -30,6 +30,8 @@ export type HebcalItem = {
   omer?: HebcalOmerDetails;
   leyning?: {
     torah?: string;
+    maftir?: string;
+    haftarah?: string;
   };
   link?: string;
 };

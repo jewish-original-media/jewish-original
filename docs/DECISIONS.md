@@ -775,3 +775,24 @@ Only clean `/explore` is indexable. Query, filter, sort, Current, and pagination
 states are `noindex, follow` with canonical `/explore`. News and Event outbound
 URLs never enter the sitemap. This quality gate favors useful, editorially
 described collections over thin taxonomy pages.
+
+## ADR-051 — Daily knowledge stays source-backed
+
+**Status:** Accepted, 2026-10-05
+
+Jewish Today may present Hebcal holiday and Torah memos, Hebcal source links,
+verified Torah, Maftir, and Haftarah references, and Sefaria study links. It
+may derive a factual sentence naming the biblical books present in those
+references. It must not infer a holiday’s meaning, summarize a Torah portion,
+or present generated religious interpretation as editorial knowledge.
+
+The `/today` sequence is Gregorian/Hebrew date ledger, eligible observance,
+festival or weekly readings, then reviewed Gregorian History. The homepage
+uses a compact subset from the same `JewishTodayDay`; it does not make a second
+provider request.
+
+News and Events retain their existing freshness, diversity, and publication
+gates. Their homepage and desk links are tracked outbound links, and
+`/explore?view=current` explains that these records are current pathways rather
+than permanent JOM archive articles. No CMS write, new provider, or ingest
+activation is part of this pass.

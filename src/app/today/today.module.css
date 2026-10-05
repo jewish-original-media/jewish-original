@@ -51,6 +51,29 @@
   margin-top: var(--space-4);
 }
 
+.dateLedger {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+  padding-block: var(--space-6);
+  border-block: 1px solid color-mix(in srgb, var(--color-navy) 18%, transparent);
+}
+
+.dateLedgerItem {
+  min-width: 0;
+}
+
+.dateLabel,
+.readingLabel {
+  margin: 0 0 var(--space-2);
+  color: var(--color-olive);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
 .gregorian {
   margin: 0;
   max-width: 28rem;
@@ -135,6 +158,16 @@
   line-height: 1.6;
 }
 
+.knowledgeNote {
+  max-width: 42rem;
+  margin: var(--space-5) 0 0;
+  padding-left: var(--space-5);
+  border-left: 2px solid var(--color-gold);
+  color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  line-height: 1.7;
+}
+
 .sectionHebrew {
   color: var(--color-navy);
 }
@@ -167,8 +200,20 @@
   list-style: none;
 }
 
+.readingGrid {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.readingGroup {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-rule);
+}
+
 .studyLinks a,
-.archiveLink {
+.archiveLink,
+.sourceLink {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
@@ -176,6 +221,13 @@
   font-size: var(--text-sm);
   font-weight: 700;
   text-underline-offset: 0.24em;
+}
+
+.sourceLink {
+  margin-top: var(--space-4);
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
 }
 
 .historyEmpty {
@@ -228,6 +280,14 @@
 @media (min-width: 64rem) {
   .hero {
     padding-block: clamp(1.75rem, 3vw, 2.75rem);
+  }
+
+  .dateLedger {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .readingGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

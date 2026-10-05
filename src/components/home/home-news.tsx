@@ -2,8 +2,8 @@ import Link from "next/link";
 
 import { TrackedAnchor } from "@/components/analytics/tracked-anchor";
 import type { CuratedNewsCard } from "@/content/news/types";
-import { formatNewsTime } from "@/lib/news/display";
 import { firstSentence } from "@/lib/jewish-today/display";
+import { formatNewsTime, newsDeskLabel } from "@/lib/news/display";
 
 import styles from "@/app/home.module.css";
 
@@ -25,6 +25,10 @@ export function HomeNews({ items }: HomeNewsProps) {
       <div className={styles.bandInner}>
         <p className={styles.sectionLabel}>What we’re following</p>
         <h2 className={styles.newsTitle}>The wire, not the reprint.</h2>
+        <p className={styles.newsIntroduction}>
+          A fresh reading of the Jewish present, with context from Jewish
+          Original and reporting kept with its publisher.
+        </p>
         <ol className={styles.newsList}>
           <li className={`${styles.newsItem} ${styles.newsLead}`}>
             <NewsDeskLink item={lead} lead />
@@ -38,6 +42,10 @@ export function HomeNews({ items }: HomeNewsProps) {
         <p className={styles.newsDesk}>
           <Link className={styles.newsDeskLink} href="/news">
             Full desk
+          </Link>
+          <span aria-hidden="true"> · </span>
+          <Link className={styles.newsDeskLink} href="/explore?view=current">
+            News and events
           </Link>
         </p>
       </div>
@@ -62,14 +70,15 @@ function NewsDeskLink({
     >
       <span className={styles.newsMeta}>
         <span className={styles.newsPublisher}>{item.publisher}</span>
+        <span>{newsDeskLabel(item.desk)}</span>
         <time dateTime={item.sourcePublishedAt}>
           {formatNewsTime(item.sourcePublishedAt)}
         </time>
       </span>
       <span className={styles.newsHeadline}>{item.headline}</span>
-      {lead && item.jomContext ? (
+      {item.jomContext ? (
         <span className={styles.newsContext}>
-          {firstSentence(item.jomContext, 120)}
+          {firstSentence(item.jomContext, lead ? 180 : 120)}
         </span>
       ) : null}
       <span className={styles.newsSource}>Read at {item.publisher}</span>

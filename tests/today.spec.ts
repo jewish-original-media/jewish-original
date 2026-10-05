@@ -25,7 +25,7 @@ test("renders an ordinary weekday without empty sections", async ({
   ).toBeVisible();
   await expect(
     page.getByRole("link", {
-      name: "Study Deuteronomy 29:9-31:30 on Sefaria",
+      name: /Deuteronomy 29:9-31:30 on Sefaria/,
     }),
   ).toHaveAttribute(
     "href",
@@ -37,18 +37,57 @@ test("renders an ordinary weekday without empty sections", async ({
   await expect(
     page.getByRole("heading", { name: /today in jewish history/i }),
   ).toHaveCount(0);
-  await expect(
-    page.getByText(
-      "No verified Gregorian anniversary is published for this date.",
-    ),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: "Browse the archive" }),
-  ).toHaveAttribute("href", "/history");
+  const historyHeading = page.getByRole("heading", {
+    name: /Published Gregorian anniversaries|No published anniversary today/,
+  });
+  await expect(historyHeading).toBeVisible();
+  if (await page.getByText(/No verified Gregorian anniversary/).count()) {
+    await expect(
+      page.getByRole("link", { name: "Browse the archive" }),
+    ).toHaveAttribute("href", "/history");
+  } else {
+    await expect(
+      page
+        .getByRole("region", { name: "Published Gregorian anniversaries" })
+        .locator("article")
+        .first(),
+    ).toBeVisible();
+  }
   await expect(
     page.getByText(/civil gregorian|america\/new_york/i),
   ).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "Hebcal" })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Hebcal", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: /Calendar notes for Nitzavim-Vayeilech on Hebcal/,
+    }),
+  ).toHaveAttribute("href", /^https:\/\/hebcal\.com\//);
+  await expect(page.getByText("Maftir", { exact: true })).toBeVisible();
+  await expect(page.getByText("Haftarah", { exact: true })).toBeVisible();
+
+  const dateLedger = page.getByText("Gregorian day", { exact: true });
+  const torahSection = page.getByRole("heading", {
+    name: /nitzavim.vayeilech/i,
+  });
+  const dateBox = await dateLedger.boundingBox();
+  const torahBox = await torahSection.boundingBox();
+  expect(dateBox).not.toBeNull();
+  expect(torahBox).not.toBeNull();
+  expect(dateBox!.y).toBeLessThan(torahBox!.y);
+
+  let reachedSefaria = false;
+  for (let press = 0; press < 30; press += 1) {
+    await page.keyboard.press("Tab");
+    reachedSefaria = await page.evaluate(
+      () =>
+        document.activeElement instanceof HTMLAnchorElement &&
+        document.activeElement.href.startsWith("https://www.sefaria.org/"),
+    );
+    if (reachedSefaria) break;
+  }
+  expect(reachedSefaria).toBe(true);
 
   await expectNoOverflow(page);
   await page.screenshot({
@@ -98,13 +137,17 @@ test("renders holiday, Omer, Shabbat, and Rosh Chodesh fixtures", async ({
   await expect(
     page.getByText("Shabbat", { exact: false }).first(),
   ).toBeVisible();
-  await expect(page.getByText(/leil selichot/i)).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /leil selichot/i }),
+  ).toBeVisible();
 
   await page.goto("/today?date=2026-01-19");
   await expect(page.getByText(/rosh chodesh/i).first()).toBeVisible();
 
   await page.goto("/today?date=2026-02-28");
-  await expect(page.getByText(/shabbat zachor/i)).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /shabbat zachor/i }),
+  ).toBeVisible();
 });
 
 test("retrieves the published Dachau History entry on April 29", async ({

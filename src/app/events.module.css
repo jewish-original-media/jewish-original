@@ -27,6 +27,19 @@
   line-height: 1.6;
 }
 
+.path {
+  margin: var(--space-5) 0 0;
+}
+
+.path a {
+  color: var(--color-navy);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-underline-offset: 0.22em;
+  text-transform: uppercase;
+}
+
 .list {
   margin: 0;
   padding: 0;

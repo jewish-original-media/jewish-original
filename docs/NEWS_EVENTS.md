@@ -19,6 +19,20 @@ optional desk, outbound URL.
 Public Event card: title, organizer, date object, place or Online, time in the
 event’s own timezone, JOM context, outbound URL.
 
+Homepage and desk links remain explicitly outbound. News uses
+`news_outbound`; Events uses `event_outbound`. JOM context may be shortened to
+its first complete sentence for compact surfaces, but source headlines, event
+titles, publishers, organizers, dates, and URLs are not rewritten.
+
+## Current discovery
+
+`/explore?view=current` combines only eligible News and Events in a
+source-honest discovery view. It explains that these are fresh outbound
+records, not permanent JOM archive articles, and links directly to `/news` and
+`/events`. The view remains `noindex, follow` and canonicalizes to `/explore`.
+It does not change either desk’s eligibility, freshness, diversity, or
+publication gates.
+
 ## Sources
 
 News allowlist: JTA, Times of Israel, Jerusalem Post diaspora/archaeology/
@@ -45,11 +59,11 @@ set publication status.
 
 These are different gates.
 
-| Surface | Show when |
-| --- | --- |
+| Surface                         | Show when                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Homepage “What We’re Following” | At least **3** items whose `sourcePublishedAt` is within **7 days**, after deterministic publisher and desk diversity (prefer 3 distinct publishers and mixed desks when the pool allows; prefer 3 items, cap 5, at most 2 per publisher). Hide at 0–2 even if fewer than three publishers are available. Never render an empty News band. |
-| `/news` | Published, unexpired items whose `sourcePublishedAt` is within **14 days**. Successful empty is not a fetch failure. |
-| Primary nav | At least **5** current `/news` items and **3** publishers. Footer News stays on. |
+| `/news`                         | Published, unexpired items whose `sourcePublishedAt` is within **14 days**. Successful empty is not a fetch failure.                                                                                                                                                                                                                       |
+| Primary nav                     | At least **5** current `/news` items and **3** publishers. Footer News stays on.                                                                                                                                                                                                                                                           |
 
 Do not backdate `sourcePublishedAt`, extend the windows, disable the gates,
 or publish filler to force the homepage band.

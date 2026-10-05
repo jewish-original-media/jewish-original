@@ -178,6 +178,8 @@ One visual system. Different rooms:
 | ------------------- | ---------------------------- | ---------------------------------- |
 | Lobby               | `/`                          | Front page / museum entrance       |
 | Daily ritual        | `/today`                     | Hebrew date, Torah, observance     |
+| Living index        | `/explore`                   | Interconnected archive discovery   |
+| Current index       | `/explore?view=current`      | Fresh outbound records             |
 | Archive / gallery   | `/history`                   | Dated collection                   |
 | Exhibition          | `/history/[slug]`            | One object, sources, related rooms |
 | Listening room      | `/podcasts` and show/episode | Voices, night field                |
@@ -186,6 +188,17 @@ One visual system. Different rooms:
 | Quiet legal room    | `/privacy`                   | Current product behavior           |
 
 Do not make every page visually identical.
+
+The Daily ritual room uses a labeled Gregorian/Hebrew date ledger, then
+observance, Torah, and History in source order. Educational depth comes from
+provider memos, verified reading references, and clear source links—not
+decorative religious copy. Torah, Maftir, and Haftarah groups remain keyboard
+accessible and collapse when absent.
+
+The Current index uses a quiet cool-field explainer and direct paths to the
+News and Events desks. It must remain visually subordinate to the durable
+Living Archive and must not make outbound records look like permanent JOM
+articles.
 
 The homepage is a sequence of editorial scenes rather than a stack of equal
 content bands. Full-viewport photography, sparse overlay type, large pauses,

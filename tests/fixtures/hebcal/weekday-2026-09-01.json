@@ -15,8 +15,12 @@
       "hdate": "23 Elul 5786",
       "category": "parashat",
       "hebrew": "פרשת נצבים־וילך",
+      "memo": "Fixture note for source-field mapping.",
+      "link": "https://www.hebcal.com/sedrot/nitzavim-vayeilech-20260905",
       "leyning": {
-        "torah": "Deuteronomy 29:9-31:30"
+        "torah": "Deuteronomy 29:9-31:30",
+        "maftir": "Deuteronomy 31:28-30",
+        "haftarah": "Isaiah 61:10-63:9"
       }
     }
   ]

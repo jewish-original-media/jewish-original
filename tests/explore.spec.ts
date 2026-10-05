@@ -73,3 +73,29 @@ test("keeps Explore usable without horizontal overflow and links it from chrome"
   );
   expect(hasHorizontalOverflow).toBe(false);
 });
+
+test("explains the source-honest Current view and links its editorial desks", async ({
+  page,
+}) => {
+  await page.goto("/explore?view=current");
+
+  await expect(
+    page.getByText(
+      /without turning outbound records into permanent archive articles/i,
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Open the News desk" }),
+  ).toHaveAttribute("href", "/news");
+  await expect(
+    page.getByRole("link", { name: "Open the Events calendar" }),
+  ).toHaveAttribute("href", "/events");
+  await expect(
+    page.getByRole("combobox", { name: "Search the archive" }),
+  ).toHaveAttribute("placeholder", "Search current news and events");
+
+  const hasHorizontalOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > window.innerWidth,
+  );
+  expect(hasHorizontalOverflow).toBe(false);
+});

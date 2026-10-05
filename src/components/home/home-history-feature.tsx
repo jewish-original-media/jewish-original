@@ -168,6 +168,10 @@ export function HomeHistoryFeature({
           <Link className="editorial-link" href="/history">
             Enter the Archive
           </Link>
+          <span aria-hidden="true"> · </span>
+          <Link className="editorial-link" href="/explore">
+            Follow every thread
+          </Link>
         </p>
       </div>
     </section>

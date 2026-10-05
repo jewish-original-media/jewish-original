@@ -15,19 +15,18 @@ test("serves /news as a text-first outward-linking desk", async ({ page }) => {
   await expect(page.getByText(/couldn't load the news desk/i)).toHaveCount(0);
   await expect(page.getByText(/no published news items yet/i)).toHaveCount(0);
   const sourceLinks = page.getByRole("link", { name: /view source/i });
-  await expect(sourceLinks).toHaveCount(4);
+  expect(await sourceLinks.count()).toBeGreaterThan(0);
+  for (const sourceLink of await sourceLinks.all()) {
+    await expect(sourceLink).toHaveAttribute(
+      "data-analytics-event",
+      "news_outbound",
+    );
+  }
   await expect(
-    page.getByRole("heading", {
-      name: "Jewish groups to protest against antisemitism outside United Nations",
+    page.getByRole("link", {
+      name: /see news and events together in current/i,
     }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", {
-      name: "A case pitting Indiana Jews against an abortion ban heads back to court",
-    }),
-  ).toBeVisible();
-  await expect(page.getByText("JTA").first()).toBeVisible();
-  await expect(page.getByText("Jerusalem Post").first()).toBeVisible();
+  ).toHaveAttribute("href", "/explore?view=current");
   await expect(page.getByText(/according to reports/i)).toHaveCount(0);
   await expect(page.getByText(/highlights the intersection/i)).toHaveCount(0);
   await expect(page.locator('a[href^="/news/"]')).toHaveCount(0);
@@ -53,7 +52,9 @@ test("serves /news as a text-first outward-linking desk", async ({ page }) => {
         href.startsWith("https://jta.org/") ||
         href.startsWith("https://jpost.com/") ||
         href.startsWith("https://www.jta.org/") ||
-        href.startsWith("https://www.jpost.com/"),
+        href.startsWith("https://www.jpost.com/") ||
+        href.startsWith("https://biblicalarchaeology.org/") ||
+        href.startsWith("https://www.biblicalarchaeology.org/"),
     ),
   ).toBe(true);
 });

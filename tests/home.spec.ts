@@ -107,7 +107,7 @@ test("composes the homepage from Jewish Today and published History", async ({
     page
       .getByRole("navigation", { name: "Discover Jewish Original" })
       .getByRole("link", { name: /events/i }),
-  ).toHaveAttribute("href", "/events");
+  ).toHaveCount(0);
   const menuToggle = page.locator("summary").filter({ hasText: "Menu" });
   await menuToggle.click();
   await expect(page.getByRole("navigation", { name: "Mobile" })).toBeVisible();
@@ -128,8 +128,16 @@ test("composes the homepage from Jewish Today and published History", async ({
     }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Enter the Archive", exact: true }),
-  ).toHaveAttribute("href", "/history");
+    page.getByRole("link", {
+      name: "Explore the Living Archive",
+      exact: true,
+    }),
+  ).toHaveAttribute("href", "/explore");
+  await expect(
+    page
+      .getByRole("navigation", { name: "Discover Jewish Original" })
+      .getByRole("link", { name: /Explore/ }),
+  ).toHaveAttribute("href", "/explore");
   await expect(historyRegion.locator("article")).toHaveCount(3);
   await expect(
     page

@@ -52,6 +52,7 @@ function namedEvent(item: HebcalItem): JewishTodayNamedEvent {
     title: item.title,
     ...(item.hebrew ? { titleHebrew: item.hebrew } : {}),
     ...(item.memo ? { memo: item.memo } : {}),
+    ...(item.link ? { sourceHref: item.link } : {}),
   };
 }
 
@@ -80,9 +81,9 @@ function parashahTitle(title: string): string {
   return title.replace(/^Parashat\s+/u, "").trim() || title;
 }
 
-function torahReadings(item: HebcalItem): string[] {
+function readings(value?: string): string[] {
   return (
-    item.leyning?.torah
+    value
       ?.split(";")
       .map((reading) => reading.trim())
       .filter(Boolean) ?? []
@@ -134,9 +135,12 @@ export function selectFestivalShabbat(
   return {
     title: festival.title,
     observedOn: nextSaturday,
-    torahReadings: torahReadings(festival),
+    torahReadings: readings(festival.leyning?.torah),
+    maftirReadings: readings(festival.leyning?.maftir),
+    haftarahReadings: readings(festival.leyning?.haftarah),
     ...(festival.hebrew ? { titleHebrew: festival.hebrew } : {}),
     ...(festival.memo ? { memo: festival.memo } : {}),
+    ...(festival.link ? { sourceHref: festival.link } : {}),
   };
 }
 
@@ -284,9 +288,12 @@ function parashahFromItem(
     title: parashahTitle(item.title),
     observedOn: itemCivilDate(item),
     readingKind,
-    torahReadings: torahReadings(item),
+    torahReadings: readings(item.leyning?.torah),
+    maftirReadings: readings(item.leyning?.maftir),
+    haftarahReadings: readings(item.leyning?.haftarah),
     ...(item.hebrew ? { titleHebrew: item.hebrew } : {}),
     ...(item.memo ? { memo: item.memo } : {}),
+    ...(item.link ? { sourceHref: item.link } : {}),
   };
 }
 

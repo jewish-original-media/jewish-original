@@ -46,9 +46,11 @@ consistent Eastern Time day to both the homepage and header.
 
 1. **Masthead** — a full-viewport class A morning-tefillin photograph carries
    the stacked “Remember, rebuild, and create.” opening, live dates, primary
-   paths, and a numbered chapter strip. Originals and News remain
-   publication-gated; Events and About remain discoverable. The OTD lion is
-   not used in this global JOM surface.
+   paths, and a numbered chapter strip. The primary path enters `/explore`.
+   The strip follows the rendered page order, includes Explore as a durable
+   destination, and includes Originals, News, and Events only when their
+   homepage scenes pass their existing publication gates. About remains
+   discoverable. The OTD lion is not used in this global JOM surface.
 2. **Jewish Today** — a near-full-screen daily scene from the shared
    `JewishTodayDay`, introduced as a living calendar.
 3. **Living Archive** — a layered passage of locally stored,
@@ -109,7 +111,9 @@ the visual object. Torah uses Hebcal labels: **This week in Torah**, **Most
 recent Torah portion**, or a separate **Festival** line when the coming
 Saturday is yom tov. The module names Eastern Time. It does not imply
 Jerusalem time. Observance and History blocks appear only when they have data.
-Do not fetch Hebcal again on the homepage.
+When Hebcal supplies them, a concise provider memo, factual book context, and
+one verified Sefaria reading path add educational depth. They are not
+editorially invented commentary. Do not fetch Hebcal again on the homepage.
 
 ## History
 
@@ -143,3 +147,6 @@ See `docs/ORIGINALS.md` and `docs/NEWS_EVENTS.md`.
 - News: tighter newswire density, rules, source + JOM context
 - Events: date as the visual object; homepage scene stays hidden while
   inventory is thin, but `/events` is permanently discoverable
+- Both scenes point to `/explore?view=current`; that view clearly identifies
+  News and Events as time-bound outbound records rather than durable archive
+  articles.

@@ -45,9 +45,9 @@ Diaspora Torah readings (`i=off`) match the Eastern Time civil date.
 A daily visit should answer, in this order:
 
 1. What Jewish day is it?
-2. Where are we in Torah this week?
-3. What happened on this Gregorian date in Jewish history?
-4. Is anything else being observed today?
+2. What is being observed today, and what does the calendar source say?
+3. Where are we in Torah this week?
+4. What happened on this Gregorian date in Jewish history?
 
 Do not invent observances, History matches, or Torah readings. The History
 section uses a quiet archive invitation when there is no exact Gregorian
@@ -62,8 +62,11 @@ Calculated calendar days are not stored in Sanity.
 ### Full `/today` experience
 
 Uses `JewishTodayPage`. Shows the compact date hero, then only the sections
-that have real content: calendar observances, this week’s parashah, and
-published History matches. History uses `HistoryEntryCard` `variant="archive"`.
+that have real content: calendar observances, festival or weekly Torah
+readings, and published History matches. Gregorian and Hebrew dates are labeled
+as a two-part ledger. Provider memos appear only when Hebcal supplies them;
+they are not rewritten as JOM commentary. History uses `HistoryEntryCard`
+`variant="archive"`.
 
 ### Compact homepage module
 
@@ -76,6 +79,8 @@ to `HomeJewishToday`. The module shows:
   `parashat` and the system falls back
 - **Festival** when the coming Saturday is a Hebcal `yomtov` without a weekly
   portion. This is the holiday name, not a guessed leyning.
+- a short source-backed Hebcal memo and factual reading-book context when
+  available, plus the first verified Sefaria study path
 - **Today** only when a holiday, Rosh Chodesh, special Shabbat, Omer, or
   other observance is present
 - **On this day** only when a published History match exists
@@ -105,10 +110,13 @@ in the response and marks `readingKind: "recent"`. Display then says **Most
 recent Torah portion**, never **This week in Torah**. If the coming Saturday
 is a Hebcal `yomtov` without a weekly portion, `festivalShabbat` carries that
 holiday. Verified `leyning.torah` references are split into passages and linked
-to Sefaria using Sefaria’s documented text-reference URL format. Combined
-portions remain one verified range; holiday readings may expose more than one
-passage. If Hebcal supplies no reference, no study link appears. Stored titles
-stay hyphenated (`Nitzavim-Vayeilech`)
+to Sefaria using Sefaria’s documented text-reference URL format. Verified
+`leyning.maftir` and `leyning.haftarah` references receive their own labeled
+reading groups. Combined portions remain one verified range; holiday readings
+may expose more than one passage. The interface may state which biblical books
+those references name, but it does not infer themes or interpretation. If
+Hebcal supplies no reference, no study link appears. Stored titles stay
+hyphenated (`Nitzavim-Vayeilech`)
 to match Hebcal. Display uses an en dash (`Nitzavim–Vayeilech`). Empty
 remains empty when Hebcal returns no portion at all.
 

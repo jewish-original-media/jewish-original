@@ -4,7 +4,10 @@ import type { JewishTodayDay } from "@/features/jewish-today";
 import { formatGregorianLabel } from "@/features/jewish-today/timezone";
 import {
   calendarHighlights,
+  firstSentence,
   formatParashahDisplayTitle,
+  sefariaPassageHref,
+  torahReadingContext,
   torahPortionLabel,
 } from "@/lib/jewish-today/display";
 
@@ -77,6 +80,23 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
                 <p className={styles.todayFactNote}>
                   {`Read ${formatGregorianLabel(day.festivalShabbat.observedOn)}`}
                 </p>
+                {firstSentence(day.festivalShabbat.memo, 180) ? (
+                  <p className={styles.todayKnowledge}>
+                    {firstSentence(day.festivalShabbat.memo, 180)}
+                  </p>
+                ) : null}
+                {day.festivalShabbat.torahReadings[0] ? (
+                  <a
+                    className={styles.todayStudyLink}
+                    href={sefariaPassageHref(
+                      day.festivalShabbat.torahReadings[0],
+                    )}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Study {day.festivalShabbat.torahReadings[0]} on Sefaria
+                  </a>
+                ) : null}
               </div>
             ) : null}
 
@@ -96,6 +116,25 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
                     ? "Read this Shabbat"
                     : `Read ${formatGregorianLabel(day.parashah.observedOn)}`}
                 </p>
+                {firstSentence(day.parashah.memo, 180) ? (
+                  <p className={styles.todayKnowledge}>
+                    {firstSentence(day.parashah.memo, 180)}
+                  </p>
+                ) : torahReadingContext(day.parashah.torahReadings) ? (
+                  <p className={styles.todayKnowledge}>
+                    {torahReadingContext(day.parashah.torahReadings)}
+                  </p>
+                ) : null}
+                {day.parashah.torahReadings[0] ? (
+                  <a
+                    className={styles.todayStudyLink}
+                    href={sefariaPassageHref(day.parashah.torahReadings[0])}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Study {day.parashah.torahReadings[0]} on Sefaria
+                  </a>
+                ) : null}
               </div>
             ) : null}
 
@@ -104,7 +143,14 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
                 <p className={styles.sectionLabel}>Today</p>
                 <ul className={styles.observanceList}>
                   {highlights.map((item) => (
-                    <li key={item.title}>{item.title}</li>
+                    <li key={item.title}>
+                      <span>{item.title}</span>
+                      {item.memo ? (
+                        <small className={styles.observanceMemo}>
+                          {item.memo}
+                        </small>
+                      ) : null}
+                    </li>
                   ))}
                 </ul>
               </div>
