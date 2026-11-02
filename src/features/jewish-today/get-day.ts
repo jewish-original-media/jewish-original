@@ -26,6 +26,16 @@ async function getPublishedOnThisDay(
   return getOnThisDayHistory(false, month, day);
 }
 
+async function getPublishedTorahBrief(lookup: {
+  canonicalTitle: string;
+  observedOn: string;
+  hebcalSourceHref?: string;
+}) {
+  const { getPublishedTorahPortionBrief } =
+    await import("@/content/torah/fetch");
+  return getPublishedTorahPortionBrief(lookup);
+}
+
 export const getJewishToday = cache(async function getJewishToday(
   options: GetJewishTodayOptions = {},
 ): Promise<JewishTodayDay> {
@@ -56,7 +66,31 @@ export const getJewishToday = cache(async function getJewishToday(
       return emptyJewishTodayDay(gregorianDate, timeZone, onThisDay);
     }
 
-    return mapHebcalDay(gregorianDate, timeZone, calendar, onThisDay);
+    const mappedDay = mapHebcalDay(
+      gregorianDate,
+      timeZone,
+      calendar,
+      onThisDay,
+    );
+    if (!mappedDay.parashah) return mappedDay;
+
+    const fetchTorahPortionBrief =
+      options.fetchTorahPortionBrief ?? getPublishedTorahBrief;
+    const brief = await fetchTorahPortionBrief({
+      canonicalTitle: mappedDay.parashah.title,
+      observedOn: mappedDay.parashah.observedOn,
+      hebcalSourceHref: mappedDay.parashah.sourceHref,
+    }).catch(() => null);
+
+    return brief
+      ? {
+          ...mappedDay,
+          parashah: {
+            ...mappedDay.parashah,
+            brief,
+          },
+        }
+      : mappedDay;
   } catch {
     return emptyJewishTodayDay(gregorianDate, timeZone, onThisDay);
   }

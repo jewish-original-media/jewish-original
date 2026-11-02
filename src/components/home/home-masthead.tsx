@@ -19,7 +19,6 @@ const DESCRIPTORS = [
   { text: "Education" },
   { text: "משפחה", lang: "he", dir: "rtl" },
   { text: "News" },
-  { text: "Games" },
   { text: "עם ישראל חי", lang: "he", dir: "rtl" },
   { text: "Podcasts" },
   { text: "Stories" },
@@ -82,7 +81,7 @@ export function HomeMasthead({
           </div>
           <h1 className="sr-only" id="home-masthead">
             Jewish Original Media, history, culture, education, news, events,
-            podcasts, games, and stories.
+            podcasts, and stories.
           </h1>
           <div aria-hidden="true" className={styles.display}>
             <span>Jewish Original</span>

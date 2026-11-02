@@ -1,4 +1,5 @@
 import type { HistoryEntrySummary } from "@/content/history/types";
+import type { TorahPortionBrief } from "@/content/torah/types";
 
 export type JewishTodayCalendarStatus = "ready" | "unavailable";
 
@@ -25,6 +26,7 @@ export type JewishTodayParashah = JewishTodayNamedEvent & {
   torahReadings: string[];
   maftirReadings: string[];
   haftarahReadings: string[];
+  brief?: TorahPortionBrief;
 };
 
 export type JewishTodayFestivalShabbat = JewishTodayNamedEvent & {
@@ -91,4 +93,9 @@ export type GetJewishTodayOptions = {
     month: number,
     day: number,
   ) => Promise<HistoryEntrySummary[]>;
+  fetchTorahPortionBrief?: (lookup: {
+    canonicalTitle: string;
+    observedOn: string;
+    hebcalSourceHref?: string;
+  }) => Promise<TorahPortionBrief | null>;
 };

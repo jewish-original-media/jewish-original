@@ -111,7 +111,11 @@ export function HomeJewishToday({ day }: HomeJewishTodayProps) {
                     ? "Read this Shabbat"
                     : `Read ${formatGregorianLabel(day.parashah.observedOn)}`}
                 </p>
-                {firstSentence(day.parashah.memo, 180) ? (
+                {day.parashah.brief?.synopsis ? (
+                  <p className={styles.todayKnowledge}>
+                    {day.parashah.brief.synopsis}
+                  </p>
+                ) : firstSentence(day.parashah.memo, 180) ? (
                   <p className={styles.todayKnowledge}>
                     {firstSentence(day.parashah.memo, 180)}
                   </p>

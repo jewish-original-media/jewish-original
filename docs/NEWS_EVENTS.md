@@ -5,8 +5,8 @@ published cards whose `sourcePublishedAt` is within the last 30 days, newest
 first. The homepage still caps that band at five cards. Cards older than 30
 days are deleted from Sanity when news ingest writes are enabled. News stays
 out of primary nav until the desk has five current items and three publishers.
-Footer includes News. No Events qualified. Ingest writes and cron stay off
-until those credentials are turned on.
+Footer includes News. No Events qualified. The cron is scheduled, while every
+write stays off unless the production credentials and explicit gate are on.
 
 ## Operating rule
 
@@ -67,24 +67,29 @@ set publication status.
 
 These are different gates.
 
-| Surface                             | Show when                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Surface                             | Show when                                                                                                                                                                                     |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Homepage “What We’re Following”     | Published cards whose `sourcePublishedAt` is within **30 days**, newest first, after publisher and desk diversity. Cap **5**, at most 2 per publisher. Hide the band when that pool is empty. |
-| `/news`                             | Published items whose `sourcePublishedAt` is within **30 days**. Successful empty is not a fetch failure. Items older than 30 days are removed from the dataset when ingest writes run. |
-| Today submenu / daily ribbon News   | At least **5** current `/news` items and **3** publishers. Footer News stays on.                                                                                                                                                                                                                                                                                                                                                                                                  |
-| Today submenu / daily ribbon Events | At least **2** upcoming events from **2** organizers and **2** geography buckets. The Events sitemap route and footer Events link use the same eligibility decision.                                                                                                                                                                                                                                                                                                              |
+| `/news`                             | Published items whose `sourcePublishedAt` is within **30 days**. Successful empty is not a fetch failure. Items older than 30 days are removed from the dataset when ingest writes run.       |
+| Today submenu / daily ribbon News   | At least **5** current `/news` items and **3** publishers. Footer News stays on.                                                                                                              |
+| Today submenu / daily ribbon Events | At least **2** upcoming events from **2** organizers and **2** geography buckets. The Events sitemap route and footer Events link use the same eligibility decision.                          |
 
 Do not backdate `sourcePublishedAt` or publish filler to force the submenu
 or ribbon. The public cutoff is 30 days from the publisher’s datetime.
 
 ## Writes
 
-Cron and `npm run ingest:dry-run` default to no Sanity writes. Publication
-requires `CRON_SECRET`, a Gateway credential, `SANITY_API_WRITE_TOKEN`, and
-`INGEST_WRITES_ENABLED=1`. Writes are scoped to `curatedNewsItem`, `event`,
-`ingestSource`, `ingestRun`, `ingestException`, and `ingestReceipt` only.
-Do not enable that on Production in this milestone. Do not enable cron or
-ingest writes from Integration to refill the desk.
+`npm run ingest:dry-run` remains read-only. Vercel requests the secured news
+cron with `?write=1` every two hours, but the route fails closed unless
+`CRON_SECRET`, a Gateway credential, `SANITY_API_WRITE_TOKEN`, and
+`INGEST_WRITES_ENABLED=1` are all present. Publication remains limited to
+high-confidence items from the approved source registry; exceptions stay in
+review. Writes are scoped to `curatedNewsItem`, `event`, `ingestSource`,
+`ingestRun`, `ingestException`, and `ingestReceipt` only.
+
+The production gate is an operational switch, not permission to bypass source,
+freshness, diversity, or confidence checks. Integration must not write into a
+production dataset.
 
 ## Replenishment (manual, 1–2 reviewed items per day)
 
@@ -98,6 +103,6 @@ same 30 days.
 Use only allowlisted publishers and their hosts. Do not invent headlines,
 dates, or context facts absent from the source.
 
-After publish, `/` and `/news` revalidate every 300 seconds. There is no
-on-write `revalidateTag("news")` hook yet. New items appear on cached
-pages within about five minutes.
+After a persisted or purged news change, the cron invalidates the `news` tag
+and the `/`, `/news`, `/today`, and `/explore` paths. A no-change run does not
+invalidate caches. The ordinary five-minute cache remains a fallback.

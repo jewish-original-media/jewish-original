@@ -38,10 +38,11 @@ revision notes, reviewer, embargo, and correction history.
 
 ### History entry
 
-Core fields: title, slug, excerpt, body, one structured historical date, Hebrew
-date when supported, era references, people, places, geographic regions, topics,
-citations, rights-aware media, related entries, SEO, workflow, corrections, and
-non-sensitive import provenance.
+Core fields: title, slug, excerpt, body, body-completeness review state, one
+structured historical date, Hebrew date when supported, era references,
+people, places, geographic regions, topics, citations, rights-aware media,
+related entries, SEO, workflow, corrections, and non-sensitive import
+provenance.
 
 The model must support BCE years, ranges, approximate dates, recurring
 commemorations, and events where the Hebrew date is context rather than an exact
@@ -76,6 +77,12 @@ publication / workflow. This is the future Originals document. Do not add a
 `blogPost` or `newsletterPost` type. See `docs/ORIGINALS.md`. The public
 homepage hides Originals until a published article exists.
 
+Owned History and Originals detail pages render the complete Portable Text
+body. Cards, search, and homepage surfaces render excerpts. Publication is
+blocked when the body merely duplicates the excerpt or when an editor has not
+set body completeness to `fullText`. Imported source bodies may be marked
+`sourceBodyImported`, but that is a review state, not publication approval.
+
 ### Curated news item
 
 Outward-linking record, not a republished article. Publisher / source
@@ -91,6 +98,15 @@ Title, organizer, canonical URL, source UID, start/end, the event’s own IANA
 timezone, attendance mode, venue/city/region/country, online URL, short JOM
 context, topics, provenance, status, expiration, and ingest metadata. Do not
 apply Jewish Today timezone rules. Do not store official blurbs as public copy.
+
+### Torah portion brief
+
+A dated, reviewed editorial companion to a Hebcal weekly reading. It stores
+the canonical Hebcal title, observed date, Hebcal source URL, original synopsis,
+verified synopsis citations, and an optional exact teaching quotation with its
+own verified citation and separately labeled JOM reflection. Drafting may be
+source- or AI-assisted; publication always requires human editorial approval.
+It never stores or replaces the calculated Jewish calendar day.
 
 ### Culture item
 

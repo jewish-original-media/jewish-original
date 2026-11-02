@@ -3,6 +3,7 @@ import { newsEventDocumentTypes } from "./news-events";
 import { objectTypes } from "./objects";
 import { originalDocumentTypes } from "./originals";
 import { podcastDocumentTypes, podcastObjectTypes } from "./podcasts";
+import { torahPortionBrief } from "./torah";
 
 export const schemaTypes = [
   ...objectTypes,
@@ -11,4 +12,5 @@ export const schemaTypes = [
   ...podcastDocumentTypes,
   ...newsEventDocumentTypes,
   ...originalDocumentTypes,
+  torahPortionBrief,
 ];

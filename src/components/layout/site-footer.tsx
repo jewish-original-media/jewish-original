@@ -53,10 +53,11 @@ export function SiteFooter({
                 </TrackedAnchor>
               </li>
               <li>
-                <a className={styles.footerMail} href={`mailto:${siteConfig.email}`}>
-                  {siteConfig.email.slice(0, siteConfig.email.indexOf("@") + 1)}
-                  <wbr />
-                  {siteConfig.email.slice(siteConfig.email.indexOf("@") + 1)}
+                <a
+                  className={styles.footerMail}
+                  href={`mailto:${siteConfig.email}`}
+                >
+                  {siteConfig.email}
                 </a>
               </li>
               {siteConfig.footerUtility.map((item) => (

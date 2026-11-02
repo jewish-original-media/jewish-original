@@ -58,19 +58,37 @@ test("renders the responsive, accessible application shell", async ({
   );
   expect(hasHorizontalOverflow).toBe(false);
 
-  if (testInfo.project.name === "mobile") {
+  if (testInfo.project.name !== "desktop") {
     const menu = page.getByText("Menu", { exact: true });
     await expect(menu).toBeVisible();
     await menu.click();
+    const mobileNavigation = page.getByRole("navigation", { name: "Mobile" });
+    await expect(mobileNavigation).toBeVisible();
     await expect(
-      page.getByRole("navigation", { name: "Mobile" }),
+      mobileNavigation.getByRole("link", { name: /Jewish calendar/ }),
     ).toBeVisible();
-    await expect(
-      page
-        .getByRole("navigation", { name: "Mobile" })
-        .getByRole("link", { name: /Jewish calendar/ }),
-    ).toBeVisible();
+    expect(
+      await page.evaluate(() => ({
+        root: document.documentElement.style.overflow,
+        body: document.body.style.overflow,
+      })),
+    ).toEqual({ root: "hidden", body: "hidden" });
+    const bannerBox = await page.getByRole("banner").boundingBox();
+    const menuBox = await mobileNavigation.boundingBox();
+    expect(bannerBox).not.toBeNull();
+    expect(menuBox).not.toBeNull();
+    expect(Math.abs((menuBox?.y || 0) - (bannerBox?.height || 0))).toBeLessThan(
+      2,
+    );
     await menu.click();
+    await expect
+      .poll(() =>
+        page.evaluate(() => ({
+          root: document.documentElement.style.overflow,
+          body: document.body.style.overflow,
+        })),
+      )
+      .toEqual({ root: "", body: "" });
   } else {
     const primary = page.getByRole("navigation", { name: "Primary" });
     await expect(primary).toBeVisible();
@@ -88,6 +106,22 @@ test("renders the responsive, accessible application shell", async ({
     await page.mouse.move(720, 960);
     await expect(archiveSearch).toBeHidden();
   }
+
+  const footerMail = page.getByRole("link", {
+    name: "hello@jewishoriginal.com",
+  });
+  await expect(footerMail).toBeVisible();
+  expect(
+    await footerMail.evaluate((element) => ({
+      hasForcedBreak: Boolean(element.querySelector("wbr")),
+      fitsColumn: element.scrollWidth <= element.clientWidth,
+      whiteSpace: getComputedStyle(element).whiteSpace,
+    })),
+  ).toEqual({
+    hasForcedBreak: false,
+    fitsColumn: true,
+    whiteSpace: "nowrap",
+  });
 
   await page.screenshot({
     path: `artifacts/shell-${testInfo.project.name}-verified.png`,
@@ -128,7 +162,7 @@ test("serves generated discovery and crawler metadata", async ({ request }) => {
 test("history submenu links open the matching archive", async ({
   page,
 }, testInfo) => {
-  test.skip(testInfo.project.name === "mobile", "desktop primary navigation");
+  test.skip(testInfo.project.name !== "desktop", "desktop primary navigation");
   await page.goto("/");
   const primary = page.getByRole("navigation", { name: "Primary" });
   const history = primary.getByRole("link", { name: "History", exact: true });
@@ -144,9 +178,9 @@ test("history submenu links open the matching archive", async ({
 
   expect(hrefs).toContain("/history");
   expect(hrefs).toContain("/explore");
-  expect(hrefs.some((href) => /^\/history\?month=\d+&day=\d+$/.test(href))).toBe(
-    true,
-  );
+  expect(
+    hrefs.some((href) => /^\/history\?month=\d+&day=\d+$/.test(href)),
+  ).toBe(true);
   expect(hrefs.some((href) => href.startsWith("/history?topic="))).toBe(true);
   expect(hrefs.some((href) => href.startsWith("/history?place="))).toBe(true);
   expect(hrefs.some((href) => href.startsWith("/history?era="))).toBe(true);
@@ -155,7 +189,9 @@ test("history submenu links open the matching archive", async ({
     const response = await page.goto(href);
     expect(response?.ok(), href).toBe(true);
     if (href.startsWith("/history?")) {
-      await expect(page.getByRole("heading", { name: /\d+ stories/ })).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: /\d+ stories/ }),
+      ).toBeVisible();
       const chip = page.getByRole("list", { name: "Active filters" });
       await expect(chip).toBeVisible();
     }

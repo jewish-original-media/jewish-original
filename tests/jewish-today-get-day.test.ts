@@ -106,4 +106,60 @@ describe("getJewishToday composition", () => {
 
     assert.deepEqual(range, ["2026-09-05", "2026-09-12"]);
   });
+
+  it("joins an editorially approved Torah brief to the matching weekly reading", async () => {
+    let lookup:
+      | {
+          canonicalTitle: string;
+          observedOn: string;
+          hebcalSourceHref?: string;
+        }
+      | undefined;
+    const day = await getJewishToday({
+      date: "2026-09-01",
+      fetchCalendar: async () => load("weekday-2026-09-01.json"),
+      fetchOnThisDay: async () => [],
+      fetchTorahPortionBrief: async (requestedLookup) => {
+        lookup = requestedLookup;
+        return {
+          canonicalTitle: "Nitzavim-Vayeilech",
+          observedOn: "2026-09-05",
+          hebcalSourceHref:
+            "https://www.hebcal.com/sedrot/nitzavim-vayeilech-20260905",
+          synopsis:
+            "Moses addresses the covenant, the possibility of return, and the choice between life and death before transferring leadership to Joshua.",
+          synopsisCitations: [
+            {
+              title: "Deuteronomy 29:9–31:30",
+              url: "https://www.sefaria.org/Deuteronomy.29.9-31.30",
+              locator: "Deuteronomy 29:9–31:30",
+            },
+          ],
+        };
+      },
+    });
+
+    assert.deepEqual(lookup, {
+      canonicalTitle: "Nitzavim-Vayeilech",
+      observedOn: "2026-09-05",
+      hebcalSourceHref:
+        "https://www.hebcal.com/sedrot/nitzavim-vayeilech-20260905",
+    });
+    assert.match(day.parashah?.brief?.synopsis ?? "", /choice between life/);
+  });
+
+  it("keeps the Hebcal reading when the Torah brief lookup fails", async () => {
+    const day = await getJewishToday({
+      date: "2026-09-01",
+      fetchCalendar: async () => load("weekday-2026-09-01.json"),
+      fetchOnThisDay: async () => [],
+      fetchTorahPortionBrief: async () => {
+        throw new Error("Sanity unavailable");
+      },
+    });
+
+    assert.equal(day.parashah?.title, "Nitzavim-Vayeilech");
+    assert.equal(day.parashah?.brief, undefined);
+    assert.equal(day.calendarStatus, "ready");
+  });
 });

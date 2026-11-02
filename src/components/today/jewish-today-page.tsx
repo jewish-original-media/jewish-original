@@ -10,6 +10,7 @@ import type { PublicEventCard } from "@/content/events/types";
 import type { HistoryEntrySummary } from "@/content/history/types";
 import { FOUNDER_PHOTOS } from "@/content/media/public-assets";
 import type { CuratedNewsCard } from "@/content/news/types";
+import type { TorahBriefCitation } from "@/content/torah/types";
 import type { JewishTodayDay } from "@/features/jewish-today";
 import {
   shouldShowHomepageEvents,
@@ -60,6 +61,38 @@ function ReadingGroup({
             >
               {reading}
               <span className="sr-only"> on Sefaria (opens in a new tab)</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function CitationLinks({
+  citations,
+  label,
+}: {
+  citations: TorahBriefCitation[];
+  label: string;
+}) {
+  if (!citations.length) return null;
+
+  return (
+    <div className={styles.citationGroup}>
+      <p className={styles.citationLabel}>{label}</p>
+      <ul className={styles.citationList}>
+        {citations.map((citation) => (
+          <li
+            key={`${citation.url}-${citation.locator ?? citation.title ?? ""}`}
+          >
+            <a href={citation.url} rel="noopener noreferrer" target="_blank">
+              {citation.title ||
+                citation.publication ||
+                citation.author ||
+                "Source"}
+              {citation.locator ? ` · ${citation.locator}` : ""}
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </li>
         ))}
@@ -376,10 +409,45 @@ export function JewishTodayPage({
                     ? "Read this Shabbat"
                     : `Read ${formatGregorianLabel(day.parashah.observedOn)}`}
                 </p>
-                {firstSentence(day.parashah.memo) ? (
+                {day.parashah.brief?.synopsis ? (
+                  <>
+                    <p className={styles.sectionLede}>
+                      {day.parashah.brief.synopsis}
+                    </p>
+                    <CitationLinks
+                      citations={day.parashah.brief.synopsisCitations}
+                      label="Synopsis sources"
+                    />
+                  </>
+                ) : firstSentence(day.parashah.memo) ? (
                   <p className={styles.sectionLede}>
                     {firstSentence(day.parashah.memo)}
                   </p>
+                ) : null}
+                {day.parashah.brief?.teaching ? (
+                  <aside
+                    className={styles.teaching}
+                    aria-labelledby="weekly-teaching"
+                  >
+                    <p className={styles.citationLabel}>
+                      {day.parashah.brief.teaching.tradition}
+                    </p>
+                    <h3 className={styles.teachingTitle} id="weekly-teaching">
+                      A teaching for the week
+                    </h3>
+                    <blockquote className={styles.teachingQuote}>
+                      “{day.parashah.brief.teaching.quotation}”
+                    </blockquote>
+                    {day.parashah.brief.teaching.reflection ? (
+                      <p className={styles.teachingReflection}>
+                        {day.parashah.brief.teaching.reflection}
+                      </p>
+                    ) : null}
+                    <CitationLinks
+                      citations={[day.parashah.brief.teaching.citation]}
+                      label="Teaching source"
+                    />
+                  </aside>
                 ) : null}
                 {torahReadingContext(day.parashah.torahReadings) ? (
                   <p className={styles.knowledgeNote}>

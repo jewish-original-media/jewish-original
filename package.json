@@ -14,6 +14,7 @@
     "test:homepage": "tsx --test tests/homepage-*.test.ts tests/living-archive-media.test.ts tests/news-desk.test.ts tests/public-media.test.ts tests/site-seo.test.ts tests/site-nav.test.ts tests/support-inquiry.test.ts",
     "test:archive": "tsx --test tests/archive.test.ts tests/history-archive.test.ts tests/history-full-archive.test.ts tests/site-seo.test.ts tests/site-nav.test.ts",
     "test:originals": "tsx --test tests/originals-*.test.ts tests/site-nav.test.ts",
+    "test:content": "tsx --test tests/content-*.test.ts",
     "test:ingest": "tsx --test tests/ingest-*.test.ts",
     "ingest:dry-run": "tsx scripts/ingest/dry-run.ts",
     "ingest:first-publish": "tsx scripts/ingest/first-publish.ts",
@@ -37,8 +38,13 @@
     "originals:inspect": "tsx scripts/originals/inspect-inventory.ts",
     "originals:publish-house:dry-run": "sanity exec scripts/originals/publish-house-essays.ts --with-user-token",
     "originals:publish-house": "sanity exec scripts/originals/publish-house-essays.ts --with-user-token -- --apply",
+    "content:audit-full-text": "tsx scripts/content/audit-full-text.ts",
+    "content:migrate-full-text:dry-run": "tsx scripts/content/migrate-full-text-drafts.ts",
+    "content:migrate-full-text": "tsx scripts/content/migrate-full-text-drafts.ts --apply",
     "news:tighten-desk:dry-run": "sanity exec scripts/news/tighten-first-desk.ts --with-user-token",
-    "news:tighten-desk": "sanity exec scripts/news/tighten-first-desk.ts --with-user-token -- --apply"
+    "news:tighten-desk": "sanity exec scripts/news/tighten-first-desk.ts --with-user-token -- --apply",
+    "torah:seed-brief:dry-run": "sanity exec scripts/torah/seed-chayei-sara-2026.ts --with-user-token",
+    "torah:seed-brief": "sanity exec scripts/torah/seed-chayei-sara-2026.ts --with-user-token -- --apply"
   },
   "private": true,
   "engines": {

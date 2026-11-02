@@ -402,7 +402,8 @@
   display: grid;
   align-content: start;
   gap: var(--space-8);
-  padding: var(--space-8) var(--gutter) var(--space-10);
+  padding: var(--space-8) var(--gutter)
+    calc(var(--space-10) + env(safe-area-inset-bottom));
   background: color-mix(in srgb, var(--color-sand) 88%, var(--color-navy));
   color: var(--color-navy);
 }
@@ -540,9 +541,10 @@
   text-decoration: none;
 }
 
-.footerMail {
+.footerList .footerMail {
   overflow-wrap: normal;
   word-break: normal;
+  white-space: nowrap;
 }
 
 .footerList a:hover {
@@ -557,7 +559,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding-block: var(--space-5);
+  padding-block: var(--space-5)
+    calc(var(--space-5) + env(safe-area-inset-bottom));
   color: rgb(255 255 255 / 0.58);
   font-size: var(--text-xs);
 }
@@ -872,6 +875,12 @@
   .menuLink {
     min-height: 3.75rem;
     font-size: clamp(1.65rem, 8vw, 2.75rem);
+  }
+}
+
+@media (max-width: 30rem) {
+  .footerColumns {
+    grid-template-columns: 1fr;
   }
 }
 
