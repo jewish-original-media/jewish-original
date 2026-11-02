@@ -20,6 +20,9 @@ export function SourcePreviewImage({
   }
 
   return (
+    // Source domains are dynamic and untrusted; bypassing the optimizer avoids
+    // proxying arbitrary third-party URLs through the application.
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       alt=""
       className={className}

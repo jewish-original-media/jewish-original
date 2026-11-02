@@ -1,4 +1,5 @@
 import { authorizeCronRequest } from "@/features/ingest/auth";
+import { revalidateNewsSurfaces } from "@/features/ingest/revalidate";
 import {
   classifyNewsItem,
   resolveAiProvider,
@@ -14,6 +15,7 @@ import {
   createIngestReadClient,
   createIngestWriteClient,
 } from "@/features/ingest/write-client";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -81,6 +83,13 @@ export async function GET(request: Request) {
     });
     persisted = persistedRun.published.length;
     purged = await purgeNewsOutsideArchive(client);
+    revalidateNewsSurfaces(
+      { persisted, purged },
+      {
+        path: revalidatePath,
+        tag: (tag) => revalidateTag(tag, "max"),
+      },
+    );
   }
 
   return Response.json({

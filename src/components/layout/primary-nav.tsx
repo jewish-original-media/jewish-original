@@ -77,14 +77,31 @@ function PrimaryNavItem({ item }: { item: SiteNavItem }) {
 
 function useStickyHeaderOffset() {
   useLayoutEffect(() => {
-    const header = document.querySelector("header");
+    const header = document.querySelector("[data-site-header]");
     if (!(header instanceof HTMLElement)) return;
+    const menu = header.querySelector("details");
+    const root = document.documentElement;
+    const body = document.body;
+    let rootOverflow = root.style.overflow;
+    let bodyOverflow = body.style.overflow;
+    let scrollLocked = false;
 
     const apply = () => {
-      document.documentElement.style.setProperty(
-        "--sticky-header",
-        `${header.offsetHeight}px`,
-      );
+      root.style.setProperty("--sticky-header", `${header.offsetHeight}px`);
+    };
+
+    const syncScrollLock = () => {
+      if (menu?.open && !scrollLocked) {
+        rootOverflow = root.style.overflow;
+        bodyOverflow = body.style.overflow;
+        root.style.overflow = "hidden";
+        body.style.overflow = "hidden";
+        scrollLocked = true;
+      } else if (!menu?.open && scrollLocked) {
+        root.style.overflow = rootOverflow;
+        body.style.overflow = bodyOverflow;
+        scrollLocked = false;
+      }
     };
 
     const closeMenu = (event: Event) => {
@@ -101,19 +118,22 @@ function useStickyHeaderOffset() {
     observer.observe(header);
     window.addEventListener("resize", apply);
     header.addEventListener("click", closeMenu);
+    menu?.addEventListener("toggle", syncScrollLock);
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", apply);
       header.removeEventListener("click", closeMenu);
+      menu?.removeEventListener("toggle", syncScrollLock);
+      if (scrollLocked) {
+        root.style.overflow = rootOverflow;
+        body.style.overflow = bodyOverflow;
+      }
+      root.style.removeProperty("--sticky-header");
     };
   }, []);
 }
 
-export function PrimaryNav({
-  items,
-}: {
-  items: readonly SiteNavItem[];
-}) {
+export function PrimaryNav({ items }: { items: readonly SiteNavItem[] }) {
   useStickyHeaderOffset();
 
   return (

@@ -11,8 +11,12 @@ It combines:
 
 - calculated Jewish calendar data from Hebcal
 - published JOM History entries whose reviewed Gregorian month/day match today
+- an optional published `torahPortionBrief` matched to the verified Hebcal
+  portion title and observed date
 
-Those two sources stay separate.
+Those sources stay separate. Hebcal determines the calendar and reading;
+Sanity may add reviewed JOM synopsis and teaching content but cannot replace
+the reading identity.
 
 ## Route
 
@@ -73,8 +77,9 @@ Uses `JewishTodayPage`. A boxed asymmetric hero pairs the Gregorian/Hebrew
 ledger with founder-cleared editorial photography. The dashboard then shows
 only sections with real content: calendar observances, festival or weekly
 Torah readings, exact or clearly labeled previous-date History, and gated
-Current records. Provider memos appear only when Hebcal supplies them; they
-are not rewritten as JOM commentary. History uses `HistoryEntryCard`
+Current records. An approved JOM Torah synopsis appears before factual reading
+context. Without one, the page falls back to the Hebcal memo and verified
+reading references; it never generates a teaching at request time. History uses `HistoryEntryCard`
 `variant="archive"`. OTD motifs remain restrained room marks.
 
 ### Compact homepage module
@@ -88,8 +93,9 @@ to `HomeJewishToday`. The module shows:
   `parashat` and the system falls back
 - **Festival** when the coming Saturday is a Hebcal `yomtov` without a weekly
   portion. This is the holiday name, not a guessed leyning.
-- a short source-backed Hebcal memo and factual reading-book context when
-  available, plus the first verified Sefaria study path
+- an approved JOM synopsis when available; otherwise a short source-backed
+  Hebcal memo and factual reading-book context, plus the first verified Sefaria
+  study path
 - **Today** only when a holiday, Rosh Chodesh, special Shabbat, Omer, or
   other observance is present
 - **On this day** only when a published History match exists
@@ -133,6 +139,23 @@ remains empty when Hebcal returns no portion at all.
 
 V1 timezone remains Eastern Time. Do not add a second Jewish-calendar library.
 Do not hard-code a parashah.
+
+### Reviewed Torah briefs
+
+`torahPortionBrief` stores one dated editorial brief with the canonical Hebcal
+title, observed civil date, Hebcal source URL, synopsis, synopsis citations,
+and an optional exact teaching quotation plus a separately labeled JOM
+reflection. Status is `draft`, `review`, or `published`.
+
+Only non-draft documents with `status: published` are queried. Publication
+requires at least one verified synopsis citation. A teaching quotation also
+requires its own verified citation. AI or source-assisted drafting is allowed,
+but human editorial approval and exact-source verification remain mandatory.
+The draft seeder never publishes.
+
+Fallback order is: approved JOM brief; attributed Hebcal memo; factual reading
+context from verified references; source links. No Torah, Mishnah, or
+historical quotation may be invented.
 
 ## History matching
 
@@ -179,7 +202,11 @@ Credit appears as “Calendar by Hebcal.”
 
 ## Caching and failure
 
-`fetch` revalidates hourly with tags `jewish-today` and `jewish-today:{date}`.
+Hebcal `fetch` revalidates hourly with tags `jewish-today` and
+`jewish-today:{date}`. Published briefs use `torah-brief` and a dated tag. A
+secured calendar cron invalidates `jewish-today`, `/`, and `/today` shortly
+after Eastern midnight, with two UTC schedule times covering daylight-saving
+changes.
 If Hebcal is unavailable, the page still shows the Gregorian date, a quiet
 status line, and any published History matches. Raw errors are not shown.
 

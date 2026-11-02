@@ -36,7 +36,7 @@ export function SiteHeader({
   );
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-site-header>
       <Container className={styles.bar}>
         <div className={styles.headerDate}>
           {today ? (

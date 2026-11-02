@@ -2575,7 +2575,7 @@
 
 .immersive .masthead {
   position: relative;
-  min-height: calc(100svh - var(--header-height));
+  min-height: calc(100svh - var(--sticky-header, var(--header-height)));
   display: grid;
   align-content: end;
   padding: 0;
@@ -3307,7 +3307,7 @@
 
 @media (max-width: 63.98rem) {
   .immersive .masthead {
-    min-height: calc(100svh - var(--header-height));
+    min-height: calc(100svh - var(--sticky-header, var(--header-height)));
   }
 
   .immersive .display {
@@ -3363,7 +3363,7 @@
   }
 
   .immersive .masthead {
-    min-height: calc(100svh - var(--header-height));
+    min-height: calc(100svh - var(--sticky-header, var(--header-height)));
   }
 
   .immersive .heroImage img {

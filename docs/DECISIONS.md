@@ -919,3 +919,28 @@ The public news desk keeps published outbound cards for 30 days from
 When news ingest writes are enabled, the same run deletes `curatedNewsItem`
 documents older than 30 days so the dataset does not accumulate an archive.
 Do not backdate headlines. Do not store publisher bodies or images.
+
+## ADR-058 — Freshness automation and owned full text remain gated
+
+**Status:** Accepted, 2026-11-01
+
+The scheduled news route may request writes every two hours, but it fails
+closed unless cron authentication, AI Gateway, the Sanity write token, and
+`INGEST_WRITES_ENABLED=1` are all present. High-confidence items from the
+approved registry may auto-publish; exceptions remain review work. A changed
+news dataset receives immediate tag and path invalidation. A separate secured
+calendar rollover invalidates the daily surfaces around Eastern midnight.
+
+ADR-051’s ban on request-time or unreviewed Torah interpretation remains in
+force. Its broader ban on summaries is superseded: a `torahPortionBrief` may
+publish an original synopsis and optional teaching only after human approval
+and verified citations. Hebcal still determines the portion and date. The
+runtime fallback never invents a summary or quotation.
+
+Owned History and Originals detail pages carry complete bodies; discovery
+surfaces carry excerpts. Publication now requires explicit `fullText`
+confirmation and rejects a body that only repeats its excerpt. Preserved
+source-body repair is checksum-verified and draft-only. No migration overwrites
+a published record, an existing editorial draft, or immutable provenance.
+Third-party news remains outbound context only and never receives this
+full-text treatment.

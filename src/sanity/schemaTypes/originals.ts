@@ -5,12 +5,19 @@ import {
   type SanityDocument,
 } from "sanity";
 
+import {
+  auditOwnedBody,
+  type BodyCompleteness,
+  type PortableTextLike,
+} from "@/lib/content/body-completeness";
+
 type OriginalDraft = {
   title?: string;
   slug?: { current?: string };
   authors?: unknown[];
   excerpt?: string;
-  body?: unknown[];
+  body?: PortableTextLike[];
+  bodyCompleteness?: BodyCompleteness;
   publishedAt?: string;
   featuredMedia?: {
     asset?: unknown;
@@ -55,6 +62,24 @@ function originalPublicationReadiness(document: SanityDocument | undefined) {
     errors.push({
       message: "Add the essay before publication.",
       path: ["body"],
+    });
+  }
+  const bodyAudit = auditOwnedBody({
+    body: draft.body,
+    excerpt: draft.excerpt,
+  });
+  if (bodyAudit.state === "excerptOnly") {
+    errors.push({
+      message:
+        "The essay body duplicates the excerpt. Add the complete owned text before publication.",
+      path: ["body"],
+    });
+  }
+  if (draft.bodyCompleteness !== "fullText") {
+    errors.push({
+      message:
+        "An editor must confirm that the complete owned text is present before publication.",
+      path: ["bodyCompleteness"],
     });
   }
   if (!draft.publishedAt) {
@@ -164,6 +189,28 @@ export const article = defineType({
       ],
       validation: (Rule) =>
         Rule.required().warning("Add the essay before review."),
+    }),
+    defineField({
+      name: "bodyCompleteness",
+      title: "Body completeness",
+      type: "string",
+      group: "story",
+      initialValue: "needsReview",
+      description:
+        "Confirm full text only after comparing the essay with the complete owned source.",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Needs review", value: "needsReview" },
+          { title: "Excerpt only", value: "excerptOnly" },
+          {
+            title: "Source body imported; editorial review required",
+            value: "sourceBodyImported",
+          },
+          { title: "Complete owned text confirmed", value: "fullText" },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "publishedAt",

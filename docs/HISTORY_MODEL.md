@@ -25,7 +25,14 @@ first-class data, and import provenance remains separate from edited content.
 - `excerpt`: reviewed plain-text summary; never silently generated into a
   published document
 - `body`: Portable Text preserving the supplied article wording during import
+- `bodyCompleteness`: `needsReview`, `excerptOnly`, `sourceBodyImported`, or
+  editor-confirmed `fullText`
 - `contentWarnings`: optional controlled labels plus an editorial note
+
+Cards, search, archive indexes, and homepage modules use `excerpt`. The detail
+route renders every Portable Text body block. A ready record cannot be
+published when its body only duplicates the excerpt or until an editor confirms
+`bodyCompleteness: fullText`.
 
 ### Historical date
 
@@ -156,6 +163,14 @@ record; it never overwrites history without an audit trail.
 severity, evidence, detector, resolution, and reviewer. `editorialNotes` may
 contain only non-sensitive operational notes. Field hiding in Studio is not
 access control.
+
+The full-text inventory command is `npm run content:audit-full-text`. It
+compares body, excerpt, and preserved `provenance.sourceBody` without writing.
+`npm run content:migrate-full-text:dry-run` prepares a checksum-verified,
+revision-guarded plan. Apply is draft-only: it may split an unchanged imported
+source into reversible paragraph blocks or create a review draft beside a
+shorter published record. It never changes a published record, never overwrites
+an existing editorial draft, and never changes `provenance.sourceBody`.
 
 ### Provenance
 

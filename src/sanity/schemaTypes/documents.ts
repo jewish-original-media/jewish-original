@@ -5,6 +5,12 @@ import {
   type SanityDocument,
 } from "sanity";
 
+import {
+  auditOwnedBody,
+  type BodyCompleteness,
+  type PortableTextLike,
+} from "@/lib/content/body-completeness";
+
 const aliasesField = defineField({
   name: "aliases",
   title: "Aliases and transliterations",
@@ -401,7 +407,8 @@ type HistoryDraft = {
   title?: string;
   slug?: { current?: string };
   excerpt?: string;
-  body?: unknown[];
+  body?: PortableTextLike[];
+  bodyCompleteness?: BodyCompleteness;
   historicalDate?: { start?: { year?: number }; precision?: string };
   observanceRule?: {
     observanceKey?: string;
@@ -453,6 +460,24 @@ function publicationReadiness(document: SanityDocument | undefined) {
     errors.push({
       message: "Add the story before publication.",
       path: ["body"],
+    });
+  }
+  const bodyAudit = auditOwnedBody({
+    body: draft.body,
+    excerpt: draft.excerpt,
+  });
+  if (bodyAudit.state === "excerptOnly") {
+    errors.push({
+      message:
+        "The story body duplicates the excerpt. Add the complete owned text before publication.",
+      path: ["body"],
+    });
+  }
+  if (draft.bodyCompleteness !== "fullText") {
+    errors.push({
+      message:
+        "An editor must confirm that the complete owned text is present before publication.",
+      path: ["bodyCompleteness"],
     });
   }
   if (
@@ -629,6 +654,28 @@ export const historyEntry = defineType({
       ],
       validation: (Rule) =>
         Rule.required().warning("Add the story before review."),
+    }),
+    defineField({
+      name: "bodyCompleteness",
+      title: "Body completeness",
+      type: "string",
+      group: "story",
+      initialValue: "needsReview",
+      description:
+        "Confirm full text only after comparing the body with the complete owned source. This does not apply to third-party news.",
+      options: {
+        layout: "radio",
+        list: [
+          { title: "Needs review", value: "needsReview" },
+          { title: "Excerpt only", value: "excerptOnly" },
+          {
+            title: "Source body imported; editorial review required",
+            value: "sourceBodyImported",
+          },
+          { title: "Complete owned text confirmed", value: "fullText" },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "excerpt",
